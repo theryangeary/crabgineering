@@ -1,3 +1,3 @@
-public class View(){
+public class View{
 
 }
