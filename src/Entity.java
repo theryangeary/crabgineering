@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 public abstract class Entity {
   
   private Rectangle bounds;
