@@ -19,13 +19,12 @@ public class View extends JPanel {
 
   public View() {
 	initJFrame();
-
+	this.setBackground(Color.cyan);
   }
 
   private void initJFrame() {
 	frame = new JFrame();
 	frame.getContentPane().add(this);
-	frame.getContentPane().setBackground(Color.blue);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(frameWidth, frameHeight);
 	frame.setVisible(true);
