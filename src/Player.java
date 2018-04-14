@@ -1,5 +1,5 @@
 public abstract class Player extends Entity {
-
-  abstract public void processInput();
-
+	
+	abstract public void processInput();
+	
 }

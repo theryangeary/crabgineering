@@ -1,7 +1,7 @@
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
 
 public class Controller {
 	
@@ -18,15 +18,20 @@ public class Controller {
 	}
 	
 	/**
-	 * INITIALIZE ENTITIES
-	 * ADD LISTENERS
+	 * Initializes both the view and the model and adds any necessary listeners.
+	 * It's the *real* main
 	 */
 	public Controller() {
 		view = new View();
 		model = new Model();
+		KeyListener keyListener = new PlayerKeyListener();
+		view.addKeyListener(keyListener);
 		initTimer();
 	}
 	
+	/**
+	 * Initializes the timer that triggers both the model's logic updates and the view's drawing updates.
+	 */
 	private void initTimer() {
 		Action updateAction = new AbstractAction() {
 			@Override
@@ -40,6 +45,9 @@ public class Controller {
 		updater = new Timer(50, updateAction);
 	}
 	
+	/**
+	 * Starts the timer
+	 */
 	public void start() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
