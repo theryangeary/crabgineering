@@ -3,6 +3,9 @@ import java.awt.*;
 public abstract class Entity {
 	
 	private Rectangle bounds = new Rectangle(10, 10, 10, 10);
+	double xVel = 0;
+	double yVel = 0;
+	double gravity = .5;
 	String imageReference = null;
 	private int currentHealth = 10;
 	private int maxHealth = 10;
@@ -31,13 +34,18 @@ public abstract class Entity {
 	}
 	
 	public void draw(Graphics g, Rectangle bounds) {
-		
 		g.setColor(Color.pink);
 		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-		
 	}
 	
 	protected void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
+	}
+	
+	void update() {
+		yVel += gravity;
+		
+		this.bounds.y += (int) yVel;
+		
 	}
 }
