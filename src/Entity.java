@@ -22,8 +22,24 @@ abstract class Entity {
 		maxHealth = 10;
 	}
 	
-	void move(double x, double y) {
+	/**
+	 * Given an x and a y, move directly to that position on the screen
+	 *
+	 * @param x
+	 * @param y
+	 */
+	void moveDirectly(double x, double y) {
 		this.setBounds(new Rectangle((int) x, (int) y, bounds.width, bounds.height));
+	}
+	
+	/**
+	 * Given an x and a y, move relative to your current position
+	 *
+	 * @param x
+	 * @param y
+	 */
+	void moveRelatively(double x, double y) {
+		this.setBounds(new Rectangle((int) (bounds.x + x), (int) (bounds.y + y), bounds.width, bounds.height));
 	}
 	
 	boolean intersects(Entity e) {
@@ -78,6 +94,6 @@ abstract class Entity {
 			}
 		}
 		
-		this.move(newX, newY);
+		this.moveDirectly(newX, newY);
 	}
 }

@@ -1,12 +1,6 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 /**
  * The Game's Key Bindings for Player Movement and Action
@@ -45,7 +39,7 @@ public class GameKeyBindings {
 		public KeyAction(String command) {
 			putValue(ACTION_COMMAND_KEY, command);
 		}
-
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.getPlayer().processInput(e.getActionCommand());

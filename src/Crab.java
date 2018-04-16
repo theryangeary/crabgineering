@@ -6,6 +6,9 @@ public class Crab extends Player {
 		super(x, y, width, height);
 	}
 	
+	/**
+	 * @param action
+	 */
 	@Override
 	public void processInput(String action) {
 		switch (action) {
@@ -19,7 +22,6 @@ public class Crab extends Player {
 				doAction();
 				break;
 		}
-		
 	}
 	
 	@Override
