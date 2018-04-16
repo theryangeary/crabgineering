@@ -3,18 +3,16 @@ import java.awt.*;
 
 public class View extends JPanel {
 	// define size of game
-	final static int frameWidth = 1000;
-	final static int frameHeight = 1000;
+	private final static int frameWidth = 1000;
+	private final static int frameHeight = 1000;
 	
-	private JFrame frame;
-	
-	public View() {
+	View() {
 		initJFrame();
 		this.setBackground(Color.cyan);
 	}
 	
 	private void initJFrame() {
-		frame = new JFrame();
+		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(frameWidth, frameHeight);
@@ -25,7 +23,7 @@ public class View extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (Entity entity : Controller.getModel().entities) {
+		for (Entity entity : Controller.getModel().getEntities()) {
 			entity.draw(g, entity.getBounds());
 		}
 		

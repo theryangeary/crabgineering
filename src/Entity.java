@@ -1,25 +1,36 @@
 import java.awt.*;
 
-public abstract class Entity {
+abstract class Entity {
 	
-	private Rectangle bounds = new Rectangle(10, 10, 10, 10);
-	double xVel = 0;
-	double yVel = 0;
-	double gravity = .5;
-	String imageReference = null;
-	private int currentHealth = 10;
-	private int maxHealth = 10;
+	private Rectangle bounds;
+	private double xVel;
+	private double yVel;
+	private final double gravity;
+	private final String imageReference;
+	private int currentHealth;
+	private final int maxHealth;
 	
 	Entity() {
+		int width = 10;
+		int height = 10;
+		int initialX = 10;
+		int initialY = 10;
+		bounds = new Rectangle(initialX, initialY, width, height);
+		xVel = 0;
+		yVel = 0;
+		gravity = .5;
+		imageReference = "TEST_IMAGE";
+		currentHealth = 10;
+		maxHealth = 10;
 	}
 	
-	public void move(int x, int y) {
+	void move(int x, int y) {
 		this.bounds = new Rectangle(x, y, bounds.width, bounds.height);
 	}
-
-//	public boolean intersects(Entity e) {
-//		Rectangle.intersect(bounds, e.bounds);
-//	}
+	
+	boolean intersects(Entity e) {
+		return this.bounds.intersects(e.bounds);
+	}
 	
 	Rectangle getBounds() {
 		return bounds;
@@ -38,7 +49,7 @@ public abstract class Entity {
 		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
 	}
 	
-	protected void setBounds(Rectangle bounds) {
+	void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}
 	
@@ -46,6 +57,5 @@ public abstract class Entity {
 		yVel += gravity;
 		
 		this.bounds.y += (int) yVel;
-		
 	}
 }

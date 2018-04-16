@@ -21,7 +21,7 @@ public class Controller {
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main
 	 */
-	public Controller() {
+	Controller() {
 		view = new View();
 		model = new Model();
 		KeyListener keyListener = new PlayerKeyListener();

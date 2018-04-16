@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Model {
 	private int worldHeight = Controller.getView().getHeight();
 	private int worldWidth = Controller.getView().getWidth();
-	ArrayList<Entity> entities = new ArrayList<>();
+	private ArrayList<Entity> entities = new ArrayList<>();
 	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
@@ -20,5 +20,9 @@ public class Model {
 		for (Entity entity : entities) {
 			entity.update();
 		}
+	}
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
 	}
 }
