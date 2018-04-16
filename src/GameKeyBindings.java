@@ -13,7 +13,7 @@ public class GameKeyBindings {
 	public GameKeyBindings(JPanel panel, Model model) {
 		this.panel = panel;
 		this.model = model;
-		setKeyBindings(panel);
+		setKeyBindings(this.panel);
 	}
 	
 	private void setKeyBindings(JPanel panel) {
@@ -45,8 +45,5 @@ public class GameKeyBindings {
 			model.getPlayer().processInput(e.getActionCommand());
 			
 		}
-		
 	}
-	
-	
 }
