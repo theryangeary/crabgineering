@@ -42,7 +42,8 @@ public class Controller {
 				view.repaint(); // Repaint basically calls paintComponent, but efficiently
 			}
 		};
-		updater = new Timer(50, updateAction);
+		int delay = 50;
+		updater = new Timer(delay, updateAction);
 	}
 	
 	/**

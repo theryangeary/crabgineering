@@ -1,24 +1,22 @@
 import java.awt.*;
 
 abstract class Entity {
-	
+	private final int initialWidth = 10;
+	private final int initialHeight = 10;
+	private final int initialX = 10;
+	private final int initialY = 10;
 	private Rectangle bounds;
 	private double xVel;
 	private double yVel;
-	private final double gravity;
+	private final double gravity = .5;
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
 	
 	Entity() {
-		int width = 10;
-		int height = 10;
-		int initialX = 10;
-		int initialY = 10;
-		bounds = new Rectangle(initialX, initialY, width, height);
+		bounds = new Rectangle(getInitialX(), getInitialY(), getInitialWidth(), getInitialHeight());
 		xVel = 0;
 		yVel = 0;
-		gravity = .5;
 		imageReference = "TEST_IMAGE";
 		currentHealth = 10;
 		maxHealth = 10;
@@ -60,11 +58,27 @@ abstract class Entity {
 		this.bounds = bounds;
 	}
 	
+	private int getInitialWidth() {
+		return initialWidth;
+	}
+	
+	private int getInitialHeight() {
+		return initialHeight;
+	}
+	
+	private int getInitialX() {
+		return initialX;
+	}
+	
+	private int getInitialY() {
+		return initialY;
+	}
+	
 	void update() {
 		yVel += gravity;
 		
-		double newX = this.bounds.x + xVel;
-		double newY = this.bounds.y + yVel;
+		double newX = bounds.x + xVel;
+		double newY = bounds.y + yVel;
 		
 		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
 			if (yVel > 0) {
