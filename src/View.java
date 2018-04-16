@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class View extends JPanel {
 	// define size of game
-	private final static int frameWidth = 1000;
-	private final static int frameHeight = 1000;
+	private final static int FRAME_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width * 2 / 3;
+	private final static int FRAME_HEIGHT = FRAME_WIDTH * 9 / 16;
 	
 	View() {
 		initJFrame();
@@ -15,8 +15,9 @@ public class View extends JPanel {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(frameWidth, frameHeight);
+		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 	}
 	
 	@Override
@@ -26,5 +27,6 @@ public class View extends JPanel {
 		for (Entity entity : Controller.getModel().getEntities()) {
 			entity.draw(g, entity.getBounds());
 		}
+		Controller.getModel().drawWorld(g);
 	}
 }

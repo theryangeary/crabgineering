@@ -1,12 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyListener;
 
 public class Controller {
 	
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
+	private static GameKeyBindings keyBindings;
 	private Timer updater;
 	private static double FRAMERATE = 144;
 	
@@ -25,9 +25,7 @@ public class Controller {
 	Controller() {
 		view = new View();
 		model = new Model();
-
-		KeyListener keyListener = new PlayerKeyListener();
-		view.addKeyListener(keyListener);
+		keyBindings = new GameKeyBindings(view, model); // Sets the key bindings for the game
 		initTimer();
 	}
 	
@@ -35,7 +33,7 @@ public class Controller {
 	 * Initializes the timer that triggers both the model's logic updates and the view's drawing updates.
 	 */
 	private void initTimer() {
-		int msPerFrame = (int)((1/FRAMERATE)*1000);
+		int msPerFrame = (int) ((1 / FRAMERATE) * 1000);
 		Action updateAction = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
