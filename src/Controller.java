@@ -45,6 +45,7 @@ public class Controller {
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);
+		//updater.setDelay();
 	}
 	
 	/**

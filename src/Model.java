@@ -4,8 +4,9 @@ public class Model {
 	private final int worldHeight = Controller.getView().getHeight();
 	private final int worldWidth = Controller.getView().getWidth();
 	private ArrayList<Entity> entities = new ArrayList<>();
+	private TrashSpawner spawner;
 	private Player player;
-	
+
 
 	private int currentPollutionLevel;
 	private final int maxPollutionLevel = 100;
@@ -13,6 +14,8 @@ public class Model {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model() {
+		//Crab crabby = new Crab(10,10,100,100);
+		//entities.add(crabby);
 		TrashFactory t = new TrashFactory();
 
 		entities.add(t.createEasyTrash(400,50));
@@ -20,7 +23,9 @@ public class Model {
 		player = new Crab(10,10,100,100);
 		entities.add(player);
 
-		currentPollutionLevel = 0;	
+		spawner = new TrashSpawner(entities, 0, worldWidth, 2*1000);
+		spawner.start();
+		currentPollutionLevel = 0;
 	}
 	
 	/**
@@ -48,7 +53,7 @@ public class Model {
 		return player;
 	}
 
-	// returns new pollution level 
+	// returns new pollution level
 	int addToPollutionLevel(int addition) {
 	  this.currentPollutionLevel += addition;
 	  return this.currentPollutionLevel;
