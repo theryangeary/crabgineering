@@ -4,7 +4,7 @@ public class Model {
 	private final int worldHeight = Controller.getView().getHeight();
 	private final int worldWidth = Controller.getView().getWidth();
 	private ArrayList<Entity> entities = new ArrayList<>();
-	private Player player = new Crab(5, 5, 5, 5);
+	private Player player;
 	
 
 	private int currentPollutionLevel;
@@ -17,8 +17,8 @@ public class Model {
 
 		entities.add(t.createEasyTrash(400,50));
 		entities.add(t.createHardTrash(300,0));
-		Crab crabby = new Crab(10,10,100,100);
-		entities.add(crabby);
+		player = new Crab(10,10,100,100);
+		entities.add(player);
 
 		currentPollutionLevel = 0;	
 	}
