@@ -55,6 +55,18 @@ abstract class Entity {
 	
 	void update() {
 		yVel += gravity;
-		this.move(bounds.x, this.bounds.y + yVel);
+		
+		double newX = this.bounds.x + xVel;
+		double newY = this.bounds.y + yVel;
+		
+		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
+			if (yVel <= 0) {
+			} else {
+				yVel = 0;
+				newY = Controller.getModel().getWorldHeight() - bounds.height;
+			}
+		}
+		
+		this.move(newX, newY);
 	}
 }

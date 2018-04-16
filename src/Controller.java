@@ -49,12 +49,7 @@ public class Controller {
 	 * Starts the timer
 	 */
 	public void start() {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				updater.start();
-			}
-		});
+		EventQueue.invokeLater(() -> updater.start());
 	}
 }
 

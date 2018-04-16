@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Model {
-	private int worldHeight = Controller.getView().getHeight();
-	private int worldWidth = Controller.getView().getWidth();
+	private final int worldHeight = Controller.getView().getHeight();
+	private final int worldWidth = Controller.getView().getWidth();
 	private ArrayList<Entity> entities = new ArrayList<>();
 	
 	/**
@@ -24,5 +24,13 @@ public class Model {
 	
 	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+	
+	int getWorldHeight() {
+		return worldHeight;
+	}
+	
+	int getWorldWidth() {
+		return worldWidth;
 	}
 }
