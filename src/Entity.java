@@ -1,11 +1,14 @@
 import java.awt.*;
 
 abstract class Entity {
-	
+
+	//note: x counts pixels left of the left-hand side of the window
+	//      y counts pixels down from the top of the window
 	private Rectangle bounds;
 	private double xVel;
 	private double yVel;
 	private final double gravity;
+
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
@@ -51,21 +54,22 @@ abstract class Entity {
 	
 	void update() {
 		yVel += gravity;
-		
+
 		double newX = this.bounds.x + xVel;
 		double newY = this.bounds.y + yVel;
+		Model model = Controller.getModel();
 		
-		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
+		if (bounds.y + bounds.height >= model.getWorldHeight() - bounds.getHeight()) {
 			if (yVel > 0) {
 				yVel = 0;
-				newY = Controller.getModel().getWorldHeight() - bounds.height;
+				newY = model.getWorldHeight() - bounds.height;
 			}
 		}
 		
-		if (bounds.x + bounds.width >= Controller.getModel().getWorldWidth() - bounds.getWidth()) {
+		if (bounds.x + bounds.width >= model.getWorldWidth() - bounds.getWidth()) {
 			if (xVel > 0) {
 				xVel = 0;
-				newX = Controller.getModel().getWorldWidth() - bounds.width;
+				newX = model.getWorldWidth() - bounds.width;
 			}
 		}
 		
