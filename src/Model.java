@@ -6,6 +6,9 @@ public class Model {
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private Player player = new Crab(5, 5, 5, 5);
 	
+
+	private int currentPollutionLevel;
+	private final int maxPollutionLevel = 100;
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
@@ -17,6 +20,7 @@ public class Model {
 		Crab crabby = new Crab(10,10,100,100);
 		entities.add(crabby);
 
+		currentPollutionLevel = 0;	
 	}
 	
 	/**
@@ -42,5 +46,19 @@ public class Model {
 
 	public Player getPlayer(){
 		return player;
+	}
+
+	// returns new pollution level 
+	int addToPollutionLevel(int addition) {
+	  this.currentPollutionLevel += addition;
+	  return this.currentPollutionLevel;
+	}
+
+	int getCurrentPollutionLevel() {
+	  return this.currentPollutionLevel;
+	}
+
+	int getMaxPollutionLevel() {
+	  return this.maxPollutionLevel;
 	}
 }
