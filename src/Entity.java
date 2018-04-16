@@ -29,7 +29,14 @@ abstract class Entity {
 	}
 	
 	boolean intersects(Entity e) {
-		return this.bounds.intersects(e.bounds);
+		boolean result;
+		if (this.bounds.intersects(e.bounds)) {
+			System.out.printf("%s intersects %s!", this, e);
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
 	}
 	
 	Rectangle getBounds() {
