@@ -8,6 +8,7 @@ public class Controller {
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
 	private Timer updater;
+	private static double FRAMERATE = 60;
 	
 	public static Model getModel() {
 		return model;
@@ -24,6 +25,7 @@ public class Controller {
 	Controller() {
 		view = new View();
 		model = new Model();
+
 		KeyListener keyListener = new PlayerKeyListener();
 		view.addKeyListener(keyListener);
 		initTimer();
@@ -33,6 +35,7 @@ public class Controller {
 	 * Initializes the timer that triggers both the model's logic updates and the view's drawing updates.
 	 */
 	private void initTimer() {
+		int msPerFrame = (int)((1/FRAMERATE)*1000);
 		Action updateAction = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -42,7 +45,7 @@ public class Controller {
 				view.repaint(); // Repaint basically calls paintComponent, but efficiently
 			}
 		};
-		updater = new Timer(50, updateAction);
+		updater = new Timer(msPerFrame, updateAction);
 	}
 	
 	/**

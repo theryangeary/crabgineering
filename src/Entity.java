@@ -18,7 +18,7 @@ abstract class Entity {
 		bounds = new Rectangle(initialX, initialY, width, height);
 		xVel = 0;
 		yVel = 0;
-		gravity = .5;
+		gravity = .1;
 		imageReference = "TEST_IMAGE";
 		currentHealth = 10;
 		maxHealth = 10;
