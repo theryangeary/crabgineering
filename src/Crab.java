@@ -10,11 +10,11 @@ public class Crab extends Player {
 	public void processInput() {
 		//TODO
 	}
-	
-	@Override
-	public void move(int x, int y) {
-		//TODO
-	}
+
+//	@Override
+//	public void move(int x, int y) {
+//		//TODO
+//	}
 	
 //	@Override
 //	public boolean intersects(Entity e) {

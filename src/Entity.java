@@ -24,8 +24,8 @@ abstract class Entity {
 		maxHealth = 10;
 	}
 	
-	void move(int x, int y) {
-		this.bounds = new Rectangle(x, y, bounds.width, bounds.height);
+	void move(double x, double y) {
+		this.setBounds(new Rectangle((int) x, (int) y, bounds.width, bounds.height));
 	}
 	
 	boolean intersects(Entity e) {
@@ -55,7 +55,6 @@ abstract class Entity {
 	
 	void update() {
 		yVel += gravity;
-		
-		this.bounds.y += (int) yVel;
+		this.move(bounds.x, this.bounds.y + yVel);
 	}
 }

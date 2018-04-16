@@ -26,6 +26,5 @@ public class View extends JPanel {
 		for (Entity entity : Controller.getModel().getEntities()) {
 			entity.draw(g, entity.getBounds());
 		}
-		
 	}
 }
