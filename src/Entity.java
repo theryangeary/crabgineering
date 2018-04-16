@@ -8,7 +8,7 @@ abstract class Entity {
 	private Rectangle bounds;
 	private double xVel;
 	private double yVel;
-	private final double gravity = .5;
+	private final double gravity = .1;
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
