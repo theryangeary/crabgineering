@@ -9,8 +9,8 @@ public class Model {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model() {
-		Crab crabby = new Crab();
-		entities.add(crabby);
+		entities.add(new Crab());
+		entities.add(new Trash());
 	}
 	
 	/**
@@ -21,10 +21,8 @@ public class Model {
 	public void update() {
 		for (Entity entity : entities) {
 			entity.update();
-//			for (Entity e: entities) {
-//				entity.intersects(e);
-//			}
 		}
+		
 	}
 	
 	public ArrayList<Entity> getEntities() {
