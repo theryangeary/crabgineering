@@ -5,5 +5,7 @@ abstract class Player extends Entity {
 	}
 	abstract public void processInput(String action);
 	
-	abstract public void move(int x, int y);
+	 public void move(double x, double y) {
+		 super.move(x, y);
+	 }
 }
