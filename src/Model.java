@@ -9,8 +9,13 @@ public class Model {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model() {
-		Crab crabby = new Crab();
+		TrashFactory t = new TrashFactory();
+
+		entities.add(t.createEasyTrash(400,50));
+		entities.add(t.createHardTrash(300,0));
+		Crab crabby = new Crab(10,10,100,100);
 		entities.add(crabby);
+
 	}
 	
 	/**

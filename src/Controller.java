@@ -8,7 +8,7 @@ public class Controller {
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
 	private Timer updater;
-	private static double FRAMERATE = 60;
+	private static double FRAMERATE = 144;
 	
 	public static Model getModel() {
 		return model;

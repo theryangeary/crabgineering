@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Crab extends Player {
 	
-	Crab() {
-		this.setBounds(new Rectangle(10, 10, 10, 10));
+	Crab(int x, int y, int width, int height) {
+		super(x,y,width,height);
 	}
 	
 	@Override
