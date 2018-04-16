@@ -10,12 +10,8 @@ abstract class Entity {
 	private int currentHealth;
 	private final int maxHealth;
 	
-	Entity() {
-		int width = 10;
-		int height = 10;
-		int initialX = 10;
-		int initialY = 10;
-		bounds = new Rectangle(initialX, initialY, width, height);
+	Entity(int x, int y, int width, int height) {
+		bounds = new Rectangle(x, y, width, height);
 		xVel = 0;
 		yVel = 0;
 		gravity = .1;
