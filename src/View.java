@@ -38,7 +38,7 @@ public class View extends JPanel {
 		g.fillRect(progressBarXPosition, progressBarYPosition,
 			pollutionBarScalar * Controller.getModel().getMaxPollutionLevel(), progressBarHeight);
 
-		g.setColor(Color.blue);
+		g.setColor(new Color(0x33, 0x99, 0xFF));
 		g.fillRect(progressBarXPosition, progressBarYPosition,
 			pollutionBarScalar * Controller.getModel().getCurrentPollutionLevel(), progressBarHeight);
 	}

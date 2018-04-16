@@ -47,7 +47,7 @@ public class Model {
 	public Player getPlayer(){
 		return player;
 	}
-}
+
 	// returns new pollution level 
 	int addToPollutionLevel(int addition) {
 	  this.currentPollutionLevel += addition;
