@@ -1,3 +1,3 @@
-public class Trash extends Entity {
-
-}
+//public class Trash extends Entity {
+//
+//}
