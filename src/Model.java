@@ -4,6 +4,7 @@ public class Model {
 	private final int worldHeight = Controller.getView().getHeight();
 	private final int worldWidth = Controller.getView().getWidth();
 	private ArrayList<Entity> entities = new ArrayList<>();
+	private Player player = new Crab(5, 5, 5, 5);
 	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
@@ -37,5 +38,9 @@ public class Model {
 	
 	int getWorldWidth() {
 		return worldWidth;
+	}
+
+	public Player getPlayer(){
+		return player;
 	}
 }
