@@ -11,12 +11,12 @@ public class Model {
 	 */
 	Model() {
 		TrashFactory t = new TrashFactory();
-
-		entities.add(t.createEasyTrash(400,50));
-		entities.add(t.createHardTrash(300,0));
-		Crab crabby = new Crab(10,10,100,100);
+		
+		entities.add(t.createEasyTrash(400, 50));
+		entities.add(t.createHardTrash(300, 0));
+		Crab crabby = new Crab(10, 10, 100, 100);
 		entities.add(crabby);
-
+		
 	}
 	
 	/**
@@ -39,8 +39,8 @@ public class Model {
 	int getWorldWidth() {
 		return worldWidth;
 	}
-
-	public Player getPlayer(){
+	
+	public Player getPlayer() {
 		return player;
 	}
 }

@@ -41,7 +41,7 @@ abstract class Entity {
 	}
 	
 	public void draw(Graphics g, Rectangle bounds) {
-		g.setColor(Color.pink);
+		g.setColor(Color.MAGENTA);
 		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
 	}
 	
