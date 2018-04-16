@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class View extends JPanel {
 	// define size of game
-	private final static int FRAME_WIDTH = 1600;
-	private final static int FRAME_HEIGHT = 900;
+	private final static int FRAME_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width * 2 / 3;
+	private final static int FRAME_HEIGHT = FRAME_WIDTH * 9 / 16;
 	
 	View() {
 		initJFrame();
