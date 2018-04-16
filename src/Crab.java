@@ -1,6 +1,7 @@
 import java.awt.*;
 
 public class Crab extends Player {
+	int movementIncrement = 5;
 	
 	public Crab(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -13,24 +14,14 @@ public class Crab extends Player {
 	public void processInput(String action) {
 		switch (action) {
 			case "VK_LEFT":
-				move(-5, 0);
+				super.moveRelatively(-movementIncrement, 0);
 				break;
 			case "VK_RIGHT":
-				move(5, 0);
+				super.moveRelatively(movementIncrement, 0);
 				break;
 			case "VK_SPACE":
 				doAction();
 				break;
-		}
-	}
-	
-	@Override
-	public void move(int x, int y) {
-		// TODO
-		if (x > 0) {
-			System.out.println("MOVE RIGHT");
-		} else if (x < 0) {
-			System.out.println("MOVE LEFT");
 		}
 	}
 	
