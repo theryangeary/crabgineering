@@ -20,12 +20,15 @@ public class Model {
 	}
 	
 	/**
-	 * Update the model, i.e. process any entities in the world for things like gravity
+	 * Update the model, i.e.
+	 * process any entities in the world for things like gravity,
+	 * check for collisions super inefficiently
 	 */
 	public void update() {
 		for (Entity entity : entities) {
 			entity.update();
 		}
+		
 	}
 	
 	public ArrayList<Entity> getEntities() {

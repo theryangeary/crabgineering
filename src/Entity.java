@@ -1,11 +1,14 @@
 import java.awt.*;
 
 abstract class Entity {
-	
+	private final int initialWidth = 10;
+	private final int initialHeight = 10;
+	private final int initialX = 10;
+	private final int initialY = 10;
 	private Rectangle bounds;
 	private double xVel;
 	private double yVel;
-	private final double gravity;
+	private final double gravity = .1;
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
@@ -14,7 +17,6 @@ abstract class Entity {
 		bounds = new Rectangle(x, y, width, height);
 		xVel = 0;
 		yVel = 0;
-		gravity = .1;
 		imageReference = "TEST_IMAGE";
 		currentHealth = 10;
 		maxHealth = 10;
@@ -25,7 +27,14 @@ abstract class Entity {
 	}
 	
 	boolean intersects(Entity e) {
-		return this.bounds.intersects(e.bounds);
+		boolean result;
+		if (this.bounds.intersects(e.bounds)) {
+			System.out.printf("%s intersects %s!", this, e);
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
 	}
 	
 	Rectangle getBounds() {
@@ -52,8 +61,8 @@ abstract class Entity {
 	void update() {
 		yVel += gravity;
 		
-		double newX = this.bounds.x + xVel;
-		double newY = this.bounds.y + yVel;
+		double newX = bounds.x + xVel;
+		double newY = bounds.y + yVel;
 		
 		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
 			if (yVel > 0) {
