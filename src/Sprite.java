@@ -7,6 +7,7 @@ public enum Sprite {
     CLAM("clam.png"),
     CRAB("crab.png"),
     SHRIMP("shrimp.png"),
+    TURTLE("turtle.png"),
     TRASH("trash.png");
 
     //should be the same for all Sprites

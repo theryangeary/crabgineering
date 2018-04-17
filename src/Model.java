@@ -1,21 +1,41 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Model {
-	private final int worldHeight = Controller.getView().getHeight();
-	private final int worldWidth = Controller.getView().getWidth();
+	//constants relevant to simulation's physics
+	private final Rectangle worldBounds;
+	private final double gravity = .1;
+
+	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
-	
+	private TrashSpawner spawner;
+	private Player player;
+
+	//game variables
+	private int currentPollutionLevel;
+	private final int maxPollutionLevel = 100;
+
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
-	Model() {
+	Model(Rectangle worldBounds) {
+	    this.worldBounds = worldBounds;
+
+		//Crab crabby = new Crab(10,10,100,100);
+		//entities.add(crabby);
 		TrashFactory t = new TrashFactory();
 
 		entities.add(t.createEasyTrash(400,50));
 		entities.add(t.createHardTrash(300,0));
-		Crab crabby = new Crab(10,10,100,100);
-		entities.add(crabby);
+		player = new Crab(10,10,100,100);
+		entities.add(player);
 
+		spawner = new TrashSpawner(entities,
+				                   0,
+				                   (int) worldBounds.getWidth(),
+				                   2*1000);
+		spawner.start();
+		currentPollutionLevel = 0;
 	}
 	
 	/**
@@ -23,19 +43,29 @@ public class Model {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
-			entity.update();
+			entity.update(worldBounds, gravity);
 		}
 	}
 	
-	public ArrayList<Entity> getEntities() {
+	public ArrayList<Entity> getEntities(){
 		return entities;
 	}
 	
-	int getWorldHeight() {
-		return worldHeight;
+	public Player getPlayer(){
+		return player;
 	}
-	
-	int getWorldWidth() {
-		return worldWidth;
+
+	// returns new pollution level
+	int addToPollutionLevel(int addition) {
+	  this.currentPollutionLevel += addition;
+	  return this.currentPollutionLevel;
+	}
+
+	int getCurrentPollutionLevel() {
+	  return this.currentPollutionLevel;
+	}
+
+	int getMaxPollutionLevel() {
+	  return this.maxPollutionLevel;
 	}
 }

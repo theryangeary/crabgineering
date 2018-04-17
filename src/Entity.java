@@ -5,26 +5,30 @@ abstract class Entity {
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
 	private Rectangle bounds;
-	private double xVel;
-	private double yVel;
-	private final double gravity;
-
-	private final String imageReference;
+	private double dx;
+	private double dy;
+	
+    private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
+
+	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
 		bounds = new Rectangle(x, y, width, height);
-		xVel = 0;
-		yVel = 0;
-		gravity = .1;
+		dx = 0;
+		dy = 0;
 		imageReference = "TEST_IMAGE";
 		currentHealth = 10;
 		maxHealth = 10;
 	}
 	
-	void move(double x, double y) {
-		this.setBounds(new Rectangle((int) x, (int) y, bounds.width, bounds.height));
+	void setLocation(int x, int y) {
+		bounds.setLocation(x, y);
+	}
+
+	void translate(int dx, int dy) {
+		bounds.translate(dx, dy);
 	}
 	
 	boolean intersects(Entity e) {
@@ -45,34 +49,35 @@ abstract class Entity {
 	
 	public void draw(Graphics g, Rectangle bounds) {
 		g.setColor(Color.pink);
-		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+		g.fillRect((int) bounds.getX(), 
+				   (int) bounds.getY(), 
+				   (int) bounds.getWidth(), 
+				   (int) bounds.getHeight());
 	}
 	
 	void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}
 	
-	void update() {
-		yVel += gravity;
-
-		double newX = this.bounds.x + xVel;
-		double newY = this.bounds.y + yVel;
-		Model model = Controller.getModel();
+	void update(Rectangle worldBounds, double gravity) {
+		//apply gravity
+		dy += gravity;
 		
-		if (bounds.y + bounds.height >= model.getWorldHeight() - bounds.getHeight()) {
-			if (yVel > 0) {
-				yVel = 0;
-				newY = model.getWorldHeight() - bounds.height;
-			}
+		double x = this.bounds.getX() + dx;
+		double y = this.bounds.getY() + dy;
+		
+		if (dy > 0
+		    && bounds.getY() + bounds.getHeight() >= worldBounds.getHeight() - bounds.getHeight()) {
+				dy = 0;
+				y = worldBounds.getHeight() - bounds.getHeight();
 		}
 		
-		if (bounds.x + bounds.width >= model.getWorldWidth() - bounds.getWidth()) {
-			if (xVel > 0) {
-				xVel = 0;
-				newX = model.getWorldWidth() - bounds.width;
-			}
+		if (dx > 0
+		    && bounds.getX() + bounds.getWidth() >= worldBounds.getWidth() - bounds.getWidth()) {
+				dx = 0;
+				x = worldBounds.getWidth() - bounds.getWidth();
 		}
 		
-		this.move(newX, newY);
+		setLocation((int) x, (int) y);
 	}
 }
