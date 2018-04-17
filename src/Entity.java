@@ -1,12 +1,10 @@
 import java.awt.*;
 
-
 abstract class Entity {
 	
 	private Rectangle bounds;
 	private double dx;
 	private double dy;
-	private final double gravity;
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
@@ -17,7 +15,6 @@ abstract class Entity {
 		bounds = new Rectangle(x, y, width, height);
 		dx = 0;
 		dy = 0;
-		gravity = .1;
 		imageReference = "TEST_IMAGE";
 		currentHealth = 10;
 		maxHealth = 10;
@@ -55,7 +52,7 @@ abstract class Entity {
 		this.bounds = bounds;
 	}
 	
-	void update(Rectangle worldBounds) {
+	void update(Rectangle worldBounds, double gravity) {
 		//apply gravity
 		dy += gravity;
 		

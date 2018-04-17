@@ -2,14 +2,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Model {
+	//constants relevant to simulation's physics
 	private final Rectangle worldBounds;
+	private final double gravity = .1;
+
+	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
 
-
+	//game variables
 	private int currentPollutionLevel;
 	private final int maxPollutionLevel = 100;
+
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
@@ -25,7 +30,10 @@ public class Model {
 		player = new Crab(10,10,100,100);
 		entities.add(player);
 
-		spawner = new TrashSpawner(entities, 0, worldWidth, 2*1000);
+		spawner = new TrashSpawner(entities,
+				                   0,
+				                   (int) worldBounds.getWidth(),
+				                   2*1000);
 		spawner.start();
 		currentPollutionLevel = 0;
 	}
@@ -35,12 +43,11 @@ public class Model {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
-			entity.update(worldBounds);
+			entity.update(worldBounds, gravity);
 		}
 	}
 	
-	public ArrayList<Entity> getEntities() {
-		return entities;
+	public ArrayList<Entity> getEntitentities;
 	}
 	
 	int getWorldHeight() {
@@ -69,3 +76,5 @@ public class Model {
 	  return this.maxPollutionLevel;
 	}
 }
+	ies() {
+		return
