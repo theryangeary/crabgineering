@@ -9,6 +9,8 @@ abstract class Entity {
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
+
+	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
 		bounds = new Rectangle(x, y, width, height);

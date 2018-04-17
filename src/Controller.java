@@ -7,6 +7,7 @@ public class Controller {
 	
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
+	private static GameKeyBindings keyBindings;
 	private Timer updater;
 	private static double FRAMERATE = 144;
 	
@@ -25,9 +26,7 @@ public class Controller {
 	Controller() {
 		view = new View();
 		model = new Model();
-
-		KeyListener keyListener = new PlayerKeyListener();
-		view.addKeyListener(keyListener);
+		keyBindings = new GameKeyBindings(view, model); // Sets the key bindings for the game
 		initTimer();
 	}
 	
@@ -46,6 +45,7 @@ public class Controller {
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);
+		//updater.setDelay();
 	}
 	
 	/**
