@@ -30,7 +30,7 @@ public class View extends JPanel {
 		super.paintComponent(g);
 		
 		for (Entity entity : Controller.getModel().getEntities()) {
-			entity.draw(g, entity.getBounds());
+			entity.draw(g);
 		}
 		
 		g.setColor(Color.black);

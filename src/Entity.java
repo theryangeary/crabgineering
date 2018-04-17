@@ -47,7 +47,7 @@ abstract class Entity {
 		return maxHealth;
 	}
 	
-	public void draw(Graphics g, Rectangle bounds) {
+	public void draw(Graphics g) {
 		g.setColor(Color.pink);
 		g.fillRect((int) bounds.getX(), 
 				   (int) bounds.getY(), 
