@@ -19,6 +19,11 @@ public class Crab extends Player {
 
 	}
 
+	@Override
+	protected void initSprite(){
+	    setSprite(Sprite.CRAB);
+    }
+
 	public void doAction(){
 		//TODO
 		System.out.println("SUPER SPECIAL ABILITY");
