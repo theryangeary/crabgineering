@@ -47,17 +47,10 @@ public class Model {
 		}
 	}
 	
-	public ArrayList<Entity> getEntitentities;
+	public ArrayList<Entity> getEntities(){
+		return entities;
 	}
 	
-	int getWorldHeight() {
-		return worldHeight;
-	}
-	
-	int getWorldWidth() {
-		return worldWidth;
-	}
-
 	public Player getPlayer(){
 		return player;
 	}
@@ -76,5 +69,3 @@ public class Model {
 	  return this.maxPollutionLevel;
 	}
 }
-	ies() {
-		return
