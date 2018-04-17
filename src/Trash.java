@@ -7,6 +7,11 @@ public class Trash extends Entity {
         this.pollutionCount = pollutionCount;
     }
 
+    @Override
+    protected void initSprite(){
+        setSprite(Sprite.TRASH);
+    }
+
     public int getPollutionCount(){
         return pollutionCount;
     }
