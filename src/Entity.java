@@ -8,7 +8,7 @@ abstract class Entity {
 	private final String imageReference;
 	private int currentHealth;
 	private final int maxHealth;
-
+	
 	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
@@ -62,19 +62,29 @@ abstract class Entity {
 		
 		double x = this.bounds.getX() + dx;
 		double y = this.bounds.getY() + dy;
-		
+
 		if (dy > 0
-		    && bounds.getY() + bounds.getHeight() >= worldBounds.getHeight() - bounds.getHeight()) {
-				dy = 0;
-				y = worldBounds.getHeight() - bounds.getHeight();
+				&& bounds.getY() + bounds.getHeight() >= worldBounds.getHeight() - bounds.getHeight()) {
+			dy = 0;
+			y = worldBounds.getHeight() - bounds.getHeight();
 		}
-		
+
 		if (dx > 0
-		    && bounds.getX() + bounds.getWidth() >= worldBounds.getWidth() - bounds.getWidth()) {
-				dx = 0;
-				x = worldBounds.getWidth() - bounds.getWidth();
+				&& bounds.getX() + bounds.getWidth() >= worldBounds.getWidth() - bounds.getWidth()) {
+			dx = 0;
+			x = worldBounds.getWidth() - bounds.getWidth();
 		}
 		
 		setLocation((int) x, (int) y);
+	}
+	
+	// Returns true if the entity is outside of the horizontal bounds
+	boolean checkXBounds(Rectangle worldBounds) {
+		return !worldBounds.contains(bounds.getMinX(), bounds.getCenterY()) || !worldBounds.contains(bounds.getMaxX(), bounds.getCenterY());
+	}
+	
+	// Returns true if the entity is outside of the vertical bounds
+	boolean checkYBounds(Rectangle worldBounds) {
+		return !worldBounds.contains(bounds.getCenterX(), bounds.getMinY()) || !worldBounds.contains(bounds.getCenterX(), bounds.getMaxY());
 	}
 }
