@@ -1,5 +1,6 @@
 import java.awt.*;
 
+
 abstract class Entity {
 	
 	private Rectangle bounds;
