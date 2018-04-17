@@ -3,8 +3,8 @@ import java.awt.*;
 abstract class Entity {
 	
 	private Rectangle bounds;
-	private double xVel;
-	private double yVel;
+	private double dx;
+	private double dy;
 	private final double gravity;
 	private final String imageReference;
 	private int currentHealth;
@@ -14,16 +14,16 @@ abstract class Entity {
 	
 	Entity(int x, int y, int width, int height) {
 		bounds = new Rectangle(x, y, width, height);
-		xVel = 0;
-		yVel = 0;
+		dx = 0;
+		dy = 0;
 		gravity = .1;
 		imageReference = "TEST_IMAGE";
 		currentHealth = 10;
 		maxHealth = 10;
 	}
 	
-	void move(double x, double y) {
-		this.setBounds(new Rectangle((int) x, (int) y, bounds.width, bounds.height));
+	void setLocation(int x, int y) {
+		bounds.setLocation(x, y);
 	}
 	
 	boolean intersects(Entity e) {
@@ -44,33 +44,35 @@ abstract class Entity {
 	
 	public void draw(Graphics g, Rectangle bounds) {
 		g.setColor(Color.pink);
-		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+		g.fillRect((int) bounds.getX(), 
+				   (int) bounds.getY(), 
+				   (int) bounds.getWidth(), 
+				   (int) bounds.getHeight());
 	}
 	
 	void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}
 	
-	void update() {
-		yVel += gravity;
+	void update(Rectangle worldBounds) {
+		//apply gravity
+		dy += gravity;
 		
-		double newX = this.bounds.x + xVel;
-		double newY = this.bounds.y + yVel;
+		double x = this.bounds.getX() + dx;
+		double y = this.bounds.getY() + dy;
 		
-		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
-			if (yVel > 0) {
-				yVel = 0;
-				newY = Controller.getModel().getWorldHeight() - bounds.height;
-			}
+		if (dy > 0
+		    && bounds.getY() + bounds.getHeight() >= worldBounds.getHeight() - bounds.getHeight()) {
+				dy = 0;
+				y = worldBounds.getHeight() - bounds.getHeight();
 		}
 		
-		if (bounds.x + bounds.width >= Controller.getModel().getWorldWidth() - bounds.getWidth()) {
-			if (xVel > 0) {
-				xVel = 0;
-				newX = Controller.getModel().getWorldWidth() - bounds.width;
-			}
+		if (dx > 0
+		    && bounds.getX() + bounds.getWidth() >= worldBounds.getWidth() - bounds.getWidth()) {
+				dx = 0;
+				x = worldBounds.getWidth() - bounds.getWidth();
 		}
 		
-		this.move(newX, newY);
+		setLocation((int) x, (int) y);
 	}
 }

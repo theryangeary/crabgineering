@@ -1,8 +1,8 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Model {
-	private final int worldHeight = Controller.getView().getHeight();
-	private final int worldWidth = Controller.getView().getWidth();
+	private final Rectangle worldBounds;
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
@@ -13,7 +13,9 @@ public class Model {
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
-	Model() {
+	Model(Rectangle worldBounds) {
+	    this.worldBounds = worldBounds;
+
 		//Crab crabby = new Crab(10,10,100,100);
 		//entities.add(crabby);
 		TrashFactory t = new TrashFactory();
@@ -33,7 +35,7 @@ public class Model {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
-			entity.update();
+			entity.update(worldBounds);
 		}
 	}
 	
