@@ -23,6 +23,10 @@ abstract class Entity {
 	void setLocation(int x, int y) {
 		bounds.setLocation(x, y);
 	}
+
+	void translate(int dx, int dy) {
+		bounds.translate(dx, dy);
+	}
 	
 	boolean intersects(Entity e) {
 		return this.bounds.intersects(e.bounds);

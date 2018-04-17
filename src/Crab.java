@@ -11,9 +11,9 @@ public class Crab extends Player {
 	@Override
 	public void processInput(String action) {
 		switch(action){
-		case "VK_LEFT": move(this.getBounds().x - 5, this.getBounds().y);
+		case "VK_LEFT": translate(- 5, 0);
 		break;
-		case "VK_RIGHT": move(this.getBounds().x + 5, this.getBounds().y);
+		case "VK_RIGHT": translate(5, 0);
 		break;
 		case "VK_SPACE": doAction();
 		break;
