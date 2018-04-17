@@ -1,8 +1,6 @@
-import java.awt.*;
-
 public class Crab extends Player {
 	
-	public static final int SPEED = 5;
+	private static final int SPEED = 5;
 
 	public Crab(int x, int y, int width, int height) {
 		super(x,y,width,height);
@@ -10,17 +8,16 @@ public class Crab extends Player {
 
 	@Override
 	public void processInput(String action) {
-		switch(action){
-		case "VK_LEFT": translate(-SPEED, 0);
+		switch(PlayerAction.valueOf(action)){
+			case MOVE_LEFT: translate(-SPEED, 0);
 		break;
-		case "VK_RIGHT": translate(SPEED, 0);
+			case MOVE_RIGHT: translate(SPEED, 0);
 		break;
-		case "VK_SPACE": doAction();
+			case SPECIAL_ACTION: doAction();
 		break;
 		}
 
 	}
-
 
 	public void doAction(){
 		//TODO
