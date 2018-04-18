@@ -24,8 +24,8 @@ public class Controller {
 	 */
 	Controller() {
 		view = new View();
-		model = new Model();
-		keyBindings = new GameKeyBindings(view, model); // Sets the key bindings for the game
+		model = new Model(view.getBounds());
+		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 		initTimer();
 	}
 	
@@ -44,6 +44,7 @@ public class Controller {
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);
+		//updater.setDelay();
 	}
 	
 	/**

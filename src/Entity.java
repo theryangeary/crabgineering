@@ -1,104 +1,92 @@
 import java.awt.*;
 
 abstract class Entity {
-	private final int initialWidth = 10;
-	private final int initialHeight = 10;
-	private final int initialX = 10;
-	private final int initialY = 10;
+
+	//note: x counts pixels left of the left-hand side of the window
+	//      y counts pixels down from the top of the window
 	private Rectangle bounds;
-	private double xVel;
-	private double yVel;
-	private final double gravity = .1;
-	private final String imageReference;
+	private double dx;
+	private double dy;
+	
+    private Sprite sprite;
 	private int currentHealth;
 	private final int maxHealth;
+
+	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
 		bounds = new Rectangle(x, y, width, height);
-		xVel = 0;
-		yVel = 0;
-		imageReference = "TEST_IMAGE";
+		dx = 0;
+		dy = 0;
 		currentHealth = 10;
 		maxHealth = 10;
+		initSprite();
 	}
-	
-	//TODO: the two movement methods are kind of redundant, we should maybe fix that
-	
-	/**
-	 * Given an x and a y, move directly to that position on the screen
-	 *
-	 * @param x
-	 * @param y
-	 */
-	private void moveDirectly(double x, double y) {
-		this.setBounds(new Rectangle((int) x, (int) y, bounds.width, bounds.height));
+
+	abstract void initSprite();
+
+	protected void setSprite(Sprite sprite){
+		this.sprite = sprite;
 	}
-	
-	boolean intersects(Entity e) {
-		boolean result;
-		if (this.bounds.intersects(e.bounds)) {
-			System.out.printf("%s intersects %s!", this, e);
-			result = true;
-		} else {
-			result = false;
-		}
-		return result;
-	}
-	
+
+	//Rectangle wrapper functions
 	Rectangle getBounds() {
 		return bounds;
 	}
-	
+
+	void setLocation(int x, int y) {
+		bounds.setLocation(x, y);
+	}
+
+	void translate(int dx, int dy) {
+		bounds.translate(dx, dy);
+	}
+
+	boolean intersects(Entity e) {
+		return this.bounds.intersects(e.bounds);
+	}
+
 	int getCurrentHealth() {
 		return currentHealth;
 	}
-	
+
 	int getMaxHealth() {
 		return maxHealth;
 	}
-	
-	public void draw(Graphics g, Rectangle bounds) {
-		g.setColor(Color.MAGENTA);
-		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+
+	public void draw(Graphics g) {
+		g.drawImage(sprite.getImage(),
+				    (int) bounds.getX(),
+				    (int) bounds.getY(),
+					//a BufferedImage won't change while
+					//the image is being loaded, so null
+				    //will work for our observer
+					null);
 	}
-	
+
 	void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}
-	
-	void update() {
-		yVel += gravity;
-		//TODO: xVel is always the same which is kind of unnatural, there needs to be some sort of drag that kills it over time
-		
-		double newX = bounds.x + xVel;
-		double newY = bounds.y + yVel;
-		
-		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
-			if (yVel > 0) {
-				yVel = 0;
-				newY = Controller.getModel().getWorldHeight() - bounds.height;
-			}
+
+	void update(Rectangle worldBounds, double gravity) {
+		//apply gravity
+		dy += gravity;
+
+		double x = this.bounds.getX() + dx;
+		double y = this.bounds.getY() + dy;
+
+		if (dy > 0
+		    && bounds.getY() + bounds.getHeight() >= worldBounds.getHeight() - bounds.getHeight()) {
+				dy = 0;
+				y = worldBounds.getHeight() - bounds.getHeight();
+		}
+
+		if (dx > 0
+		    && bounds.getX() + bounds.getWidth() >= worldBounds.getWidth() - bounds.getWidth()) {
+				dx = 0;
+				x = worldBounds.getWidth() - bounds.getWidth();
 		}
 		
-		// TODO: Collision with the outer left/right wall is broken
-		if (bounds.x + bounds.width >= Controller.getModel().getWorldWidth() - bounds.getWidth()) {
-			if (xVel > 0) {
-				xVel = 0;
-				newX = Controller.getModel().getWorldWidth() - bounds.width;
-			}
-		}
-		
-		this.moveDirectly(newX, newY);
-	}
-	
-	/**
-	 * Add to velocity in order to move the entity
-	 *
-	 * @param xVel
-	 * @param yVel
-	 */
-	void push(double xVel, double yVel) {
-		this.xVel += xVel;
-		this.yVel += yVel;
+		setLocation((int) x, (int) y);
 	}
 }

@@ -1,15 +1,17 @@
 abstract class Player extends Entity {
-//
-//	int initialWidth = 20;
-//
-//	@Override
-//	private int getInitialWidth() {
-//		return initialWidth;
-//	}
-	
-	Player(int x, int y, int width, int height) {
-		super(x, y, width, height);
+
+	public enum PlayerAction{
+		MOVE_LEFT,
+		MOVE_RIGHT,
+		SPECIAL_ACTION;
 	}
-	
+
+	Player(int x, int y, int width, int height){
+		super(x,y,width,height);
+	}
 	abstract public void processInput(String action);
+	
+	 public void setLocation(int x, int y) {
+		 super.setLocation(x, y);
+	 }
 }
