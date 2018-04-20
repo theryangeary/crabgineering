@@ -45,6 +45,16 @@ public class Model {
 		for (Entity entity : entities) {
 			entity.update(worldBounds, gravity);
 		}
+		
+		//Check for player-trash collision
+		for (Entity entity : entities) {
+			if (entity instanceof Trash) {
+				if (player.intersects(entity)) {
+					player.touchTrash((Trash) entity);
+				}
+			}
+		}
+		
 	}
 	
 	public ArrayList<Entity> getEntities(){
