@@ -1,6 +1,6 @@
 public class Crab extends Player {
 	
-	private static final int SPEED = 5;
+	private static final int SPEED = 10;
 
 	public Crab(int x, int y, int width, int height) {
 		super(x,y,width,height);
