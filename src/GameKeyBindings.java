@@ -25,18 +25,26 @@ public class GameKeyBindings {
 
 		//map KeyStrokes to player actions
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0),
-				     Player.PlayerAction.MOVE_LEFT);
+				Player.PlayerAction.MOVE_LEFT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0),
-				     Player.PlayerAction.MOVE_RIGHT);
+				Player.PlayerAction.MOVE_RIGHT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),
-				     Player.PlayerAction.SPECIAL_ACTION);
+				Player.PlayerAction.SPECIAL_ACTION);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0),
+				Player.PlayerAction.ROTATE_TRASH_LEFT);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
+				Player.PlayerAction.ROTATE_TRASH_RIGHT);
 
 		actionMap.put(Player.PlayerAction.MOVE_LEFT,
-				      new KeyAction(Player.PlayerAction.MOVE_LEFT.name(), player));
+				new KeyAction(Player.PlayerAction.MOVE_LEFT.name(), player));
 		actionMap.put(Player.PlayerAction.MOVE_RIGHT,
-				      new KeyAction(Player.PlayerAction.MOVE_RIGHT.name(), player));
+				new KeyAction(Player.PlayerAction.MOVE_RIGHT.name(), player));
 		actionMap.put(Player.PlayerAction.SPECIAL_ACTION,
-					  new KeyAction(Player.PlayerAction.SPECIAL_ACTION.name(), player));
+				new KeyAction(Player.PlayerAction.SPECIAL_ACTION.name(), player));
+		actionMap.put(Player.PlayerAction.ROTATE_TRASH_LEFT,
+				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
+		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
+				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
 	}
 	
 	private class KeyAction extends AbstractAction {

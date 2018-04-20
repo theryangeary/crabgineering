@@ -11,18 +11,28 @@ public class Crab extends Player {
 	@Override
 	public void processInput(String action) {
 		switch(PlayerAction.valueOf(action)){
-			case MOVE_LEFT: translate(-SPEED, 0);
+		case MOVE_LEFT: translate(-SPEED, 0);
 			if (hasTrash) {
 				heldTrash.translate(-SPEED, 0);
 			}
-		break;
-			case MOVE_RIGHT: translate(SPEED, 0);
+			break;
+		case MOVE_RIGHT: translate(SPEED, 0);
 			if (hasTrash) {
 				heldTrash.translate(SPEED, 0);
 			}
-		break;
-			case SPECIAL_ACTION: doAction();
-		break;
+			break;
+		case SPECIAL_ACTION: doAction();
+			break;
+		case ROTATE_TRASH_LEFT: 
+			if (hasTrash) {
+				heldTrash.rotateLeft();
+			}
+			break;
+		case ROTATE_TRASH_RIGHT:
+			if (hasTrash) {
+				heldTrash.rotateRight();
+			}
+			break;
 		}
 
 	}
@@ -39,6 +49,7 @@ public class Crab extends Player {
 			heldTrash.toggleStop();
 			heldTrash = null;
 			hasTrash = false;
+			// REMOVE TRAJECTORY ARROW
 		}
 	}
 	
@@ -47,6 +58,7 @@ public class Crab extends Player {
 			hasTrash = true;
 			t.toggleStop();
 			heldTrash = t;
+			// SHOW TRAJECTORY ARROW
 		}
 	}
 

@@ -4,6 +4,8 @@ public class Trash extends Entity {
     
     private boolean thrown = false;
     private final int THROWSPEED = -25;
+    private int xThrow = 0;
+    private int yThrow = THROWSPEED;
 
     Trash(int x, int y, int width, int height, int pollutionCount){
         super(x,y,width,height);
@@ -21,11 +23,19 @@ public class Trash extends Entity {
     
     public void throwTrash() {
     	thrown = true;
-    	setSpeed(0, THROWSPEED);
+    	setSpeed(xThrow, yThrow);
     }
     
     public boolean thrown() {
     	return thrown;
+    }
+    
+    public void rotateLeft() {
+    	// ROTATE TRJACTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
+    }
+    
+    public void rotateRight() {
+    	// ROTATE TRJACTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
     }
     
 }
