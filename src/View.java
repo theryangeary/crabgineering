@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
+import static java.awt.Toolkit.getDefaultToolkit;
+
 public class View extends JPanel {
 	// define size of game
 	private final static int frameWidth = 1000;
@@ -21,7 +23,8 @@ public class View extends JPanel {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(frameWidth, frameHeight);
+		//frame.setSize(frameWidth, frameHeight);
+		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setVisible(true);
 	}
