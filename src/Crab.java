@@ -3,6 +3,13 @@ public class Crab extends Player {
 	private static final int SPEED = 10;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
+	
+	private Sprite arrow; // Image of the trajectory arrow
+	private boolean arrowVisible = false;
+	private final int THROWSPEED = -25;
+	private final int ROTATESPEED = 10;
+    private int xThrow = 0;
+    private int yThrow = THROWSPEED;
 
 	public Crab(int x, int y, int width, int height) {
 		super(x,y,width,height);
@@ -25,12 +32,12 @@ public class Crab extends Player {
 			break;
 		case ROTATE_TRASH_LEFT: 
 			if (hasTrash) {
-				heldTrash.rotateLeft();
+				rotateArrow(-ROTATESPEED);
 			}
 			break;
 		case ROTATE_TRASH_RIGHT:
 			if (hasTrash) {
-				heldTrash.rotateRight();
+				rotateArrow(ROTATESPEED);
 			}
 			break;
 		}
@@ -45,21 +52,30 @@ public class Crab extends Player {
 	public void doAction(){
 		if (hasTrash) {
 			// Fire trash
-			heldTrash.throwTrash();
+			heldTrash.throwTrash(xThrow, yThrow);
 			heldTrash.toggleStop();
 			heldTrash = null;
 			hasTrash = false;
-			// REMOVE TRAJECTORY ARROW
+			arrowVisible = false;
 		}
 	}
 	
 	public void touchTrash(Trash t) {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
 			hasTrash = true;
+			arrowVisible = true;
 			t.toggleStop();
 			heldTrash = t;
-			// SHOW TRAJECTORY ARROW
 		}
+	}
+	
+	  public void rotateArrow(int rotation) {
+	    	// ROTATE TRJACTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
+	    }
+	    
+	
+	public boolean arrowVisible() {
+		return arrowVisible;
 	}
 
 }
