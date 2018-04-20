@@ -22,6 +22,7 @@ public class View extends JPanel {
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(frameWidth, frameHeight);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setVisible(true);
 	}
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Model {
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds;
-	private final double gravity = .1;
+	private final double gravity = .05;
 
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
@@ -45,6 +45,16 @@ public class Model {
 		for (Entity entity : entities) {
 			entity.update(worldBounds, gravity);
 		}
+		
+		//Check for player-trash collision
+		for (Entity entity : entities) {
+			if (entity instanceof Trash) {
+				if (player.intersects(entity)) {
+					player.touchTrash((Trash) entity);
+				}
+			}
+		}
+		
 	}
 	
 	public ArrayList<Entity> getEntities(){
@@ -67,5 +77,9 @@ public class Model {
 
 	int getMaxPollutionLevel() {
 	  return this.maxPollutionLevel;
+	}
+	
+	Rectangle getWorldBounds() {
+		return worldBounds;
 	}
 }
