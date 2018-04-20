@@ -8,7 +8,8 @@ public enum Sprite {
     CRAB("crab.png"),
     SHRIMP("shrimp.png"),
     TURTLE("turtle.png"),
-    TRASH("trash.png");
+    TRASH("trash.png"),
+	ARROW("arrow.png");
 
     //should be the same for all Sprites
     final static String IMAGE_DIR = "resources/images/";
