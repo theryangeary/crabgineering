@@ -39,7 +39,25 @@ abstract class Entity {
 	}
 
 	void translate(int dx, int dy) {
-		bounds.translate(dx, dy);
+		int x = dx;
+		int y = dy;
+		Rectangle worldBounds = Controller.getModel().getWorldBounds();
+		
+		// Bounds check
+		if (leftBound(worldBounds) && x < 0) {
+			x = 0;
+		}
+		if (rightBound(worldBounds) && x > 0) {
+			x = 0;
+		}
+		if (topBound(worldBounds) && y < 0) {
+			y = 0;
+		}
+		if (bottomBound(worldBounds) && y > 0) {
+			y = 0;
+		}
+		
+		bounds.translate(x, y);
 	}
 
 	boolean intersects(Entity e) {
@@ -71,22 +89,25 @@ abstract class Entity {
 	void update(Rectangle worldBounds, double gravity) {
 		//apply gravity
 		dy += gravity;
-
-		double x = this.bounds.getX() + dx;
-		double y = this.bounds.getY() + dy;
-
-		if (dy > 0
-		    && bounds.getY() + bounds.getHeight() >= worldBounds.getHeight() - bounds.getHeight()) {
-				dy = 0;
-				y = worldBounds.getHeight() - bounds.getHeight();
-		}
-
-		if (dx > 0
-		    && bounds.getX() + bounds.getWidth() >= worldBounds.getWidth() - bounds.getWidth()) {
-				dx = 0;
-				x = worldBounds.getWidth() - bounds.getWidth();
-		}
 		
-		setLocation((int) x, (int) y);
+		translate((int) dx, (int) dy);
+	}
+	
+	
+	// The Bound functions return true if the Entity is at the specified bounds
+	boolean leftBound(Rectangle worldBounds) {
+		return !worldBounds.contains(bounds.getMinX(), bounds.getCenterY());
+	}
+	
+	boolean rightBound(Rectangle worldBounds) {
+		return !worldBounds.contains(bounds.getMaxX(), bounds.getCenterY());
+	}
+	
+	boolean topBound(Rectangle worldBounds) {
+		return !worldBounds.contains(bounds.getCenterX(), bounds.getMinY());
+	}
+	
+	boolean bottomBound(Rectangle worldBounds) {
+		return !worldBounds.contains(bounds.getCenterX(), bounds.getMaxY());
 	}
 }
