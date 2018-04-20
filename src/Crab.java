@@ -11,18 +11,21 @@ public class Crab extends Player {
 	@Override
 	public void processInput(String action) {
 		switch(PlayerAction.valueOf(action)){
-			case MOVE_LEFT: translate(-SPEED, 0);
-			if (hasTrash) {
-				heldTrash.translate(-SPEED, 0);
-			}
-		break;
-			case MOVE_RIGHT: translate(SPEED, 0);
-			if (hasTrash) {
-				heldTrash.translate(SPEED, 0);
-			}
-		break;
-			case SPECIAL_ACTION: doAction();
-		break;
+			case MOVE_LEFT:
+				translate(-SPEED, 0);
+                if (hasTrash) {
+                    heldTrash.translate(-SPEED, 0);
+                }
+                break;
+			case MOVE_RIGHT:
+				translate(SPEED, 0);
+                if (hasTrash) {
+                    heldTrash.translate(SPEED, 0);
+                }
+            	break;
+			case SPECIAL_ACTION:
+				doAction();
+				break;
 		}
 
 	}
