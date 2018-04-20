@@ -13,8 +13,4 @@ abstract class Player extends Entity {
 	abstract public void processInput(String action);
 	
 	abstract public void touchTrash(Trash t);
-	
-	 public void setLocation(int x, int y) {
-		 super.setLocation(x, y);
-	 }
 }
