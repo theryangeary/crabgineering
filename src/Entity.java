@@ -110,12 +110,8 @@ abstract class Entity {
 		}
 	}
 
-	void toggleStop() {
-		if (stopped) {
-			stopped = false;
-		} else {
-			stopped = true;
-		}
+	void toggleStopped() {
+		stopped = !stopped;
 	}
 	
 	

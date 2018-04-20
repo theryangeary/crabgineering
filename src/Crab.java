@@ -39,7 +39,7 @@ public class Crab extends Player {
 		if (hasTrash) {
 			// Fire trash
 			heldTrash.throwTrash();
-			heldTrash.toggleStop();
+			heldTrash.toggleStopped();
 			heldTrash = null;
 			hasTrash = false;
 		}
@@ -48,7 +48,7 @@ public class Crab extends Player {
 	public void touchTrash(Trash t) {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
 			hasTrash = true;
-			t.toggleStop();
+			t.toggleStopped();
 			heldTrash = t;
 		}
 	}
