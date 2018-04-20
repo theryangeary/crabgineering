@@ -11,7 +11,10 @@ abstract class Entity {
     private Sprite sprite;
 	private int currentHealth;
 	private final int maxHealth;
+	private boolean atBottom = false;
+	private boolean stopped = false;
 
+	
 	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
@@ -37,6 +40,11 @@ abstract class Entity {
 	void setLocation(int x, int y) {
 		bounds.setLocation(x, y);
 	}
+	
+	void setSpeed(int dx, int dy) {
+		this.dx = dx;
+		this.dy = dy;
+	}
 
 	void translate(int dx, int dy) {
 		int x = dx;
@@ -55,6 +63,7 @@ abstract class Entity {
 		}
 		if (bottomBound(worldBounds) && y > 0) {
 			y = 0;
+			atBottom = true;
 		}
 		
 		bounds.translate(x, y);
@@ -70,6 +79,10 @@ abstract class Entity {
 
 	int getMaxHealth() {
 		return maxHealth;
+	}
+	
+	boolean atBottom() {
+		return atBottom;
 	}
 
 	public void draw(Graphics g) {
@@ -88,9 +101,19 @@ abstract class Entity {
 
 	void update(Rectangle worldBounds, double gravity) {
 		//apply gravity
-		dy += gravity;
-		
-		translate((int) dx, (int) dy);
+		if (!stopped) {
+			dy += gravity;
+
+			translate((int) dx, (int) dy);
+		}
+	}
+
+	void toggleStop() {
+		if (stopped) {
+			stopped = false;
+		} else {
+			stopped = true;
+		}
 	}
 	
 	
