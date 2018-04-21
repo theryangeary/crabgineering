@@ -17,6 +17,8 @@ public class View extends JPanel {
 	
 	int score = 0;
 	int pollution = 0;
+	
+	private JFrame frame;
 
 	private ArrayList<Sprite> sprites;
 
@@ -54,7 +56,7 @@ public class View extends JPanel {
 	}
 	
 	private void initJFrame() {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,5 +109,9 @@ public class View extends JPanel {
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 			g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
 		}
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
 	}
 }
