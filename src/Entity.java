@@ -4,9 +4,11 @@ abstract class Entity {
 
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
-	private Rectangle bounds;
+	private final Rectangle bounds; //should ALWAYS == the bounds of the corresponding Sprite
 	private double dx;
 	private double dy;
+
+	private Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding model
 	
     private Sprite sprite;
 	private int currentHealth;
@@ -28,8 +30,12 @@ abstract class Entity {
 
 	abstract void initSprite();
 
-	protected void setSprite(Sprite sprite){
+	void setSprite(Sprite sprite){
 		this.sprite = sprite;
+	}
+
+	void setWorldBounds(Rectangle worldBounds) {
+		this.worldBounds = worldBounds;
 	}
 
 	//Rectangle wrapper functions
@@ -44,19 +50,18 @@ abstract class Entity {
 	void translate(int dx, int dy) {
 		int x = dx;
 		int y = dy;
-		Rectangle worldBounds = Controller.getModel().getWorldBounds();
 
 		// Bounds check
-		if (leftBound(worldBounds) && x < 0) {
+		if (leftBound() && x < 0) {
 			x = 0;
 		}
-		if (rightBound(worldBounds) && x > 0) {
+		if (rightBound() && x > 0) {
 			x = 0;
 		}
-		if (topBound(worldBounds) && y < 0) {
+		if (topBound() && y < 0) {
 			y = 0;
 		}
-		if (bottomBound(worldBounds) && y > 0) {
+		if (bottomBound() && y > 0) {
 			y = 0;
 			atBottom = true;
 		}
@@ -90,7 +95,7 @@ abstract class Entity {
 		sprite.draw(g);
 	}
 
-	void update(Rectangle worldBounds, double gravity) {
+	void update(double gravity) {
 		//apply gravity
 		if (!stopped) {
 			dy += gravity;
@@ -105,19 +110,19 @@ abstract class Entity {
 	
 	
 	// The Bound functions return true if the Entity is at the specified bounds
-	boolean leftBound(Rectangle worldBounds) {
+	boolean leftBound() {
 		return !worldBounds.contains(bounds.getMinX(), bounds.getCenterY());
 	}
 	
-	boolean rightBound(Rectangle worldBounds) {
+	boolean rightBound() {
 		return !worldBounds.contains(bounds.getMaxX(), bounds.getCenterY());
 	}
 	
-	boolean topBound(Rectangle worldBounds) {
+	boolean topBound() {
 		return !worldBounds.contains(bounds.getCenterX(), bounds.getMinY());
 	}
 	
-	boolean bottomBound(Rectangle worldBounds) {
+	boolean bottomBound() {
 		return !worldBounds.contains(bounds.getCenterX(), bounds.getMaxY());
 	}
 }

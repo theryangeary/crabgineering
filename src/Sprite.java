@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 
 public class Sprite {
     private final SpriteImage spriteImage;
-    private Rectangle bounds;
+    private final Rectangle bounds; //should ALWAYS == the bounds of the corresponding Sprite
 
     Sprite(SpriteImage spriteImage, Rectangle bounds) {
         this.spriteImage = spriteImage;

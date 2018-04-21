@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Model {
 	//constants relevant to simulation's physics
-	private final Rectangle worldBounds;
+	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
 	private final double gravity = .05;
 
 	//objects in simulation
@@ -43,7 +43,7 @@ public class Model {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
-			entity.update(worldBounds, gravity);
+			entity.update(gravity);
 		}
 		
 		//Check for player-trash collision
@@ -58,6 +58,7 @@ public class Model {
 	}
 
 	public void addEntity(Entity e) {
+		e.setWorldBounds(worldBounds);
 	    entities.add(e);
     }
 

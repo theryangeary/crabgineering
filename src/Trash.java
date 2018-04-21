@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Trash extends Entity {
 
     private int pollutionCount;
@@ -6,7 +8,7 @@ public class Trash extends Entity {
     private final int THROWSPEED = -25;
 
     Trash(int x, int y, int width, int height, int pollutionCount){
-        super(x,y,width,height);
+        super(x, y, width, height);
         //System.out.println(String.format(
         //        "Trash: width=%d height=%d",
         //        width, height));
