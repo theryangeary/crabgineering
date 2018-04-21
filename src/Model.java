@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Model {
 	//listeners
@@ -15,10 +16,14 @@ public class Model {
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
+	private ArrayList<Trash> thrownTrash = new ArrayList<>();
+	private ArrayList<Trash> toRemove = new ArrayList<>();
 	
 	//game variables
-	private int currentPollutionLevel;
-	private final int maxPollutionLevel = 100;
+	private int currentPollutionLevel = 0;
+	private final int MAXPOLLUTIONLEVEL = 100;
+	private final int SCOREINCREMENT = 10;
+	private int score = 0;
 	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
@@ -34,8 +39,8 @@ public class Model {
 		//addEntity(crabby);
 		TrashFactory t = new TrashFactory();
 
-		addEntity(t.createEasyTrash(400,50));
-		addEntity(t.createHardTrash(300,0));
+		//addEntity(t.createEasyTrash(400,50));
+		//addEntity(t.createHardTrash(300,0));
 
 		int crabInitialX = 10;
 		int crabInitialY = 10;
@@ -60,15 +65,49 @@ public class Model {
 			entity.update(GRAVITY, DRAG);
 		}
 		
-		//Check for player-trash collision
+		//Check for player-trash collision and trash-trash collision
 		for (Entity entity : entities) {
 			if (entity instanceof Trash) {
-				if (player.intersects(entity)) {
-					player.touchTrash((Trash) entity);
+				Trash trash = (Trash) entity;
+				if (player.intersects(trash)) {
+					player.touchTrash((Trash) trash);
+				}
+
+				for (Trash tt : thrownTrash) {
+					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
+						toRemove.add(trash);
+						toRemove.add(tt);
+						incrementScore(3);
+					}
 				}
 			}
 		}
 		
+		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
+		for (Trash t : toRemove) {
+			removeEntity(t);
+			thrownTrash.remove(t);
+		}
+		toRemove.clear();
+		
+		// Check end game
+		if (currentPollutionLevel == MAXPOLLUTIONLEVEL) {
+			endGame();
+		}
+		
+	}
+	
+	void endGame() {
+		//TODO
+		
+	}
+	
+	public void incrementScore(int modifier) {
+		score += SCOREINCREMENT * modifier;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 
 	public void addEntity(Entity entity) {
@@ -90,6 +129,14 @@ public class Model {
 		return player;
 	}
 	
+	public ArrayList<Trash> getThrownTrash(){
+		return thrownTrash;
+	}
+	
+	public ArrayList<Trash> toRemove(){
+		return toRemove;
+	}
+	
 	// returns new pollution level
 	int addToPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
@@ -101,7 +148,7 @@ public class Model {
 	}
 	
 	int getMaxPollutionLevel() {
-		return this.maxPollutionLevel;
+		return this.MAXPOLLUTIONLEVEL;
 	}
 	
 	Rectangle getWorldBounds() {
