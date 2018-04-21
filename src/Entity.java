@@ -90,10 +90,6 @@ abstract class Entity {
 		sprite.draw(g);
 	}
 
-	void setBounds(Rectangle bounds) {
-		this.bounds = bounds;
-	}
-
 	void update(Rectangle worldBounds, double gravity) {
 		//apply gravity
 		if (!stopped) {
