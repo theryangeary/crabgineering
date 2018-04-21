@@ -35,6 +35,8 @@ public class GameKeyBindings {
 				Player.PlayerAction.ROTATE_TRASH_LEFT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
 				Player.PlayerAction.ROTATE_TRASH_RIGHT);
+
+		//These input maps only fire when the left and right keys are released
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,0,true), Player.PlayerAction.STOP);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,0,true), Player.PlayerAction.STOP);
 
