@@ -5,8 +5,7 @@ public class Trash extends Entity {
     private int pollutionCount;
     
     private boolean thrown = false;
-    private final int THROWSPEED = -25;
-
+    
     Trash(int x, int y, int width, int height, int pollutionCount){
         super(x, y, width, height);
         //System.out.println(String.format(
@@ -24,9 +23,9 @@ public class Trash extends Entity {
         return pollutionCount;
     }
     
-    public void throwTrash() {
+    public void throwTrash(int xSpeed, int ySpeed) {
     	thrown = true;
-    	setSpeed(0, THROWSPEED);
+    	setSpeed(xSpeed, ySpeed);
     }
     
     public boolean thrown() {

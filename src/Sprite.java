@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Sprite {
     private final SpriteImage spriteImage;

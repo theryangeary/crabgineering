@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Controller {
+public class Controller implements ActionListener {
 	
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
@@ -28,6 +29,7 @@ public class Controller {
 				          new AddedEntityListener(),
                           new RemovedEntityListener());
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
+		view.setButtonListener(this);
 		initTimer();
 	}
 	
@@ -49,6 +51,14 @@ public class Controller {
 		//updater.setDelay();
 	}
 	
+	@Override public void actionPerformed(ActionEvent e) {
+	  if (updater.isRunning()) {
+		updater.stop();
+	  } else {
+		updater.start();
+	  }
+	  view.updateButton(updater.isRunning());
+	}
 	/**
 	 * Starts the timer
 	 */

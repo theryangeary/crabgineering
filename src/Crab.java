@@ -3,9 +3,19 @@ public class Crab extends Player {
 	private static final int SPEED = 10;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
-
-	public Crab(int x, int y, int width, int height) {
-		super(x,y,width,height);
+	
+	private Sprite arrow = Sprite.ARROW; // Image of the trajectory arrow
+	private boolean arrowVisible = false;
+	private final int THROWSPEED = -25;
+	private final int ROTATESPEED = 10;
+    private int xThrow = 0;
+    private int yThrow = THROWSPEED;
+	private static final int CRAB_WIDTH = 100;
+	private static final int CRAB_HEIGHT = 100;
+	
+	
+	public Crab(int x, int y) {
+		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
 	}
 
 	@Override
@@ -17,15 +27,25 @@ public class Crab extends Player {
                     heldTrash.translate(-SPEED, 0);
                 }
                 break;
-			case MOVE_RIGHT:
-				translate(SPEED, 0);
+            case MOVE_RIGHT:
+            	translate(SPEED, 0);
                 if (hasTrash) {
                     heldTrash.translate(SPEED, 0);
                 }
-            	break;
-			case SPECIAL_ACTION:
-				doAction();
-				break;
+                break;
+            case SPECIAL_ACTION:
+            	doAction();
+                break;
+            case ROTATE_TRASH_LEFT:
+                if (hasTrash) {
+                    rotateArrow(-ROTATESPEED);
+                }
+                break;
+            case ROTATE_TRASH_RIGHT:
+                if (hasTrash) {
+                    rotateArrow(ROTATESPEED);
+                }
+                break;
 		}
 
 	}
@@ -38,10 +58,11 @@ public class Crab extends Player {
 	public void doAction(){
 		if (hasTrash) {
 			// Fire trash
-			heldTrash.throwTrash();
 			heldTrash.toggleStopped();
+			heldTrash.throwTrash(xThrow, yThrow);
 			heldTrash = null;
 			hasTrash = false;
+			arrowVisible = false;
 		}
 	}
 	
@@ -49,8 +70,18 @@ public class Crab extends Player {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
 			hasTrash = true;
 			t.toggleStopped();
+			arrowVisible = true;
 			heldTrash = t;
 		}
+	}
+	
+	  public void rotateArrow(int rotation) {
+	    	// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
+	    }
+	    
+	
+	public boolean arrowVisible() {
+		return arrowVisible;
 	}
 
 }

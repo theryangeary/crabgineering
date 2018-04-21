@@ -9,16 +9,16 @@ public class Model {
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
 	private final double gravity = .05;
-
+	
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
-
+	
 	//game variables
 	private int currentPollutionLevel;
 	private final int maxPollutionLevel = 100;
-
+	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
@@ -35,13 +35,16 @@ public class Model {
 
 		addEntity(t.createEasyTrash(400,50));
 		addEntity(t.createHardTrash(300,0));
-		player = new Crab(10,10,100,100);
+
+		int crabInitialX = 10;
+		int crabInitialY = 10;
+		player = new Crab(crabInitialX, crabInitialY);
 		addEntity(player);
 
 		spawner = new TrashSpawner(this,
 				                   0,
 				                   (int) worldBounds.getWidth(),
-				                   2*1000);
+				                   spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
 	}
@@ -80,26 +83,22 @@ public class Model {
 		removedEntityListener.handleRemovedEntity(entity);
 	}
 
-	public ArrayList<Entity> getEntities(){
-		return entities;
-	}
-	
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return player;
 	}
-
+	
 	// returns new pollution level
 	int addToPollutionLevel(int addition) {
-	  this.currentPollutionLevel += addition;
-	  return this.currentPollutionLevel;
+		this.currentPollutionLevel += addition;
+		return this.currentPollutionLevel;
 	}
-
+	
 	int getCurrentPollutionLevel() {
-	  return this.currentPollutionLevel;
+		return this.currentPollutionLevel;
 	}
-
+	
 	int getMaxPollutionLevel() {
-	  return this.maxPollutionLevel;
+		return this.maxPollutionLevel;
 	}
 	
 	Rectangle getWorldBounds() {
