@@ -1,8 +1,8 @@
 import java.awt.*;
 
-public class Sprite {
+public class Sprite implements BoundsListener {
     private final SpriteImage spriteImage;
-    private final Rectangle bounds; //should ALWAYS == the bounds of the corresponding Sprite
+    private final Rectangle bounds;
 
     Sprite(SpriteImage spriteImage, Rectangle bounds) {
         this.spriteImage = spriteImage;
@@ -22,6 +22,16 @@ public class Sprite {
         }
 
         return false;
+    }
+
+    @Override
+    public void handleTranslate(int dx, int dy) {
+        bounds.translate(dx, dy);
+    }
+
+    @Override
+    public void handleSetLocation(int x, int y) {
+        bounds.setLocation(x, y);
     }
 
     public void draw(Graphics g){
