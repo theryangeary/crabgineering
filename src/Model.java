@@ -22,15 +22,15 @@ public class Model {
 	    this.worldBounds = worldBounds;
 
 		//Crab crabby = new Crab(10,10,100,100);
-		//entities.add(crabby);
+		//addEntity(crabby);
 		TrashFactory t = new TrashFactory();
 
-		entities.add(t.createEasyTrash(400,50));
-		entities.add(t.createHardTrash(300,0));
+		addEntity(t.createEasyTrash(400,50));
+		addEntity(t.createHardTrash(300,0));
 		player = new Crab(10,10,100,100);
-		entities.add(player);
+		addEntity(player);
 
-		spawner = new TrashSpawner(entities,
+		spawner = new TrashSpawner(this,
 				                   0,
 				                   (int) worldBounds.getWidth(),
 				                   2*1000);
@@ -56,7 +56,12 @@ public class Model {
 		}
 		
 	}
-	
+
+	public void addEntity(Entity e) {
+	    entities.add(e);
+    }
+
+
 	public ArrayList<Entity> getEntities(){
 		return entities;
 	}

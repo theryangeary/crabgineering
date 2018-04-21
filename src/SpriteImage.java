@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public enum Sprite {
+public enum SpriteImage {
     CLAM("clam.png"),
     CRAB("crab.png"),
     SHRIMP("shrimp.png"),
@@ -15,7 +15,7 @@ public enum Sprite {
 
     final BufferedImage image;
 
-    Sprite(String image_name){
+    SpriteImage(String image_name){
         //get image should be in the folder IMAGE_DIR
         //and have the lowercase version of the name of the constant
         //with the IMAGE_TYPE file extension

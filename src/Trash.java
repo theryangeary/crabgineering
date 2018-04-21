@@ -7,12 +7,15 @@ public class Trash extends Entity {
 
     Trash(int x, int y, int width, int height, int pollutionCount){
         super(x,y,width,height);
+        //System.out.println(String.format(
+        //        "Trash: width=%d height=%d",
+        //        width, height));
         this.pollutionCount = pollutionCount;
     }
 
     @Override
     protected void initSprite(){
-        setSprite(Sprite.TRASH);
+        setSpriteImage(SpriteImage.TRASH);
     }
 
     public int getPollutionCount(){

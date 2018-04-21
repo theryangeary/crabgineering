@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-
-import static java.awt.Toolkit.getDefaultToolkit;
+import java.util.ArrayList;
 
 public class View extends JPanel {
 	// define size of game
@@ -13,6 +12,8 @@ public class View extends JPanel {
 	private final static int progressBarHeight = 40;
 
 	private int pollutionBarScalar = 2;
+
+	private ArrayList<SpriteImage> spriteImages;
 	
 	View() {
 		initJFrame();

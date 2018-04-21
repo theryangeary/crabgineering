@@ -12,7 +12,7 @@ public class TrashSpawner {
     private Timer spawnTimer;
 
 
-    TrashSpawner(ArrayList<Entity> entities, int spawnHeight, int spawnWidth, int interval){
+    TrashSpawner(Model model, int spawnHeight, int spawnWidth, int interval){
         //Interval is how long it talks between spawns
         this.interval = interval;
         factory = new TrashFactory();
@@ -24,7 +24,7 @@ public class TrashSpawner {
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
                 int randX = (int)(Math.random()*spawnWidth);
-                entities.add(factory.createEasyTrash(randX,10));
+                model.addEntity(factory.createEasyTrash(randX,10));
             }
         };
 

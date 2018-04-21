@@ -8,7 +8,7 @@ abstract class Entity {
 	private double dx;
 	private double dy;
 	
-    private Sprite sprite;
+    private SpriteImage spriteImage;
 	private int currentHealth;
 	private final int maxHealth;
 	private boolean atBottom = false;
@@ -28,8 +28,8 @@ abstract class Entity {
 
 	abstract void initSprite();
 
-	protected void setSprite(Sprite sprite){
-		this.sprite = sprite;
+	protected void setSpriteImage(SpriteImage spriteImage){
+		this.spriteImage = spriteImage;
 	}
 
 	//Rectangle wrapper functions
@@ -86,7 +86,7 @@ abstract class Entity {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(sprite.getImage(),
+		g.drawImage(spriteImage.getImage(),
                     (int) bounds.getX(),
                     (int) bounds.getY(),
                     (int) bounds.getWidth(),
