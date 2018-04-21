@@ -10,9 +10,12 @@ public class Crab extends Player {
 	private final int ROTATESPEED = 10;
     private int xThrow = 0;
     private int yThrow = THROWSPEED;
-
-	public Crab(int x, int y, int width, int height) {
-		super(x,y,width,height);
+	private static final int CRAB_WIDTH = 100;
+	private static final int CRAB_HEIGHT = 100;
+	
+	
+	public Crab(int x, int y) {
+		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
 	}
 
 	@Override
