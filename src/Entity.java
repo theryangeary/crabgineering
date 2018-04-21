@@ -87,8 +87,10 @@ abstract class Entity {
 
 	public void draw(Graphics g) {
 		g.drawImage(sprite.getImage(),
-				    (int) bounds.getX(),
-				    (int) bounds.getY(),
+                    (int) bounds.getX(),
+                    (int) bounds.getY(),
+                    (int) bounds.getWidth(),
+					(int) bounds.getHeight(),
 					//a BufferedImage won't change while
 					//the image is being loaded, so null
 				    //will work for our observer
