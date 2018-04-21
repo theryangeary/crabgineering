@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class View extends JPanel {
 	// define size of game
@@ -11,8 +12,12 @@ public class View extends JPanel {
 	private final static int progressBarHeight = 40;
 
 	private int pollutionBarScalar = 2;
+
+	JButton pauseButton;
+	JPanel buttonPanel;
 	
 	View() {
+		initButton();
 		initJFrame();
 		this.setBackground(Color.cyan);
 	}
@@ -41,6 +46,7 @@ public class View extends JPanel {
 	private void initJFrame() {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
+		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(frameWidth, frameHeight);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
