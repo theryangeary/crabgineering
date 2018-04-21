@@ -60,6 +60,7 @@ public class Crab extends Player {
 			// Fire trash
 			heldTrash.toggleStopped();
 			heldTrash.throwTrash(xThrow, yThrow);
+			Controller.getModel().getThrownTrash().add(heldTrash);
 			heldTrash = null;
 			hasTrash = false;
 			arrowVisible = false;

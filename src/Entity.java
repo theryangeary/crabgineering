@@ -4,7 +4,7 @@ abstract class Entity {
 
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
-	private final Rectangle bounds; //should ALWAYS == the bounds of the corresponding Sprite
+	protected final Rectangle bounds; //should ALWAYS == the bounds of the corresponding Sprite
 	private double dx;
 	private double dy;
 
@@ -13,7 +13,7 @@ abstract class Entity {
     private Sprite sprite;
 	private int currentHealth;
 	private final int maxHealth;
-	private boolean atBottom = false;
+	protected boolean atBottom = false;
 	private boolean stopped = false;
 
 	

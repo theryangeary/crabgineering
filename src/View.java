@@ -11,6 +11,12 @@ public class View extends JPanel {
 	private final static int progressBarXPosition = 30;
 	private final static int progressBarYPosition = 30;
 	private final static int progressBarHeight = 40;
+	
+	private final static int SCOREXPOS = 580;
+	private final static int SCOREYPOS = 15;
+	
+	int score = 0;
+	int pollution = 0;
 
 	private ArrayList<Sprite> sprites;
 
@@ -66,6 +72,12 @@ public class View extends JPanel {
 		sprites.remove(sprite);
 	}
 	
+	public void update(int score, int pollution) {
+		this.score = score;
+		this.pollution = pollution;
+		this.repaint();
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -74,7 +86,8 @@ public class View extends JPanel {
 			for (Sprite sprite: sprites) {
 				sprite.draw(g);
 			}
-
+			
+			// POLLUTION BAR
 			g.setColor(Color.black);
 			g.fillRect(progressBarXPosition,
 					progressBarYPosition,
@@ -86,8 +99,13 @@ public class View extends JPanel {
 			g.setColor(seaBlue);
 			g.fillRect(progressBarXPosition,
 					progressBarYPosition,
-					pollutionBarScalar * Controller.getModel().getCurrentPollutionLevel(),
+					pollutionBarScalar * pollution,
 					progressBarHeight);
+			
+			// SCORE
+			g.setColor(Color.black);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+			g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
 		}
 	}
 }
