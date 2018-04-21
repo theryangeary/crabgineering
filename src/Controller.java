@@ -69,7 +69,11 @@ public class Controller implements ActionListener {
 	public class AddedEntityListener {
 
 		public void handleAddedEntity(Entity entity){
-			view.addSprite(entity.initSprite());
+			Sprite sprite = new Sprite(
+			    SpriteImage.valueOf(entity.getClass().getName().toUpperCase()),
+                entity.getBounds());
+
+		    view.addSprite(sprite);
 		}
 	}
 

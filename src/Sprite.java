@@ -2,11 +2,16 @@ import java.awt.*;
 
 public class Sprite implements BoundsListener {
     private final SpriteImage spriteImage;
-    private final Rectangle bounds;
+    private Rectangle bounds;
 
-    Sprite(SpriteImage spriteImage, Rectangle bounds) {
+    Sprite(SpriteImage spriteImage, Bounds bounds) {
         this.spriteImage = spriteImage;
-        this.bounds = bounds;
+        setBounds(bounds);
+    }
+
+    void setBounds(Bounds bounds){
+        this.bounds = new Rectangle(bounds);
+        bounds.addListener(this);
     }
 
     @Override

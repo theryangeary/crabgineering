@@ -40,7 +40,6 @@ public enum SpriteImage {
     }
 
     //getters
-
     public BufferedImage getImage() {
         return image;
     }

@@ -73,7 +73,7 @@ public class Model {
 
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
-		entity.handleBeingAddedTo(this);
+		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
 
 		//let the proper listener respond to the Entity being added

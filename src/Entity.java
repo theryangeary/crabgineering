@@ -28,12 +28,13 @@ abstract class Entity implements BoundsListener {
 
 	abstract Sprite initSprite();
 
-	void handleBeingAddedTo(Model model) {
-		this.worldBounds = model.getWorldBounds();
+	void setWorldBounds(Bounds worldBounds){
+		this.worldBounds = new Rectangle(worldBounds);
+		worldBounds.addListener(this);
 	}
 
 	//Rectangle wrapper functions
-	Rectangle getBounds() {
+	Bounds getBounds() {
 		return bounds;
 	}
 
