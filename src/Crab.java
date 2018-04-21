@@ -31,8 +31,8 @@ public class Crab extends Player {
 	}
 
 	@Override
-	protected void initSprite(){
-	    setSprite(new Sprite(SpriteImage.CRAB, getBounds()));
+	protected Sprite initSprite(){
+	    return new Sprite(SpriteImage.CRAB, getBounds());
     }
 
 	public void doAction(){

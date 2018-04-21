@@ -25,17 +25,16 @@ abstract class Entity {
 		dy = 0;
 		currentHealth = 10;
 		maxHealth = 10;
-		initSprite();
 	}
 
-	abstract void initSprite();
+	abstract Sprite initSprite();
 
 	void setSprite(Sprite sprite){
 		this.sprite = sprite;
 	}
 
-	void setWorldBounds(Rectangle worldBounds) {
-		this.worldBounds = worldBounds;
+	void handleBeingAddedTo(Model model) {
+		this.worldBounds = model.getWorldBounds();
 	}
 
 	//Rectangle wrapper functions

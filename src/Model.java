@@ -58,8 +58,11 @@ public class Model {
 	}
 
 	public void addEntity(Entity e) {
-		e.setWorldBounds(worldBounds);
-	    entities.add(e);
+		e.handleBeingAddedTo(this);
+		entities.add(e);
+
+		Sprite sprite = e.initSprite();
+		e.setSprite(sprite);
     }
 
 

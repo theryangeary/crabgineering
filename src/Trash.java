@@ -16,8 +16,8 @@ public class Trash extends Entity {
     }
 
     @Override
-    protected void initSprite(){
-        setSprite(new Sprite(SpriteImage.TRASH, getBounds()));
+    protected Sprite initSprite(){
+        return new Sprite(SpriteImage.TRASH, getBounds());
     }
 
     public int getPollutionCount(){
