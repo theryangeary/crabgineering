@@ -1,16 +1,15 @@
 import java.awt.*;
 
-abstract class Entity {
+abstract class Entity implements BoundsListener {
 
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
-	private final Rectangle bounds; //should ALWAYS == the bounds of the corresponding Sprite
+	private final Bounds bounds; //should ALWAYS == the bounds of the corresponding Sprite
 	private double dx;
 	private double dy;
 
-	private Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding model
+	private Rectangle worldBounds;
 	
-    private Sprite sprite;
 	private int currentHealth;
 	private final int maxHealth;
 	private boolean atBottom = false;
@@ -20,7 +19,7 @@ abstract class Entity {
 	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
-		bounds = new Rectangle(x, y, width, height);
+		bounds = new Bounds(x, y, width, height);
 		dx = 0;
 		dy = 0;
 		currentHealth = 10;
@@ -86,10 +85,6 @@ abstract class Entity {
 		return atBottom;
 	}
 
-	public void draw(Graphics g) {
-		sprite.draw(g);
-	}
-
 	void update(double gravity, double drag) {
 		//apply gravity
 		if (!stopped) {
@@ -119,5 +114,15 @@ abstract class Entity {
 	
 	boolean bottomBound() {
 		return !worldBounds.contains(bounds.getCenterX(), bounds.getMaxY());
+	}
+
+	@Override
+	public void handleSetLocation(int x, int y) {
+		worldBounds.setLocation(x, y);
+	}
+
+	@Override
+	public void handleTranslate(int dx, int dy) {
+		worldBounds.translate(dx, dy);
 	}
 }

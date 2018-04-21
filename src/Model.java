@@ -7,7 +7,7 @@ public class Model {
 	private final Controller.RemovedEntityListener removedEntityListener;
 
 	//constants relevant to simulation's physics
-	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
+	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
 	
@@ -23,7 +23,7 @@ public class Model {
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
-	Model(Rectangle worldBounds,
+	Model(Bounds worldBounds,
 		  Controller.AddedEntityListener addedEntityListener,
 		  Controller.RemovedEntityListener removedEntityListener) {
 	    this.worldBounds = worldBounds;

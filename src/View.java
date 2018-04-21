@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 public class View extends JPanel {
 	// define size of game
-	private final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
-	private final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
+	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
+	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 	
 	private final static int progressBarXPosition = 30;
 	private final static int progressBarYPosition = 30;
