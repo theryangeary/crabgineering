@@ -90,10 +90,10 @@ abstract class Entity {
 		sprite.draw(g);
 	}
 
-	void update(double gravity) {
+	void update(double gravity, double drag) {
 		//apply gravity
 		if (!stopped) {
-			dy += gravity;
+			dy += gravity - dy * drag;
 
 			translate((int) dx, (int) dy);
 		}

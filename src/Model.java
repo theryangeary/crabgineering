@@ -8,7 +8,8 @@ public class Model {
 
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
-	private final double gravity = .05;
+	private final double GRAVITY = .05;
+	private final double DRAG = .01;
 	
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
@@ -56,7 +57,7 @@ public class Model {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
-			entity.update(gravity);
+			entity.update(GRAVITY, DRAG);
 		}
 		
 		//Check for player-trash collision
