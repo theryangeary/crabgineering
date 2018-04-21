@@ -4,7 +4,7 @@ public class Crab extends Player {
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 	
-	private Sprite arrow = Sprite.ARROW; // Image of the trajectory arrow
+	private SpriteImage arrow = SpriteImage.ARROW; // Image of the trajectory arrow
 	private boolean arrowVisible = false;
 	private final int THROWSPEED = -25;
 	private final int ROTATESPEED = 10;

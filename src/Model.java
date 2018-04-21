@@ -41,8 +41,10 @@ public class Model {
 		player = new Crab(crabInitialX, crabInitialY);
 		addEntity(player);
 
+		int spawnInterval = 2 * 1000;
+		int spawnHeight = 0;
 		spawner = new TrashSpawner(this,
-				                   0,
+				                   spawnHeight,
 				                   (int) worldBounds.getWidth(),
 				                   spawnInterval);
 		spawner.start();
