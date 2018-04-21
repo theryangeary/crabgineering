@@ -10,6 +10,21 @@ public class Sprite {
         this.bounds = bounds;
     }
 
+    @Override
+    public int hashCode() {
+        return bounds.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Sprite) {
+            Sprite otherSprite = (Sprite) other;
+            return bounds == otherSprite.bounds;
+        }
+
+        return false;
+    }
+
     public void draw(Graphics g){
         g.drawImage(spriteImage.getImage(),
                 (int) bounds.getX(),

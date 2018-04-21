@@ -29,10 +29,6 @@ abstract class Entity {
 
 	abstract Sprite initSprite();
 
-	void setSprite(Sprite sprite){
-		this.sprite = sprite;
-	}
-
 	void handleBeingAddedTo(Model model) {
 		this.worldBounds = model.getWorldBounds();
 	}
