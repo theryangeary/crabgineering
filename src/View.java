@@ -28,6 +28,7 @@ public class View extends JPanel {
 	  buttonPanel.add(pauseButton);
 	  buttonPanel.setBackground(Color.cyan);
 	  buttonPanel.setFocusable(false);
+	  pauseButton.setFocusable(false);
 	}
 
 	public void setButtonListener(ActionListener l) {
