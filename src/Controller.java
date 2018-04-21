@@ -79,6 +79,10 @@ public class Controller implements ActionListener {
 		}
 	}
 	
+	public static void stop() {
+		view.closeWindow();
+	}
+	
 }
 
 
