@@ -24,7 +24,7 @@ public class Controller {
 	 */
 	Controller() {
 		view = new View();
-		model = new Model(view.getBounds());
+		model = new Model(view.getBounds(), new AddedEntityListener());
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 		initTimer();
 	}
@@ -52,6 +52,13 @@ public class Controller {
 	 */
 	public void start() {
 		EventQueue.invokeLater(() -> updater.start());
+	}
+
+	public class AddedEntityListener {
+
+		public void handleAddedEntity(Entity entity){
+			view.addSprite(entity.initSprite());
+		}
 	}
 }
 

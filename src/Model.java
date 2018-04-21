@@ -2,6 +2,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Model {
+	//listeners
+	private final Controller.AddedEntityListener addedEntityListener;
+	//private final RemovedEntityListener removedEntityListener;
+
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
 	private final double gravity = .05;
@@ -18,8 +22,10 @@ public class Model {
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
-	Model(Rectangle worldBounds) {
+	Model(Rectangle worldBounds,
+		  Controller.AddedEntityListener addedEntityListener) {
 	    this.worldBounds = worldBounds;
+	    this.addedEntityListener = addedEntityListener;
 
 		//Crab crabby = new Crab(10,10,100,100);
 		//addEntity(crabby);
@@ -58,11 +64,12 @@ public class Model {
 	}
 
 	public void addEntity(Entity e) {
+		//add the Entity, and let it react to being added
 		e.handleBeingAddedTo(this);
 		entities.add(e);
 
-		Sprite sprite = e.initSprite();
-		e.setSprite(sprite);
+		//let the proper listener respond to the Entity being added
+		addedEntityListener.handleAddedEntity(e);
     }
 
 

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class View extends JPanel {
 	// define size of game
@@ -13,11 +14,12 @@ public class View extends JPanel {
 
 	private int pollutionBarScalar = 2;
 
-	private ArrayList<SpriteImage> spriteImages;
+	private ArrayList<Sprite> sprites;
 	
 	View() {
 		initJFrame();
 		this.setBackground(Color.cyan);
+		sprites = new ArrayList<>();
 	}
 	
 	private void initJFrame() {
@@ -29,13 +31,17 @@ public class View extends JPanel {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setVisible(true);
 	}
+
+	public void addSprite(Sprite sprite){
+		sprites.add(sprite);
+	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (Entity entity : Controller.getModel().getEntities()) {
-			entity.draw(g);
+		for (Sprite sprite: sprites) {
+			sprite.draw(g);
 		}
 		
 		g.setColor(Color.black);
