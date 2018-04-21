@@ -5,35 +5,39 @@ public class Model {
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds;
 	private final double gravity = .05;
-
+	
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
-
+	
 	//game variables
 	private int currentPollutionLevel;
 	private final int maxPollutionLevel = 100;
-
+	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model(Rectangle worldBounds) {
-	    this.worldBounds = worldBounds;
-
+		this.worldBounds = worldBounds;
+		
 		//Crab crabby = new Crab(10,10,100,100);
 		//entities.add(crabby);
 		TrashFactory t = new TrashFactory();
-
-		entities.add(t.createEasyTrash(400,50));
-		entities.add(t.createHardTrash(300,0));
-		player = new Crab(10,10,100,100);
+		
+		entities.add(t.createEasyTrash(400, 50));
+		entities.add(t.createHardTrash(300, 0));
+		int crabInitialX = 10;
+		int crabInitialY = 10;
+		player = new Crab(crabInitialX, crabInitialY);
 		entities.add(player);
-
+		
+		int spawnInterval = 2 * 1000;
+		int spawnHeight = 0;
 		spawner = new TrashSpawner(entities,
-				                   0,
-				                   (int) worldBounds.getWidth(),
-				                   2*1000);
+				spawnHeight,
+				(int) worldBounds.getWidth(),
+				spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
 	}
@@ -57,26 +61,26 @@ public class Model {
 		
 	}
 	
-	public ArrayList<Entity> getEntities(){
+	public ArrayList<Entity> getEntities() {
 		return entities;
 	}
 	
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return player;
 	}
-
+	
 	// returns new pollution level
 	int addToPollutionLevel(int addition) {
-	  this.currentPollutionLevel += addition;
-	  return this.currentPollutionLevel;
+		this.currentPollutionLevel += addition;
+		return this.currentPollutionLevel;
 	}
-
+	
 	int getCurrentPollutionLevel() {
-	  return this.currentPollutionLevel;
+		return this.currentPollutionLevel;
 	}
-
+	
 	int getMaxPollutionLevel() {
-	  return this.maxPollutionLevel;
+		return this.maxPollutionLevel;
 	}
 	
 	Rectangle getWorldBounds() {
