@@ -8,7 +8,7 @@ abstract class Entity {
 	private double dx;
 	private double dy;
 	
-    private SpriteImage spriteImage;
+    private Sprite sprite;
 	private int currentHealth;
 	private final int maxHealth;
 	private boolean atBottom = false;
@@ -28,8 +28,8 @@ abstract class Entity {
 
 	abstract void initSprite();
 
-	protected void setSpriteImage(SpriteImage spriteImage){
-		this.spriteImage = spriteImage;
+	protected void setSprite(Sprite sprite){
+		this.sprite = sprite;
 	}
 
 	//Rectangle wrapper functions
@@ -40,17 +40,12 @@ abstract class Entity {
 	void setLocation(int x, int y) {
 		bounds.setLocation(x, y);
 	}
-	
-	void setSpeed(int dx, int dy) {
-		this.dx = dx;
-		this.dy = dy;
-	}
 
 	void translate(int dx, int dy) {
 		int x = dx;
 		int y = dy;
 		Rectangle worldBounds = Controller.getModel().getWorldBounds();
-		
+
 		// Bounds check
 		if (leftBound(worldBounds) && x < 0) {
 			x = 0;
@@ -65,12 +60,18 @@ abstract class Entity {
 			y = 0;
 			atBottom = true;
 		}
-		
+
 		bounds.translate(x, y);
 	}
 
 	boolean intersects(Entity e) {
 		return this.bounds.intersects(e.bounds);
+	}
+
+
+	void setSpeed(int dx, int dy) {
+		this.dx = dx;
+		this.dy = dy;
 	}
 
 	int getCurrentHealth() {
@@ -86,7 +87,7 @@ abstract class Entity {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(spriteImage.getImage(),
+		g.drawImage(sprite.getImage(),
                     (int) bounds.getX(),
                     (int) bounds.getY(),
                     (int) bounds.getWidth(),

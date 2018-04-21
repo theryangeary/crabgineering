@@ -32,7 +32,7 @@ public class Crab extends Player {
 
 	@Override
 	protected void initSprite(){
-	    setSpriteImage(SpriteImage.CRAB);
+	    setSprite(new Sprite(SpriteImage.CRAB, getBounds()));
     }
 
 	public void doAction(){

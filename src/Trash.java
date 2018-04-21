@@ -15,7 +15,7 @@ public class Trash extends Entity {
 
     @Override
     protected void initSprite(){
-        setSpriteImage(SpriteImage.TRASH);
+        setSprite(new Sprite(SpriteImage.TRASH, getBounds()));
     }
 
     public int getPollutionCount(){
