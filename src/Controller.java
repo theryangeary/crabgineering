@@ -24,7 +24,9 @@ public class Controller {
 	 */
 	Controller() {
 		view = new View();
-		model = new Model(view.getBounds(), new AddedEntityListener());
+		model = new Model(view.getBounds(),
+				          new AddedEntityListener(),
+                          new RemovedEntityListener());
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 		initTimer();
 	}
@@ -58,6 +60,12 @@ public class Controller {
 
 		public void handleAddedEntity(Entity entity){
 			view.addSprite(entity.initSprite());
+		}
+	}
+
+	public class RemovedEntityListener {
+		public void handleRemovedEntity(Entity entity){
+			view.removeSprite(entity.initSprite());
 		}
 	}
 }

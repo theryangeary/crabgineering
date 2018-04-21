@@ -35,6 +35,10 @@ public class View extends JPanel {
 	public void addSprite(Sprite sprite){
 		sprites.add(sprite);
 	}
+
+	public void removeSprite(Sprite sprite){
+		sprites.remove(sprite);
+	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {

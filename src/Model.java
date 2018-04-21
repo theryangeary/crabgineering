@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Model {
 	//listeners
 	private final Controller.AddedEntityListener addedEntityListener;
-	//private final RemovedEntityListener removedEntityListener;
+	private final Controller.RemovedEntityListener removedEntityListener;
 
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
@@ -23,9 +23,11 @@ public class Model {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model(Rectangle worldBounds,
-		  Controller.AddedEntityListener addedEntityListener) {
+		  Controller.AddedEntityListener addedEntityListener,
+		  Controller.RemovedEntityListener removedEntityListener) {
 	    this.worldBounds = worldBounds;
 	    this.addedEntityListener = addedEntityListener;
+	    this.removedEntityListener = removedEntityListener;
 
 		//Crab crabby = new Crab(10,10,100,100);
 		//addEntity(crabby);
@@ -63,15 +65,20 @@ public class Model {
 		
 	}
 
-	public void addEntity(Entity e) {
+	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
-		e.handleBeingAddedTo(this);
-		entities.add(e);
+		entity.handleBeingAddedTo(this);
+		entities.add(entity);
 
 		//let the proper listener respond to the Entity being added
-		addedEntityListener.handleAddedEntity(e);
+		addedEntityListener.handleAddedEntity(entity);
     }
 
+    public void removeEntity(Entity entity) {
+		entities.remove(entity);
+
+		removedEntityListener.handleRemovedEntity(entity);
+	}
 
 	public ArrayList<Entity> getEntities(){
 		return entities;
