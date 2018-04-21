@@ -17,6 +17,27 @@ public class View extends JPanel {
 		this.setBackground(Color.cyan);
 	}
 	
+	private void initButton() {
+	  buttonPanel = new JPanel();
+	  pauseButton = new JButton("Pause");
+	  buttonPanel.add(pauseButton);
+	  buttonPanel.setBackground(Color.cyan);
+	  buttonPanel.setFocusable(false);
+	  pauseButton.setFocusable(false);
+	}
+
+	public void setButtonListener(ActionListener l) {
+	  pauseButton.addActionListener(l);
+	}
+
+	public void updateButton (boolean running) {
+	  if (running) {
+		pauseButton.setText("Pause");
+	  } else {
+		pauseButton.setText("Play");
+	  }
+	}
+
 	private void initJFrame() {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
