@@ -24,6 +24,7 @@ public class GameKeyBindings {
 		InputMap inputMap = panel.getInputMap(condition);
 
 		//map KeyStrokes to player actions
+
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0),
 				Player.PlayerAction.MOVE_LEFT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0),
@@ -34,6 +35,9 @@ public class GameKeyBindings {
 				Player.PlayerAction.ROTATE_TRASH_LEFT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
 				Player.PlayerAction.ROTATE_TRASH_RIGHT);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,0,true), Player.PlayerAction.STOP);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,0,true), Player.PlayerAction.STOP);
+
 
 		actionMap.put(Player.PlayerAction.MOVE_LEFT,
 				new KeyAction(Player.PlayerAction.MOVE_LEFT.name(), player));
@@ -45,12 +49,14 @@ public class GameKeyBindings {
 				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
 		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
 				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
+		actionMap.put(Player.PlayerAction.STOP,
+				new KeyAction(Player.PlayerAction.STOP.name(), player));
 	}
 	
 	private class KeyAction extends AbstractAction {
 		private Player player;
 
-		public KeyAction(String command, Player player) {
+		public KeyAction(String command, Player player){
 			putValue(ACTION_COMMAND_KEY, command);
 			this.player = player;
 		}

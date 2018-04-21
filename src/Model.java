@@ -34,9 +34,6 @@ public class Model {
 		//addEntity(crabby);
 		TrashFactory t = new TrashFactory();
 
-		addEntity(t.createEasyTrash(400,50));
-		addEntity(t.createHardTrash(300,0));
-
 		int crabInitialX = 10;
 		int crabInitialY = 10;
 		player = new Crab(crabInitialX, crabInitialY);
