@@ -12,7 +12,7 @@ public class View extends JPanel {
 	private final static int progressBarYPosition = FRAME_HEIGHT / 32;
 	private final static int progressBarHeight = FRAME_HEIGHT / 24;
 	
-	private final static int SCOREXPOS = FRAME_WIDTH * 7 / 8; //Position the Score relative to the frame
+	private final static int SCOREXPOS = FRAME_WIDTH * 17 / 20; //Position the Score relative to the frame
 	private final static int SCOREYPOS = FRAME_HEIGHT / 32;
 	
 	int score = 0;
