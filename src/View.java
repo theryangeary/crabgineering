@@ -13,7 +13,7 @@ public class View extends JPanel {
 	private final static int progressBarHeight = 40;
 	
 	private final static int SCOREXPOS = 580;
-	private final static int SCOREYPOS = 15;
+	private final static int SCOREYPOS = 40;
 	
 	int score = 0;
 	int pollution = 0;
@@ -24,8 +24,12 @@ public class View extends JPanel {
 	
 	JButton pauseButton;
 	JPanel buttonPanel;
+	JLabel endScore = new JLabel("");
+	JFrame frame;
 
 	View() {
+		this.add(endScore, BorderLayout.CENTER);
+		endScore.setVisible(false);
 		initButton();
 		initJFrame();
 		this.setBackground(Color.cyan);
@@ -54,7 +58,7 @@ public class View extends JPanel {
 	}
 	
 	private void initJFrame() {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.getContentPane().add(this);
 		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +80,12 @@ public class View extends JPanel {
 		this.score = score;
 		this.pollution = pollution;
 		this.repaint();
+	}
+	
+	public void endGame() {
+		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
+		endScore.setText("Final Score: " + score);
+		endScore.setVisible(true);
 	}
 	
 	@Override
