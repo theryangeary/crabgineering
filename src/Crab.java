@@ -1,6 +1,7 @@
 public class Crab extends Player {
 	
 	private static final double SPEED = 10;
+	private double currentSpeed = 0;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 	
@@ -22,16 +23,13 @@ public class Crab extends Player {
 	public void processInput(String action) {
 		switch (PlayerAction.valueOf(action)) {
 			case MOVE_LEFT:
-				translate(-SPEED, 0);
-				if (hasTrash) {
-					heldTrash.translate(-SPEED, 0);
-				}
+				currentSpeed = -SPEED;
 				break;
 			case MOVE_RIGHT:
-				translate(SPEED, 0);
-				if (hasTrash) {
-					heldTrash.translate(SPEED, 0);
-				}
+				currentSpeed = SPEED;
+				break;
+			case STOP:
+				currentSpeed = 0;
 				break;
 			case SPECIAL_ACTION:
 				doAction();
@@ -48,6 +46,15 @@ public class Crab extends Player {
 				break;
 		}
 		
+	}
+
+	@Override
+	public void update(double gravity, double drag){
+		super.update(gravity,drag);
+		translate(currentSpeed,0);
+		if (hasTrash) {
+			heldTrash.setLocation(bounds.getLocation().x,heldTrash.bounds.getLocation().y);
+		}
 	}
 	
 	@Override

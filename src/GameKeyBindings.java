@@ -28,6 +28,12 @@ public class GameKeyBindings {
 				Player.PlayerAction.ROTATE_TRASH_LEFT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
 				Player.PlayerAction.ROTATE_TRASH_RIGHT);
+
+		//when left or right is released, stop
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true),
+				Player.PlayerAction.STOP);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true),
+				Player.PlayerAction.STOP);
 		
 		actionMap.put(Player.PlayerAction.MOVE_LEFT,
 				new KeyAction(Player.PlayerAction.MOVE_LEFT.name(), player));
@@ -39,6 +45,8 @@ public class GameKeyBindings {
 				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
 		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
 				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
+		actionMap.put(Player.PlayerAction.STOP,
+				new KeyAction(Player.PlayerAction.STOP.name(), player));
 	}
 	
 	private class KeyAction extends AbstractAction {
