@@ -15,7 +15,7 @@ public class DefaultEstuaryEventSource implements EstuaryEventSource {
     }
 
     @Override
-    public notifyListeners(EstuaryEvent event){
+    public void notifyListeners(EstuaryEvent event){
         for (EstuaryEventListener listener: listeners) {
             listener.handleEstuaryEvent(event);
         }

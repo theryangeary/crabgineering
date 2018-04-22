@@ -15,11 +15,6 @@ public class Trash extends Entity {
 	}
 	
 	@Override
-	protected Sprite initSprite() {
-		return new Sprite(SpriteImage.TRASH, getBounds());
-	}
-	
-	@Override
 	void translate(double dx, double dy) {
 		
 		// Bounds check

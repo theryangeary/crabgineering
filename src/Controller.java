@@ -50,7 +50,7 @@ public class Controller implements ActionListener {
 				//UPDATE ENTITIES
 				//UPDATE VIEW BASED ON UPDATED ENTITIES
 				model.update();
-				view.update(model.getScore(), model.getCurrentPollutionLevel()); //Update with current score and pollution, then repaint
+				view.update(model.getScore()); //Update with current score and pollution, then repaint
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);
@@ -91,14 +91,10 @@ public class Controller implements ActionListener {
             }
 		}
 	}
-<<<<<<< HEAD
 
 	public interface PollutionListener {
 	    void handlePollutionChange(int pollutionLevel);
     }
-=======
-	
->>>>>>> alpha
 }
 
 

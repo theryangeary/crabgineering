@@ -82,6 +82,6 @@ public class View extends JPanel {
 			g.setColor(Color.black);
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 			g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
-		}
+		//}
 	}
 }

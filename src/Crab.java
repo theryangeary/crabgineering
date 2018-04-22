@@ -24,7 +24,6 @@ public class Crab extends Player {
 		switch (PlayerAction.valueOf(action)) {
 			case MOVE_LEFT:
 				translate(-SPEED, 0);
-<<<<<<< HEAD
                 if (hasTrash) {
                     heldTrash.translate(-SPEED, 0);
                 }
@@ -51,7 +50,6 @@ public class Crab extends Player {
 		}
 		
 	}
-<<<<<<< HEAD
 
 	public void doAction(){
 		if (hasTrash) {

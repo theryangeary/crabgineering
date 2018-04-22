@@ -1,9 +1,11 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 
-public class Model implements EstuaryEventSource, EstuaryEventListener{
+public class Model {
 	//listeners
+	private Controller.AddedEntityListener addedEntityListener;
+	private Controller.RemovedEntityListener removedEntityListener;
+	private Controller.PollutionListener pollutionListener;
 
 	//constants relevant to simulation's physics
 	private final Bounds worldBounds;
@@ -127,14 +129,11 @@ public class Model implements EstuaryEventSource, EstuaryEventListener{
 	public Player getPlayer() {
 		return player;
 	}
-<<<<<<< HEAD
 
 	public void setPollutionListener(Controller.PollutionListener pollutionListener) {
 		this.pollutionListener = pollutionListener;
 	}
 
-=======
-	
 	public ArrayList<Trash> getThrownTrash(){
 		return thrownTrash;
 	}
@@ -143,7 +142,6 @@ public class Model implements EstuaryEventSource, EstuaryEventListener{
 		return toRemove;
 	}
 	
->>>>>>> alpha
 	// returns new pollution level
 	int addToPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
