@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class EntitySprite implements Sprite, BoundsListener {
     private final SpriteImage spriteImage;
@@ -14,6 +15,10 @@ public class EntitySprite implements Sprite, BoundsListener {
         bounds.addListener(this);
     }
 
+    protected BufferedImage getImage(){
+        return spriteImage.getImage();
+    }
+
     @Override
     public void handleTranslate(int dx, int dy) {
         bounds.translate(dx, dy);
@@ -25,7 +30,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     public void draw(Graphics g){
-        g.drawImage(spriteImage.getImage(),
+        g.drawImage(getImage(),
                 (int) bounds.getX(),
                 (int) bounds.getY(),
                 (int) bounds.getWidth(),
