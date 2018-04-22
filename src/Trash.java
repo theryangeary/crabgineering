@@ -1,17 +1,20 @@
 public class Trash extends Entity {
 
+	RequestQueue requestQueue;
+
 	private int pollutionCount;
 	private final int POLLUTION = 5;
 	
 	private boolean thrown = false;
 	private boolean addedPollution = false;
 	
-	Trash(int x, int y, int width, int height, int pollutionCount) {
+	Trash(int x, int y, int width, int height, int pollutionCount, RequestQueue requestQueue) {
 		super(x, y, width, height);
 		//System.out.println(String.format(
 		//        "Trash: width=%d height=%d",
 		//        width, height));
 		this.pollutionCount = pollutionCount;
+		this.requestQueue = requestQueue;
 	}
 	
 	@Override
@@ -25,14 +28,23 @@ public class Trash extends Entity {
 			dx = 0;
 		}
 		if (topBound() && dy < 0) {
-			//Controller.getModel().toRemove().add(this);
-			//Controller.getModel().incrementScore(1);
+			requestQueue.postRequest(new Request<>(
+					this,
+					Request.ActionType.REMOVE
+			));
+			requestQueue.postRequest(new Request<>(
+					1,
+					Request.ActionType.UPDATE_SCORE
+			));
 		}
 		if (bottomBound() && dy > 0) {
 			dy = 0;
 			isAtBottom = true;
 			if (!addedPollution) {
-				//Controller.getModel().addToPollutionLevel(POLLUTION);
+				requestQueue.postRequest(new Request<>(
+						POLLUTION,
+						Request.ActionType.UPDATE_POLLUTION
+				));
 				addedPollution = true;
 			}
 		}

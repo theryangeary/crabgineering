@@ -77,6 +77,10 @@ public class Model implements RequestListener {
 				if (request.getSpecifics() instanceof Entity)
 					removeEntity((Entity) request.getSpecifics());
 				break;
+			case UPDATE_SCORE:
+				incrementScore((int) request.getSpecifics());
+			case UPDATE_POLLUTION:
+				incrementPollutionLevel((int) request.getSpecifics());
 		}
 	}
 
@@ -100,7 +104,10 @@ public class Model implements RequestListener {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
 						toRemove.add(tt);
-						incrementScore(3);
+						requestQueue.postRequest(new Request<>(
+								3,
+								Request.ActionType.UPDATE_SCORE
+						));
 					}
 				}
 			}
@@ -127,10 +134,6 @@ public class Model implements RequestListener {
 
 	public void incrementScore(int modifier) {
 		score += SCOREINCREMENT * modifier;
-		requestQueue.postRequest(new Request<>(
-				score,
-				Request.ActionType.UPDATE_SCORE
-		));
 	}
 
 	public int getScore() {
@@ -178,11 +181,8 @@ public class Model implements RequestListener {
 	}
 	
 	// returns new pollution level
-	int addToPollutionLevel(int addition) {
+	int incrementPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
-		requestQueue.postRequest(new Request<>(
-				currentPollutionLevel,
-				Request.ActionType.UPDATE_POLLUTION));
 		return this.currentPollutionLevel;
 	}
 	

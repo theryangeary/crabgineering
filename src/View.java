@@ -12,11 +12,8 @@ public class View extends JPanel implements RequestListener{
 	private final static int SCOREYPOS = FRAME_HEIGHT / 32;
 	
 	int score = 0;
-	int pollution = 0;
-	
+
 	private ArrayList<Sprite> sprites;
-	
-	private final int pollutionBarScalar = FRAME_WIDTH / Model.MAXPOLLUTIONLEVEL / 3;
 	
 	JButton pauseButton;
 	JPanel buttonPanel;
@@ -74,10 +71,11 @@ public class View extends JPanel implements RequestListener{
 					addSprite((Sprite) request.getSpecifics());
 				break;
 			case REMOVE:
-				System.out.println("View removing sprite");
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
 				break;
+			case UPDATE_SCORE:
+				score = (int) request.getSpecifics();
 		}
 	}
 
@@ -104,14 +102,13 @@ public class View extends JPanel implements RequestListener{
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		//if (null != Controller.getModel()) { /// Only paint if a model exists
-			for (Sprite sprite: sprites) {
-				sprite.draw(g);
-			}
-			// SCORE
-			g.setColor(Color.black);
-			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-			g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
-		//}
+        for (Sprite sprite: sprites) {
+            sprite.draw(g);
+        }
+
+        // SCORE
+        g.setColor(Color.black);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
 	}
 }

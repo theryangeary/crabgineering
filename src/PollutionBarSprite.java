@@ -19,7 +19,8 @@ public class PollutionBarSprite implements Sprite, RequestListener {
     public void handleRequest(Request request){
         switch (request.getRequestedAction()){
             case UPDATE_POLLUTION:
-                this.pollutionLevel = (Integer) request.getSpecifics();
+                System.out.println("pollution update");
+                this.pollutionLevel = (int) request.getSpecifics();
         }
     }
 

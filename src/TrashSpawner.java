@@ -15,8 +15,7 @@ public class TrashSpawner {
     TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
         //Interval is how long it talks between spawns
         this.interval = interval;
-        factory = new TrashFactory();
-
+        factory = new TrashFactory(requestQueue);
 
         //Abstract action that spawns trash randomly
         spawnAction = new AbstractAction() {
