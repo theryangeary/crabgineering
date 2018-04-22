@@ -3,19 +3,19 @@ public class Crab extends Player {
 	private static final int SPEED = 10;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
-	
-	private SpriteImage arrow = SpriteImage.ARROW; // Image of the trajectory arrow
-	private boolean arrowVisible = false;
+
+	private ArrowSprite arrowSprite;
+
+	private double throwAngle = Math.PI/2;
 	private final int THROW_SPEED = -25;
-	private final int ROTATE_SPEED = 10;
-    private int xThrow = 0;
-    private int yThrow = THROW_SPEED;
+	private final double ROTATE_SPEED = Math.PI/32;
+
 	private static final int CRAB_WIDTH = 100;
 	private static final int CRAB_HEIGHT = 100;
-	
-	
+
 	public Crab(int x, int y) {
 		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
+		arrowSprite = new ArrowSprite(getBounds());
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class Crab extends Player {
                 break;
             case ROTATE_TRASH_LEFT:
                 if (hasTrash) {
-                    rotateArrow(-ROTATE_SPEED);
+                    rotateThrow(-ROTATE_SPEED);
                 }
                 break;
             case ROTATE_TRASH_RIGHT:
                 if (hasTrash) {
-                    rotateArrow(ROTATE_SPEED);
+                    rotateThrow(ROTATE_SPEED);
                 }
                 break;
 		}
@@ -54,10 +54,12 @@ public class Crab extends Player {
 		if (hasTrash) {
 			// Fire trash
 			heldTrash.toggleStopped();
-			heldTrash.throwTrash(xThrow, yThrow);
+			heldTrash.throwTrash(
+					(int) Math.round(THROW_SPEED * Math.cos(throwAngle)),
+					(int) Math.round(THROW_SPEED * Math.sin(throwAngle)));
 			heldTrash = null;
 			hasTrash = false;
-			arrowVisible = false;
+			arrowSprite.setVisiblity(false);
 		}
 	}
 	
@@ -65,18 +67,14 @@ public class Crab extends Player {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
 			hasTrash = true;
 			t.toggleStopped();
-			arrowVisible = true;
+			arrowSprite.setVisiblity(true);
 			heldTrash = t;
 		}
 	}
 	
-	  public void rotateArrow(int rotation) {
-	    	// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
-	    }
-	    
-	
-	public boolean arrowVisible() {
-		return arrowVisible;
+	public void rotateThrow(double dTheta) {
+		// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
+		throwAngle += dTheta;
+		arrowSprite.rotate(dTheta);
 	}
-
 }
