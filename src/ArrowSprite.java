@@ -26,9 +26,6 @@ public class ArrowSprite extends EntitySprite {
             Graphics2D g2d = (Graphics2D) g;
             AffineTransform oldTransf = g2d.getTransform();
 
-            //grab the unrotated image
-            BufferedImage image = super.getImage();
-
             //create transform
             AffineTransform transform = new AffineTransform();
             transform.rotate(theta,
