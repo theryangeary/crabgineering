@@ -11,13 +11,13 @@ public class Crab extends Player {
 	private final int THROW_SPEED = -25;
 	private final double ROTATE_SPEED = Math.PI/32;
 
-	private static final int CRAB_WIDTH = 100;
-	private static final int CRAB_HEIGHT = 100;
+	static final int CRAB_WIDTH = 100;
+	static final int CRAB_HEIGHT = 100;
 
-	public Crab(int x, int y, RequestQueue spriteQueue) {
+	public Crab(int x, int y, RequestQueue requestQueue) {
 		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
 		arrowSprite = new ArrowSprite(getBounds());
-		spriteQueue.postRequest(new Request<>(
+		requestQueue.postRequest(new Request<>(
 				arrowSprite,
 				Request.ActionType.ADD));
 	}
@@ -25,9 +25,6 @@ public class Crab extends Player {
 	@Override
 	public void processInput(String action) {
 		switch (PlayerAction.valueOf(action)) {
-            case SPECIAL_ACTION:
-            	doAction();
-                break;
             case ROTATE_TRASH_LEFT:
                 if (hasTrash) {
                     rotateThrow(-ROTATE_SPEED);
@@ -59,13 +56,10 @@ public class Crab extends Player {
 		super.update(gravity,drag);
 		translate(currentSpeed,0);
 		if (hasTrash) {
-			heldTrash.setLocation(bounds.getLocation().x,heldTrash.bounds.getLocation().y);
+			heldTrash.setLocation(
+					(int) getBounds().getX(),
+					(int) getBounds().getY());
 		}
-	}
-	
-	@Override
-	protected Sprite initSprite() {
-		return new Sprite(SpriteImage.CRAB, getBounds());
 	}
 	
 	public void doAction() {

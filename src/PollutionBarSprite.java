@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Graphics;
 
-public class PollutionBarSprite implements Sprite, Controller.PollutionListener {
+public class PollutionBarSprite implements Sprite, RequestListener {
 
     private static final Color SEA_BLUE = new Color(0x3399ff);
 
@@ -16,8 +16,11 @@ public class PollutionBarSprite implements Sprite, Controller.PollutionListener 
     }
 
     @Override
-    public void handlePollutionChange(int pollutionLevel) {
-        this.pollutionLevel = pollutionLevel;
+    public void handleRequest(Request request){
+        switch (request.getRequestedAction()){
+            case UPDATE_POLLUTION:
+                this.pollutionLevel = (Integer) request.getSpecifics();
+        }
     }
 
     @Override

@@ -5,18 +5,9 @@ import java.util.ArrayList;
 
 public class View extends JPanel implements RequestListener{
 	// define size of game
-<<<<<<< HEAD
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
-=======
-	private final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
-	private final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
-	
-	private final static int progressBarXPosition = FRAME_WIDTH / 32;
-	private final static int progressBarYPosition = FRAME_HEIGHT / 32;
-	private final static int progressBarHeight = FRAME_HEIGHT / 24;
->>>>>>> alpha
-	
+
 	private final static int SCOREXPOS = FRAME_WIDTH * 17 / 20; //Position the Score relative to the frame
 	private final static int SCOREYPOS = FRAME_HEIGHT / 32;
 	

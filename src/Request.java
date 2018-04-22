@@ -3,7 +3,8 @@ public class Request<D> {
     public enum ActionType{
         ADD,
         REMOVE,
-        UPDATE;
+        UPDATE_POLLUTION,
+        UPDATE_SCORE;
     }
 
     private D specifics;

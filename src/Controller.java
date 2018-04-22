@@ -37,8 +37,8 @@ public class Controller implements ActionListener {
                            model.getMaxPollutionLevel(),
                            progressBarHeight),
                 model.getCurrentPollutionLevel());
-        model.setPollutionListener(pollutionBar);
         view.addSprite(pollutionBar);
+        requests.addListener(pollutionBar);
 
 		initTimer();
 	}
@@ -81,30 +81,6 @@ public class Controller implements ActionListener {
 		updater.stop();
 		view.endGame();
 	}
-
-	public class AddedEntityListener {
-
-		public void handleAddedEntity(Entity entity){
-			Sprite sprite = new EntitySprite(
-			    SpriteImage.valueOf(entity.getClass().getName().toUpperCase()),
-                entity.getBounds());
-
-		    view.addSprite(sprite);
-		}
-	}
-
-	public class RemovedEntityListener {
-		public void handleRemovedEntity(Entity entity){
-		    for (BoundsListener listener: entity.getBounds().getListeners()) {
-		        if (listener instanceof Sprite)
-		            view.removeSprite((Sprite) listener);
-            }
-		}
-	}
-
-	public interface PollutionListener {
-	    void handlePollutionChange(int pollutionLevel);
-    }
 }
 
 

@@ -12,7 +12,7 @@ public class TrashSpawner {
     private Timer spawnTimer;
 
 
-    TrashSpawner(RequestQueue spawnRequests, int spawnHeight, int spawnWidth, int interval){
+    TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
         //Interval is how long it talks between spawns
         this.interval = interval;
         factory = new TrashFactory();
@@ -24,7 +24,7 @@ public class TrashSpawner {
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
                 int randX = (int)(Math.random()*spawnWidth);
-                spawnRequests.postRequest(new Request<>(
+                requestQueue.postRequest(new Request<>(
                         factory.createEasyTrash(randX,10),
                         Request.ActionType.ADD));
             }
