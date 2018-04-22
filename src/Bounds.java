@@ -23,6 +23,10 @@ public class Bounds extends Rectangle {
         listeners.remove(listener);
     }
 
+    public Collection<BoundsListener> getListeners() {
+        return listeners;
+    }
+
     @Override
     public void translate(int dx, int dy){
         for(BoundsListener boundsListener: listeners)

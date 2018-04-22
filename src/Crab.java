@@ -50,11 +50,6 @@ public class Crab extends Player {
 
 	}
 
-	@Override
-	protected Sprite initSprite(){
-	    return new Sprite(SpriteImage.CRAB, getBounds());
-    }
-
 	public void doAction(){
 		if (hasTrash) {
 			// Fire trash

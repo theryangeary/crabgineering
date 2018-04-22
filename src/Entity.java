@@ -26,8 +26,6 @@ abstract class Entity implements BoundsListener {
 		maxHealth = 10;
 	}
 
-	abstract Sprite initSprite();
-
 	void setWorldBounds(Bounds worldBounds){
 		this.worldBounds = new Rectangle(worldBounds);
 		worldBounds.addListener(this);

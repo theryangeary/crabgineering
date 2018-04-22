@@ -14,11 +14,6 @@ public class Trash extends Entity {
         this.pollutionCount = pollutionCount;
     }
 
-    @Override
-    protected Sprite initSprite(){
-        return new Sprite(SpriteImage.TRASH, getBounds());
-    }
-
     public int getPollutionCount(){
         return pollutionCount;
     }

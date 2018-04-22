@@ -8,14 +8,8 @@ public class View extends JPanel {
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 	
-	private final static int progressBarXPosition = 30;
-	private final static int progressBarYPosition = 30;
-	private final static int progressBarHeight = 40;
-
 	private ArrayList<Sprite> sprites;
 
-	private final int pollutionBarScalar = 2;
-	
 	JButton pauseButton;
 	JPanel buttonPanel;
 
@@ -70,24 +64,11 @@ public class View extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		if (null != Controller.getModel()) { /// Only paint if a model exists
+		//if (null != Controller.getModel()) { /// Only paint if a model exists
 			for (Sprite sprite: sprites) {
 				sprite.draw(g);
 			}
 
-			g.setColor(Color.black);
-			g.fillRect(progressBarXPosition,
-					progressBarYPosition,
-					pollutionBarScalar * Controller.getModel().getMaxPollutionLevel(),
-					progressBarHeight);
-			
-			Color seaBlue = new Color(0x3399ff);
-			
-			g.setColor(seaBlue);
-			g.fillRect(progressBarXPosition,
-					progressBarYPosition,
-					pollutionBarScalar * Controller.getModel().getCurrentPollutionLevel(),
-					progressBarHeight);
-		}
+		//}
 	}
 }

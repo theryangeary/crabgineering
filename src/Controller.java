@@ -11,14 +11,6 @@ public class Controller implements ActionListener {
 	private Timer updater;
 	private static double FRAMERATE = 144;
 	
-	public static Model getModel() {
-		return model;
-	}
-	
-	public static View getView() {
-		return view;
-	}
-	
 	/**
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main
@@ -30,6 +22,19 @@ public class Controller implements ActionListener {
                           new RemovedEntityListener());
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 		view.setButtonListener(this);
+
+		int progressBarXPosition = 30;
+        int progressBarYPosition = 30;
+        int progressBarHeight = 40;
+        PollutionBarSprite pollutionBar = new PollutionBarSprite(
+                new Rectangle(progressBarXPosition,
+                           progressBarYPosition,
+                           model.getMaxPollutionLevel(),
+                           progressBarHeight),
+                model.getCurrentPollutionLevel());
+        model.setPollutionListener(pollutionBar);
+        view.addSprite(pollutionBar);
+
 		initTimer();
 	}
 	
@@ -69,7 +74,7 @@ public class Controller implements ActionListener {
 	public class AddedEntityListener {
 
 		public void handleAddedEntity(Entity entity){
-			Sprite sprite = new Sprite(
+			Sprite sprite = new EntitySprite(
 			    SpriteImage.valueOf(entity.getClass().getName().toUpperCase()),
                 entity.getBounds());
 
@@ -79,9 +84,16 @@ public class Controller implements ActionListener {
 
 	public class RemovedEntityListener {
 		public void handleRemovedEntity(Entity entity){
-			view.removeSprite(entity.initSprite());
+		    for (BoundsListener listener: entity.getBounds().getListeners()) {
+		        if (listener instanceof Sprite)
+		            view.removeSprite((Sprite) listener);
+            }
 		}
 	}
+
+	public interface PollutionListener {
+	    void handlePollutionChange(int pollutionLevel);
+    }
 }
 
 

@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class Model {
 	//listeners
-	private final Controller.AddedEntityListener addedEntityListener;
-	private final Controller.RemovedEntityListener removedEntityListener;
+	private Controller.AddedEntityListener addedEntityListener;
+	private Controller.RemovedEntityListener removedEntityListener;
+	private Controller.PollutionListener pollutionListener;
 
 	//constants relevant to simulation's physics
 	private final Bounds worldBounds;
@@ -89,10 +90,15 @@ public class Model {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
+	public void setPollutionListener(Controller.PollutionListener pollutionListener) {
+		this.pollutionListener = pollutionListener;
+	}
+
 	// returns new pollution level
 	int addToPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
+		pollutionListener.handlePollutionChange(currentPollutionLevel);
 		return this.currentPollutionLevel;
 	}
 	
