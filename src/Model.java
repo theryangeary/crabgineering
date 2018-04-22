@@ -1,10 +1,12 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Model {
+public class Model implements RequestListener {
 	//listeners
-	private Controller.AddedEntityListener addedEntityListener;
-	private Controller.RemovedEntityListener removedEntityListener;
+	RequestQueue spriteRequests;
+	//private Controller.AddedEntityListener addedEntityListener;
+	//private Controller.RemovedEntityListener removedEntityListener;
 	private Controller.PollutionListener pollutionListener;
 
 	//constants relevant to simulation's physics
@@ -29,12 +31,19 @@ public class Model {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model(Bounds worldBounds,
-		  Controller.AddedEntityListener addedEntityListener,
-		  Controller.RemovedEntityListener removedEntityListener,
-		  View view) {
+		  //Controller.AddedEntityListener addedEntityListener,
+		  //Controller.RemovedEntityListener removedEntityListener,
+		  RequestQueue spriteRequests) {
 	    this.worldBounds = worldBounds;
-	    this.addedEntityListener = addedEntityListener;
-	    this.removedEntityListener = removedEntityListener;
+	    //this.addedEntityListener = addedEntityListener;
+	    //this.removedEntityListener = removedEntityListener;
+
+	    this.spriteRequests = spriteRequests;
+
+	    //setup the RequestQueue Entities can use to post requests
+		//for the Model
+	    RequestQueue requests = new RequestQueue();
+	    requests.addListener(this::handleRequest);
 
 		//Crab crabby = new Crab(10,10,100,100);
 		//addEntity(crabby);
@@ -45,19 +54,32 @@ public class Model {
 
 		int crabInitialX = 10;
 		int crabInitialY = 10;
-		player = new Crab(crabInitialX, crabInitialY, view);
-		addEntity(player);
+		player = new Crab(crabInitialX, crabInitialY, requests);
 
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
-		spawner = new TrashSpawner(this,
+		spawner = new TrashSpawner(requests,
 				                   spawnHeight,
 				                   (int) worldBounds.getWidth(),
 				                   spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
 	}
-	
+
+	@Override
+	public void handleRequest(Request request) {
+		switch (request.getRequestedAction()){
+			case ADD:
+				if (request.getSpecifics() instanceof Entity)
+					addEntity((Entity) request.getSpecifics());
+				else if (request.getSpecifics() instanceof Sprite)
+					spriteRequests.postRequest(request);
+			case REMOVE:
+				if (request.getSpecifics() instanceof Entity)
+					removeEntity((Entity) request.getSpecifics());
+		}
+	}
+
 	/**
 	 * Update the model, i.e. process any entities in the world for things like GRAVITY
 	 */
@@ -117,13 +139,13 @@ public class Model {
 		entities.add(entity);
 
 		//let the proper listener respond to the Entity being added
-		addedEntityListener.handleAddedEntity(entity);
+		//addedEntityListener.handleAddedEntity(entity);
     }
 
     public void removeEntity(Entity entity) {
 		entities.remove(entity);
 
-		removedEntityListener.handleRemovedEntity(entity);
+		//removedEntityListener.handleRemovedEntity(entity);
 	}
 
 	public Player getPlayer() {

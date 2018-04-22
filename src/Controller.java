@@ -17,10 +17,13 @@ public class Controller implements ActionListener {
 	 */
 	Controller() {
 		view = new View();
+		RequestQueue requestQueue = new RequestQueue();
+		requestQueue.addListener(view::handleRequest);
+
 		model = new Model(new Bounds(View.FRAME_WIDTH, View.FRAME_HEIGHT),
-				          new AddedEntityListener(),
-                          new RemovedEntityListener(),
-                          view);
+				          //new AddedEntityListener(),
+                          //new RemovedEntityListener(),
+                          requestQueue);
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 		view.setButtonListener(this);
 

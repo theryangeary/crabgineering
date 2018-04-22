@@ -12,7 +12,8 @@ abstract class Entity implements BoundsListener {
 	
 	private int currentHealth;
 	private final int maxHealth;
-	
+
+	//TODO: switch to enum flag
 	// States, i.e. booleans that are used to perform actions and check for things
 	private boolean isMovingRight = false;
 	private boolean isMovingLeft = false;

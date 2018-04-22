@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class View extends JPanel {
+public class View extends JPanel implements RequestListener{
 	// define size of game
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
@@ -55,6 +55,18 @@ public class View extends JPanel {
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void handleRequest(Request request) {
+		switch (request.getRequestedAction()){
+			case ADD:
+				if (request.getSpecifics() instanceof Sprite)
+					addSprite((Sprite) request.getSpecifics());
+			case REMOVE:
+				if (request.getSpecifics() instanceof Sprite)
+					removeSprite((Sprite) request.getSpecifics());
+		}
 	}
 
 	public void addSprite(Sprite sprite){
