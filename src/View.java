@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class View extends JPanel {
 	// define size of game
@@ -56,7 +56,7 @@ public class View extends JPanel {
 	private void initJFrame() {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
-		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
+		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
