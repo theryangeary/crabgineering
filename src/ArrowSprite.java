@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class ArrowSprite extends EntitySprite {
     private double theta;
-    private boolean is_visible = true;
+    private boolean is_visible = false;
 
     ArrowSprite(Bounds bounds){
         super(SpriteImage.ARROW, bounds);
@@ -20,28 +20,26 @@ public class ArrowSprite extends EntitySprite {
     }
 
     @Override
-    public BufferedImage getImage(){
-        //create transform
-        AffineTransform transform = new AffineTransform();
-        BufferedImage image = super.getImage();
-        transform.rotate(theta,
-                        image.getWidth()/2,
-                        image.getHeight()/2);
-
-        //create operation to actually transform an image
-        AffineTransformOp op = new AffineTransformOp(
-                transform,
-                AffineTransformOp.TYPE_BILINEAR);
-
-        //actually rotate the image
-        BufferedImage rotatedImage = op.filter(image, null);
-        return rotatedImage;
-    }
-
-    @Override
     public void draw(Graphics g){
         if (is_visible){
-            super.draw(g);
+            //get the old transform
+            Graphics2D g2d = (Graphics2D) g;
+            AffineTransform oldTransf = g2d.getTransform();
+
+            //grab the unrotated image
+            BufferedImage image = super.getImage();
+
+            //create transform
+            AffineTransform transform = new AffineTransform();
+            transform.rotate(theta,
+                    getBounds().getWidth()/2 + getBounds().getX(),
+                    getBounds().getHeight()/2 + getBounds().getY());
+            g2d.setTransform(transform);
+
+            //draw the image
+            super.draw(g2d);
+
+            g2d.setTransform(oldTransf);
         }
     }
 }

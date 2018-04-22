@@ -15,6 +15,10 @@ public class EntitySprite implements Sprite, BoundsListener {
         bounds.addListener(this);
     }
 
+    protected Rectangle getBounds(){
+        return bounds;
+    }
+
     protected BufferedImage getImage(){
         return spriteImage.getImage();
     }
@@ -30,11 +34,13 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     public void draw(Graphics g){
+        Rectangle rectangle = getBounds();
+
         g.drawImage(getImage(),
-                (int) bounds.getX(),
-                (int) bounds.getY(),
-                (int) bounds.getWidth(),
-                (int) bounds.getHeight(),
+                (int) rectangle.getX(),
+                (int) rectangle.getY(),
+                (int) rectangle.getWidth(),
+                (int) rectangle.getHeight(),
                 //a BufferedImage won't change while
                 //the image is being loaded, so null
                 //will work for our observer
