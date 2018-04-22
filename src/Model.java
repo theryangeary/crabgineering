@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Model {
 	//listeners
@@ -58,7 +57,7 @@ public class Model {
 	}
 	
 	/**
-	 * Update the model, i.e. process any entities in the world for things like gravity
+	 * Update the model, i.e. process any entities in the world for things like GRAVITY
 	 */
 	public void update() {
 		for (Entity entity : entities) {
@@ -70,7 +69,7 @@ public class Model {
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
 				if (player.intersects(trash)) {
-					player.touchTrash((Trash) trash);
+					player.touchTrash(trash);
 				}
 
 				for (Trash tt : thrownTrash) {
