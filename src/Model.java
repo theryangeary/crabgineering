@@ -28,12 +28,8 @@ public class Model implements RequestListener {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model(Bounds worldBounds,
-		  //Controller.AddedEntityListener addedEntityListener,
-		  //Controller.RemovedEntityListener removedEntityListener,
 		  RequestQueue requestQueue) {
 	    this.worldBounds = worldBounds;
-	    //this.addedEntityListener = addedEntityListener;
-	    //this.removedEntityListener = removedEntityListener;
 
 	    this.requestQueue = requestQueue;
 
@@ -41,12 +37,19 @@ public class Model implements RequestListener {
 		//for the Model
 	    requestQueue.addListener(this::handleRequest);
 
-		//Crab crabby = new Crab(10,10,100,100);
-		//addEntity(crabby);
-		TrashFactory t = new TrashFactory();
-
-		//addEntity(t.createEasyTrash(400,50));
-		//addEntity(t.createHardTrash(300,0));
+		reset();
+	}
+	
+	/**
+	 * Resets the model
+	 */
+	public void reset() {
+		entities.clear();
+		thrownTrash.clear();
+		toRemove.clear();
+		player = null;
+		spawner = null;
+		
 		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
 		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
 		player = new Crab(crabInitialX, crabInitialY, requestQueue);
@@ -60,6 +63,7 @@ public class Model implements RequestListener {
 				                   spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
+		score = 0;
 	}
 
 	@Override
@@ -117,8 +121,7 @@ public class Model implements RequestListener {
 	}
 
 	void endGame() {
-
-		//TODO
+		//reset();
 		Controller.endGame();
 	}
 
