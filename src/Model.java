@@ -99,7 +99,7 @@ public class Model {
 	void endGame() {
 		
 		//TODO
-		
+		Controller.endGame();
 	}
 	
 	public void incrementScore(int modifier) {
