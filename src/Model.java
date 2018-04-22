@@ -5,8 +5,6 @@ import java.util.ArrayList;
 public class Model implements RequestListener {
 	//listeners
 	RequestQueue requestQueue;
-	//private Controller.AddedEntityListener addedEntityListener;
-	//private Controller.RemovedEntityListener removedEntityListener;
 	private Controller.PollutionListener pollutionListener;
 
 	//constants relevant to simulation's physics
@@ -23,7 +21,7 @@ public class Model implements RequestListener {
 	
 	//game variables
 	private int currentPollutionLevel = 0;
-	private final int MAXPOLLUTIONLEVEL = 100;
+	static final int MAXPOLLUTIONLEVEL = 100;
 	private final int SCOREINCREMENT = 10;
 	private int score = 0;
 	
@@ -47,15 +45,14 @@ public class Model implements RequestListener {
 		//Crab crabby = new Crab(10,10,100,100);
 		//addEntity(crabby);
 		TrashFactory t = new TrashFactory();
-
+		
 		//addEntity(t.createEasyTrash(400,50));
 		//addEntity(t.createHardTrash(300,0));
-
-		int crabInitialX = 10;
-		int crabInitialY = 10;
+		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
+		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
 		player = new Crab(crabInitialX, crabInitialY, requestQueue);
 		addEntity(player);
-
+		
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
 		spawner = new TrashSpawner(requestQueue,
@@ -95,7 +92,7 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-
+				
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
@@ -121,8 +118,9 @@ public class Model implements RequestListener {
 	}
 	
 	void endGame() {
-		//TODO
 		
+		//TODO
+		Controller.endGame();
 	}
 	
 	public void incrementScore(int modifier) {
@@ -132,7 +130,7 @@ public class Model implements RequestListener {
 	public int getScore() {
 		return score;
 	}
-
+	
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
@@ -160,7 +158,7 @@ public class Model implements RequestListener {
 				));
 		}
 	}
-
+	
 	public Player getPlayer() {
 		return player;
 	}
@@ -169,11 +167,11 @@ public class Model implements RequestListener {
 		this.pollutionListener = pollutionListener;
 	}
 
-	public ArrayList<Trash> getThrownTrash(){
+	public ArrayList<Trash> getThrownTrash() {
 		return thrownTrash;
 	}
 	
-	public ArrayList<Trash> toRemove(){
+	public ArrayList<Trash> toRemove() {
 		return toRemove;
 	}
 	
@@ -189,7 +187,7 @@ public class Model implements RequestListener {
 	}
 	
 	int getMaxPollutionLevel() {
-		return this.MAXPOLLUTIONLEVEL;
+		return MAXPOLLUTIONLEVEL;
 	}
 	
 	Rectangle getWorldBounds() {

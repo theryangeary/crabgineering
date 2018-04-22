@@ -5,6 +5,7 @@ abstract class Player extends Entity {
 	public enum PlayerAction{
 		MOVE_LEFT,
 		MOVE_RIGHT,
+		STOP,
 		SPECIAL_ACTION,
 		ROTATE_TRASH_LEFT,
 		ROTATE_TRASH_RIGHT;
