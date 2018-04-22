@@ -1,13 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class View extends JPanel {
 	// define size of game
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 	
+	private final static int SCOREXPOS = 580;
+	private final static int SCOREYPOS = 15;
+	
+	int score = 0;
+
 	private ArrayList<Sprite> sprites;
 
 	JButton pauseButton;
@@ -44,7 +49,7 @@ public class View extends JPanel {
 	private void initJFrame() {
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
-		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
+		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
@@ -60,6 +65,11 @@ public class View extends JPanel {
 		sprites.remove(sprite);
 	}
 	
+	public void update(int score) {
+		this.score = score;
+		this.repaint();
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -68,7 +78,10 @@ public class View extends JPanel {
 			for (Sprite sprite: sprites) {
 				sprite.draw(g);
 			}
-
-		//}
+			// SCORE
+			g.setColor(Color.black);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+			g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
+		}
 	}
 }

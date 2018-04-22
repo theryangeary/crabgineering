@@ -1,6 +1,6 @@
 public class Crab extends Player {
 	
-	private static final int SPEED = 10;
+	private static final double SPEED = 10;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 
@@ -18,12 +18,13 @@ public class Crab extends Player {
 		arrowSprite = new ArrowSprite(getBounds());
 		view.addSprite(arrowSprite);
 	}
-
+	
 	@Override
 	public void processInput(String action) {
-		switch(PlayerAction.valueOf(action)){
+		switch (PlayerAction.valueOf(action)) {
 			case MOVE_LEFT:
 				translate(-SPEED, 0);
+<<<<<<< HEAD
                 if (hasTrash) {
                     heldTrash.translate(-SPEED, 0);
                 }
@@ -48,8 +49,9 @@ public class Crab extends Player {
                 }
                 break;
 		}
-
+		
 	}
+<<<<<<< HEAD
 
 	public void doAction(){
 		if (hasTrash) {
@@ -58,6 +60,7 @@ public class Crab extends Player {
 			heldTrash.throwTrash(
 					(int) Math.round(THROW_SPEED * Math.cos(throwAngle)),
 					(int) Math.round(THROW_SPEED * Math.sin(throwAngle)));
+			//Controller.getModel().getThrownTrash().add(heldTrash);
 			heldTrash = null;
 			hasTrash = false;
 			arrowSprite.setVisiblity(false);
@@ -78,4 +81,10 @@ public class Crab extends Player {
 		throwAngle += dTheta;
 		arrowSprite.rotate(dTheta);
 	}
+
+	/*
+	public boolean arrowVisible() {
+		return arrowVisible;
+	}
+	*/
 }
