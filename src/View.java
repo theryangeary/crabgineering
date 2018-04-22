@@ -8,22 +8,23 @@ public class View extends JPanel {
 	private final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	private final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 	
-	private final static int progressBarXPosition = 30;
-	private final static int progressBarYPosition = 30;
-	private final static int progressBarHeight = 40;
+	private final static int progressBarXPosition = FRAME_WIDTH / 32;
+	private final static int progressBarYPosition = FRAME_HEIGHT / 32;
+	private final static int progressBarHeight = FRAME_HEIGHT / 24;
 	
-	private final static int SCOREXPOS = 580;
-	private final static int SCOREYPOS = 40;
+	private final static int SCOREXPOS = FRAME_WIDTH * 7 / 8; //Position the Score relative to the frame
+	private final static int SCOREYPOS = FRAME_HEIGHT / 32;
 	
 	int score = 0;
 	int pollution = 0;
-
+	
 	private ArrayList<Sprite> sprites;
-
-	private final int pollutionBarScalar = 2;
+	
+	private final int pollutionBarScalar = FRAME_WIDTH / Model.MAXPOLLUTIONLEVEL / 3;
 	
 	JButton pauseButton;
 	JPanel buttonPanel;
+
 	JLabel endScore = new JLabel("");
 	JFrame frame;
 
@@ -67,12 +68,12 @@ public class View extends JPanel {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-
-	public void addSprite(Sprite sprite){
+	
+	public void addSprite(Sprite sprite) {
 		sprites.add(sprite);
 	}
-
-	public void removeSprite(Sprite sprite){
+	
+	public void removeSprite(Sprite sprite) {
 		sprites.remove(sprite);
 	}
 	
@@ -93,19 +94,19 @@ public class View extends JPanel {
 		super.paintComponent(g);
 		
 		if (null != Controller.getModel()) { /// Only paint if a model exists
-			for (Sprite sprite: sprites) {
+			for (Sprite sprite : sprites) {
 				sprite.draw(g);
 			}
 			
-			// POLLUTION BAR
+			// POLLUTION BAR BASE
 			g.setColor(Color.black);
 			g.fillRect(progressBarXPosition,
 					progressBarYPosition,
 					pollutionBarScalar * Controller.getModel().getMaxPollutionLevel(),
 					progressBarHeight);
 			
+			// POLLUTION BAR FILLED
 			Color seaBlue = new Color(0x3399ff);
-			
 			g.setColor(seaBlue);
 			g.fillRect(progressBarXPosition,
 					progressBarYPosition,

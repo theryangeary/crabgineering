@@ -1,6 +1,6 @@
 public class Crab extends Player {
 	
-	private static final double SPEED = 10;
+	private static final double SPEED = 4;
 	private double currentSpeed = 0;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
@@ -11,8 +11,8 @@ public class Crab extends Player {
 	private final int ROTATE_SPEED = 10;
 	private int xThrow = 0;
 	private int yThrow = THROW_SPEED;
-	private static final int CRAB_WIDTH = 100;
-	private static final int CRAB_HEIGHT = 100;
+	public static final int CRAB_WIDTH = 100;
+	public static final int CRAB_HEIGHT = 100;
 	
 	
 	public Crab(int x, int y) {

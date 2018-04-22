@@ -5,7 +5,7 @@ public class Model {
 	//listeners
 	private final Controller.AddedEntityListener addedEntityListener;
 	private final Controller.RemovedEntityListener removedEntityListener;
-
+	
 	//constants relevant to simulation's physics
 	private final Rectangle worldBounds; //should ALWAYS == the worldBounds of the corresponding entities
 	private final double GRAVITY = .05;
@@ -20,7 +20,7 @@ public class Model {
 	
 	//game variables
 	private int currentPollutionLevel = 0;
-	private final int MAXPOLLUTIONLEVEL = 100;
+	static final int MAXPOLLUTIONLEVEL = 100;
 	private final int SCOREINCREMENT = 10;
 	private int score = 0;
 	
@@ -28,30 +28,30 @@ public class Model {
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
 	 */
 	Model(Rectangle worldBounds,
-		  Controller.AddedEntityListener addedEntityListener,
-		  Controller.RemovedEntityListener removedEntityListener) {
-	    this.worldBounds = worldBounds;
-	    this.addedEntityListener = addedEntityListener;
-	    this.removedEntityListener = removedEntityListener;
-
+	      Controller.AddedEntityListener addedEntityListener,
+	      Controller.RemovedEntityListener removedEntityListener) {
+		this.worldBounds = worldBounds;
+		this.addedEntityListener = addedEntityListener;
+		this.removedEntityListener = removedEntityListener;
+		
 		//Crab crabby = new Crab(10,10,100,100);
 		//addEntity(crabby);
 		TrashFactory t = new TrashFactory();
-
+		
 		//addEntity(t.createEasyTrash(400,50));
 		//addEntity(t.createHardTrash(300,0));
-
-		int crabInitialX = 10;
-		int crabInitialY = 10;
+		
+		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
+		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
 		player = new Crab(crabInitialX, crabInitialY);
 		addEntity(player);
-
+		
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
 		spawner = new TrashSpawner(this,
-				                   spawnHeight,
-				                   (int) worldBounds.getWidth(),
-				                   spawnInterval);
+				spawnHeight,
+				(int) worldBounds.getWidth(),
+				spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
 	}
@@ -71,7 +71,7 @@ public class Model {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-
+				
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
@@ -97,6 +97,7 @@ public class Model {
 	}
 	
 	void endGame() {
+		
 		//TODO
 		Controller.endGame();
 	}
@@ -108,31 +109,31 @@ public class Model {
 	public int getScore() {
 		return score;
 	}
-
+	
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
 		entity.handleBeingAddedTo(this);
 		entities.add(entity);
-
+		
 		//let the proper listener respond to the Entity being added
 		addedEntityListener.handleAddedEntity(entity);
-    }
-
-    public void removeEntity(Entity entity) {
+	}
+	
+	public void removeEntity(Entity entity) {
 		entities.remove(entity);
-
+		
 		removedEntityListener.handleRemovedEntity(entity);
 	}
-
+	
 	public Player getPlayer() {
 		return player;
 	}
 	
-	public ArrayList<Trash> getThrownTrash(){
+	public ArrayList<Trash> getThrownTrash() {
 		return thrownTrash;
 	}
 	
-	public ArrayList<Trash> toRemove(){
+	public ArrayList<Trash> toRemove() {
 		return toRemove;
 	}
 	
@@ -147,7 +148,7 @@ public class Model {
 	}
 	
 	int getMaxPollutionLevel() {
-		return this.MAXPOLLUTIONLEVEL;
+		return MAXPOLLUTIONLEVEL;
 	}
 	
 	Rectangle getWorldBounds() {
