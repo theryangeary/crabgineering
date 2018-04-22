@@ -7,8 +7,8 @@ public class PollutionBarSprite implements Sprite, RequestListener {
     private static final Color SEA_BLUE = new Color(0x3399ff);
 
     private Rectangle maxArea;
-    private static final double POLLUTION_BAR_SCALAR = 2;
     private int pollutionLevel;
+    private int POLLUTION_BAR_SCALAR = 2;
 
     public PollutionBarSprite(Rectangle maxArea, int pollutionLevel) {
         this.maxArea = maxArea;
@@ -19,7 +19,6 @@ public class PollutionBarSprite implements Sprite, RequestListener {
     public void handleRequest(Request request){
         switch (request.getRequestedAction()){
             case UPDATE_POLLUTION:
-                System.out.println("pollution update");
                 this.pollutionLevel = (int) request.getSpecifics();
         }
     }

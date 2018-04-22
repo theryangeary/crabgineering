@@ -20,7 +20,7 @@ public class Model implements RequestListener {
 
 	//game variables
 	private int currentPollutionLevel = 0;
-	static final int MAXPOLLUTIONLEVEL = 100;
+	static final int MAX_POLLUTION_LEVEL = 100;
 	private final int SCOREINCREMENT = 10;
 	private int score = 0;
 
@@ -121,7 +121,7 @@ public class Model implements RequestListener {
 		toRemove.clear();
 
 		// Check end game
-		if (currentPollutionLevel == MAXPOLLUTIONLEVEL) {
+		if (currentPollutionLevel == MAX_POLLUTION_LEVEL) {
 			endGame();
 		}
 
@@ -191,7 +191,7 @@ public class Model implements RequestListener {
 	}
 	
 	int getMaxPollutionLevel() {
-		return MAXPOLLUTIONLEVEL;
+		return MAX_POLLUTION_LEVEL;
 	}
 	
 	Rectangle getWorldBounds() {
