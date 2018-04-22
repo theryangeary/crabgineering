@@ -13,9 +13,10 @@ public class Crab extends Player {
 	private static final int CRAB_WIDTH = 100;
 	private static final int CRAB_HEIGHT = 100;
 
-	public Crab(int x, int y) {
+	public Crab(int x, int y, View view) {
 		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
 		arrowSprite = new ArrowSprite(getBounds());
+		view.addSprite(arrowSprite);
 	}
 
 	@Override

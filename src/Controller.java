@@ -19,7 +19,8 @@ public class Controller implements ActionListener {
 		view = new View();
 		model = new Model(new Bounds(View.FRAME_WIDTH, View.FRAME_HEIGHT),
 				          new AddedEntityListener(),
-                          new RemovedEntityListener());
+                          new RemovedEntityListener(),
+                          view);
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 		view.setButtonListener(this);
 

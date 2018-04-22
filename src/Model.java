@@ -26,7 +26,8 @@ public class Model {
 	 */
 	Model(Bounds worldBounds,
 		  Controller.AddedEntityListener addedEntityListener,
-		  Controller.RemovedEntityListener removedEntityListener) {
+		  Controller.RemovedEntityListener removedEntityListener,
+		  View view) {
 	    this.worldBounds = worldBounds;
 	    this.addedEntityListener = addedEntityListener;
 	    this.removedEntityListener = removedEntityListener;
@@ -40,7 +41,7 @@ public class Model {
 
 		int crabInitialX = 10;
 		int crabInitialY = 10;
-		player = new Crab(crabInitialX, crabInitialY);
+		player = new Crab(crabInitialX, crabInitialY, view);
 		addEntity(player);
 
 		int spawnInterval = 2 * 1000;
