@@ -1,11 +1,9 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class Model {
+public class Model implements EstuaryEventSource, EstuaryEventListener{
 	//listeners
-	private Controller.AddedEntityListener addedEntityListener;
-	private Controller.RemovedEntityListener removedEntityListener;
-	private Controller.PollutionListener pollutionListener;
 
 	//constants relevant to simulation's physics
 	private final Bounds worldBounds;
