@@ -6,10 +6,10 @@ public class Crab extends Player {
 	
 	private SpriteImage arrow = SpriteImage.ARROW; // Image of the trajectory arrow
 	private boolean arrowVisible = false;
-	private final int THROWSPEED = -25;
-	private final int ROTATESPEED = 10;
+	private final int THROW_SPEED = -25;
+	private final int ROTATE_SPEED = 10;
     private int xThrow = 0;
-    private int yThrow = THROWSPEED;
+    private int yThrow = THROW_SPEED;
 	private static final int CRAB_WIDTH = 100;
 	private static final int CRAB_HEIGHT = 100;
 	
@@ -38,12 +38,12 @@ public class Crab extends Player {
                 break;
             case ROTATE_TRASH_LEFT:
                 if (hasTrash) {
-                    rotateArrow(-ROTATESPEED);
+                    rotateArrow(-ROTATE_SPEED);
                 }
                 break;
             case ROTATE_TRASH_RIGHT:
                 if (hasTrash) {
-                    rotateArrow(ROTATESPEED);
+                    rotateArrow(ROTATE_SPEED);
                 }
                 break;
 		}
