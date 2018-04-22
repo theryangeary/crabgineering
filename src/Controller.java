@@ -8,7 +8,7 @@ public class Controller implements ActionListener {
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
 	private static GameKeyBindings keyBindings;
-	private Timer updater;
+	private static Timer updater;
 	private static double FRAMERATE = 144;
 	
 	public static Model getModel() {
@@ -64,6 +64,11 @@ public class Controller implements ActionListener {
 	 */
 	public void start() {
 		EventQueue.invokeLater(() -> updater.start());
+	}
+	
+	public static void endGame() {
+		updater.stop();
+		view.endGame();
 	}
 
 	public class AddedEntityListener {

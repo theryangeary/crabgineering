@@ -103,11 +103,10 @@ public class Model {
 		}
 		
 	}
-	
+
 	void endGame() {
-		
-		reset();
-		
+		//reset();
+		Controller.endGame();
 	}
 	
 	public void incrementScore(int modifier) {
