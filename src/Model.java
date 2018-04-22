@@ -11,18 +11,18 @@ public class Model {
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
 	
+	//game variables
+	private int currentPollutionLevel;
+	static final int MAXPOLLUTIONLEVEL = 10;
+	private final int SCOREINCREMENT = 10;
+	private int score;
+	
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> toRemove = new ArrayList<>();
-	
-	//game variables
-	private int currentPollutionLevel = 0;
-	static final int MAXPOLLUTIONLEVEL = 100;
-	private final int SCOREINCREMENT = 10;
-	private int score = 0;
 	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
@@ -34,12 +34,18 @@ public class Model {
 		this.addedEntityListener = addedEntityListener;
 		this.removedEntityListener = removedEntityListener;
 		
-		//Crab crabby = new Crab(10,10,100,100);
-		//addEntity(crabby);
-		TrashFactory t = new TrashFactory();
-		
-		//addEntity(t.createEasyTrash(400,50));
-		//addEntity(t.createHardTrash(300,0));
+		reset();
+	}
+	
+	/**
+	 * Resets the model
+	 */
+	public void reset() {
+		entities.clear();
+		thrownTrash.clear();
+		toRemove.clear();
+		player = null;
+		spawner = null;
 		
 		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
 		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
@@ -52,8 +58,10 @@ public class Model {
 				spawnHeight,
 				(int) worldBounds.getWidth(),
 				spawnInterval);
+		
 		spawner.start();
 		currentPollutionLevel = 0;
+		score = 0;
 	}
 	
 	/**
@@ -95,10 +103,9 @@ public class Model {
 		}
 		
 	}
-	
+
 	void endGame() {
-		
-		//TODO
+		//reset();
 		Controller.endGame();
 	}
 	

@@ -41,7 +41,7 @@ public class View extends JPanel {
 		buttonPanel = new JPanel();
 		pauseButton = new JButton("Pause");
 		buttonPanel.add(pauseButton);
-		buttonPanel.setBackground(Color.cyan);
+		buttonPanel.setBackground(new Color(0, true));
 		buttonPanel.setFocusable(false);
 		pauseButton.setFocusable(false);
 	}
@@ -61,7 +61,7 @@ public class View extends JPanel {
 	private void initJFrame() {
 		frame = new JFrame();
 		frame.getContentPane().add(this);
-		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
+		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
