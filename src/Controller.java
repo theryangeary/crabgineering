@@ -10,22 +10,23 @@ public class Controller implements ActionListener {
 	private static GameKeyBindings keyBindings;
 	private Timer updater;
 	private static double FRAMERATE = 144;
+
+	private RequestQueue requests;
 	
 	/**
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main
 	 */
 	Controller() {
-		view = new View();
-		RequestQueue requestQueue = new RequestQueue();
-		requestQueue.addListener(view::handleRequest);
+		requests = new RequestQueue();
+
+		view = new View(requests);
+		view.setButtonListener(this);
 
 		model = new Model(new Bounds(View.FRAME_WIDTH, View.FRAME_HEIGHT),
-				          //new AddedEntityListener(),
-                          //new RemovedEntityListener(),
-                          requestQueue);
+				requests);
+
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
-		view.setButtonListener(this);
 
 		int progressBarXPosition = 30;
         int progressBarYPosition = 30;
@@ -54,6 +55,7 @@ public class Controller implements ActionListener {
 				//UPDATE VIEW BASED ON UPDATED ENTITIES
 				model.update();
 				view.update(model.getScore()); //Update with current score and pollution, then repaint
+				requests.fulfillAllRequests();
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);

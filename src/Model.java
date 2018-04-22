@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Model implements RequestListener {
 	//listeners
-	RequestQueue spriteRequests;
+	RequestQueue requestQueue;
 	//private Controller.AddedEntityListener addedEntityListener;
 	//private Controller.RemovedEntityListener removedEntityListener;
 	private Controller.PollutionListener pollutionListener;
@@ -33,17 +33,16 @@ public class Model implements RequestListener {
 	Model(Bounds worldBounds,
 		  //Controller.AddedEntityListener addedEntityListener,
 		  //Controller.RemovedEntityListener removedEntityListener,
-		  RequestQueue spriteRequests) {
+		  RequestQueue requestQueue) {
 	    this.worldBounds = worldBounds;
 	    //this.addedEntityListener = addedEntityListener;
 	    //this.removedEntityListener = removedEntityListener;
 
-	    this.spriteRequests = spriteRequests;
+	    this.requestQueue = requestQueue;
 
 	    //setup the RequestQueue Entities can use to post requests
 		//for the Model
-	    RequestQueue requests = new RequestQueue();
-	    requests.addListener(this::handleRequest);
+	    requestQueue.addListener(this::handleRequest);
 
 		//Crab crabby = new Crab(10,10,100,100);
 		//addEntity(crabby);
@@ -54,11 +53,12 @@ public class Model implements RequestListener {
 
 		int crabInitialX = 10;
 		int crabInitialY = 10;
-		player = new Crab(crabInitialX, crabInitialY, requests);
+		player = new Crab(crabInitialX, crabInitialY, requestQueue);
+		addEntity(player);
 
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
-		spawner = new TrashSpawner(requests,
+		spawner = new TrashSpawner(requestQueue,
 				                   spawnHeight,
 				                   (int) worldBounds.getWidth(),
 				                   spawnInterval);
@@ -72,11 +72,11 @@ public class Model implements RequestListener {
 			case ADD:
 				if (request.getSpecifics() instanceof Entity)
 					addEntity((Entity) request.getSpecifics());
-				else if (request.getSpecifics() instanceof Sprite)
-					spriteRequests.postRequest(request);
+				break;
 			case REMOVE:
 				if (request.getSpecifics() instanceof Entity)
 					removeEntity((Entity) request.getSpecifics());
+				break;
 		}
 	}
 
@@ -138,14 +138,27 @@ public class Model implements RequestListener {
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
 
-		//let the proper listener respond to the Entity being added
-		//addedEntityListener.handleAddedEntity(entity);
-    }
+		//create the corresponding sprite
+		Sprite sprite = new EntitySprite(entity);
+
+		//and post a request for it to be added to the view
+		requestQueue.postRequest(new Request<>(
+    			sprite,
+				Request.ActionType.ADD
+		));
+	}
 
     public void removeEntity(Entity entity) {
 		entities.remove(entity);
 
-		//removedEntityListener.handleRemovedEntity(entity);
+		//remove any Sprites that are following the entity's movements
+		for (BoundsListener listener: entity.getBounds().getListeners()) {
+			if (listener instanceof Sprite)
+				requestQueue.postRequest(new Request<>(
+						(Sprite) listener,
+						Request.ActionType.REMOVE
+				));
+		}
 	}
 
 	public Player getPlayer() {

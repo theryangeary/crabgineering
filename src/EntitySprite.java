@@ -5,6 +5,11 @@ public class EntitySprite implements Sprite, BoundsListener {
     private final SpriteImage spriteImage;
     private Rectangle bounds;
 
+    public EntitySprite(Entity entity){
+        this(SpriteImage.valueOf(entity.getClass().getName().toUpperCase()),
+             entity.getBounds());
+    }
+
     EntitySprite(SpriteImage spriteImage, Bounds bounds) {
         this.spriteImage = spriteImage;
         setBounds(bounds);

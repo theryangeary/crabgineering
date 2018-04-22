@@ -18,11 +18,12 @@ public class View extends JPanel implements RequestListener{
 	JButton pauseButton;
 	JPanel buttonPanel;
 
-	View() {
+	View(RequestQueue requests) {
 		initButton();
 		initJFrame();
 		this.setBackground(Color.cyan);
 		sprites = new ArrayList<>();
+		requests.addListener(this::handleRequest);
 	}
 	
 	private void initButton() {
@@ -63,9 +64,12 @@ public class View extends JPanel implements RequestListener{
 			case ADD:
 				if (request.getSpecifics() instanceof Sprite)
 					addSprite((Sprite) request.getSpecifics());
+				break;
 			case REMOVE:
+				System.out.println("View removing sprite");
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
+				break;
 		}
 	}
 

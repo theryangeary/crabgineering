@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +22,10 @@ public class RequestQueue extends ArrayDeque<Request> {
 
     public void fulfillAllRequests(){
         while (peek() != null) { //while there's still Requests in the queue
-            Request request = poll();
             //get the next request
+            Request request = poll();
 
+            //inform all listeners about the request
             for (RequestListener listener : listeners) {
                 listener.handleRequest(request);
             }
