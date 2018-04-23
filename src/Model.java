@@ -105,10 +105,9 @@ public class Model implements RequestListener {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
 						toRemove.add(tt);
-						requestQueue.postRequest(new Request<>(
-								3,
-								Request.RequestType.UPDATE_SCORE
-						));
+						requestQueue.postRequest(
+								RequestFactory.createUpdateScoreRequest(3)
+						);
 					}
 				}
 			}
