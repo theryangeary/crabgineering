@@ -20,7 +20,7 @@ public class Model implements RequestListener {
 	//game variables
 	private int currentPollutionLevel = 0;
 	static final int MAX_POLLUTION_LEVEL = 100;
-	private final int SCOREINCREMENT = 10;
+	static final int SCORE_INCREMENT = 10;
 	private int score = 0;
 
 	/**
@@ -133,7 +133,7 @@ public class Model implements RequestListener {
 	}
 
 	public void incrementScore(int modifier) {
-		score += SCOREINCREMENT * modifier;
+		score += SCORE_INCREMENT * modifier;
 	}
 
 	public int getScore() {
@@ -172,14 +172,6 @@ public class Model implements RequestListener {
 		return player;
 	}
 
-	public ArrayList<Trash> getThrownTrash() {
-		return thrownTrash;
-	}
-	
-	public ArrayList<Trash> toRemove() {
-		return toRemove;
-	}
-	
 	// returns new pollution level
 	int incrementPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;

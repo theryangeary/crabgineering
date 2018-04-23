@@ -8,9 +8,7 @@ public class View extends JPanel implements RequestListener{
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 
-	private final static int SCOREXPOS = FRAME_WIDTH * 17 / 20; //Position the Score relative to the frame
-	private final static int SCOREYPOS = FRAME_HEIGHT / 32;
-	
+
 	int score = 0;
 
 	private ArrayList<Sprite> sprites;
@@ -74,8 +72,6 @@ public class View extends JPanel implements RequestListener{
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
 				break;
-			case UPDATE_SCORE:
-				score += (int) request.getSpecifics();
 		}
 	}
 
@@ -104,10 +100,5 @@ public class View extends JPanel implements RequestListener{
         for (Sprite sprite: sprites) {
             sprite.draw(g);
         }
-
-        // SCORE
-        g.setColor(Color.black);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g.drawString("Score: " + score, SCOREXPOS, SCOREYPOS);
 	}
 }

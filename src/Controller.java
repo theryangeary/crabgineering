@@ -28,6 +28,7 @@ public class Controller implements ActionListener {
 
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 
+		//setup pollutionBar
 		int progressBarXPosition = 30;
         int progressBarYPosition = 30;
         int progressBarHeight = 40;
@@ -39,6 +40,11 @@ public class Controller implements ActionListener {
                 model.getCurrentPollutionLevel());
         view.addSprite(pollutionBar);
         requests.addListener(pollutionBar);
+
+        //setup score
+		ScoreSprite scoreSprite = new ScoreSprite();
+		view.addSprite(scoreSprite);
+		requests.addListener(scoreSprite);
 
 		initTimer();
 	}
