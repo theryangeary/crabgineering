@@ -84,6 +84,7 @@ public class View extends JPanel {
 	}
 	
 	public void endGame() {
+		pauseButton.setEnabled(false);
 		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);
 		endScore.setVisible(true);

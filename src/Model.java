@@ -109,6 +109,7 @@ public class Model {
 		
 		//TODO
 		Controller.endGame();
+		spawner.stop();
 	}
 	
 	public void incrementScore(int modifier) {
