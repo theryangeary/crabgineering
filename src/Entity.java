@@ -1,60 +1,81 @@
 import java.awt.*;
 
-abstract class Entity {
-	private final int initialWidth = 10;
-	private final int initialHeight = 10;
-	private final int initialX = 10;
-	private final int initialY = 10;
-	private Rectangle bounds;
-	private double xVel;
-	private double yVel;
-	private final double gravity = .1;
-	private final String imageReference;
+abstract class Entity implements BoundsListener {
+
+	//note: x counts pixels left of the left-hand side of the window
+	//      y counts pixels down from the top of the window
+	private final Bounds bounds;
+	private double dx;
+	private double dy;
+
+	private Rectangle worldBounds;
+	
 	private int currentHealth;
 	private final int maxHealth;
+
+	//TODO: switch to enum flag
+	// States, i.e. booleans that are used to perform actions and check for things
+	private boolean isMovingRight = false;
+	private boolean isMovingLeft = false;
+	private boolean isMovingUp = false;
+	private boolean isMovingDown = false;
+	private boolean isAlive = true;
+	protected boolean isAtBottom = false;
+	private boolean isStopped = false;
+	
+	
+	//double trashRate = 1;
 	
 	Entity(int x, int y, int width, int height) {
-		bounds = new Rectangle(x, y, width, height);
-		xVel = 0;
-		yVel = 0;
-		imageReference = "TEST_IMAGE";
+		bounds = new Bounds(x, y, width, height);
+		dx = 0;
+		dy = 0;
 		currentHealth = 10;
 		maxHealth = 10;
 	}
-	
-	/**
-	 * Given an x and a y, move directly to that position on the screen
-	 *
-	 * @param x
-	 * @param y
-	 */
-	void moveDirectly(double x, double y) {
-		this.setBounds(new Rectangle((int) x, (int) y, bounds.width, bounds.height));
+
+	void setWorldBounds(Bounds worldBounds){
+		this.worldBounds = new Rectangle(worldBounds);
+		worldBounds.addListener(this);
 	}
 	
-	/**
-	 * Given an x and a y, move relative to your current position
-	 *
-	 * @param x
-	 * @param y
-	 */
-	void moveRelatively(double x, double y) {
-		this.setBounds(new Rectangle((int) (bounds.x + x), (int) (bounds.y + y), bounds.width, bounds.height));
+	//Rectangle wrapper functions
+	Bounds getBounds() {
+		return bounds;
+	}
+	
+	void setLocation(int x, int y) {
+		bounds.setLocation(x, y);
+	}
+	
+	void translate(double dx, double dy) {
+		
+		// Bounds check
+		if (leftBound() && dx < 0) {
+			dx = 0;
+		}
+		if (rightBound() && dx > 0) {
+			dx = 0;
+		}
+		if (topBound() && dy < 0) {
+			dy = 0;
+		}
+		if (bottomBound() && dy > 0) {
+			dy = 0;
+			isAtBottom = true;
+		}
+		
+		bounds.translate((int) dx, (int) dy);
 	}
 	
 	boolean intersects(Entity e) {
-		boolean result;
-		if (this.bounds.intersects(e.bounds)) {
-			System.out.printf("%s intersects %s!", this, e);
-			result = true;
-		} else {
-			result = false;
-		}
-		return result;
+		return this.bounds.intersects(e.bounds);
 	}
 	
-	Rectangle getBounds() {
-		return bounds;
+	
+	void setSpeed(int dx, int dy) {
+		this.dx = dx;
+		this.dy = dy;
 	}
 	
 	int getCurrentHealth() {
@@ -65,35 +86,52 @@ abstract class Entity {
 		return maxHealth;
 	}
 	
-	public void draw(Graphics g, Rectangle bounds) {
-		g.setColor(Color.MAGENTA);
-		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+	boolean atBottom() {
+		return isAtBottom;
+	}
+
+	void update(double gravity, double drag) {
+		//apply gravity
+		if (!isStopped) {
+			dy += gravity - dy * drag;
+			
+			translate((int) dx, (int) dy);
+		}
+
+//		if (isMovingDown){
+//			translate(SPEED);
+//		}
 	}
 	
-	void setBounds(Rectangle bounds) {
-		this.bounds = bounds;
+	void toggleStopped() {
+		isStopped = !isStopped;
 	}
 	
-	void update() {
-		yVel += gravity;
-		
-		double newX = bounds.x + xVel;
-		double newY = bounds.y + yVel;
-		
-		if (bounds.y + bounds.height >= Controller.getModel().getWorldHeight() - bounds.getHeight()) {
-			if (yVel > 0) {
-				yVel = 0;
-				newY = Controller.getModel().getWorldHeight() - bounds.height;
-			}
-		}
-		
-		if (bounds.x + bounds.width >= Controller.getModel().getWorldWidth() - bounds.getWidth()) {
-			if (xVel > 0) {
-				xVel = 0;
-				newX = Controller.getModel().getWorldWidth() - bounds.width;
-			}
-		}
-		
-		this.moveDirectly(newX, newY);
+	
+	// The Bound functions return true if the Entity is at the specified bounds
+	boolean leftBound() {
+		return !worldBounds.contains(bounds.getMinX(), bounds.getCenterY());
+	}
+	
+	boolean rightBound() {
+		return !worldBounds.contains(bounds.getMaxX(), bounds.getCenterY());
+	}
+	
+	boolean topBound() {
+		return !worldBounds.contains(bounds.getCenterX(), bounds.getMinY());
+	}
+	
+	boolean bottomBound() {
+		return !worldBounds.contains(bounds.getCenterX(), bounds.getMaxY());
+	}
+
+	@Override
+	public void handleSetLocation(int x, int y) {
+		worldBounds.setLocation(x, y);
+	}
+
+	@Override
+	public void handleTranslate(int dx, int dy) {
+		worldBounds.translate(dx, dy);
 	}
 }

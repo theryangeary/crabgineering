@@ -7,43 +7,59 @@ import java.awt.event.KeyEvent;
  */
 public class GameKeyBindings {
 	
-	private JPanel panel;
-	private Model model;
-	
-	public GameKeyBindings(JPanel panel, Model model) {
-		this.panel = panel;
-		this.model = model;
-		setKeyBindings(panel);
+	public GameKeyBindings(JPanel panel, Player player) {
+		setKeyBindings(panel, player);
 	}
 	
-	private void setKeyBindings(JPanel panel) {
-		
+	private void setKeyBindings(JPanel panel, Player player) {
+		//get the necessary maps from the JPanel
 		ActionMap actionMap = panel.getActionMap();
 		int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
 		InputMap inputMap = panel.getInputMap(condition);
 		
-		String vkLeft = "VK_LEFT";
-		String vkRight = "VK_RIGHT";
-		String vkSpace = "VK_SPACE";
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), vkLeft);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), vkRight);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), vkSpace);
+		//map KeyStrokes to player actions
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0),
+				Player.PlayerAction.MOVE_LEFT);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0),
+				Player.PlayerAction.MOVE_RIGHT);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),
+				Player.PlayerAction.SPECIAL_ACTION);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0),
+				Player.PlayerAction.ROTATE_TRASH_LEFT);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
+				Player.PlayerAction.ROTATE_TRASH_RIGHT);
+
+		//when left or right is released, stop
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true),
+				Player.PlayerAction.STOP);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true),
+				Player.PlayerAction.STOP);
 		
-		actionMap.put(vkLeft, new KeyAction(vkLeft));
-		actionMap.put(vkRight, new KeyAction(vkRight));
-		actionMap.put(vkSpace, new KeyAction(vkSpace));
+		actionMap.put(Player.PlayerAction.MOVE_LEFT,
+				new KeyAction(Player.PlayerAction.MOVE_LEFT.name(), player));
+		actionMap.put(Player.PlayerAction.MOVE_RIGHT,
+				new KeyAction(Player.PlayerAction.MOVE_RIGHT.name(), player));
+		actionMap.put(Player.PlayerAction.SPECIAL_ACTION,
+				new KeyAction(Player.PlayerAction.SPECIAL_ACTION.name(), player));
+		actionMap.put(Player.PlayerAction.ROTATE_TRASH_LEFT,
+				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
+		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
+				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
+		actionMap.put(Player.PlayerAction.STOP,
+				new KeyAction(Player.PlayerAction.STOP.name(), player));
 	}
 	
 	private class KeyAction extends AbstractAction {
+		private Player player;
 		
-		public KeyAction(String command) {
+		public KeyAction(String command, Player player) {
 			putValue(ACTION_COMMAND_KEY, command);
+			this.player = player;
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.getPlayer().processInput(e.getActionCommand());
-			
+			player.processInput(e.getActionCommand());
 		}
 		
 	}

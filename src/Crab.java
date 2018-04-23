@@ -1,44 +1,104 @@
-import java.awt.*;
-
 public class Crab extends Player {
-	int movementIncrement = 5;
 	
-	public Crab(int x, int y, int width, int height) {
-		super(x, y, width, height);
+	private static final double SPEED = 4;
+	private double currentSpeed = 0;
+	private boolean hasTrash = false;
+	private Trash heldTrash = null;
+
+	private RequestQueue requestQueue;
+	private ArrowSprite arrowSprite;
+
+	private double throwAngle = Math.PI/2;
+	private final int THROW_SPEED = -25;
+	private final double ROTATE_SPEED = Math.PI/32;
+
+	static final int CRAB_WIDTH = 100;
+	static final int CRAB_HEIGHT = 100;
+
+	public Crab(int x, int y, RequestQueue requestQueue) {
+		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
+		this.requestQueue = requestQueue;
+
+		arrowSprite = new ArrowSprite(getBounds());
+		requestQueue.postRequest(
+				RequestFactory.createAddSpriteRequest(arrowSprite)
+		);
 	}
 	
-	/**
-	 * @param action
-	 */
 	@Override
 	public void processInput(String action) {
-		switch (action) {
-			case "VK_LEFT":
-				super.moveRelatively(-movementIncrement, 0);
+		switch (PlayerAction.valueOf(action)) {
+            case ROTATE_TRASH_LEFT:
+                if (hasTrash) {
+                    rotateThrow(-ROTATE_SPEED);
+                }
+                break;
+            case ROTATE_TRASH_RIGHT:
+                if (hasTrash) {
+                    rotateThrow(ROTATE_SPEED);
+                }
+                break;
+			case MOVE_LEFT:
+				currentSpeed = -SPEED;
 				break;
-			case "VK_RIGHT":
-				super.moveRelatively(movementIncrement, 0);
+			case MOVE_RIGHT:
+				currentSpeed = SPEED;
 				break;
-			case "VK_SPACE":
+			case STOP:
+				currentSpeed = 0;
+				break;
+			case SPECIAL_ACTION:
 				doAction();
 				break;
+		}
+		
+	}
+
+	@Override
+	public void update(double gravity, double drag){
+		super.update(gravity,drag);
+		translate(currentSpeed,0);
+		if (hasTrash) {
+			heldTrash.setLocation(
+					(int) getBounds().getX(),
+					(int) getBounds().getY());
 		}
 	}
 	
 	public void doAction() {
-		//TODO
-		System.out.println("SUPER SPECIAL ABILITY");
+		if (hasTrash) {
+			// Fire trash
+			heldTrash.toggleStopped();
+			heldTrash.throwTrash(
+					(int) Math.round(THROW_SPEED * Math.cos(throwAngle)),
+					(int) Math.round(THROW_SPEED * Math.sin(throwAngle)));
+			requestQueue.postRequest(
+					RequestFactory.createAddThrownTrashRequest(heldTrash));
+
+			heldTrash = null;
+			hasTrash = false;
+			arrowSprite.setVisiblity(false);
+		}
 	}
 	
-	//	@Override
-	//	public boolean intersects(Entity e) {
-	//		return false;
-	//		//TODO
-	//	}
-	
-	@Override
-	public void draw(Graphics g, Rectangle bounds) {
-		g.setColor(Color.red);
-		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+	public void touchTrash(Trash t) {
+		if (!t.atBottom() && !t.thrown() && !hasTrash) {
+			hasTrash = true;
+			t.toggleStopped();
+			arrowSprite.setVisiblity(true);
+			heldTrash = t;
+		}
 	}
+	
+	public void rotateThrow(double dTheta) {
+		// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
+		throwAngle += dTheta;
+		arrowSprite.rotate(dTheta);
+	}
+
+	/*
+	public boolean arrowVisible() {
+		return arrowVisible;
+	}
+	*/
 }

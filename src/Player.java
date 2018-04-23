@@ -1,15 +1,21 @@
+import java.awt.*;
+
 abstract class Player extends Entity {
-//
-//	int initialWidth = 20;
-//
-//	@Override
-//	private int getInitialWidth() {
-//		return initialWidth;
-//	}
-	
-	Player(int x, int y, int width, int height) {
-		super(x, y, width, height);
+
+	public enum PlayerAction{
+		MOVE_LEFT,
+		MOVE_RIGHT,
+		STOP,
+		SPECIAL_ACTION,
+		ROTATE_TRASH_LEFT,
+		ROTATE_TRASH_RIGHT;
+	}
+
+	Player(int x, int y, int width, int height){
+		super(x,y,width,height);
 	}
 	
 	abstract public void processInput(String action);
+	
+	abstract public void touchTrash(Trash t);
 }
