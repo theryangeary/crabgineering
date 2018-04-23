@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 /*
     TrashSpawner psudorandomly adds different types of trash on random places on the screen.
@@ -23,9 +22,11 @@ public class TrashSpawner {
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
                 int randX = (int)(Math.random()*spawnWidth);
-                requestQueue.postRequest(new Request<>(
-                        factory.createEasyTrash(randX,10),
-                        Request.ActionType.ADD));
+                requestQueue.postRequest(
+                        RequestFactory.createAddEntityRequest(
+                                factory.createEasyTrash(randX,10)
+                        )
+                );
             }
         };
 

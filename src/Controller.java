@@ -54,8 +54,8 @@ public class Controller implements ActionListener {
 				//UPDATE ENTITIES
 				//UPDATE VIEW BASED ON UPDATED ENTITIES
 				model.update();
-				view.update(model.getScore()); //Update with current score and pollution, then repaint
 				requests.fulfillAllRequests();
+				view.update();
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);

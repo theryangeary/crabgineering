@@ -66,16 +66,16 @@ public class View extends JPanel implements RequestListener{
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
-			case ADD:
+			case ADD_SPRITE:
 				if (request.getSpecifics() instanceof Sprite)
 					addSprite((Sprite) request.getSpecifics());
 				break;
-			case REMOVE:
+			case REMOVE_SPRITE:
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
 				break;
 			case UPDATE_SCORE:
-				score = (int) request.getSpecifics();
+				score += (int) request.getSpecifics();
 		}
 	}
 
@@ -87,8 +87,7 @@ public class View extends JPanel implements RequestListener{
 		sprites.remove(sprite);
 	}
 	
-	public void update(int score) {
-		this.score = score;
+	public void update() {
 		this.repaint();
 	}
 	

@@ -5,6 +5,7 @@ public class Crab extends Player {
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 
+	private RequestQueue requestQueue;
 	private ArrowSprite arrowSprite;
 
 	private double throwAngle = Math.PI/2;
@@ -16,10 +17,12 @@ public class Crab extends Player {
 
 	public Crab(int x, int y, RequestQueue requestQueue) {
 		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
+		this.requestQueue = requestQueue;
+
 		arrowSprite = new ArrowSprite(getBounds());
-		requestQueue.postRequest(new Request<>(
-				arrowSprite,
-				Request.ActionType.ADD));
+		requestQueue.postRequest(
+				RequestFactory.createAddSpriteRequest(arrowSprite)
+		);
 	}
 	
 	@Override
@@ -69,7 +72,9 @@ public class Crab extends Player {
 			heldTrash.throwTrash(
 					(int) Math.round(THROW_SPEED * Math.cos(throwAngle)),
 					(int) Math.round(THROW_SPEED * Math.sin(throwAngle)));
-			//Controller.getModel().getThrownTrash().add(heldTrash);
+			requestQueue.postRequest(
+					RequestFactory.createAddThrownTrashRequest(heldTrash));
+
 			heldTrash = null;
 			hasTrash = false;
 			arrowSprite.setVisiblity(false);

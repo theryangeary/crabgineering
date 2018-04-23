@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -69,16 +68,18 @@ public class Model implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
-			case ADD:
-				if (request.getSpecifics() instanceof Entity)
-					addEntity((Entity) request.getSpecifics());
+			case ADD_ENTITY:
+                addEntity((Entity) request.getSpecifics());
 				break;
-			case REMOVE:
-				if (request.getSpecifics() instanceof Entity)
-					removeEntity((Entity) request.getSpecifics());
+			case REMOVE_ENTITY:
+                removeEntity((Entity) request.getSpecifics());
+				break;
+			case ADD_THROWN_TRASH:
+				thrownTrash.add((Trash) request.getSpecifics());
 				break;
 			case UPDATE_SCORE:
 				incrementScore((int) request.getSpecifics());
+				break;
 			case UPDATE_POLLUTION:
 				incrementPollutionLevel((int) request.getSpecifics());
 		}
@@ -106,7 +107,7 @@ public class Model implements RequestListener {
 						toRemove.add(tt);
 						requestQueue.postRequest(new Request<>(
 								3,
-								Request.ActionType.UPDATE_SCORE
+								Request.RequestType.UPDATE_SCORE
 						));
 					}
 				}
@@ -149,10 +150,9 @@ public class Model implements RequestListener {
 		Sprite sprite = new EntitySprite(entity);
 
 		//and post a request for it to be added to the view
-		requestQueue.postRequest(new Request<>(
-    			sprite,
-				Request.ActionType.ADD
-		));
+		requestQueue.postRequest(
+				RequestFactory.createAddSpriteRequest(sprite)
+		);
 	}
 
     public void removeEntity(Entity entity) {
@@ -161,10 +161,11 @@ public class Model implements RequestListener {
 		//remove any Sprites that are following the entity's movements
 		for (BoundsListener listener: entity.getBounds().getListeners()) {
 			if (listener instanceof Sprite)
-				requestQueue.postRequest(new Request<>(
-						(Sprite) listener,
-						Request.ActionType.REMOVE
-				));
+				requestQueue.postRequest(
+						RequestFactory.createRemoveSpriteRequest(
+								(Sprite) listener
+						)
+				);
 		}
 	}
 	

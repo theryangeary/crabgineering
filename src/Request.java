@@ -1,25 +1,28 @@
-public class Request<D> {
+public class Request<R> {
 
-    public enum ActionType{
-        ADD,
-        REMOVE,
+    public enum RequestType {
+        ADD_ENTITY,
+        REMOVE_ENTITY,
+        ADD_THROWN_TRASH,
+        ADD_SPRITE,
+        REMOVE_SPRITE,
         UPDATE_POLLUTION,
         UPDATE_SCORE;
     }
 
-    private D specifics;
-    private ActionType requestedAction;
+    private R specifics;
+    private RequestType requestedAction;
 
-    public Request(D specifics, ActionType requestedAction){
+    public Request(R specifics, RequestType requestedAction){
         this.specifics = specifics;
         this.requestedAction = requestedAction;
     }
 
-    public D getSpecifics() {
+    public R getSpecifics() {
         return specifics;
     }
 
-    public ActionType getRequestedAction() {
+    public RequestType getRequestedAction() {
         return requestedAction;
     }
 }

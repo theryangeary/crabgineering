@@ -28,23 +28,20 @@ public class Trash extends Entity {
 			dx = 0;
 		}
 		if (topBound() && dy < 0) {
-			requestQueue.postRequest(new Request<>(
-					this,
-					Request.ActionType.REMOVE
-			));
-			requestQueue.postRequest(new Request<>(
-					1,
-					Request.ActionType.UPDATE_SCORE
-			));
+			requestQueue.postRequest(
+					RequestFactory.createRemoveEntityRequest(this)
+			);
+			requestQueue.postRequest(
+					RequestFactory.createUpdateScoreRequest(1)
+			);
 		}
 		if (bottomBound() && dy > 0) {
 			dy = 0;
 			isAtBottom = true;
 			if (!addedPollution) {
-				requestQueue.postRequest(new Request<>(
-						POLLUTION,
-						Request.ActionType.UPDATE_POLLUTION
-				));
+				requestQueue.postRequest(
+						RequestFactory.createUpdatePollutionRequest(POLLUTION)
+				);
 				addedPollution = true;
 			}
 		}
