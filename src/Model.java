@@ -128,7 +128,8 @@ public class Model implements RequestListener {
 	}
 
 	void endGame() {
-		//reset();
+		spawner.stop();
+		//reset()
 		Controller.endGame();
 	}
 
