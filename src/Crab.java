@@ -23,6 +23,7 @@ public class Crab extends Player {
 		requestQueue.postRequest(
 				RequestFactory.createAddSpriteRequest(arrowSprite)
 		);
+		requestQueue.addListener(arrowSprite);
 	}
 	
 	@Override

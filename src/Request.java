@@ -7,10 +7,17 @@ public class Request<R> {
         ADD_SPRITE,
         REMOVE_SPRITE,
         UPDATE_POLLUTION,
-        UPDATE_SCORE;
+        UPDATE_SCORE,
+        UPDATE_THROW_ANGLE,
+        TOGGLE_DISPLAY;
     }
 
+    //any extra information that a RequestListener
+    //might need to fulfill the Request
     private R specifics;
+
+    //lets us know what should happen
+    //when the Request is fulfilled
     private RequestType requestedAction;
 
     public Request(R specifics, RequestType requestedAction){
