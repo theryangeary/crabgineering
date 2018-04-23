@@ -56,6 +56,15 @@ public class Model {
 		currentPollutionLevel = 0;
 	}
 	
+	
+	public void trashOn() {
+		spawner.start();
+	}
+	
+	public void trashOff() {
+		spawner.stop();
+	}
+	
 	/**
 	 * Update the model, i.e. process any entities in the world for things like GRAVITY
 	 */

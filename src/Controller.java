@@ -54,8 +54,10 @@ public class Controller implements ActionListener {
 	@Override public void actionPerformed(ActionEvent e) {
 	  if (updater.isRunning()) {
 		updater.stop();
+		model.trashOff();
 	  } else {
 		updater.start();
+		model.trashOn();
 	  }
 	  view.updateButton(updater.isRunning());
 	}
