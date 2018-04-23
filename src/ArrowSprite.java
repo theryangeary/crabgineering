@@ -3,7 +3,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
-public class ArrowSprite extends EntitySprite {
+public class ArrowSprite extends EntitySprite implements RequestListener{
     private double theta;
     private boolean is_visible = false;
 
@@ -17,6 +17,14 @@ public class ArrowSprite extends EntitySprite {
 
     public void rotate(double dTheta){
         theta += dTheta;
+    }
+
+    @Override
+    public void handleRequest(Request request) {
+        switch (request.getRequestedAction()){
+            case UPDATE_THROW_ANGLE:
+                rotate((double) request.getSpecifics());
+        }
     }
 
     @Override

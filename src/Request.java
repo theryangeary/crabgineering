@@ -7,7 +7,9 @@ public class Request<R> {
         ADD_SPRITE,
         REMOVE_SPRITE,
         UPDATE_POLLUTION,
-        UPDATE_SCORE;
+        UPDATE_SCORE,
+        UPDATE_THROW_ANGLE,
+        TOGGLE_DISPLAY;
     }
 
     private R specifics;
