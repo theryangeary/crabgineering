@@ -6,6 +6,7 @@ import java.util.List;
 
 public class RequestQueue extends ArrayDeque<Request> {
 
+    //anything that might fulfill a request from this queue
     private List<RequestListener> listeners;
 
     public RequestQueue (){
@@ -16,10 +17,12 @@ public class RequestQueue extends ArrayDeque<Request> {
         listeners.add(listener);
     }
 
+    //adds a new request to the queue
     public void postRequest(Request request){
         add(request);
     }
 
+    //hands the requests on the queue over to the listeners to fulfill them
     public void fulfillAllRequests(){
         while (peek() != null) { //while there's still Requests in the queue
             //get the next request

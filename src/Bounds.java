@@ -2,6 +2,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/*
+ * Just a rectangle with listeners, which it informs every time it moves
+ */
 public class Bounds extends Rectangle {
     private Collection<BoundsListener> listeners;
 
@@ -30,14 +33,20 @@ public class Bounds extends Rectangle {
     @Override
     public void translate(int dx, int dy){
         for(BoundsListener boundsListener: listeners)
+            //inform all our listeners about where we're moving
             boundsListener.handleTranslate(dx, dy);
+
+        //then move normally
         super.translate(dx, dy);
     }
 
     @Override
     public void setLocation(int x, int y){
         for (BoundsListener boundsListener: listeners)
+            //inform all our listeners about where we're moving
             boundsListener.handleSetLocation(x, y);
+
+        //then move normally
         super.setLocation(x, y);
     }
 }

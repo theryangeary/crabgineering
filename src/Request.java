@@ -12,7 +12,12 @@ public class Request<R> {
         TOGGLE_DISPLAY;
     }
 
+    //any extra information that a RequestListener
+    //might need to fulfill the Request
     private R specifics;
+
+    //lets us know what should happen
+    //when the Request is fulfilled
     private RequestType requestedAction;
 
     public Request(R specifics, RequestType requestedAction){
