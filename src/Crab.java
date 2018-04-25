@@ -1,3 +1,8 @@
+/**
+ * A class that is specific to a Crab. A Crab is a type of Player.
+ * @author Zelinsky
+ * @see Player
+ */
 public class Crab extends Player {
 	
 	private static final double SPEED = 4;
@@ -12,9 +17,23 @@ public class Crab extends Player {
 	private final int THROW_SPEED = -25;
 	private final double ROTATE_SPEED = Math.PI/32;
 
+	/**
+	 * The width of the Crab
+	 */
 	static final int CRAB_WIDTH = 100;
+	/**
+	 * The height of the Crab
+	 */
 	static final int CRAB_HEIGHT = 100;
 
+	/**
+	 * Constructs the Crab by calling Player's Constructor super(x, y, CRAB_WIDTH, CRAB_HEIGHT) and assigning the Crab
+	 * its Sprite and RequestQueue.
+	 * @param x The x position of the Crab
+	 * @param y The y position of the Crab
+	 * @param requestQueue The RequestQueue of the Crab
+	 * @see Player
+	 */
 	public Crab(int x, int y, RequestQueue requestQueue) {
 		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
 		this.requestQueue = requestQueue;
@@ -25,6 +44,9 @@ public class Crab extends Player {
 		);
 	}
 	
+	/**
+	 * Handles how a Crab processes an action command.
+	 */
 	@Override
 	public void processInput(String action) {
 		switch (PlayerAction.valueOf(action)) {
@@ -54,6 +76,13 @@ public class Crab extends Player {
 		
 	}
 
+	/**
+	 * Updates the position of the Crab's Bounds based on gravity, drag, and the Crab's speed.
+	 * Calls Entity's update(gravity, drag) and handles heldTrash movement..
+	 * @param gravity The gravity applied to the Entity
+	 * @param drag The drag applied to the Entity
+	 * @see Entity
+	 */
 	@Override
 	public void update(double gravity, double drag){
 		super.update(gravity,drag);
@@ -65,7 +94,12 @@ public class Crab extends Player {
 		}
 	}
 	
+	/**
+	 * Performs the Crab's special action by throwing currently held Trash.
+	 */
 	public void doAction() {
+		SoundEffect.SHOOT.play();
+
 		if (hasTrash) {
 			// Fire trash
 			heldTrash.toggleStopped();
@@ -75,14 +109,20 @@ public class Crab extends Player {
 			requestQueue.postRequest(
 					RequestFactory.createAddThrownTrashRequest(heldTrash));
 
+
 			heldTrash = null;
 			hasTrash = false;
 			arrowSprite.setVisiblity(false);
 		}
 	}
 	
+	/**
+	 * Handles how Trash and Crab respond to intersecting with a Trash.
+	 * @param t The Trash the Crab intersects with
+	 */
 	public void touchTrash(Trash t) {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
+			SoundEffect.GET_TRASH.play();
 			hasTrash = true;
 			t.toggleStopped();
 			arrowSprite.setVisiblity(true);
@@ -90,6 +130,10 @@ public class Crab extends Player {
 		}
 	}
 	
+	/**
+	 * Rotates the Crab's throwing direction for throwing Trash by the degrees specified
+	 * @param dTheta The degrees to rotate the throwing direction by
+	 */
 	public void rotateThrow(double dTheta) {
 		// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
 		throwAngle += dTheta;
