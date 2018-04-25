@@ -1,3 +1,4 @@
+import javax.sound.sampled.SourceDataLine;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -104,6 +105,9 @@ public class Model implements RequestListener {
 				break;
 			case UPDATE_POLLUTION:
 				incrementPollutionLevel((int) request.getSpecifics());
+				break;
+			case PLAY_SOUND:
+				System.out.println(request.getSpecifics());
 		}
 	}
 
@@ -127,6 +131,7 @@ public class Model implements RequestListener {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
 						toRemove.add(tt);
+						SoundEffect.TRASH_HIT.play();
 						requestQueue.postRequest(
 								RequestFactory.createUpdateScoreRequest(3)
 						);
@@ -164,6 +169,7 @@ public class Model implements RequestListener {
 	 * @param modifier The amount to multiply SCORE_INCREMENT by
 	 */
 	public void incrementScore(int modifier) {
+		SoundEffect.POINTS.play();
 		score += SCORE_INCREMENT * modifier;
 	}
 

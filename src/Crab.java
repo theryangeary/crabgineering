@@ -98,6 +98,8 @@ public class Crab extends Player {
 	 * Performs the Crab's special action by throwing currently held Trash.
 	 */
 	public void doAction() {
+		SoundEffect.SHOOT.play();
+
 		if (hasTrash) {
 			// Fire trash
 			heldTrash.toggleStopped();
@@ -106,6 +108,7 @@ public class Crab extends Player {
 					(int) Math.round(THROW_SPEED * Math.sin(throwAngle)));
 			requestQueue.postRequest(
 					RequestFactory.createAddThrownTrashRequest(heldTrash));
+
 
 			heldTrash = null;
 			hasTrash = false;
@@ -119,6 +122,7 @@ public class Crab extends Player {
 	 */
 	public void touchTrash(Trash t) {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
+			SoundEffect.GET_TRASH.play();
 			hasTrash = true;
 			t.toggleStopped();
 			arrowSprite.setVisiblity(true);
