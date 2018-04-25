@@ -1,9 +1,9 @@
-import javax.sound.sampled.SourceDataLine;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
+ *
  * @author Zelinsky
  * @see Controller
  */
@@ -39,7 +39,8 @@ public class Model implements RequestListener {
 	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
 	 * Starts a new game by calling reset().
-	 * @param worldBounds The Bounds of the world
+	 *
+	 * @param worldBounds  The Bounds of the world
 	 * @param requestQueue The RequestQueue for the Model
 	 * @see Bounds
 	 * @see RequestQueue
@@ -86,8 +87,9 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Handles how a Request is processed.
-	 * @see Request
+	 *
 	 * @param request
+	 * @see Request
 	 */
 	@Override
 	public void handleRequest(Request request) {
@@ -154,9 +156,10 @@ public class Model implements RequestListener {
 		}
 		
 	}
-
+	
 	/**
 	 * Handles what should happen when the game ends. Tells the Controller the game is over by calling Controller.endGame().
+	 *
 	 * @see Controller
 	 */
 	void endGame() {
@@ -164,9 +167,10 @@ public class Model implements RequestListener {
 		//reset()
 		Controller.endGame();
 	}
-
+	
 	/**
 	 * Increments the score by the (modifier * SCORE_INCREMENT).
+	 *
 	 * @param modifier The amount to multiply SCORE_INCREMENT by
 	 */
 	public void incrementScore(int modifier) {
@@ -176,15 +180,17 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the current score
+	 *
 	 * @return The current score
 	 */
 	public int getScore() {
 		return score;
 	}
-
+	
 	/**
 	 * Adds an Entity to the Entities that will be processed during update().
 	 * The Entity will also be added to the View through the requestQueue.
+	 *
 	 * @param entity The Entity to add to the Model
 	 */
 	public void addEntity(Entity entity) {
@@ -200,13 +206,14 @@ public class Model implements RequestListener {
 				RequestFactory.createAddSpriteRequest(sprite)
 		);
 	}
-
+	
 	/**
 	 * Removes an Entity from the Entities that will be processed during update().
 	 * The Entity will also be removed from the view through the requestQueue.
+	 *
 	 * @param entity The Entity to be removed from the Model
 	 */
-    public void removeEntity(Entity entity) {
+	public void removeEntity(Entity entity) {
 		entities.remove(entity);
 		
 		//remove any Sprites that are following the entity's movements
@@ -220,16 +227,18 @@ public class Model implements RequestListener {
 		}
 	}
 	
-    /**
-     * Returns the current player.
-     * @return The current player
-     */
+	/**
+	 * Returns the current player.
+	 *
+	 * @return The current player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
-
+	
 	/**
 	 * Increments the current pollution level by the specified amount.
+	 *
 	 * @param addition The amount to add to the current pollution level
 	 * @return The new pollution level
 	 */
@@ -241,6 +250,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the current pollution level
+	 *
 	 * @return The current pollution level
 	 */
 	int getCurrentPollutionLevel() {
@@ -249,6 +259,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the maximum pollution level specified by MAX_POLLUTION_LEVEL
+	 *
 	 * @return The amount specified by MAXIMUM_POLLUTION_LEVEL
 	 */
 	int getMaxPollutionLevel() {
@@ -257,6 +268,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the Bounds of the world.
+	 *
 	 * @return The world Bounds
 	 */
 	Rectangle getWorldBounds() {
