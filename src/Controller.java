@@ -28,6 +28,8 @@ public class Controller implements ActionListener {
 
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 
+		SoundEffect.init();
+
 		//setup pollutionBar
 		int progressBarXPosition = 30;
         int progressBarYPosition = 30;
