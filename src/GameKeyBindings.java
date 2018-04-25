@@ -4,13 +4,24 @@ import java.awt.event.KeyEvent;
 
 /**
  * The Game's Key Bindings for Player Movement and Action
+ * @author Zelinsky
  */
 public class GameKeyBindings {
 	
+	/**
+	 * Constructs a GameKeyBindings by calling setKeyBindings(panel, player). Maps the inputs from the panel to the player.
+	 * @param panel The JPanel to get input from
+	 * @param player The Player to modify based on inputs from panel
+	 */
 	public GameKeyBindings(JPanel panel, Player player) {
 		setKeyBindings(panel, player);
 	}
 	
+	/**
+	 * Maps the inputs from panel to player.
+	 * @param panel The JPanel to get input from
+	 * @param player The Player to modify based on inputs from panel
+	 */
 	private void setKeyBindings(JPanel panel, Player player) {
 		//get the necessary maps from the JPanel
 		ActionMap actionMap = panel.getActionMap();
@@ -49,14 +60,27 @@ public class GameKeyBindings {
 				new KeyAction(Player.PlayerAction.STOP.name(), player));
 	}
 	
+	/**
+	 * A type of AbstractAction specifically for key inputs
+	 */
 	private class KeyAction extends AbstractAction {
 		private Player player;
 		
+		/**
+		 * Constructs a KeyAction.
+		 * @param command The command corresponding the the key input
+		 * @param player The Player to modify based on the command
+		 */
 		public KeyAction(String command, Player player) {
 			putValue(ACTION_COMMAND_KEY, command);
 			this.player = player;
 		}
 		
+		/**
+		 * Handles what happens when a key input is registered.
+		 * Calls Player's processInput(e.getActionCommand()).
+		 * @see Player
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			player.processInput(e.getActionCommand());

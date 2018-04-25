@@ -3,6 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A class that controls updates of a View and Model
+ * @author Zelinsky
+ *
+ */
 public class Controller implements ActionListener {
 	
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
@@ -14,8 +19,9 @@ public class Controller implements ActionListener {
 	private RequestQueue requests;
 	
 	/**
+	 * Constructs the Controller.
 	 * Initializes both the view and the model and adds any necessary listeners.
-	 * It's the *real* main
+	 * It's the *real* main.
 	 */
 	Controller() {
 		requests = new RequestQueue();
@@ -70,6 +76,11 @@ public class Controller implements ActionListener {
 		//updater.setDelay();
 	}
 	
+	/**
+	 * Toggles the timer (start/stop) and updates the pauseButton in the view based on the timer's toggle state.
+	 * @param e The ActionEvent passed in when the pasueButton is pressed
+	 * @see View
+	 */
 	@Override public void actionPerformed(ActionEvent e) {
 	  if (updater.isRunning()) {
 		updater.stop();
@@ -78,13 +89,18 @@ public class Controller implements ActionListener {
 	  }
 	  view.updateButton(updater.isRunning());
 	}
+	
 	/**
-	 * Starts the timer
+	 * Starts the timer.
 	 */
 	public void start() {
 		EventQueue.invokeLater(() -> updater.start());
 	}
 	
+	/**
+	 * Stops the timer and sends a message to the view to end the game.
+	 * The model detects the necessary requirements for this method to be called.
+	 */
 	public static void endGame() {
 		updater.stop();
 		view.endGame();
