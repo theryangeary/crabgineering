@@ -19,13 +19,12 @@ import java.net.URL;
 public enum SoundEffect {
     HIT_GROUND("hit_ground.wav"),
     POINTS("points.wav"),
-    SHOOT("shoot.wav"),
     THROW("throw.wav"),
     TRASH_HIT("trash_hit.wav"),
     GET_TRASH("get_trash.wav");
 
     // Nested class for specifying volume
-    public static enum Volume {
+    public enum Volume {
         MUTE, LOW, MEDIUM, HIGH
     }
 

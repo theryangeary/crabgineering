@@ -98,7 +98,6 @@ public class Crab extends Player {
 	 * Performs the Crab's special action by throwing currently held Trash.
 	 */
 	public void doAction() {
-		SoundEffect.SHOOT.play();
 
 		if (hasTrash) {
 			// Fire trash
