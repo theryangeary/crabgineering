@@ -66,6 +66,8 @@ public class Crab extends Player {
 	}
 	
 	public void doAction() {
+		SoundEffect.SHOOT.play();
+
 		if (hasTrash) {
 			// Fire trash
 			heldTrash.toggleStopped();
@@ -75,6 +77,7 @@ public class Crab extends Player {
 			requestQueue.postRequest(
 					RequestFactory.createAddThrownTrashRequest(heldTrash));
 
+
 			heldTrash = null;
 			hasTrash = false;
 			arrowSprite.setVisiblity(false);
@@ -83,6 +86,7 @@ public class Crab extends Player {
 	
 	public void touchTrash(Trash t) {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
+			SoundEffect.GET_TRASH.play();
 			hasTrash = true;
 			t.toggleStopped();
 			arrowSprite.setVisiblity(true);

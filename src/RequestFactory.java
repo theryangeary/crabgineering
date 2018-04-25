@@ -47,4 +47,11 @@ public class RequestFactory {
                 Request.RequestType.UPDATE_SCORE
         );
     }
+
+    public static Request<String> createPlaySoundRequest(String sound){
+        return new Request<>(
+          sound,
+          Request.RequestType.PLAY_SOUND
+        );
+    }
 }

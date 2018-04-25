@@ -2,8 +2,15 @@ public class Trash extends Entity {
 
 	RequestQueue requestQueue;
 
+	public enum TrashType{
+		AGRICULTURAL,
+		INDUSTRIAL,
+		COMMERCIAL;
+	}
+
 	private int pollutionCount;
 	private final int POLLUTION = 5;
+	private TrashType type;
 	
 	private boolean thrown = false;
 	private boolean addedPollution = false;
@@ -39,6 +46,7 @@ public class Trash extends Entity {
 			dy = 0;
 			isAtBottom = true;
 			if (!addedPollution) {
+				SoundEffect.HIT_GROUND.play();
 				requestQueue.postRequest(
 						RequestFactory.createUpdatePollutionRequest(POLLUTION)
 				);

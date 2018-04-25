@@ -7,7 +7,8 @@ public class Request<R> {
         ADD_SPRITE,
         REMOVE_SPRITE,
         UPDATE_POLLUTION,
-        UPDATE_SCORE;
+        UPDATE_SCORE,
+        PLAY_SOUND;
     }
 
     private R specifics;
