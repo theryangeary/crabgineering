@@ -4,38 +4,41 @@ import java.util.ArrayList;
 public class Model implements RequestListener {
 	//listeners
 	RequestQueue requestQueue;
-
+	
 	//constants relevant to simulation's physics
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
-
+	
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> toRemove = new ArrayList<>();
-
+	
 	//game variables
 	private int currentPollutionLevel = 0;
 	static final int MAX_POLLUTION_LEVEL = 100;
 	static final int SCORE_INCREMENT = 10;
 	private int score = 0;
-
+	
 	/**
 	 * Initialize the model, i.e. add any starting enemies and things that start with the world
+	 *
+	 * @param worldBounds
+	 * @param requestQueue
 	 */
 	Model(Bounds worldBounds,
-		  RequestQueue requestQueue) {
-	    this.worldBounds = worldBounds;
-
-	    this.requestQueue = requestQueue;
-
-	    //setup the RequestQueue Entities can use to post requests
+	      RequestQueue requestQueue) {
+		this.worldBounds = worldBounds;
+		
+		this.requestQueue = requestQueue;
+		
+		//setup the RequestQueue Entities can use to post requests
 		//for the Model
-	    requestQueue.addListener(this::handleRequest);
-
+		requestQueue.addListener(this::handleRequest);
+		
 		reset();
 	}
 	
@@ -53,26 +56,29 @@ public class Model implements RequestListener {
 		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
 		player = new Crab(crabInitialX, crabInitialY, requestQueue);
 		addEntity(player);
-
+		
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
 		spawner = new TrashSpawner(requestQueue,
-				                   spawnHeight,
-				                   (int) worldBounds.getWidth(),
-				                   spawnInterval);
+				spawnHeight,
+				(int) worldBounds.getWidth(),
+				spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
 		score = 0;
 	}
-
+	
+	/**
+	 * @param request
+	 */
 	@Override
 	public void handleRequest(Request request) {
-		switch (request.getRequestedAction()){
+		switch (request.getRequestedAction()) {
 			case ADD_ENTITY:
-                addEntity((Entity) request.getSpecifics());
+				addEntity((Entity) request.getSpecifics());
 				break;
 			case REMOVE_ENTITY:
-                removeEntity((Entity) request.getSpecifics());
+				removeEntity((Entity) request.getSpecifics());
 				break;
 			case ADD_THROWN_TRASH:
 				thrownTrash.add((Trash) request.getSpecifics());
@@ -84,7 +90,7 @@ public class Model implements RequestListener {
 				incrementPollutionLevel((int) request.getSpecifics());
 		}
 	}
-
+	
 	/**
 	 * Update the model, i.e. process any entities in the world for things like GRAVITY
 	 */
@@ -92,7 +98,7 @@ public class Model implements RequestListener {
 		for (Entity entity : entities) {
 			entity.update(GRAVITY, DRAG);
 		}
-
+		
 		//Check for player-trash collision and trash-trash collision
 		for (Entity entity : entities) {
 			if (entity instanceof Trash) {
@@ -100,7 +106,7 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-
+				
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
@@ -112,53 +118,68 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-
+		
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
 		for (Trash t : toRemove) {
 			removeEntity(t);
 			thrownTrash.remove(t);
 		}
 		toRemove.clear();
-
+		
 		// Check end game
 		if (currentPollutionLevel == MAX_POLLUTION_LEVEL) {
 			endGame();
 		}
-
+		
 	}
-
+	
 	void endGame() {
 		//reset();
 		Controller.endGame();
 	}
-
+	
+	/**
+	 *
+	 * @param modifier
+	 */
 	public void incrementScore(int modifier) {
 		score += SCORE_INCREMENT * modifier;
 	}
-
+	
+	/**
+	 *
+	 * @return
+	 */
 	public int getScore() {
 		return score;
 	}
-
+	
+	/**
+	 *
+	 * @param entity
+	 */
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
-
+		
 		//create the corresponding sprite
 		Sprite sprite = new EntitySprite(entity);
-
+		
 		//and post a request for it to be added to the view
 		requestQueue.postRequest(
 				RequestFactory.createAddSpriteRequest(sprite)
 		);
 	}
-
-    public void removeEntity(Entity entity) {
+	
+	/**
+	 * @param entity
+	 */
+	public void removeEntity(Entity entity) {
 		entities.remove(entity);
-
+		
 		//remove any Sprites that are following the entity's movements
-		for (BoundsListener listener: entity.getBounds().getListeners()) {
+		for (BoundsListener listener : entity.getBounds().getListeners()) {
 			if (listener instanceof Sprite)
 				requestQueue.postRequest(
 						RequestFactory.createRemoveSpriteRequest(
@@ -168,24 +189,44 @@ public class Model implements RequestListener {
 		}
 	}
 	
+	/**
+	 *
+	 * @return
+	 */
 	public Player getPlayer() {
 		return player;
 	}
-
-	// returns new pollution level
+	
+	/**
+	 * Returns new pollution level
+	 * @param addition
+	 * @return
+	 */
 	int incrementPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
 		return this.currentPollutionLevel;
 	}
 	
+	/**
+	 *
+	 * @return
+	 */
 	int getCurrentPollutionLevel() {
 		return this.currentPollutionLevel;
 	}
 	
+	/**
+	 *
+	 * @return
+	 */
 	int getMaxPollutionLevel() {
 		return MAX_POLLUTION_LEVEL;
 	}
 	
+	/**
+	 *
+	 * @return
+	 */
 	Rectangle getWorldBounds() {
 		return worldBounds;
 	}
