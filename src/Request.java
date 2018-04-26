@@ -9,7 +9,8 @@ public class Request<R> {
         UPDATE_POLLUTION,
         UPDATE_SCORE,
         UPDATE_THROW_ANGLE,
-        TOGGLE_DISPLAY;
+        TOGGLE_DISPLAY,
+        PLAY_SOUND;
     }
 
     //any extra information that a RequestListener

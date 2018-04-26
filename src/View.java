@@ -3,22 +3,32 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * A class for the graphical components of the game. Updates are called by a Controller.
+ * @author Zelinsky
+ * @see Controller
+ */
 public class View extends JPanel implements RequestListener{
 	// define size of game
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 
 
-	int score = 0;
+	private int score = 0;
 
 	private ArrayList<Sprite> sprites;
 	
-	JButton pauseButton;
-	JPanel buttonPanel;
+	private JButton pauseButton;
+	private JPanel buttonPanel;
 
-	JLabel endScore = new JLabel("");
-	JFrame frame;
+	private JLabel endScore = new JLabel("");
+	private JFrame frame;
 
+	/**
+	 * Constructs the View by initializing the JFrame and components.
+	 * Also sets up the View's RequestQueue.
+	 * @param requests The RequestQueue for the View
+	 */
 	View(RequestQueue requests) {
 		this.add(endScore, BorderLayout.CENTER);
 		endScore.setVisible(false);
@@ -29,6 +39,9 @@ public class View extends JPanel implements RequestListener{
 		requests.addListener(this::handleRequest);
 	}
 	
+	/**
+	 * Sets up the pause button for the game.
+	 */
 	private void initButton() {
 		buttonPanel = new JPanel();
 		pauseButton = new JButton("Pause");
@@ -38,10 +51,18 @@ public class View extends JPanel implements RequestListener{
 		pauseButton.setFocusable(false);
 	}
 	
+	/**
+	 * Sets the pause button's listener to the specified ActionListener.
+	 * @param l The ActionListener to add to the pause button
+	 */
 	public void setButtonListener(ActionListener l) {
 		pauseButton.addActionListener(l);
 	}
 	
+	/**
+	 * Updates the pause button's display text based upon the running state of the timer
+	 * @param running The running state of the timer
+	 */
 	public void updateButton(boolean running) {
 		if (running) {
 			pauseButton.setText("Pause");
@@ -50,6 +71,9 @@ public class View extends JPanel implements RequestListener{
 		}
 	}
 	
+	/**
+	 * Sets up the JFrame for the View.
+	 */
 	private void initJFrame() {
 		frame = new JFrame();
 		frame.getContentPane().add(this);
@@ -61,6 +85,11 @@ public class View extends JPanel implements RequestListener{
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Specifies how the View should handle a Request
+	 * @param request The Request that the View should handle
+	 * @see Request
+	 */
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
@@ -75,24 +104,44 @@ public class View extends JPanel implements RequestListener{
 		}
 	}
 
+	/**
+	 * Add a Sprite to the View
+	 * @param sprite The Sprite to add to the View
+	 * @see Sprite
+	 */
 	public void addSprite(Sprite sprite){
 		sprites.add(sprite);
 	}
 	
+	/**
+	 * Removes a Sprite from the View
+	 * @param sprite The Sprite to remove from the View
+	 */
 	public void removeSprite(Sprite sprite) {
 		sprites.remove(sprite);
 	}
 	
+	/**
+	 * Update the View by calling repaint().
+	 */
 	public void update() {
 		this.repaint();
 	}
 	
+	/**
+	 * Handles what should happen when the game ends. This method will be called by a Controller.
+	 */
 	public void endGame() {
 		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);
 		endScore.setVisible(true);
 	}
 	
+	/**
+	 * Paints the Sprites that are in the View
+	 * @param g The Graphics
+	 * @see Sprite
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
