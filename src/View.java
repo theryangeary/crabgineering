@@ -93,11 +93,11 @@ public class View extends JPanel implements RequestListener{
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
-			case ADD_SPRITE:
+			case ADD_TO_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
 					addSprite((Sprite) request.getSpecifics());
 				break;
-			case REMOVE_SPRITE:
+			case REMOVE_FROM_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
 				break;

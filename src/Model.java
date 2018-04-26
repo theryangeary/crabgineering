@@ -94,10 +94,10 @@ public class Model implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()) {
-			case ADD_ENTITY:
+			case ADD_TO_MODEL:
 				addEntity((Entity) request.getSpecifics());
 				break;
-			case REMOVE_ENTITY:
+			case REMOVE_FROM_MODEL:
 				removeEntity((Entity) request.getSpecifics());
 				break;
 			case ADD_THROWN_TRASH:
@@ -203,7 +203,7 @@ public class Model implements RequestListener {
 		
 		//and post a request for it to be added to the view
 		requestQueue.postRequest(
-				RequestFactory.createAddSpriteRequest(sprite)
+				RequestFactory.createAddToViewRequest(sprite)
 		);
 	}
 	
@@ -220,7 +220,7 @@ public class Model implements RequestListener {
 		for (BoundsListener listener : entity.getBounds().getListeners()) {
 			if (listener instanceof Sprite)
 				requestQueue.postRequest(
-						RequestFactory.createRemoveSpriteRequest(
+						RequestFactory.createRemoveFromViewRequest(
 								(Sprite) listener
 						)
 				);

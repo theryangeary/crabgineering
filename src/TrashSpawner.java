@@ -30,7 +30,7 @@ public class TrashSpawner {
                 //Generates a random x position within rage 0
                 int randX = (int)(Math.random()*spawnWidth);
                 requestQueue.postRequest(
-                        RequestFactory.createAddEntityRequest(
+                        RequestFactory.createAddToModelRequest(
                                 factory.createEasyTrash(randX,10)
                         )
                 );

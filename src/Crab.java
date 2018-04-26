@@ -40,7 +40,7 @@ public class Crab extends Player {
 
 		arrowSprite = new ArrowSprite(getBounds());
 		requestQueue.postRequest(
-				RequestFactory.createAddSpriteRequest(arrowSprite)
+				RequestFactory.createAddToViewRequest(arrowSprite)
 		);
 		requestQueue.addListener(arrowSprite);
 	}

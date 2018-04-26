@@ -1,11 +1,20 @@
+/**
+ * A Request is a semantic type used to represent an action
+ * that SHOULD occur, but has not necessarily taken place yet
+ *
+ * @param <R> The type used for the specifics of the request
+ */
 public class Request<R> {
 
+    /**
+     * The possible types of actions that can be represented by a Request
+     */
     public enum RequestType {
-        ADD_ENTITY,
-        REMOVE_ENTITY,
+        ADD_TO_MODEL,
+        REMOVE_FROM_MODEL,
         ADD_THROWN_TRASH,
-        ADD_SPRITE,
-        REMOVE_SPRITE,
+        ADD_TO_VIEW,
+        REMOVE_FROM_VIEW,
         UPDATE_POLLUTION,
         UPDATE_SCORE,
         UPDATE_THROW_ANGLE,
@@ -26,10 +35,17 @@ public class Request<R> {
         this.requestedAction = requestedAction;
     }
 
+    /**
+     * @return Any specific information needed to actually fulfill the request
+     * ex: the Entity to be added to the Model for an ADD_TO_MODEL request
+     */
     public R getSpecifics() {
         return specifics;
     }
 
+    /**
+     * @return The type of action requested
+     */
     public RequestType getRequestedAction() {
         return requestedAction;
     }

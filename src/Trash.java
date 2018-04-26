@@ -59,7 +59,7 @@ public class Trash extends Entity {
 		}
 		if (topBound() && dy < 0) {
 			requestQueue.postRequest(
-					RequestFactory.createRemoveEntityRequest(this)
+					RequestFactory.createRemoveFromModelRequest(this)
 			);
 			requestQueue.postRequest(
 					RequestFactory.createUpdateScoreRequest(1)
