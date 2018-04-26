@@ -30,7 +30,7 @@ public enum SoundEffect {
 
     public static Volume volume = Volume.LOW;
 
-    private final String IMAGE_DIR = "../resources/audio/";
+    private final String IMAGE_DIR = "audio/";
 
     // Each sound effect has its own clip, loaded with its own sound file.
     private Clip clip;
