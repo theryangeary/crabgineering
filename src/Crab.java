@@ -1,5 +1,5 @@
 /**
- * A class that is specific to a Crab. A Crab is a type of Player.
+ * A Crab is a type of Player.
  * @author Zelinsky
  * @see Player
  */

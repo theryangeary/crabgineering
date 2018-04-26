@@ -1,28 +1,28 @@
-import javax.sound.sampled.SourceDataLine;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
+ *
  * @author Zelinsky
  * @see Controller
  */
 public class Model implements RequestListener {
 	//listeners
 	RequestQueue requestQueue;
-
+	
 	//constants relevant to simulation's physics
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
-
+	
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> toRemove = new ArrayList<>();
-
+	
 	//game variables
 	private int currentPollutionLevel = 0;
 	/**
@@ -35,25 +35,26 @@ public class Model implements RequestListener {
 	 */
 	static final int SCORE_INCREMENT = 10;
 	private int score = 0;
-
+	
 	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
 	 * Starts a new game by calling reset().
-	 * @param worldBounds The Bounds of the world
+	 *
+	 * @param worldBounds  The Bounds of the world
 	 * @param requestQueue The RequestQueue for the Model
 	 * @see Bounds
 	 * @see RequestQueue
 	 */
 	Model(Bounds worldBounds,
-		  RequestQueue requestQueue) {
-	    this.worldBounds = worldBounds;
-
-	    this.requestQueue = requestQueue;
-
-	    //setup the RequestQueue Entities can use to post requests
+	      RequestQueue requestQueue) {
+		this.worldBounds = worldBounds;
+		
+		this.requestQueue = requestQueue;
+		
+		//setup the RequestQueue Entities can use to post requests
 		//for the Model
-	    requestQueue.addListener(this::handleRequest);
-
+		requestQueue.addListener(this::handleRequest);
+		
 		reset();
 	}
 	
@@ -72,30 +73,32 @@ public class Model implements RequestListener {
 		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
 		player = new Crab(crabInitialX, crabInitialY, requestQueue);
 		addEntity(player);
-
+		
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
 		spawner = new TrashSpawner(requestQueue,
-				                   spawnHeight,
-				                   (int) worldBounds.getWidth(),
-				                   spawnInterval);
+				spawnHeight,
+				(int) worldBounds.getWidth(),
+				spawnInterval);
 		spawner.start();
 		currentPollutionLevel = 0;
 		score = 0;
 	}
-
+	
 	/**
 	 * Handles how a Request is processed.
+	 *
+	 * @param request The request to be processed
 	 * @see Request
 	 */
 	@Override
 	public void handleRequest(Request request) {
-		switch (request.getRequestedAction()){
+		switch (request.getRequestedAction()) {
 			case ADD_ENTITY:
-                addEntity((Entity) request.getSpecifics());
+				addEntity((Entity) request.getSpecifics());
 				break;
 			case REMOVE_ENTITY:
-                removeEntity((Entity) request.getSpecifics());
+				removeEntity((Entity) request.getSpecifics());
 				break;
 			case ADD_THROWN_TRASH:
 				thrownTrash.add((Trash) request.getSpecifics());
@@ -110,7 +113,7 @@ public class Model implements RequestListener {
 				System.out.println(request.getSpecifics());
 		}
 	}
-
+	
 	/**
 	 * Updates the model by updating all Entities, checking for and processing collisions, and checking for end-game conditions.
 	 */
@@ -118,7 +121,7 @@ public class Model implements RequestListener {
 		for (Entity entity : entities) {
 			entity.update(GRAVITY, DRAG);
 		}
-
+		
 		//Check for player-trash collision and trash-trash collision
 		for (Entity entity : entities) {
 			if (entity instanceof Trash) {
@@ -126,7 +129,7 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-
+				
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 						toRemove.add(trash);
@@ -139,23 +142,24 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-
+		
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
 		for (Trash t : toRemove) {
 			removeEntity(t);
 			thrownTrash.remove(t);
 		}
 		toRemove.clear();
-
+		
 		// Check end game
 		if (currentPollutionLevel == MAX_POLLUTION_LEVEL) {
 			endGame();
 		}
-
+		
 	}
-
+	
 	/**
 	 * Handles what should happen when the game ends. Tells the Controller the game is over by calling Controller.endGame().
+	 *
 	 * @see Controller
 	 */
 	void endGame() {
@@ -163,53 +167,57 @@ public class Model implements RequestListener {
 		//reset()
 		Controller.endGame();
 	}
-
+	
 	/**
 	 * Increments the score by the (modifier * SCORE_INCREMENT).
+	 *
 	 * @param modifier The amount to multiply SCORE_INCREMENT by
 	 */
 	public void incrementScore(int modifier) {
 		SoundEffect.POINTS.play();
 		score += SCORE_INCREMENT * modifier;
 	}
-
+	
 	/**
 	 * Returns the current score
+	 *
 	 * @return The current score
 	 */
 	public int getScore() {
 		return score;
 	}
-
+	
 	/**
 	 * Adds an Entity to the Entities that will be processed during update().
 	 * The Entity will also be added to the View through the requestQueue.
+	 *
 	 * @param entity The Entity to add to the Model
 	 */
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
-
+		
 		//create the corresponding sprite
 		Sprite sprite = new EntitySprite(entity);
-
+		
 		//and post a request for it to be added to the view
 		requestQueue.postRequest(
 				RequestFactory.createAddSpriteRequest(sprite)
 		);
 	}
-
+	
 	/**
 	 * Removes an Entity from the Entities that will be processed during update().
 	 * The Entity will also be removed from the view through the requestQueue.
+	 *
 	 * @param entity The Entity to be removed from the Model
 	 */
-    public void removeEntity(Entity entity) {
+	public void removeEntity(Entity entity) {
 		entities.remove(entity);
-
+		
 		//remove any Sprites that are following the entity's movements
-		for (BoundsListener listener: entity.getBounds().getListeners()) {
+		for (BoundsListener listener : entity.getBounds().getListeners()) {
 			if (listener instanceof Sprite)
 				requestQueue.postRequest(
 						RequestFactory.createRemoveSpriteRequest(
@@ -219,16 +227,18 @@ public class Model implements RequestListener {
 		}
 	}
 	
-    /**
-     * Returns the current player.
-     * @return The current player
-     */
+	/**
+	 * Returns the current player.
+	 *
+	 * @return The current player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
-
+	
 	/**
 	 * Increments the current pollution level by the specified amount.
+	 *
 	 * @param addition The amount to add to the current pollution level
 	 * @return The new pollution level
 	 */
@@ -240,6 +250,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the current pollution level
+	 *
 	 * @return The current pollution level
 	 */
 	int getCurrentPollutionLevel() {
@@ -248,6 +259,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the maximum pollution level specified by MAX_POLLUTION_LEVEL
+	 *
 	 * @return The amount specified by MAXIMUM_POLLUTION_LEVEL
 	 */
 	int getMaxPollutionLevel() {
@@ -256,6 +268,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Returns the Bounds of the world.
+	 *
 	 * @return The world Bounds
 	 */
 	Rectangle getWorldBounds() {
