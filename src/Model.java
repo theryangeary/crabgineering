@@ -88,7 +88,7 @@ public class Model implements RequestListener {
 	/**
 	 * Handles how a Request is processed.
 	 *
-	 * @param request
+	 * @param request The request to be processed
 	 * @see Request
 	 */
 	@Override

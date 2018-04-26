@@ -3,6 +3,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * SpriteImage - an enum to handle inclusion of Sprites in game
+ */
 public enum SpriteImage {
     CLAM("clam.png"),
     CRAB("crab.png"),
@@ -16,6 +19,10 @@ public enum SpriteImage {
 
     final BufferedImage image;
 
+    /**
+     * Constructor to create a SpriteImage
+     * @param image_name the type of image to make
+     */
     SpriteImage(String image_name){
         //get image should be in the folder IMAGE_DIR
         //and have the lowercase version of the name of the constant
@@ -26,7 +33,11 @@ public enum SpriteImage {
         image = createImage(imagePath);
     }
 
-    //Read image from file and return
+    /**
+     * Read image from file and return
+     * @param imagePath relative image path from PWD
+     * @return BufferedImage of either the requested image, or null
+     */
     private BufferedImage createImage(String imagePath) {
         BufferedImage bufferedImage;
         try {
@@ -39,7 +50,10 @@ public enum SpriteImage {
         return null;
     }
 
-    //getters
+    /**
+     * Get BufferedImage
+     * @return The image
+     */
     public BufferedImage getImage() {
         return image;
     }
