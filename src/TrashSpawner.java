@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-/*
-    TrashSpawner psudorandomly adds different types of trash on random places on the screen.
+/**
+ * TrashSpawner, a time based trash generator
+ * @see Human
  */
 public class TrashSpawner {
     private int interval = 0;
@@ -10,7 +11,14 @@ public class TrashSpawner {
     private Action spawnAction;
     private Timer spawnTimer;
 
-
+    /**
+     * Generate a TrashSpawner
+     * @param requestQueue for requests
+     * @param spawnHeight
+     * @param spawnWidth Specifies how wide of a range to spawn trash in
+     * @param interval time between trash spawning
+     * @see Request
+     */
     TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
         //Interval is how long it talks between spawns
         this.interval = interval;
@@ -33,16 +41,32 @@ public class TrashSpawner {
         spawnTimer = new Timer(interval, spawnAction);
     }
 
+    /**
+     * Set the time interval to spawn trash
+     * @param interval time, in ms, between trash generation
+     */
     public void setInterval(int interval){
         this.interval = interval;
     }
+
+    /**
+     * Get the time interval to spawn trash
+     * @return time, in ms, between trash generation
+     */
     public int getInterval(){
         return interval;
     }
 
+    /**
+     * Stop or pause the trash spawner
+     */
     public void stop(){
         spawnTimer.stop();
     }
+
+    /**
+     * Start or resume the trash spawner
+     */
     public void start(){
         spawnTimer.start();
     }
