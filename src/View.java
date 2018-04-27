@@ -12,13 +12,13 @@ public class View extends JPanel implements RequestListener{
 	// define size of game
 	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
-	// relative to model
-	private double scale;
 
-	private int score = 0;
+	// relative to model
+	private Dimension scale;
 
 	private ArrayList<Sprite> sprites;
 	
+	private JButton startButton;
 	private JButton pauseButton;
 	private JPanel buttonPanel;
 
@@ -45,11 +45,21 @@ public class View extends JPanel implements RequestListener{
 	 */
 	private void initButton() {
 		buttonPanel = new JPanel();
+		// PAUSE BUTTON
 		pauseButton = new JButton("Pause");
+		pauseButton.setActionCommand("PAUSE");
 		buttonPanel.add(pauseButton);
+		pauseButton.setFocusable(false);
+		pauseButton.setVisible(false);
+		
+		//START BUTTON
+		startButton = new JButton("Start");
+		startButton.setActionCommand("START");
+		buttonPanel.add(startButton);
+		startButton.setFocusable(false);
+		
 		buttonPanel.setBackground(new Color(0, true));
 		buttonPanel.setFocusable(false);
-		pauseButton.setFocusable(false);
 	}
 	
 	/**
@@ -58,17 +68,38 @@ public class View extends JPanel implements RequestListener{
 	 */
 	public void setButtonListener(ActionListener l) {
 		pauseButton.addActionListener(l);
+		startButton.addActionListener(l);
 	}
 	
 	/**
-	 * Updates the pause button's display text based upon the running state of the timer
+	 * Updates buttons' display text based upon the running state of the timer and the button pressed.
+	 * @param button The button to update
 	 * @param running The running state of the timer
 	 */
-	public void updateButton(boolean running) {
-		if (running) {
-			pauseButton.setText("Pause");
-		} else {
-			pauseButton.setText("Play");
+	public void updateButton(String button, boolean running) {
+		switch(button) {
+		case "PAUSE":
+			if (running) {
+				pauseButton.setText("Pause");
+			} else {
+				pauseButton.setText("Play");
+			}
+			break;
+
+		case "START":
+			startButton.setVisible(false);
+			pauseButton.setVisible(true);
+			frame.revalidate();
+			frame.repaint();
+			break;
+			
+		case "RESTART":
+			startButton.setVisible(false);
+			pauseButton.setVisible(true);
+			endScore.setVisible(false);
+			frame.revalidate();
+			frame.repaint();
+			break;
 		}
 	}
 	
@@ -132,10 +163,16 @@ public class View extends JPanel implements RequestListener{
 	/**
 	 * Handles what should happen when the game ends. This method will be called by a Controller.
 	 */
-	public void endGame() {
+	public void endGame(int score) {
+		pauseButton.setVisible(false);
+		startButton.setText("Restart");
+		startButton.setActionCommand("RESTART");
+		startButton.setVisible(true);
 		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);
 		endScore.setVisible(true);
+		frame.revalidate();
+		frame.repaint();
 	}
 	
 	/**

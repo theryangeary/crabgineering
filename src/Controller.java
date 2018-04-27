@@ -81,13 +81,35 @@ public class Controller implements ActionListener {
 	 * @see View
 	 */
 	@Override public void actionPerformed(ActionEvent e) {
-	  if (updater.isRunning()) {
-		updater.stop();
-	  } else {
-		updater.start();
-	  }
-	  view.updateButton(updater.isRunning());
+		String command = e.getActionCommand();
+
+		switch(command) {
+
+		case "PAUSE":
+
+			if (updater.isRunning()) {
+				updater.stop();
+				model.toggleTrashSpawning(false);
+			} else {
+				updater.start();
+				model.toggleTrashSpawning(true);
+			}
+			break;
+			
+		case "START":
+			start();
+			break;
+		
+		case "RESTART":
+			model.reset();
+			keyBindings = new GameKeyBindings(view, model.getPlayer());
+			requests.fulfillAllRequests();
+			updater.start();
+			break;
+		}
+		view.updateButton(command, updater.isRunning());
 	}
+
 	
 	/**
 	 * Starts the timer.
@@ -102,7 +124,7 @@ public class Controller implements ActionListener {
 	 */
 	public static void endGame() {
 		updater.stop();
-		view.endGame();
+		view.endGame(model.getScore());
 	}
 }
 

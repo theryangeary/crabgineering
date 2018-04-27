@@ -23,7 +23,7 @@ public class Model implements RequestListener {
 	private TrashSpawner spawner;
 	private Player player;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
-	private ArrayList<Trash> toRemove = new ArrayList<>();
+	private ArrayList<Entity> toRemove = new ArrayList<>();
 	
 	//game variables
 	private int currentPollutionLevel = 0;
@@ -62,6 +62,10 @@ public class Model implements RequestListener {
 	 * and adds a TrashSpawner and Player.
 	 */
 	public void reset() {
+		toRemove.addAll(entities);
+		for(Entity e : toRemove) {
+			removeEntity(e);
+		}
 		entities.clear();
 		thrownTrash.clear();
 		toRemove.clear();
@@ -80,8 +84,13 @@ public class Model implements RequestListener {
 				(int) worldBounds.getWidth(),
 				spawnInterval);
 		spawner.start();
-		currentPollutionLevel = 0;
-		score = 0;
+		
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
+		);
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
+		);
 	}
 	
 	/**
@@ -143,17 +152,17 @@ public class Model implements RequestListener {
 		}
 		
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
-		for (Trash t : toRemove) {
-			removeEntity(t);
-			thrownTrash.remove(t);
+		for (Entity e : toRemove) {
+			removeEntity(e);
+			thrownTrash.remove(e);
 		}
 		toRemove.clear();
 		
 		// Check end game
-		if (currentPollutionLevel == MAX_POLLUTION_LEVEL) {
+		if (currentPollutionLevel >= MAX_POLLUTION_LEVEL) {
 			endGame();
 		}
-		
+				
 	}
 	
 	/**
@@ -272,5 +281,17 @@ public class Model implements RequestListener {
 	 */
 	Rectangle getWorldBounds() {
 		return worldBounds;
+	}
+	
+	/**
+	 * Turns on the Trash Spawner if the state is true, off if the state is false.
+	 * @param state Determines whether the Trash Spawner is turned off or on
+	 */
+	void toggleTrashSpawning(boolean state) {
+		if (state == true) {
+			spawner.start();
+		} else {
+			spawner.stop();
+		}
 	}
 }
