@@ -183,9 +183,14 @@ public class View extends JPanel implements RequestListener{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-        for (Sprite sprite: sprites) {
-            sprite.draw(g);
+
+		Graphics2D g2d = (Graphics2D) g;
+		Dimension size = getSize();
+		g2d.scale(size.getWidth() / Model.WORLD_WIDTH,
+				  size.getHeight() / Model.WORLD_HEIGHT);
+
+		for (Sprite sprite: sprites) {
+            sprite.draw(g2d);
         }
 	}
 }
