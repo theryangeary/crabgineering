@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 
 /**
  * TrashSpawner, a time based trash generator
- * @see Human
  */
 public class TrashSpawner {
     private int interval = 0;

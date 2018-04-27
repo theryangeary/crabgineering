@@ -52,7 +52,7 @@ public class Bounds extends Rectangle {
 
     /**
      * Returns the list of BoundsListeners
-     * @return the Collection<BoundsListener>
+     * @return the Collection of BoundsListener
      */
     public Collection<BoundsListener> getListeners() {
         return listeners;

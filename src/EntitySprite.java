@@ -74,7 +74,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Draw this sprite at it's bounds
+     * Draw this sprite at its bounds
      * @param g Graphics object to draw on
      */
     public void draw(Graphics g){
