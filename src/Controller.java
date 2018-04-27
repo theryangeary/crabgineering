@@ -29,8 +29,7 @@ public class Controller implements ActionListener {
 		view = new View(requests);
 		view.setButtonListener(this);
 
-		model = new Model(new Bounds(View.FRAME_WIDTH, View.FRAME_HEIGHT),
-				requests);
+		model = new Model(requests);
 
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 
