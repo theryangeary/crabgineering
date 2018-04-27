@@ -15,7 +15,7 @@ public class Trash extends Entity {
 
 	private int pollutionCount;
 
-	private final int POLLUTION = 5;
+	private final int POLLUTION = 10;
 	private TrashType type;
 	
 	private boolean thrown = false;
