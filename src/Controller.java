@@ -9,12 +9,13 @@ import java.awt.event.ActionListener;
  *
  */
 public class Controller implements ActionListener {
-	
+
+	//TODO: make these NOT be static (please...)
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
 	private static GameKeyBindings keyBindings;
 	private static Timer updater;
-	private static double FRAMERATE = 144;
+	private static final double FRAMERATE = 144;
 
 	private RequestQueue requests;
 	
@@ -29,8 +30,7 @@ public class Controller implements ActionListener {
 		view = new View(requests);
 		view.setButtonListener(this);
 
-		model = new Model(new Bounds(View.FRAME_WIDTH, View.FRAME_HEIGHT),
-				requests);
+		model = new Model(requests);
 		model.toggleTrashSpawning(false);
 
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game

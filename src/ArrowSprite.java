@@ -35,7 +35,7 @@ public class ArrowSprite extends EntitySprite implements RequestListener{
             AffineTransform oldTransf = g2d.getTransform();
 
             //create transform
-            AffineTransform transform = new AffineTransform();
+            AffineTransform transform = new AffineTransform(oldTransf);
             transform.rotate(theta,
                     getBounds().getWidth()/2 + getBounds().getX(),
                     getBounds().getHeight()/2 + getBounds().getY());

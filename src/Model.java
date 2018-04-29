@@ -12,6 +12,8 @@ public class Model implements RequestListener {
 	RequestQueue requestQueue;
 	
 	//constants relevant to simulation's physics
+	static final int WORLD_WIDTH = 500;
+	static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
@@ -40,15 +42,12 @@ public class Model implements RequestListener {
 	 * Constructs the Model with its Bounds and RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
-	 * @param worldBounds  The Bounds of the world
 	 * @param requestQueue The RequestQueue for the Model
 	 * @see Bounds
 	 * @see RequestQueue
 	 */
-	Model(Bounds worldBounds,
-	      RequestQueue requestQueue) {
-		this.worldBounds = worldBounds;
-		
+	Model(RequestQueue requestQueue) {
+		this.worldBounds = new Bounds(WORLD_WIDTH, WORLD_HEIGHT);
 		this.requestQueue = requestQueue;
 		
 		//setup the RequestQueue Entities can use to post requests

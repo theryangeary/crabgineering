@@ -10,8 +10,11 @@ import java.util.ArrayList;
  */
 public class View extends JPanel implements RequestListener{
 	// define size of game
-	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
+	final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
+
+	// relative to model
+	private Dimension scale;
 
 	private ArrayList<Sprite> sprites;
 	
@@ -28,7 +31,7 @@ public class View extends JPanel implements RequestListener{
 	 * @param requests The RequestQueue for the View
 	 */
 	View(RequestQueue requests) {
-		this.add(endScore, BorderLayout.CENTER);
+		this.add(endScore, BorderLayout.PAGE_START);
 		endScore.setVisible(false);
 		initButton();
 		initJFrame();
@@ -48,11 +51,12 @@ public class View extends JPanel implements RequestListener{
 		buttonPanel.add(pauseButton);
 		pauseButton.setFocusable(false);
 		pauseButton.setVisible(false);
-		
+
 		//START BUTTON
 		startButton = new JButton("Start");
 		startButton.setActionCommand("START");
 		buttonPanel.add(startButton);
+		startButton.setVisible(true);
 		startButton.setFocusable(false);
 		
 		buttonPanel.setBackground(new Color(0, true));
@@ -78,8 +82,12 @@ public class View extends JPanel implements RequestListener{
 		case "PAUSE":
 			if (running) {
 				pauseButton.setText("Pause");
+				frame.revalidate();
+				frame.repaint();
 			} else {
 				pauseButton.setText("Play");
+				frame.revalidate();
+				frame.repaint();
 			}
 			break;
 
@@ -99,16 +107,45 @@ public class View extends JPanel implements RequestListener{
 			break;
 		}
 	}
-	
+
+	/**
+	 *
+	 */
+	private void configurePane(Container pane) {
+		//setup the layout
+		pane.setLayout(new GridBagLayout());
+
+		//configure layout for the button
+		GridBagConstraints buttonCons = new GridBagConstraints();
+		buttonCons.gridx = 0;
+		buttonCons.gridy = 0;
+		buttonCons.weightx = 1; //expand when window gets wider ("" as for view)
+		buttonCons.weighty = 0; //don't expand when the window gets taller
+		buttonCons.fill = GridBagConstraints.HORIZONTAL;
+		pane.add(buttonPanel, buttonCons);
+
+		//configure layout for main game window (ie View)
+		GridBagConstraints viewCons = new GridBagConstraints();
+		viewCons.gridx = 0;
+		viewCons.gridy = 1;
+		viewCons.weightx = 1; //expand when window gets wider ("" as button)
+		viewCons.weighty = 1; //give this priority when expanding vertically
+		viewCons.fill = GridBagConstraints.BOTH;
+		pane.add(this, viewCons);
+	}
+
 	/**
 	 * Sets up the JFrame for the View.
 	 */
 	private void initJFrame() {
 		frame = new JFrame();
-		frame.getContentPane().add(this);
-		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
+
+		configurePane(frame.getContentPane());
+		//frame.getContentPane().add(this);
+		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		frame.pack();
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
@@ -180,9 +217,14 @@ public class View extends JPanel implements RequestListener{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
+		Graphics2D g2d = (Graphics2D) g;
+		Dimension size = getSize();
+		g2d.scale(size.getWidth() / Model.WORLD_WIDTH,
+				  size.getHeight() / Model.WORLD_HEIGHT);
+
         for (Sprite sprite: sprites) {
-            sprite.draw(g);
+            sprite.draw(g2d);
         }
 	}
 }
