@@ -51,7 +51,7 @@ public class View extends JPanel implements RequestListener{
 		buttonPanel.add(pauseButton);
 		pauseButton.setFocusable(false);
 		pauseButton.setVisible(false);
-		
+
 		//START BUTTON
 		startButton = new JButton("Start");
 		startButton.setActionCommand("START");
@@ -82,8 +82,12 @@ public class View extends JPanel implements RequestListener{
 		case "PAUSE":
 			if (running) {
 				pauseButton.setText("Pause");
+				frame.revalidate();
+				frame.repaint();
 			} else {
 				pauseButton.setText("Play");
+				frame.revalidate();
+				frame.repaint();
 			}
 			break;
 
