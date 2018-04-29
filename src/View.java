@@ -56,6 +56,7 @@ public class View extends JPanel implements RequestListener{
 		startButton = new JButton("Start");
 		startButton.setActionCommand("START");
 		buttonPanel.add(startButton);
+		startButton.setVisible(true);
 		startButton.setFocusable(false);
 		
 		buttonPanel.setBackground(new Color(0, true));
@@ -102,18 +103,45 @@ public class View extends JPanel implements RequestListener{
 			break;
 		}
 	}
-	
+
+	/**
+	 *
+	 */
+	private void configurePane(Container pane) {
+		//setup the layout
+		pane.setLayout(new GridBagLayout());
+
+		//configure layout for the button
+		GridBagConstraints buttonCons = new GridBagConstraints();
+		buttonCons.gridx = 0;
+		buttonCons.gridy = 0;
+		buttonCons.weightx = 1; //expand when window gets wider ("" as for view)
+		buttonCons.weighty = 0; //don't expand when the window gets taller
+		buttonCons.fill = GridBagConstraints.HORIZONTAL;
+		pane.add(buttonPanel, buttonCons);
+
+		//configure layout for main game window (ie View)
+		GridBagConstraints viewCons = new GridBagConstraints();
+		viewCons.gridx = 0;
+		viewCons.gridy = 1;
+		viewCons.weightx = 1; //expand when window gets wider ("" as button)
+		viewCons.weighty = 1; //give this priority when expanding vertically
+		viewCons.fill = GridBagConstraints.BOTH;
+		pane.add(this, viewCons);
+	}
+
 	/**
 	 * Sets up the JFrame for the View.
 	 */
 	private void initJFrame() {
 		frame = new JFrame();
-		Container pane = frame.getContentPane();
-		//pane.setLayout(new BorderLayout());
-		pane.add(this, BorderLayout.CENTER);
-		pane.add(buttonPanel, BorderLayout.BEFORE_FIRST_LINE);
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+		configurePane(frame.getContentPane());
+		//frame.getContentPane().add(this);
+		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		frame.pack();
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
