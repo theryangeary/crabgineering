@@ -31,7 +31,7 @@ public class View extends JPanel implements RequestListener{
 	 * @param requests The RequestQueue for the View
 	 */
 	View(RequestQueue requests) {
-		this.add(endScore, BorderLayout.CENTER);
+		this.add(endScore, BorderLayout.PAGE_START);
 		endScore.setVisible(false);
 		initButton();
 		initJFrame();
@@ -108,9 +108,11 @@ public class View extends JPanel implements RequestListener{
 	 */
 	private void initJFrame() {
 		frame = new JFrame();
-		frame.getContentPane().add(this);
-		frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container pane = frame.getContentPane();
+		//pane.setLayout(new BorderLayout());
+		pane.add(this, BorderLayout.CENTER);
+		pane.add(buttonPanel, BorderLayout.BEFORE_FIRST_LINE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
 		frame.setLocationRelativeTo(null);
@@ -189,7 +191,7 @@ public class View extends JPanel implements RequestListener{
 		g2d.scale(size.getWidth() / Model.WORLD_WIDTH,
 				  size.getHeight() / Model.WORLD_HEIGHT);
 
-		for (Sprite sprite: sprites) {
+        for (Sprite sprite: sprites) {
             sprite.draw(g2d);
         }
 	}
