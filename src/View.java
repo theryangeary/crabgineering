@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class View extends JPanel implements RequestListener{
 	// define size of game
-	final static int FRAME_HEIGHT = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) * .9);
+	final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 
 	// relative to model
