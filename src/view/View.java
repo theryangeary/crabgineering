@@ -3,6 +3,7 @@ package view;
 import controller.requests.Request;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
+import model.Model;
 import view.sprites.Sprite;
 
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class View extends JPanel implements RequestListener {
 	 * Also sets up the view.View's controller.requests.RequestQueue.
 	 * @param requests The controller.requests.RequestQueue for the view.View
 	 */
-	View(RequestQueue requests) {
+	public View(RequestQueue requests) {
 		this.add(endScore, BorderLayout.PAGE_START);
 		endScore.setVisible(false);
 		initButton();

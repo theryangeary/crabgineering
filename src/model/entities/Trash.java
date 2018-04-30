@@ -2,6 +2,7 @@ package model.entities;
 
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
+import view.audio.SoundEffect;
 
 /**
  * A class representing a model.entities.Trash object. model.entities.Trash is a type of Entitiy.

@@ -60,7 +60,7 @@ public class Model implements RequestListener {
 	 * @see Bounds
 	 * @see RequestQueue
 	 */
-	Model(RequestQueue requestQueue) {
+	public Model(RequestQueue requestQueue) {
 		this.worldBounds = new Bounds(WORLD_WIDTH, WORLD_HEIGHT);
 		this.requestQueue = requestQueue;
 		
@@ -93,7 +93,8 @@ public class Model implements RequestListener {
 		
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
-		spawner = new TrashSpawner(requestQueue,
+		spawner = new TrashSpawner(
+		        requestQueue,
 				spawnHeight,
 				(int) worldBounds.getWidth(),
 				spawnInterval);

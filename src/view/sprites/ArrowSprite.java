@@ -1,5 +1,6 @@
 package view.sprites;
 
+import controller.bounds.Bounds;
 import controller.requests.Request;
 import controller.requests.RequestListener;
 
@@ -10,7 +11,7 @@ public class ArrowSprite extends EntitySprite implements RequestListener {
     private double theta;
     private boolean is_visible = false;
 
-    ArrowSprite(Bounds bounds){
+    public ArrowSprite(Bounds bounds){
         super(SpriteImage.ARROW, bounds);
     }
 

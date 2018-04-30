@@ -1,5 +1,8 @@
 package model.entities;
 
+import controller.bounds.Bounds;
+import controller.bounds.BoundsListener;
+
 import java.awt.*;
 
 /**

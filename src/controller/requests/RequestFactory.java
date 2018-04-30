@@ -1,5 +1,9 @@
 package controller.requests;
 
+import model.entities.Entity;
+import model.entities.Trash;
+import view.sprites.Sprite;
+
 /**
  * controller.requests.RequestFactory is utility for producing different types of controller.requests
  */

@@ -1,6 +1,8 @@
 package controller;
 
 import controller.requests.RequestQueue;
+import model.Model;
+import view.audio.SoundEffect;
 import view.sprites.PollutionBarSprite;
 import view.sprites.ScoreSprite;
 import view.View;
@@ -31,7 +33,7 @@ public class Controller implements ActionListener {
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main.
 	 */
-	Controller() {
+	public Controller() {
 		requests = new RequestQueue();
 
 		view = new View(requests);

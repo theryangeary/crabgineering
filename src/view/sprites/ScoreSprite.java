@@ -2,6 +2,8 @@ package view.sprites;
 
 import controller.requests.Request;
 import controller.requests.RequestListener;
+import model.Model;
+import view.View;
 
 import java.awt.*;
 

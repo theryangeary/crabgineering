@@ -24,7 +24,7 @@ public class TrashSpawner {
      * @param interval time between trash spawning
      * @see Request
      */
-    TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
+    public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
         //Interval is how long it talks between spawns
         this.interval = interval;
         factory = new TrashFactory(requestQueue);
