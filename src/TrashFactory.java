@@ -1,3 +1,5 @@
+import requests.RequestQueue;
+
 public class TrashFactory {
 
     private RequestQueue requestQueue;

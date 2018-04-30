@@ -1,3 +1,6 @@
+import requests.RequestFactory;
+import requests.RequestQueue;
+
 /**
  * A class representing a Trash object. Trash is a type of Entitiy.
  * @author Zelinsky
@@ -23,12 +26,12 @@ public class Trash extends Entity {
 	
 	/**
 	 * Constructs a Trash object. Calls Entity's constructor with super(x, y, width, height).
-	 * Sets up the Trash's RequestQueue.
+	 * Sets up the Trash's requests.RequestQueue.
 	 * @param x The x position of the Trash
 	 * @param y The y position of the Trash
 	 * @param width The width of the Trash
 	 * @param height The height of the Trash
-	 * @param requestQueue The RequestQueue of the Trash
+	 * @param requestQueue The requests.RequestQueue of the Trash
 	 * @see RequestQueue
 	 */
 	Trash(int x, int y, int width, int height, RequestQueue requestQueue) {

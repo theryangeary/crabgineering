@@ -1,3 +1,5 @@
+package requests;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class RequestQueue extends ArrayDeque<Request> {
     private List<RequestListener> listeners;
 
     /**
-     * Initialises an empty RequestQueue with no Requests or RequestListeners
+     * Initialises an empty requests.RequestQueue with no Requests or RequestListeners
      */
     public RequestQueue (){
         this.listeners = new ArrayList<>();
@@ -24,7 +26,7 @@ public class RequestQueue extends ArrayDeque<Request> {
 
     /**
      * Sets this queue to inform listener whenever it fulfills Requests
-     * @param listener A RequestListener not already listening to this queue
+     * @param listener A requests.RequestListener not already listening to this queue
      */
     public void addListener(RequestListener listener){
         listeners.add(listener);
@@ -32,7 +34,7 @@ public class RequestQueue extends ArrayDeque<Request> {
 
     /**
      * Adds the given request to the queue
-     * @param request A Request to be added to the queue
+     * @param request A requests.Request to be added to the queue
      */
     public void postRequest(Request request){
         add(request);

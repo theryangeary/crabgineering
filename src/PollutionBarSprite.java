@@ -1,3 +1,6 @@
+import requests.Request;
+import requests.RequestListener;
+
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Graphics;

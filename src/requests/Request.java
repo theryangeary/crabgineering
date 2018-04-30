@@ -1,5 +1,7 @@
+package requests;
+
 /**
- * A Request is a semantic type used to represent an action
+ * A requests.Request is a semantic type used to represent an action
  * that SHOULD occur, but has not necessarily taken place yet
  *
  * @param <R> The type used for the specifics of the request
@@ -7,7 +9,7 @@
 public class Request<R> {
 
     /**
-     * The possible types of actions that can be represented by a Request
+     * The possible types of actions that can be represented by a requests.Request
      */
     public enum RequestType {
         ADD_TO_MODEL,
@@ -22,12 +24,12 @@ public class Request<R> {
         PLAY_SOUND;
     }
 
-    //any extra information that a RequestListener
-    //might need to fulfill the Request
+    //any extra information that a requests.RequestListener
+    //might need to fulfill the requests.Request
     private R specifics;
 
     //lets us know what should happen
-    //when the Request is fulfilled
+    //when the requests.Request is fulfilled
     private RequestType requestedAction;
 
     public Request(R specifics, RequestType requestedAction){

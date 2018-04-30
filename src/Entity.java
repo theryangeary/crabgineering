@@ -5,7 +5,7 @@ import java.awt.*;
  * @author Zelinsky
  */
 
-abstract class Entity implements BoundsListener {
+public abstract class Entity implements BoundsListener {
 
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window

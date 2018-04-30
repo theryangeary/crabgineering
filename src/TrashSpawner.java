@@ -1,3 +1,7 @@
+import requests.Request;
+import requests.RequestFactory;
+import requests.RequestQueue;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 

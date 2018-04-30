@@ -1,3 +1,8 @@
+import requests.Request;
+import requests.RequestFactory;
+import requests.RequestListener;
+import requests.RequestQueue;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -39,10 +44,10 @@ public class Model implements RequestListener {
 	private int score = 0;
 	
 	/**
-	 * Constructs the Model with its Bounds and RequestQueue.
+	 * Constructs the Model with its Bounds and requests.RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
-	 * @param requestQueue The RequestQueue for the Model
+	 * @param requestQueue The requests.RequestQueue for the Model
 	 * @see Bounds
 	 * @see RequestQueue
 	 */
@@ -50,7 +55,7 @@ public class Model implements RequestListener {
 		this.worldBounds = new Bounds(WORLD_WIDTH, WORLD_HEIGHT);
 		this.requestQueue = requestQueue;
 		
-		//setup the RequestQueue Entities can use to post requests
+		//setup the requests.RequestQueue Entities can use to post requests
 		//for the Model
 		requestQueue.addListener(this::handleRequest);
 		
@@ -94,7 +99,7 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Handles how a Request is processed.
+	 * Handles how a requests.Request is processed.
 	 *
 	 * @param request The request to be processed
 	 * @see Request

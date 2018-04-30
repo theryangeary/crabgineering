@@ -1,9 +1,10 @@
+import requests.Request;
+import requests.RequestListener;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 
-public class ArrowSprite extends EntitySprite implements RequestListener{
+public class ArrowSprite extends EntitySprite implements RequestListener {
     private double theta;
     private boolean is_visible = false;
 

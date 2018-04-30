@@ -1,3 +1,6 @@
+import requests.RequestFactory;
+import requests.RequestQueue;
+
 /**
  * A Crab is a type of Player.
  * @author Zelinsky
@@ -28,10 +31,10 @@ public class Crab extends Player {
 
 	/**
 	 * Constructs the Crab by calling Player's Constructor super(x, y, CRAB_WIDTH, CRAB_HEIGHT) and assigning the Crab
-	 * its Sprite and RequestQueue.
+	 * its Sprite and requests.RequestQueue.
 	 * @param x The x position of the Crab
 	 * @param y The y position of the Crab
-	 * @param requestQueue The RequestQueue of the Crab
+	 * @param requestQueue The requests.RequestQueue of the Crab
 	 * @see Player
 	 */
 	public Crab(int x, int y, RequestQueue requestQueue) {

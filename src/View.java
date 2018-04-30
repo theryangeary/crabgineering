@@ -1,3 +1,7 @@
+import requests.Request;
+import requests.RequestListener;
+import requests.RequestQueue;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -8,7 +12,7 @@ import java.util.ArrayList;
  * @author Zelinsky
  * @see Controller
  */
-public class View extends JPanel implements RequestListener{
+public class View extends JPanel implements RequestListener {
 	// define size of game
 	final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
@@ -27,8 +31,8 @@ public class View extends JPanel implements RequestListener{
 
 	/**
 	 * Constructs the View by initializing the JFrame and components.
-	 * Also sets up the View's RequestQueue.
-	 * @param requests The RequestQueue for the View
+	 * Also sets up the View's requests.RequestQueue.
+	 * @param requests The requests.RequestQueue for the View
 	 */
 	View(RequestQueue requests) {
 		this.add(endScore, BorderLayout.PAGE_START);
@@ -152,8 +156,8 @@ public class View extends JPanel implements RequestListener{
 	}
 
 	/**
-	 * Specifies how the View should handle a Request
-	 * @param request The Request that the View should handle
+	 * Specifies how the View should handle a requests.Request
+	 * @param request The requests.Request that the View should handle
 	 * @see Request
 	 */
 	@Override
