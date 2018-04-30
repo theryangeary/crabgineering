@@ -1,7 +1,7 @@
-package sprites;
+package view.sprites;
 
-import requests.Request;
-import requests.RequestListener;
+import controller.requests.Request;
+import controller.requests.RequestListener;
 
 import java.awt.Color;
 import java.awt.Rectangle;

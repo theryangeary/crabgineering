@@ -1,7 +1,9 @@
-import requests.Request;
-import requests.RequestListener;
-import requests.RequestQueue;
-import sprites.Sprite;
+package view;
+
+import controller.requests.Request;
+import controller.requests.RequestListener;
+import controller.requests.RequestQueue;
+import view.sprites.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * A class for the graphical components of the game. Updates are called by a Controller.
+ * A class for the graphical components of the game. Updates are called by a controller.Controller.
  * @author Zelinsky
  * @see Controller
  */
@@ -31,9 +33,9 @@ public class View extends JPanel implements RequestListener {
 	private JFrame frame;
 
 	/**
-	 * Constructs the View by initializing the JFrame and components.
-	 * Also sets up the View's requests.RequestQueue.
-	 * @param requests The requests.RequestQueue for the View
+	 * Constructs the view.View by initializing the JFrame and components.
+	 * Also sets up the view.View's controller.requests.RequestQueue.
+	 * @param requests The controller.requests.RequestQueue for the view.View
 	 */
 	View(RequestQueue requests) {
 		this.add(endScore, BorderLayout.PAGE_START);
@@ -129,7 +131,7 @@ public class View extends JPanel implements RequestListener {
 		buttonCons.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(buttonPanel, buttonCons);
 
-		//configure layout for main game window (ie View)
+		//configure layout for main game window (ie view.View)
 		GridBagConstraints viewCons = new GridBagConstraints();
 		viewCons.gridx = 0;
 		viewCons.gridy = 1;
@@ -140,7 +142,7 @@ public class View extends JPanel implements RequestListener {
 	}
 
 	/**
-	 * Sets up the JFrame for the View.
+	 * Sets up the JFrame for the view.View.
 	 */
 	private void initJFrame() {
 		frame = new JFrame();
@@ -157,8 +159,8 @@ public class View extends JPanel implements RequestListener {
 	}
 
 	/**
-	 * Specifies how the View should handle a requests.Request
-	 * @param request The requests.Request that the View should handle
+	 * Specifies how the view.View should handle a controller.requests.Request
+	 * @param request The controller.requests.Request that the view.View should handle
 	 * @see Request
 	 */
 	@Override
@@ -176,8 +178,8 @@ public class View extends JPanel implements RequestListener {
 	}
 
 	/**
-	 * Add a sprites.Sprite to the View
-	 * @param sprite The sprites.Sprite to add to the View
+	 * Add a view.sprites.Sprite to the view.View
+	 * @param sprite The view.sprites.Sprite to add to the view.View
 	 * @see Sprite
 	 */
 	public void addSprite(Sprite sprite){
@@ -185,22 +187,22 @@ public class View extends JPanel implements RequestListener {
 	}
 	
 	/**
-	 * Removes a sprites.Sprite from the View
-	 * @param sprite The sprites.Sprite to remove from the View
+	 * Removes a view.sprites.Sprite from the view.View
+	 * @param sprite The view.sprites.Sprite to remove from the view.View
 	 */
 	public void removeSprite(Sprite sprite) {
 		sprites.remove(sprite);
 	}
 	
 	/**
-	 * Update the View by calling repaint().
+	 * Update the view.View by calling repaint().
 	 */
 	public void update() {
 		this.repaint();
 	}
 	
 	/**
-	 * Handles what should happen when the game ends. This method will be called by a Controller.
+	 * Handles what should happen when the game ends. This method will be called by a controller.Controller.
 	 */
 	public void endGame(int score) {
 		pauseButton.setVisible(false);
@@ -215,7 +217,7 @@ public class View extends JPanel implements RequestListener {
 	}
 	
 	/**
-	 * Paints the Sprites that are in the View
+	 * Paints the Sprites that are in the view.View
 	 * @param g The Graphics
 	 * @see Sprite
 	 */

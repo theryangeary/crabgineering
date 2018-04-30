@@ -1,4 +1,4 @@
-package sprites;
+package view.sprites;
 
 import java.awt.Graphics;
 

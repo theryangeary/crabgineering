@@ -1,13 +1,13 @@
-package requests;
+package controller.requests;
 
 /**
- * requests.RequestFactory is utility for producing different types of requests
+ * controller.requests.RequestFactory is utility for producing different types of controller.requests
  */
 
 public class RequestFactory {
     /**
-     * @param sprite A sprites.Sprite not currently in the View
-     * @return A requests.Request for the given sprites.Sprite to be added to the View
+     * @param sprite A view.sprites.Sprite not currently in the view.View
+     * @return A controller.requests.Request for the given view.sprites.Sprite to be added to the view.View
      */
     public static Request<Sprite> createAddToViewRequest(Sprite sprite){
         return new Request<>(
@@ -17,8 +17,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param sprite A sprites.Sprite currently in the View
-     * @return A requests.Request for the given sprites.Sprite to be removed from the View
+     * @param sprite A view.sprites.Sprite currently in the view.View
+     * @return A controller.requests.Request for the given view.sprites.Sprite to be removed from the view.View
      */
     public static Request<Sprite> createRemoveFromViewRequest(Sprite sprite){
         return new Request<>(
@@ -28,8 +28,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param entity An entities.Entity not currently in the Model
-     * @return A requests.Request for the given entities.Entity to be added to the Model
+     * @param entity An model.entities.Entity not currently in the model.Model
+     * @return A controller.requests.Request for the given model.entities.Entity to be added to the model.Model
      */
     public static Request<Entity> createAddToModelRequest(Entity entity){
         return new Request<>(
@@ -39,8 +39,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param entity An entities.Entity currently in the Model
-     * @return A requests.Request for the given entities.Entity to be removed from the Model
+     * @param entity An model.entities.Entity currently in the model.Model
+     * @return A controller.requests.Request for the given model.entities.Entity to be removed from the model.Model
      */
     public static Request<Entity> createRemoveFromModelRequest(Entity entity){
         return new Request<>(
@@ -50,8 +50,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param trash A piece of entities.Trash not currently thrown
-     * @return A requests.Request for the given entities.Trash to be thrown
+     * @param trash A piece of model.entities.Trash not currently thrown
+     * @return A controller.requests.Request for the given model.entities.Trash to be thrown
      */
     public static Request<Trash> createAddThrownTrashRequest(Trash trash){
         return new Request<>(
@@ -62,7 +62,7 @@ public class RequestFactory {
 
     /**
      * @param dPollution The change in pollution level
-     * @return A requests.Request for the pollution level to be changed by
+     * @return A controller.requests.Request for the pollution level to be changed by
      * the specified amount
      */
     public static Request<Integer> createUpdatePollutionRequest(int dPollution){
@@ -74,7 +74,7 @@ public class RequestFactory {
 
     /**
      * @param dScore The change in score
-     * @return A requests.Request for the score to be changed by the specified amount
+     * @return A controller.requests.Request for the score to be changed by the specified amount
      */
     public static Request<Integer> createUpdateScoreRequest(int dScore){
         return new Request<>(
@@ -84,8 +84,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param sound The name of the SoundEffect to be played
-     * @return A requests.Request for the SoundEffect represented by sound
+     * @param sound The name of the view.soundeffects.SoundEffect to be played
+     * @return A controller.requests.Request for the view.soundeffects.SoundEffect represented by sound
      * to be played
      */
     public static Request<String> createPlaySoundRequest(String sound){

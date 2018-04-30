@@ -1,6 +1,6 @@
-package entities;
+package model.entities;
 
-import requests.RequestQueue;
+import controller.requests.RequestQueue;
 
 public class TrashFactory {
 

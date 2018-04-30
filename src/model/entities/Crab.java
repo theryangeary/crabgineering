@@ -1,11 +1,11 @@
-package entities;
+package model.entities;
 
-import requests.RequestFactory;
-import requests.RequestQueue;
-import sprites.ArrowSprite;
+import controller.requests.RequestFactory;
+import controller.requests.RequestQueue;
+import view.sprites.ArrowSprite;
 
 /**
- * A entities.Crab is a type of entities.Player.
+ * A model.entities.Crab is a type of model.entities.Player.
  * @author Zelinsky
  * @see Player
  */
@@ -24,20 +24,20 @@ public class Crab extends Player {
 	private final double ROTATE_SPEED = Math.PI/32;
 
 	/**
-	 * The width of the entities.Crab
+	 * The width of the model.entities.Crab
 	 */
-	static final int CRAB_WIDTH = 100;
+	public static final int CRAB_WIDTH = 100;
 	/**
-	 * The height of the entities.Crab
+	 * The height of the model.entities.Crab
 	 */
-	static final int CRAB_HEIGHT = 100;
+	public static final int CRAB_HEIGHT = 100;
 
 	/**
-	 * Constructs the entities.Crab by calling entities.Player's Constructor super(x, y, CRAB_WIDTH, CRAB_HEIGHT) and assigning the entities.Crab
-	 * its sprites.Sprite and requests.RequestQueue.
-	 * @param x The x position of the entities.Crab
-	 * @param y The y position of the entities.Crab
-	 * @param requestQueue The requests.RequestQueue of the entities.Crab
+	 * Constructs the model.entities.Crab by calling model.entities.Player's Constructor super(x, y, CRAB_WIDTH, CRAB_HEIGHT) and assigning the model.entities.Crab
+	 * its view.sprites.Sprite and controller.requests.RequestQueue.
+	 * @param x The x position of the model.entities.Crab
+	 * @param y The y position of the model.entities.Crab
+	 * @param requestQueue The controller.requests.RequestQueue of the model.entities.Crab
 	 * @see Player
 	 */
 	public Crab(int x, int y, RequestQueue requestQueue) {
@@ -52,7 +52,7 @@ public class Crab extends Player {
 	}
 	
 	/**
-	 * Handles how a entities.Crab processes an action command.
+	 * Handles how a model.entities.Crab processes an action command.
 	 */
 	@Override
 	public void processInput(String action) {
@@ -84,10 +84,10 @@ public class Crab extends Player {
 	}
 
 	/**
-	 * Updates the position of the entities.Crab's Bounds based on gravity, drag, and the entities.Crab's speed.
-	 * Calls entities.Entity's update(gravity, drag) and handles heldTrash movement..
-	 * @param gravity The gravity applied to the entities.Entity
-	 * @param drag The drag applied to the entities.Entity
+	 * Updates the position of the model.entities.Crab's controller.bounds.Bounds based on gravity, drag, and the model.entities.Crab's speed.
+	 * Calls model.entities.Entity's update(gravity, drag) and handles heldTrash movement..
+	 * @param gravity The gravity applied to the model.entities.Entity
+	 * @param drag The drag applied to the model.entities.Entity
 	 * @see Entity
 	 */
 	@Override
@@ -102,7 +102,7 @@ public class Crab extends Player {
 	}
 	
 	/**
-	 * Performs the entities.Crab's special action by throwing currently held entities.Trash.
+	 * Performs the model.entities.Crab's special action by throwing currently held model.entities.Trash.
 	 */
 	public void doAction() {
 
@@ -123,8 +123,8 @@ public class Crab extends Player {
 	}
 	
 	/**
-	 * Handles how entities.Trash and entities.Crab respond to intersecting with a entities.Trash.
-	 * @param t The entities.Trash the entities.Crab intersects with
+	 * Handles how model.entities.Trash and model.entities.Crab respond to intersecting with a model.entities.Trash.
+	 * @param t The model.entities.Trash the model.entities.Crab intersects with
 	 */
 	public void touchTrash(Trash t) {
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
@@ -137,7 +137,7 @@ public class Crab extends Player {
 	}
 	
 	/**
-	 * Rotates the entities.Crab's throwing direction for throwing entities.Trash by the degrees specified
+	 * Rotates the model.entities.Crab's throwing direction for throwing model.entities.Trash by the degrees specified
 	 * @param dTheta The degrees to rotate the throwing direction by
 	 */
 	public void rotateThrow(double dTheta) {

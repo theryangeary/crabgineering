@@ -1,19 +1,21 @@
-import entities.Player;
+package controller;
+
+import model.entities.Player;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 /**
- * The Game's Key Bindings for entities.Player Movement and Action
+ * The Game's Key Bindings for model.entities.Player Movement and Action
  * @author Zelinsky
  */
 public class GameKeyBindings {
 	
 	/**
-	 * Constructs a GameKeyBindings by calling setKeyBindings(panel, player). Maps the inputs from the panel to the player.
+	 * Constructs a controller.GameKeyBindings by calling setKeyBindings(panel, player). Maps the inputs from the panel to the player.
 	 * @param panel The JPanel to get input from
-	 * @param player The entities.Player to modify based on inputs from panel
+	 * @param player The model.entities.Player to modify based on inputs from panel
 	 */
 	public GameKeyBindings(JPanel panel, Player player) {
 		setKeyBindings(panel, player);
@@ -22,7 +24,7 @@ public class GameKeyBindings {
 	/**
 	 * Maps the inputs from panel to player.
 	 * @param panel The JPanel to get input from
-	 * @param player The entities.Player to modify based on inputs from panel
+	 * @param player The model.entities.Player to modify based on inputs from panel
 	 */
 	private void setKeyBindings(JPanel panel, Player player) {
 		//get the necessary maps from the JPanel
@@ -71,7 +73,7 @@ public class GameKeyBindings {
 		/**
 		 * Constructs a KeyAction.
 		 * @param command The command corresponding the the key input
-		 * @param player The entities.Player to modify based on the command
+		 * @param player The model.entities.Player to modify based on the command
 		 */
 		public KeyAction(String command, Player player) {
 			putValue(ACTION_COMMAND_KEY, command);
@@ -80,7 +82,7 @@ public class GameKeyBindings {
 		
 		/**
 		 * Handles what happens when a key input is registered.
-		 * Calls entities.Player's processInput(e.getActionCommand()).
+		 * Calls model.entities.Player's processInput(e.getActionCommand()).
 		 * @see Player
 		 */
 		@Override

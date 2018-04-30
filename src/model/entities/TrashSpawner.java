@@ -1,14 +1,14 @@
-package entities;
+package model.entities;
 
-import requests.Request;
-import requests.RequestFactory;
-import requests.RequestQueue;
+import controller.requests.Request;
+import controller.requests.RequestFactory;
+import controller.requests.RequestQueue;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * entities.TrashSpawner, a time based trash generator
+ * model.entities.TrashSpawner, a time based trash generator
  */
 public class TrashSpawner {
     private int interval = 0;
@@ -17,8 +17,8 @@ public class TrashSpawner {
     private Timer spawnTimer;
 
     /**
-     * Generate a entities.TrashSpawner
-     * @param requestQueue for requests
+     * Generate a model.entities.TrashSpawner
+     * @param requestQueue for controller.requests
      * @param spawnHeight
      * @param spawnWidth Specifies how wide of a range to spawn trash in
      * @param interval time between trash spawning

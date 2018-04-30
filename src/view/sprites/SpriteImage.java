@@ -1,4 +1,4 @@
-package sprites;
+package view.sprites;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * sprites.SpriteImage - an enum to handle inclusion of Sprites in game
+ * view.sprites.SpriteImage - an enum to handle inclusion of Sprites in game
  */
 public enum SpriteImage {
     CLAM("clam.png"),
@@ -22,7 +22,7 @@ public enum SpriteImage {
     final BufferedImage image;
 
     /**
-     * Constructor to create a sprites.SpriteImage
+     * Constructor to create a view.sprites.SpriteImage
      * @param image_name the type of image to make
      */
     SpriteImage(String image_name){

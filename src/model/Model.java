@@ -1,16 +1,22 @@
-import entities.*;
-import requests.Request;
-import requests.RequestFactory;
-import requests.RequestListener;
-import requests.RequestQueue;
-import sprites.EntitySprite;
-import sprites.Sprite;
+package model;
+
+import view.audio.SoundEffect;
+import controller.bounds.Bounds;
+import controller.bounds.BoundsListener;
+import controller.Controller;
+import model.entities.*;
+import controller.requests.Request;
+import controller.requests.RequestFactory;
+import controller.requests.RequestListener;
+import controller.requests.RequestQueue;
+import view.sprites.EntitySprite;
+import view.sprites.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * A class that contains the game's logic. Updates are called by a Controller.
+ * A class that contains the game's logic. Updates are called by a controller.Controller.
  *
  * @author Zelinsky
  * @see Controller
@@ -20,8 +26,8 @@ public class Model implements RequestListener {
 	RequestQueue requestQueue;
 	
 	//constants relevant to simulation's physics
-	static final int WORLD_WIDTH = 500;
-	static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
+	public static final int WORLD_WIDTH = 500;
+	public static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
@@ -47,10 +53,10 @@ public class Model implements RequestListener {
 	private int score = 0;
 	
 	/**
-	 * Constructs the Model with its Bounds and requests.RequestQueue.
+	 * Constructs the model.Model with its controller.bounds.Bounds and controller.requests.RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
-	 * @param requestQueue The requests.RequestQueue for the Model
+	 * @param requestQueue The controller.requests.RequestQueue for the model.Model
 	 * @see Bounds
 	 * @see RequestQueue
 	 */
@@ -58,8 +64,8 @@ public class Model implements RequestListener {
 		this.worldBounds = new Bounds(WORLD_WIDTH, WORLD_HEIGHT);
 		this.requestQueue = requestQueue;
 		
-		//setup the requests.RequestQueue Entities can use to post requests
-		//for the Model
+		//setup the controller.requests.RequestQueue Entities can use to post controller.requests
+		//for the model.Model
 		requestQueue.addListener(this::handleRequest);
 		
 		reset();
@@ -67,7 +73,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
-	 * and adds a entities.TrashSpawner and entities.Player.
+	 * and adds a model.entities.TrashSpawner and model.entities.Player.
 	 */
 	public void reset() {
 		toRemove.addAll(entities);
@@ -102,7 +108,7 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Handles how a requests.Request is processed.
+	 * Handles how a controller.requests.Request is processed.
 	 *
 	 * @param request The request to be processed
 	 * @see Request
@@ -174,7 +180,7 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Handles what should happen when the game ends. Tells the Controller the game is over by calling Controller.endGame().
+	 * Handles what should happen when the game ends. Tells the controller.Controller the game is over by calling controller.Controller.endGame().
 	 *
 	 * @see Controller
 	 */
@@ -204,13 +210,13 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Adds an entities.Entity to the Entities that will be processed during update().
-	 * The entities.Entity will also be added to the View through the requestQueue.
+	 * Adds an model.entities.Entity to the Entities that will be processed during update().
+	 * The model.entities.Entity will also be added to the view.View through the requestQueue.
 	 *
-	 * @param entity The entities.Entity to add to the Model
+	 * @param entity The model.entities.Entity to add to the model.Model
 	 */
 	public void addEntity(Entity entity) {
-		//add the entities.Entity, and let it react to being added
+		//add the model.entities.Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
 		
@@ -224,10 +230,10 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Removes an entities.Entity from the Entities that will be processed during update().
-	 * The entities.Entity will also be removed from the view through the requestQueue.
+	 * Removes an model.entities.Entity from the Entities that will be processed during update().
+	 * The model.entities.Entity will also be removed from the view through the requestQueue.
 	 *
-	 * @param entity The entities.Entity to be removed from the Model
+	 * @param entity The model.entities.Entity to be removed from the model.Model
 	 */
 	public void removeEntity(Entity entity) {
 		entities.remove(entity);
@@ -269,7 +275,7 @@ public class Model implements RequestListener {
 	 *
 	 * @return The current pollution level
 	 */
-	int getCurrentPollutionLevel() {
+	public int getCurrentPollutionLevel() {
 		return this.currentPollutionLevel;
 	}
 	
@@ -278,24 +284,24 @@ public class Model implements RequestListener {
 	 *
 	 * @return The amount specified by MAXIMUM_POLLUTION_LEVEL
 	 */
-	int getMaxPollutionLevel() {
+	public int getMaxPollutionLevel() {
 		return MAX_POLLUTION_LEVEL;
 	}
 	
 	/**
-	 * Returns the Bounds of the world.
+	 * Returns the controller.bounds.Bounds of the world.
 	 *
-	 * @return The world Bounds
+	 * @return The world controller.bounds.Bounds
 	 */
 	Rectangle getWorldBounds() {
 		return worldBounds;
 	}
 	
 	/**
-	 * Turns on the entities.Trash Spawner if the state is true, off if the state is false.
-	 * @param state Determines whether the entities.Trash Spawner is turned off or on
+	 * Turns on the model.entities.Trash Spawner if the state is true, off if the state is false.
+	 * @param state Determines whether the model.entities.Trash Spawner is turned off or on
 	 */
-	void toggleTrashSpawning(boolean state) {
+	public void toggleTrashSpawning(boolean state) {
 		if (state == true) {
 			spawner.start();
 		} else {

@@ -1,6 +1,9 @@
-import requests.RequestQueue;
-import sprites.PollutionBarSprite;
-import sprites.ScoreSprite;
+package controller;
+
+import controller.requests.RequestQueue;
+import view.sprites.PollutionBarSprite;
+import view.sprites.ScoreSprite;
+import view.View;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * A class that controls updates of a View and Model
+ * A class that controls updates of a view.View and model.Model
  * @author Zelinsky
  *
  */
@@ -24,7 +27,7 @@ public class Controller implements ActionListener {
 	private RequestQueue requests;
 	
 	/**
-	 * Constructs the Controller.
+	 * Constructs the controller.Controller.
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main.
 	 */

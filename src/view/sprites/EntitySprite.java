@@ -1,4 +1,4 @@
-package sprites;
+package view.sprites;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +11,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     private Rectangle bounds;
 
     /**
-     * Create sprites.EntitySprite with the entities included bounds
+     * Create view.sprites.EntitySprite with the model.entities included controller.bounds
      * @param entity The type of entity to create a sprite for
      */
     public EntitySprite(Entity entity){
@@ -20,7 +20,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Create sprites.EntitySprite with specified bounds
+     * Create view.sprites.EntitySprite with specified controller.bounds
      * @param spriteImage Image for the entity
      * @param bounds Location of the entity
      */
@@ -30,9 +30,9 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Set the sprites.EntitySprite's bounds to these bounds
-     * Listen to these bounds
-     * @param bounds The bounds of this sprites.EntitySprite
+     * Set the view.sprites.EntitySprite's controller.bounds to these controller.bounds
+     * Listen to these controller.bounds
+     * @param bounds The controller.bounds of this view.sprites.EntitySprite
      */
     void setBounds(Bounds bounds){
         this.bounds = new Rectangle(bounds);
@@ -40,8 +40,8 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Return this sprites.EntitySprite's bounds
-     * @return Rectangle bounds
+     * Return this view.sprites.EntitySprite's controller.bounds
+     * @return Rectangle controller.bounds
      */
     protected Rectangle getBounds(){
         return bounds;
@@ -56,9 +56,9 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Change the entity's bounds relatively
-     * @param dx change in x bounds
-     * @param dy change in y bounds
+     * Change the entity's controller.bounds relatively
+     * @param dx change in x controller.bounds
+     * @param dy change in y controller.bounds
      */
     @Override
     public void handleTranslate(int dx, int dy) {
@@ -66,7 +66,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Change the entity's bounds absolutely
+     * Change the entity's controller.bounds absolutely
      * @param x new x bound
      * @param y new y bound
      */
@@ -76,7 +76,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Draw this sprite at its bounds
+     * Draw this sprite at its controller.bounds
      * @param g Graphics object to draw on
      */
     public void draw(Graphics g){
