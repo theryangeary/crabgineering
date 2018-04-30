@@ -19,7 +19,7 @@ public class EntitySprite implements Sprite, BoundsListener {
      * @param entity The type of entity to create a sprite for
      */
     public EntitySprite(Entity entity){
-        this(SpriteImage.valueOf(entity.getClass().getName().toUpperCase()),
+        this(imageOf(entity),
              entity.getBounds());
     }
 
@@ -31,6 +31,16 @@ public class EntitySprite implements Sprite, BoundsListener {
     EntitySprite(SpriteImage spriteImage, Bounds bounds) {
         this.spriteImage = spriteImage;
         setBounds(bounds);
+    }
+
+    /**
+     * Gets the SpriteImage which corresponds to the given Entity
+     * @param entity The Entity to be depicted
+     * @return A SpriteImage depicting that Entity
+     */
+    static SpriteImage imageOf(Entity entity){
+        String name = entity.getClass().getSimpleName();
+        return SpriteImage.valueOf(name.toUpperCase());
     }
 
     /**

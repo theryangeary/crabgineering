@@ -17,7 +17,7 @@ public enum SpriteImage {
     ARROW("arrow.png");
 
     //should be the same for all Sprites
-    final static String IMAGE_DIR = "resources/images/";
+    final static String IMAGE_DIR = "src/resources/images/";
 
     final BufferedImage image;
 
