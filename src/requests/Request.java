@@ -39,7 +39,7 @@ public class Request<R> {
 
     /**
      * @return Any specific information needed to actually fulfill the request
-     * ex: the Entity to be added to the Model for an ADD_TO_MODEL request
+     * ex: the entities.Entity to be added to the Model for an ADD_TO_MODEL request
      */
     public R getSpecifics() {
         return specifics;

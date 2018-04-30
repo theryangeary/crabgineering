@@ -1,3 +1,5 @@
+package sprites;
+
 import requests.Request;
 import requests.RequestListener;
 

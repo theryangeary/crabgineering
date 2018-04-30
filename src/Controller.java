@@ -1,4 +1,6 @@
 import requests.RequestQueue;
+import sprites.PollutionBarSprite;
+import sprites.ScoreSprite;
 
 import javax.swing.*;
 import java.awt.*;

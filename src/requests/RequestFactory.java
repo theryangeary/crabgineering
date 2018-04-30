@@ -6,8 +6,8 @@ package requests;
 
 public class RequestFactory {
     /**
-     * @param sprite A Sprite not currently in the View
-     * @return A requests.Request for the given Sprite to be added to the View
+     * @param sprite A sprites.Sprite not currently in the View
+     * @return A requests.Request for the given sprites.Sprite to be added to the View
      */
     public static Request<Sprite> createAddToViewRequest(Sprite sprite){
         return new Request<>(
@@ -17,8 +17,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param sprite A Sprite currently in the View
-     * @return A requests.Request for the given Sprite to be removed from the View
+     * @param sprite A sprites.Sprite currently in the View
+     * @return A requests.Request for the given sprites.Sprite to be removed from the View
      */
     public static Request<Sprite> createRemoveFromViewRequest(Sprite sprite){
         return new Request<>(
@@ -28,8 +28,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param entity An Entity not currently in the Model
-     * @return A requests.Request for the given Entity to be added to the Model
+     * @param entity An entities.Entity not currently in the Model
+     * @return A requests.Request for the given entities.Entity to be added to the Model
      */
     public static Request<Entity> createAddToModelRequest(Entity entity){
         return new Request<>(
@@ -39,8 +39,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param entity An Entity currently in the Model
-     * @return A requests.Request for the given Entity to be removed from the Model
+     * @param entity An entities.Entity currently in the Model
+     * @return A requests.Request for the given entities.Entity to be removed from the Model
      */
     public static Request<Entity> createRemoveFromModelRequest(Entity entity){
         return new Request<>(
@@ -50,8 +50,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param trash A piece of Trash not currently thrown
-     * @return A requests.Request for the given Trash to be thrown
+     * @param trash A piece of entities.Trash not currently thrown
+     * @return A requests.Request for the given entities.Trash to be thrown
      */
     public static Request<Trash> createAddThrownTrashRequest(Trash trash){
         return new Request<>(

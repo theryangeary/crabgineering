@@ -1,6 +1,7 @@
 import requests.Request;
 import requests.RequestListener;
 import requests.RequestQueue;
+import sprites.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +15,8 @@ import java.util.ArrayList;
  */
 public class View extends JPanel implements RequestListener {
 	// define size of game
-	final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
+	public final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	public final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 
 	// relative to model
 	private Dimension scale;
@@ -175,8 +176,8 @@ public class View extends JPanel implements RequestListener {
 	}
 
 	/**
-	 * Add a Sprite to the View
-	 * @param sprite The Sprite to add to the View
+	 * Add a sprites.Sprite to the View
+	 * @param sprite The sprites.Sprite to add to the View
 	 * @see Sprite
 	 */
 	public void addSprite(Sprite sprite){
@@ -184,8 +185,8 @@ public class View extends JPanel implements RequestListener {
 	}
 	
 	/**
-	 * Removes a Sprite from the View
-	 * @param sprite The Sprite to remove from the View
+	 * Removes a sprites.Sprite from the View
+	 * @param sprite The sprites.Sprite to remove from the View
 	 */
 	public void removeSprite(Sprite sprite) {
 		sprites.remove(sprite);

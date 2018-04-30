@@ -9,8 +9,8 @@ import java.util.List;
  * them to RequestListeners. Intended to be used to maintain
  * control flow in an organised fashion for
  *  (1) horizontal updates (eg Model to View)
- *  (2) vertical updates (eg Entity to Model)
- *  (3) asynchronous events (eg removing Trash outside of update loop)
+ *  (2) vertical updates (eg entities.Entity to Model)
+ *  (3) asynchronous events (eg removing entities.Trash outside of update loop)
  */
 public class RequestQueue extends ArrayDeque<Request> {
 

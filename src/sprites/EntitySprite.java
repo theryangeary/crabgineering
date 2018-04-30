@@ -1,3 +1,5 @@
+package sprites;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -9,7 +11,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     private Rectangle bounds;
 
     /**
-     * Create EntitySprite with the entities included bounds
+     * Create sprites.EntitySprite with the entities included bounds
      * @param entity The type of entity to create a sprite for
      */
     public EntitySprite(Entity entity){
@@ -18,7 +20,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Create EntitySprite with specified bounds
+     * Create sprites.EntitySprite with specified bounds
      * @param spriteImage Image for the entity
      * @param bounds Location of the entity
      */
@@ -28,9 +30,9 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Set the EntitySprite's bounds to these bounds
+     * Set the sprites.EntitySprite's bounds to these bounds
      * Listen to these bounds
-     * @param bounds The bounds of this EntitySprite
+     * @param bounds The bounds of this sprites.EntitySprite
      */
     void setBounds(Bounds bounds){
         this.bounds = new Rectangle(bounds);
@@ -38,7 +40,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Return this EntitySprite's bounds
+     * Return this sprites.EntitySprite's bounds
      * @return Rectangle bounds
      */
     protected Rectangle getBounds(){

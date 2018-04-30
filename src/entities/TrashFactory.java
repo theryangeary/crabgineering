@@ -1,3 +1,5 @@
+package entities;
+
 import requests.RequestQueue;
 
 public class TrashFactory {

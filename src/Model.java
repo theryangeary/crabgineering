@@ -1,7 +1,10 @@
+import entities.*;
 import requests.Request;
 import requests.RequestFactory;
 import requests.RequestListener;
 import requests.RequestQueue;
+import sprites.EntitySprite;
+import sprites.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,7 +43,7 @@ public class Model implements RequestListener {
 	/**
 	 * The amounts the score should be incremented by.
 	 */
-	static final int SCORE_INCREMENT = 10;
+	public static final int SCORE_INCREMENT = 10;
 	private int score = 0;
 	
 	/**
@@ -64,7 +67,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
-	 * and adds a TrashSpawner and Player.
+	 * and adds a entities.TrashSpawner and entities.Player.
 	 */
 	public void reset() {
 		toRemove.addAll(entities);
@@ -201,13 +204,13 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Adds an Entity to the Entities that will be processed during update().
-	 * The Entity will also be added to the View through the requestQueue.
+	 * Adds an entities.Entity to the Entities that will be processed during update().
+	 * The entities.Entity will also be added to the View through the requestQueue.
 	 *
-	 * @param entity The Entity to add to the Model
+	 * @param entity The entities.Entity to add to the Model
 	 */
 	public void addEntity(Entity entity) {
-		//add the Entity, and let it react to being added
+		//add the entities.Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
 		
@@ -221,10 +224,10 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Removes an Entity from the Entities that will be processed during update().
-	 * The Entity will also be removed from the view through the requestQueue.
+	 * Removes an entities.Entity from the Entities that will be processed during update().
+	 * The entities.Entity will also be removed from the view through the requestQueue.
 	 *
-	 * @param entity The Entity to be removed from the Model
+	 * @param entity The entities.Entity to be removed from the Model
 	 */
 	public void removeEntity(Entity entity) {
 		entities.remove(entity);
@@ -289,8 +292,8 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Turns on the Trash Spawner if the state is true, off if the state is false.
-	 * @param state Determines whether the Trash Spawner is turned off or on
+	 * Turns on the entities.Trash Spawner if the state is true, off if the state is false.
+	 * @param state Determines whether the entities.Trash Spawner is turned off or on
 	 */
 	void toggleTrashSpawning(boolean state) {
 		if (state == true) {

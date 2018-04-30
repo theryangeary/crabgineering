@@ -1,3 +1,5 @@
+package entities;
+
 import requests.Request;
 import requests.RequestFactory;
 import requests.RequestQueue;
@@ -6,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * TrashSpawner, a time based trash generator
+ * entities.TrashSpawner, a time based trash generator
  */
 public class TrashSpawner {
     private int interval = 0;
@@ -15,7 +17,7 @@ public class TrashSpawner {
     private Timer spawnTimer;
 
     /**
-     * Generate a TrashSpawner
+     * Generate a entities.TrashSpawner
      * @param requestQueue for requests
      * @param spawnHeight
      * @param spawnWidth Specifies how wide of a range to spawn trash in
