@@ -56,7 +56,7 @@ public class Trash extends Entity {
 	@Override
 	void translate(double dx, double dy) {
 		
-		// controller.bounds.Bounds check
+		// Bounds check
 		if (leftBound() && dx < 0) {
 			dx = 0;
 		}

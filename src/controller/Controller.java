@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * A class that controls updates of a view.View and model.Model
+ * A class that controls updates of a View and model.Model
  * @author Zelinsky
  *
  */
@@ -29,7 +29,7 @@ public class Controller implements ActionListener {
 	private RequestQueue requests;
 	
 	/**
-	 * Constructs the controller.Controller.
+	 * Constructs the Controller.
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main.
 	 */
@@ -88,7 +88,7 @@ public class Controller implements ActionListener {
 	
 	/**
 	 * Toggles the timer (start/stop) and updates the pauseButton in the view based on the timer's toggle state.
-	 * @param e The ActionEvent passed in when the pasueButton is pressed
+	 * @param e The ActionEvent passed in when the pauseButton is pressed
 	 * @see View
 	 */
 	@Override public void actionPerformed(ActionEvent e) {

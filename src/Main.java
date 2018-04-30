@@ -7,7 +7,7 @@ import controller.Controller;
 public class Main {
 	/**
 	 * Begins the game.
-	 * Constructs a controller.Controller and calls that controller.Controller's start() method.
+	 * Constructs a Controller and calls that Controller's start() method.
 	 * @param args Any String inputs (none specified)
 	 */
 	public static void main(String[] args) {

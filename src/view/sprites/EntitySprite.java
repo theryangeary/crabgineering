@@ -15,7 +15,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     private Rectangle bounds;
 
     /**
-     * Create view.sprites.EntitySprite with the model.entities included controller.bounds
+     * Create EntitySprite with the entities included bounds
      * @param entity The type of entity to create a sprite for
      */
     public EntitySprite(Entity entity){
@@ -24,7 +24,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Create view.sprites.EntitySprite with specified controller.bounds
+     * Create EntitySprite with specified bounds
      * @param spriteImage Image for the entity
      * @param bounds Location of the entity
      */
@@ -44,9 +44,9 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Set the view.sprites.EntitySprite's controller.bounds to these controller.bounds
-     * Listen to these controller.bounds
-     * @param bounds The controller.bounds of this view.sprites.EntitySprite
+     * Set the EntitySprite's bounds to these bounds
+     * Listen to these bounds
+     * @param bounds The bounds of this EntitySprite
      */
     void setBounds(Bounds bounds){
         this.bounds = new Rectangle(bounds);
@@ -54,8 +54,8 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Return this view.sprites.EntitySprite's controller.bounds
-     * @return Rectangle controller.bounds
+     * Return this EntitySprite's bounds
+     * @return Rectangle bounds
      */
     protected Rectangle getBounds(){
         return bounds;
@@ -70,9 +70,9 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Change the entity's controller.bounds relatively
-     * @param dx change in x controller.bounds
-     * @param dy change in y controller.bounds
+     * Change the entity's relatively
+     * @param dx change in x bounds
+     * @param dy change in y bounds
      */
     @Override
     public void handleTranslate(int dx, int dy) {
@@ -80,7 +80,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Change the entity's controller.bounds absolutely
+     * Change the entity's absolutely
      * @param x new x bound
      * @param y new y bound
      */
@@ -90,7 +90,7 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Draw this sprite at its controller.bounds
+     * Draw this sprite at its bounds
      * @param g Graphics object to draw on
      */
     public void draw(Graphics g){

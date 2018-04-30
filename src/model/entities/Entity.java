@@ -41,11 +41,11 @@ public abstract class Entity implements BoundsListener {
 	//double trashRate = 1;
 	
 	/**
-	 * Constructs an model.entities.Entity. Creates a controller.bounds.Bounds for the model.entities.Entity representing its size and location.
-	 * @param x The x position of the controller.bounds.Bounds
-	 * @param y The y position of the controller.bounds.Bounds
-	 * @param width The width of the controller.bounds.Bounds
-	 * @param height The height of the controller.bounds.Bounds
+	 * Constructs an model.entities.Entity. Creates a Bounds for the model.entities.Entity representing its size and location.
+	 * @param x The x position of the Bounds
+	 * @param y The y position of the Bounds
+	 * @param width The width of the Bounds
+	 * @param height The height of the Bounds
 	 * @see Bounds
 	 */
 	Entity(int x, int y, int width, int height) {
@@ -57,8 +57,8 @@ public abstract class Entity implements BoundsListener {
 	}
 
 	/**
-	 * Sets the controller.bounds.Bounds of the world for this model.entities.Entity. An model.entities.Entity can't move outside of the worldBounds.
-	 * @param worldBounds A controller.bounds.Bounds representing the controller.bounds of the world
+	 * Sets the Bounds of the world for this model.entities.Entity. An model.entities.Entity can't move outside of the worldBounds.
+	 * @param worldBounds A Bounds representing the of the world
 	 */
 	public void setWorldBounds(Bounds worldBounds){
 		this.worldBounds = new Rectangle(worldBounds);
@@ -66,8 +66,8 @@ public abstract class Entity implements BoundsListener {
 	}
 	
 	/**
-	 * Returns the controller.bounds.Bounds representing the position for the model.entities.Entity
-	 * @return The controller.bounds.Bounds representing the position for the model.entities.Entity
+	 * Returns the Bounds representing the position for the model.entities.Entity
+	 * @return The Bounds representing the position for the model.entities.Entity
 	 */
 	//Rectangle wrapper functions
 	public Bounds getBounds() {
@@ -75,23 +75,23 @@ public abstract class Entity implements BoundsListener {
 	}
 	
 	/**
-	 * Sets the location of the controller.bounds.Bounds representing the position of the model.entities.Entity to the specified x and y position.
-	 * @param x The new x position of the controller.bounds.Bounds
-	 * @param y The new y position of the controller.bounds.Bounds
+	 * Sets the location of the Bounds representing the position of the model.entities.Entity to the specified x and y position.
+	 * @param x The new x position of the Bounds
+	 * @param y The new y position of the Bounds
 	 */
 	void setLocation(int x, int y) {
 		bounds.setLocation(x, y);
 	}
 	
 	/**
-	 * Translates the controller.bounds.Bounds representing the model.entities.Entity's location a distance specified by the change in x and y.
+	 * Translates the Bounds representing the model.entities.Entity's location a distance specified by the change in x and y.
 	 * Will not allow for the model.entities.Entity to move outside of the worldBounds.
-	 * @param dx The distance to translate the controller.bounds.Bounds in the x direction
-	 * @param dy The distance to translate the controller.bounds.Bounds in the y direction
+	 * @param dx The distance to translate the Bounds in the x direction
+	 * @param dy The distance to translate the Bounds in the y direction
 	 */
 	void translate(double dx, double dy) {
 		
-		// controller.bounds.Bounds check
+		// Bounds check
 		if (leftBound() && dx < 0) {
 			dx = 0;
 		}
@@ -110,9 +110,9 @@ public abstract class Entity implements BoundsListener {
 	}
 	
 	/**
-	 * Checks if this model.entities.Entity's controller.bounds.Bounds intersects the specified model.entities.Entity's controller.bounds.Bounds.
+	 * Checks if this model.entities.Entity's Bounds intersects the specified model.entities.Entity's Bounds.
 	 * @param e The other model.entities.Entity
-	 * @return True if this model.entities.Entity's controller.bounds.Bounds intersects the other model.entities.Entity's controller.bounds.Bounds, false otherwise
+	 * @return True if this model.entities.Entity's Bounds intersects the other model.entities.Entity's Bounds, false otherwise
 	 */
 	public boolean intersects(Entity e) {
 		return this.bounds.intersects(e.bounds);
@@ -181,32 +181,32 @@ public abstract class Entity implements BoundsListener {
 	
 	// The Bound functions return true if the model.entities.Entity is at the specified controller.bounds
 	/**
-	 * Checks if the model.entities.Entity's controller.bounds.Bounds is touching the left of the worldBounds.
-	 * @return True if the model.entities.Entity's controller.bounds.Bounds is touching the left of the worldBounds, false otherwise
+	 * Checks if the model.entities.Entity's Bounds is touching the left of the worldBounds.
+	 * @return True if the model.entities.Entity's Bounds is touching the left of the worldBounds, false otherwise
 	 */
 	boolean leftBound() {
 		return !worldBounds.contains(bounds.getMinX(), bounds.getCenterY());
 	}
 	
 	/**
-	 * Checks if the model.entities.Entity's controller.bounds.Bounds is touching the right of the worldBounds.
-	 * @return True if the model.entities.Entity's controller.bounds.Bounds is touching the right of the worldBounds, false otherwise
+	 * Checks if the model.entities.Entity's Bounds is touching the right of the worldBounds.
+	 * @return True if the model.entities.Entity's Bounds is touching the right of the worldBounds, false otherwise
 	 */
 	boolean rightBound() {
 		return !worldBounds.contains(bounds.getMaxX(), bounds.getCenterY());
 	}
 	
 	/**
-	 * Checks if the model.entities.Entity's controller.bounds.Bounds is touching the top of the worldBounds.
-	 * @return True if the model.entities.Entity's controller.bounds.Bounds is touching the top of the worldBounds, false otherwise
+	 * Checks if the model.entities.Entity's Bounds is touching the top of the worldBounds.
+	 * @return True if the model.entities.Entity's Bounds is touching the top of the worldBounds, false otherwise
 	 */
 	boolean topBound() {
 		return !worldBounds.contains(bounds.getCenterX(), bounds.getMinY());
 	}
 	
 	/**
-	 * Checks if the model.entities.Entity's controller.bounds.Bounds is touching the bottom of the worldBounds.
-	 * @return True if the model.entities.Entity's controller.bounds.Bounds is touching the bottom of the worldBounds, false otherwise
+	 * Checks if the model.entities.Entity's Bounds is touching the bottom of the worldBounds.
+	 * @return True if the model.entities.Entity's Bounds is touching the bottom of the worldBounds, false otherwise
 	 */
 	boolean bottomBound() {
 		return !worldBounds.contains(bounds.getCenterX(), bounds.getMaxY());

@@ -8,7 +8,7 @@ import java.util.List;
  * A utility class for collecting Requests and distributing
  * them to RequestListeners. Intended to be used to maintain
  * control flow in an organised fashion for
- *  (1) horizontal updates (eg model.Model to view.View)
+ *  (1) horizontal updates (eg model.Model to View)
  *  (2) vertical updates (eg model.entities.Entity to model.Model)
  *  (3) asynchronous events (eg removing model.entities.Trash outside of update loop)
  */

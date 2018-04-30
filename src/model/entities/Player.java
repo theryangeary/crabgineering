@@ -38,7 +38,7 @@ public abstract class Player extends Entity {
 	abstract public void processInput(String action);
 	
 	/**
-	 * Handles what happens when a model.entities.Player's controller.bounds intersects with a model.entities.Trash's controller.bounds. Must be implemented by a type of model.entities.Player.
+	 * Handles what happens when a model.entities.Player's intersects with a model.entities.Trash's  Must be implemented by a type of model.entities.Player.
 	 * @param t The model.entities.Trash that the model.entities.Player intersects with
 	 */
 	abstract public void touchTrash(Trash t);

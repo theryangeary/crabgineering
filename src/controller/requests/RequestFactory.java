@@ -10,8 +10,8 @@ import view.sprites.Sprite;
 
 public class RequestFactory {
     /**
-     * @param sprite A view.sprites.Sprite not currently in the view.View
-     * @return A controller.requests.Request for the given view.sprites.Sprite to be added to the view.View
+     * @param sprite A Sprite not currently in the View
+     * @return A controller.requests.Request for the given Sprite to be added to the View
      */
     public static Request<Sprite> createAddToViewRequest(Sprite sprite){
         return new Request<>(
@@ -21,8 +21,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param sprite A view.sprites.Sprite currently in the view.View
-     * @return A controller.requests.Request for the given view.sprites.Sprite to be removed from the view.View
+     * @param sprite A Sprite currently in the View
+     * @return A controller.requests.Request for the given Sprite to be removed from the View
      */
     public static Request<Sprite> createRemoveFromViewRequest(Sprite sprite){
         return new Request<>(

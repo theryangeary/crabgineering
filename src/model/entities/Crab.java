@@ -35,7 +35,7 @@ public class Crab extends Player {
 
 	/**
 	 * Constructs the model.entities.Crab by calling model.entities.Player's Constructor super(x, y, CRAB_WIDTH, CRAB_HEIGHT) and assigning the model.entities.Crab
-	 * its view.sprites.Sprite and controller.requests.RequestQueue.
+	 * its Sprite and controller.requests.RequestQueue.
 	 * @param x The x position of the model.entities.Crab
 	 * @param y The y position of the model.entities.Crab
 	 * @param requestQueue The controller.requests.RequestQueue of the model.entities.Crab
@@ -85,7 +85,7 @@ public class Crab extends Player {
 	}
 
 	/**
-	 * Updates the position of the model.entities.Crab's controller.bounds.Bounds based on gravity, drag, and the model.entities.Crab's speed.
+	 * Updates the position of the model.entities.Crab's Bounds based on gravity, drag, and the model.entities.Crab's speed.
 	 * Calls model.entities.Entity's update(gravity, drag) and handles heldTrash movement..
 	 * @param gravity The gravity applied to the model.entities.Entity
 	 * @param drag The drag applied to the model.entities.Entity

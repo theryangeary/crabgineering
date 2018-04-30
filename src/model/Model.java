@@ -16,7 +16,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * A class that contains the game's logic. Updates are called by a controller.Controller.
+ * A class that contains the game's logic. Updates are called by a Controller.
  *
  * @author Zelinsky
  * @see Controller
@@ -53,7 +53,7 @@ public class Model implements RequestListener {
 	private int score = 0;
 	
 	/**
-	 * Constructs the model.Model with its controller.bounds.Bounds and controller.requests.RequestQueue.
+	 * Constructs the model.Model with its Bounds and controller.requests.RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
 	 * @param requestQueue The controller.requests.RequestQueue for the model.Model
@@ -181,7 +181,7 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Handles what should happen when the game ends. Tells the controller.Controller the game is over by calling controller.Controller.endGame().
+	 * Handles what should happen when the game ends. Tells the Controller the game is over by calling Controller.endGame().
 	 *
 	 * @see Controller
 	 */
@@ -212,7 +212,7 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Adds an model.entities.Entity to the Entities that will be processed during update().
-	 * The model.entities.Entity will also be added to the view.View through the requestQueue.
+	 * The model.entities.Entity will also be added to the View through the requestQueue.
 	 *
 	 * @param entity The model.entities.Entity to add to the model.Model
 	 */
@@ -290,9 +290,9 @@ public class Model implements RequestListener {
 	}
 	
 	/**
-	 * Returns the controller.bounds.Bounds of the world.
+	 * Returns the Bounds of the world.
 	 *
-	 * @return The world controller.bounds.Bounds
+	 * @return The world Bounds
 	 */
 	Rectangle getWorldBounds() {
 		return worldBounds;

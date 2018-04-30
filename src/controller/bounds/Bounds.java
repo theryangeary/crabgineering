@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * controller.bounds.Bounds is a utility for handling movement and intersection
+ * Bounds is a utility for handling movement and intersection
  * @see java.awt.Rectangle
  */
 public class Bounds extends Rectangle {
@@ -22,7 +22,7 @@ public class Bounds extends Rectangle {
 
     /**
      * The four parameter constructor specifies x and y coordinates.
-     * It then generates a controller.bounds.BoundsListener ArrayList.
+     * It then generates a BoundsListener ArrayList.
      * @param x the x coordinate of the Bound.
      * @param y the y coordinate of the Bound.
      * @param width The width of the entity.
@@ -35,8 +35,8 @@ public class Bounds extends Rectangle {
     }
 
     /**
-     * Add a listener to the controller.bounds.Bounds list of listeners
-     * @param listener The controller.bounds.BoundsListener object to add
+     * Add a listener to the Bounds list of listeners
+     * @param listener The BoundsListener object to add
      * @return the result of ArrayList.add
      */
     public boolean addListener(BoundsListener listener){
@@ -44,8 +44,8 @@ public class Bounds extends Rectangle {
     }
 
     /**
-     * Remove a listener from the controller.bounds.Bounds' list of listeners
-     * @param listener The controller.bounds.BoundsListener object to remove
+     * Remove a listener from the Bounds' list of listeners
+     * @param listener The BoundsListener object to remove
      * @return the result of ArrayList.remove
      */
     public boolean removeListener(BoundsListener listener){
@@ -54,14 +54,14 @@ public class Bounds extends Rectangle {
 
     /**
      * Returns the list of BoundsListeners
-     * @return the Collection of controller.bounds.BoundsListener
+     * @return the Collection of BoundsListener
      */
     public Collection<BoundsListener> getListeners() {
         return listeners;
     }
 
     /**
-     * Translates a set of controller.bounds by a specified x and y change
+     * Translates a set of by a specified x and y change
      * @param dx Change in x (positive is to the right)
      * @param dy Change in y (positive is downwards)
      */
@@ -76,7 +76,7 @@ public class Bounds extends Rectangle {
     }
 
     /**
-     * Sets the location of a set of controller.bounds absolutely
+     * Sets the location of a set of absolutely
      * @param x The absolute x position
      * @param y The absolute y position
      */
