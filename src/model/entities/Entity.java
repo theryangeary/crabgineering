@@ -232,4 +232,18 @@ public abstract class Entity implements BoundsListener {
 	public void handleTranslate(int dx, int dy) {
 		worldBounds.translate(dx, dy);
 	}
+
+	/**
+	 * Get the current speed in the X direction
+	 * @return speed in the X direction, as a double. Right is positive.
+	 */
+	public double getXSpeed() { return dx; }
+
+	/**
+	 * Get the current speed in the Y direction
+	 * @return speed in the Y direction, as a double. Down is positive.
+	 */
+	public double getYSpeed() {
+		return dy;
+	}
 }

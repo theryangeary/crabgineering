@@ -103,4 +103,10 @@ public class Trash extends Entity {
 	public boolean thrown() {
 		return thrown;
 	}
+
+	/**
+	 * Set the "thrown" flag so that falling trash can be thrown (again)
+	 * @param t boolean to set thrown to.
+	 */
+	public void setThrown(boolean t) { thrown = t; }
 }
