@@ -21,6 +21,8 @@ public class Trash extends Entity {
 
 	private int pollutionCount;
 
+	private final int ANGLE_FACTOR = 5;
+
 	private final int POLLUTION = 10;
 	private TrashType type;
 	
@@ -102,5 +104,21 @@ public class Trash extends Entity {
 	 */
 	public boolean thrown() {
 		return thrown;
+	}
+
+	/**
+	 * Set the "thrown" flag so that falling trash can be thrown (again)
+	 * @param t boolean to set thrown to.
+	 */
+	public void setThrown(boolean t) { thrown = t; }
+
+    /**
+     * Bounch thrown trash off of other trash
+     * @param t the non-thrown trash to bounce off
+     */
+	public void bounceTrash(Trash t) {
+	    double angle = this.getBounds().getCenterX() - t.getBounds().getCenterX();
+        this.setSpeed(-angle / ANGLE_FACTOR,  this.getYSpeed());
+	    t.setSpeed(angle / ANGLE_FACTOR, this.getYSpeed());
 	}
 }

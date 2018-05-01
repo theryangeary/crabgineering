@@ -21,7 +21,7 @@ public class Crab extends Player {
 	private ArrowSprite arrowSprite;
 
 	private double throwAngle = Math.PI/2;
-	private final int THROW_SPEED = -25;
+	private final int THROW_SPEED = -15;
 	private final double ROTATE_SPEED = Math.PI/32;
 
 	/**

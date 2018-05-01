@@ -14,6 +14,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
@@ -45,13 +46,13 @@ public class Model implements RequestListener {
 	 * The maximum pollution level. The game ends once this level is reached.
 	 */
 	static final int MAX_POLLUTION_LEVEL = 100;
-	
+
 	/**
 	 * The amounts the score should be incremented by.
 	 */
 	public static final int SCORE_INCREMENT = 10;
 	private int score = 0;
-	
+
 	/**
 	 * Constructs the model.Model with its Bounds and controller.requests.RequestQueue.
 	 * Starts a new game by calling reset().
@@ -152,9 +153,15 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-				
+				if (trash.getYSpeed() > 0) {
+					thrownTrash.remove(trash);
+					trash.setThrown(false);
+				}
+				Date date = new Date();
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
+					    System.out.println(date.toString() + ": thrown trash intersected entity: " + entity.getClass());
+						tt.bounceTrash((Trash) entity);
 						toRemove.add(trash);
 						toRemove.add(tt);
 						SoundEffect.TRASH_HIT.play();
@@ -165,21 +172,20 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-		
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
 		for (Entity e : toRemove) {
-			removeEntity(e);
+//			removeEntity(e);
 			thrownTrash.remove(e);
 		}
 		toRemove.clear();
-		
+
 		// Check end game
 		if (currentPollutionLevel >= MAX_POLLUTION_LEVEL) {
 			endGame();
 		}
-				
+
 	}
-	
+
 	/**
 	 * Handles what should happen when the game ends. Tells the Controller the game is over by calling Controller.endGame().
 	 *
@@ -190,7 +196,7 @@ public class Model implements RequestListener {
 		//reset()
 		Controller.endGame();
 	}
-	
+
 	/**
 	 * Increments the score by the (modifier * SCORE_INCREMENT).
 	 *
@@ -200,7 +206,7 @@ public class Model implements RequestListener {
 		SoundEffect.POINTS.play();
 		score += SCORE_INCREMENT * modifier;
 	}
-	
+
 	/**
 	 * Returns the current score
 	 *
@@ -209,7 +215,7 @@ public class Model implements RequestListener {
 	public int getScore() {
 		return score;
 	}
-	
+
 	/**
 	 * Adds an model.entities.Entity to the Entities that will be processed during update().
 	 * The model.entities.Entity will also be added to the View through the requestQueue.
@@ -220,16 +226,16 @@ public class Model implements RequestListener {
 		//add the model.entities.Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
-		
+
 		//create the corresponding sprite
 		Sprite sprite = new EntitySprite(entity);
-		
+
 		//and post a request for it to be added to the view
 		requestQueue.postRequest(
 				RequestFactory.createAddToViewRequest(sprite)
 		);
 	}
-	
+
 	/**
 	 * Removes an model.entities.Entity from the Entities that will be processed during update().
 	 * The model.entities.Entity will also be removed from the view through the requestQueue.
@@ -238,7 +244,7 @@ public class Model implements RequestListener {
 	 */
 	public void removeEntity(Entity entity) {
 		entities.remove(entity);
-		
+
 		//remove any Sprites that are following the entity's movements
 		for (BoundsListener listener : entity.getBounds().getListeners()) {
 			if (listener instanceof Sprite)
@@ -249,7 +255,7 @@ public class Model implements RequestListener {
 				);
 		}
 	}
-	
+
 	/**
 	 * Returns the current player.
 	 *
@@ -258,7 +264,7 @@ public class Model implements RequestListener {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	/**
 	 * Increments the current pollution level by the specified amount.
 	 *
@@ -270,7 +276,7 @@ public class Model implements RequestListener {
 		this.currentPollutionLevel += addition;
 		return this.currentPollutionLevel;
 	}
-	
+
 	/**
 	 * Returns the current pollution level
 	 *

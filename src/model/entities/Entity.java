@@ -123,7 +123,7 @@ public abstract class Entity implements BoundsListener {
 	 * @param dx The new speed of the model.entities.Entity in the x direction
 	 * @param dy The new speed of the model.entities.Entity in the y direction
 	 */
-	void setSpeed(int dx, int dy) {
+	void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
@@ -231,5 +231,19 @@ public abstract class Entity implements BoundsListener {
 	@Override
 	public void handleTranslate(int dx, int dy) {
 		worldBounds.translate(dx, dy);
+	}
+
+	/**
+	 * Get the current speed in the X direction
+	 * @return speed in the X direction, as a double. Right is positive.
+	 */
+	public double getXSpeed() { return dx; }
+
+	/**
+	 * Get the current speed in the Y direction
+	 * @return speed in the Y direction, as a double. Down is positive.
+	 */
+	public double getYSpeed() {
+		return dy;
 	}
 }
