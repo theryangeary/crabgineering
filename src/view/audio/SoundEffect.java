@@ -1,4 +1,4 @@
-/**
+package view.audio; /**
  * Code from:
  * https://www.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
  */
@@ -30,12 +30,14 @@ public enum SoundEffect {
 
     public static Volume volume = Volume.LOW;
 
-    private final String IMAGE_DIR = "audio/";
+    private final String IMAGE_DIR = "resources/soundeffects/";
 
     // Each sound effect has its own clip, loaded with its own sound file.
     private Clip clip;
 
-    // Constructor to construct each element of the enum with its own sound file.
+    /**
+     * Constructor to construct each element of the enum with its own sound file.
+      */
     SoundEffect(String soundFileName) {
         try {
             // Use URL (instead of File) to read from disk and JAR.
@@ -43,11 +45,11 @@ public enum SoundEffect {
             URL url = this.getClass().getClassLoader().getResource(IMAGE_DIR+soundFileName);
 
             //this.getClass().getClassLoader().getR
-            // Set up an audio input stream piped from the sound file.
+            // Set up an soundeffects input stream piped from the sound file.
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
             // Get a clip resource.
             clip = AudioSystem.getClip();
-            // Open audio clip and load samples from the audio input stream.
+            // Open soundeffects clip and load samples from the soundeffects input stream.
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
@@ -58,7 +60,9 @@ public enum SoundEffect {
         }
     }
 
-    // Play or Re-play the sound effect from the beginning, by rewinding.
+    /**
+     * Play or Re-play the sound effect from the beginning, by rewinding.
+     */
     public void play() {
         if (volume != Volume.MUTE) {
             if (clip.isRunning())
@@ -68,8 +72,10 @@ public enum SoundEffect {
         }
     }
 
-    // Optional static method to pre-load all the sound files.
-    static void init() {
+    /**
+     * Optional static method to pre-load all the sound files.
+     */
+    public static void init() {
         values(); // calls the constructor for all the elements
     }
 }

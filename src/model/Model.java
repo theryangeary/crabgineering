@@ -1,5 +1,20 @@
+package model;
+
+import view.audio.SoundEffect;
+import controller.bounds.Bounds;
+import controller.bounds.BoundsListener;
+import controller.Controller;
+import model.entities.*;
+import controller.requests.Request;
+import controller.requests.RequestFactory;
+import controller.requests.RequestListener;
+import controller.requests.RequestQueue;
+import view.sprites.EntitySprite;
+import view.sprites.Sprite;
+
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
@@ -12,6 +27,8 @@ public class Model implements RequestListener {
 	RequestQueue requestQueue;
 	
 	//constants relevant to simulation's physics
+	public static final int WORLD_WIDTH = 500;
+	public static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
@@ -21,7 +38,7 @@ public class Model implements RequestListener {
 	private TrashSpawner spawner;
 	private Player player;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
-	private ArrayList<Trash> toRemove = new ArrayList<>();
+	private ArrayList<Entity> toRemove = new ArrayList<>();
 	
 	//game variables
 	private int currentPollutionLevel = 0;
@@ -29,30 +46,27 @@ public class Model implements RequestListener {
 	 * The maximum pollution level. The game ends once this level is reached.
 	 */
 	static final int MAX_POLLUTION_LEVEL = 100;
-	
+
 	/**
 	 * The amounts the score should be incremented by.
 	 */
-	static final int SCORE_INCREMENT = 10;
+	public static final int SCORE_INCREMENT = 10;
 	private int score = 0;
-	
+
 	/**
-	 * Constructs the Model with its Bounds and RequestQueue.
+	 * Constructs the model.Model with its Bounds and controller.requests.RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
-	 * @param worldBounds  The Bounds of the world
-	 * @param requestQueue The RequestQueue for the Model
+	 * @param requestQueue The controller.requests.RequestQueue for the model.Model
 	 * @see Bounds
 	 * @see RequestQueue
 	 */
-	Model(Bounds worldBounds,
-	      RequestQueue requestQueue) {
-		this.worldBounds = worldBounds;
-		
+	public Model(RequestQueue requestQueue) {
+		this.worldBounds = new Bounds(WORLD_WIDTH, WORLD_HEIGHT);
 		this.requestQueue = requestQueue;
 		
-		//setup the RequestQueue Entities can use to post requests
-		//for the Model
+		//setup the controller.requests.RequestQueue Entities can use to post controller.requests
+		//for the model.Model
 		requestQueue.addListener(this::handleRequest);
 		
 		reset();
@@ -60,9 +74,13 @@ public class Model implements RequestListener {
 	
 	/**
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
-	 * and adds a TrashSpawner and Player.
+	 * and adds a model.entities.TrashSpawner and model.entities.Player.
 	 */
 	public void reset() {
+		toRemove.addAll(entities);
+		for(Entity e : toRemove) {
+			removeEntity(e);
+		}
 		entities.clear();
 		thrownTrash.clear();
 		toRemove.clear();
@@ -76,28 +94,34 @@ public class Model implements RequestListener {
 		
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
-		spawner = new TrashSpawner(requestQueue,
+		spawner = new TrashSpawner(
+		        requestQueue,
 				spawnHeight,
 				(int) worldBounds.getWidth(),
 				spawnInterval);
 		spawner.start();
-		currentPollutionLevel = 0;
-		score = 0;
+		
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
+		);
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
+		);
 	}
 	
 	/**
-	 * Handles how a Request is processed.
+	 * Handles how a controller.requests.Request is processed.
 	 *
-	 * @param request
+	 * @param request The request to be processed
 	 * @see Request
 	 */
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()) {
-			case ADD_ENTITY:
+			case ADD_TO_MODEL:
 				addEntity((Entity) request.getSpecifics());
 				break;
-			case REMOVE_ENTITY:
+			case REMOVE_FROM_MODEL:
 				removeEntity((Entity) request.getSpecifics());
 				break;
 			case ADD_THROWN_TRASH:
@@ -129,9 +153,15 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-				
+				if (trash.getYSpeed() > 0) {
+					thrownTrash.remove(trash);
+					trash.setThrown(false);
+				}
+				Date date = new Date();
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
+					    System.out.println(date.toString() + ": thrown trash intersected entity: " + entity.getClass());
+						tt.bounceTrash((Trash) entity);
 						toRemove.add(trash);
 						toRemove.add(tt);
 						SoundEffect.TRASH_HIT.play();
@@ -142,21 +172,20 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-		
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
-		for (Trash t : toRemove) {
-			removeEntity(t);
-			thrownTrash.remove(t);
+		for (Entity e : toRemove) {
+//			removeEntity(e);
+			thrownTrash.remove(e);
 		}
 		toRemove.clear();
-		
+
 		// Check end game
-		if (currentPollutionLevel == MAX_POLLUTION_LEVEL) {
+		if (currentPollutionLevel >= MAX_POLLUTION_LEVEL) {
 			endGame();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Handles what should happen when the game ends. Tells the Controller the game is over by calling Controller.endGame().
 	 *
@@ -167,7 +196,7 @@ public class Model implements RequestListener {
 		//reset()
 		Controller.endGame();
 	}
-	
+
 	/**
 	 * Increments the score by the (modifier * SCORE_INCREMENT).
 	 *
@@ -177,7 +206,7 @@ public class Model implements RequestListener {
 		SoundEffect.POINTS.play();
 		score += SCORE_INCREMENT * modifier;
 	}
-	
+
 	/**
 	 * Returns the current score
 	 *
@@ -186,47 +215,47 @@ public class Model implements RequestListener {
 	public int getScore() {
 		return score;
 	}
-	
+
 	/**
-	 * Adds an Entity to the Entities that will be processed during update().
-	 * The Entity will also be added to the View through the requestQueue.
+	 * Adds an model.entities.Entity to the Entities that will be processed during update().
+	 * The model.entities.Entity will also be added to the View through the requestQueue.
 	 *
-	 * @param entity The Entity to add to the Model
+	 * @param entity The model.entities.Entity to add to the model.Model
 	 */
 	public void addEntity(Entity entity) {
-		//add the Entity, and let it react to being added
+		//add the model.entities.Entity, and let it react to being added
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
-		
+
 		//create the corresponding sprite
 		Sprite sprite = new EntitySprite(entity);
-		
+
 		//and post a request for it to be added to the view
 		requestQueue.postRequest(
-				RequestFactory.createAddSpriteRequest(sprite)
+				RequestFactory.createAddToViewRequest(sprite)
 		);
 	}
-	
+
 	/**
-	 * Removes an Entity from the Entities that will be processed during update().
-	 * The Entity will also be removed from the view through the requestQueue.
+	 * Removes an model.entities.Entity from the Entities that will be processed during update().
+	 * The model.entities.Entity will also be removed from the view through the requestQueue.
 	 *
-	 * @param entity The Entity to be removed from the Model
+	 * @param entity The model.entities.Entity to be removed from the model.Model
 	 */
 	public void removeEntity(Entity entity) {
 		entities.remove(entity);
-		
+
 		//remove any Sprites that are following the entity's movements
 		for (BoundsListener listener : entity.getBounds().getListeners()) {
 			if (listener instanceof Sprite)
 				requestQueue.postRequest(
-						RequestFactory.createRemoveSpriteRequest(
+						RequestFactory.createRemoveFromViewRequest(
 								(Sprite) listener
 						)
 				);
 		}
 	}
-	
+
 	/**
 	 * Returns the current player.
 	 *
@@ -235,7 +264,7 @@ public class Model implements RequestListener {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	/**
 	 * Increments the current pollution level by the specified amount.
 	 *
@@ -247,13 +276,13 @@ public class Model implements RequestListener {
 		this.currentPollutionLevel += addition;
 		return this.currentPollutionLevel;
 	}
-	
+
 	/**
 	 * Returns the current pollution level
 	 *
 	 * @return The current pollution level
 	 */
-	int getCurrentPollutionLevel() {
+	public int getCurrentPollutionLevel() {
 		return this.currentPollutionLevel;
 	}
 	
@@ -262,7 +291,7 @@ public class Model implements RequestListener {
 	 *
 	 * @return The amount specified by MAXIMUM_POLLUTION_LEVEL
 	 */
-	int getMaxPollutionLevel() {
+	public int getMaxPollutionLevel() {
 		return MAX_POLLUTION_LEVEL;
 	}
 	
@@ -273,5 +302,17 @@ public class Model implements RequestListener {
 	 */
 	Rectangle getWorldBounds() {
 		return worldBounds;
+	}
+	
+	/**
+	 * Turns on the model.entities.Trash Spawner if the state is true, off if the state is false.
+	 * @param state Determines whether the model.entities.Trash Spawner is turned off or on
+	 */
+	public void toggleTrashSpawning(boolean state) {
+		if (state == true) {
+			spawner.start();
+		} else {
+			spawner.stop();
+		}
 	}
 }

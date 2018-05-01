@@ -1,13 +1,17 @@
+package view.sprites;
+
+import controller.bounds.Bounds;
+import controller.requests.Request;
+import controller.requests.RequestListener;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 
-public class ArrowSprite extends EntitySprite {
+public class ArrowSprite extends EntitySprite implements RequestListener {
     private double theta;
     private boolean is_visible = false;
 
-    ArrowSprite(Bounds bounds){
+    public ArrowSprite(Bounds bounds){
         super(SpriteImage.ARROW, bounds);
     }
 
@@ -20,6 +24,14 @@ public class ArrowSprite extends EntitySprite {
     }
 
     @Override
+    public void handleRequest(Request request) {
+        switch (request.getRequestedAction()){
+            case UPDATE_THROW_ANGLE:
+                rotate((double) request.getSpecifics());
+        }
+    }
+
+    @Override
     public void draw(Graphics g){
         if (is_visible){
             //get the old transform
@@ -27,7 +39,7 @@ public class ArrowSprite extends EntitySprite {
             AffineTransform oldTransf = g2d.getTransform();
 
             //create transform
-            AffineTransform transform = new AffineTransform();
+            AffineTransform transform = new AffineTransform(oldTransf);
             transform.rotate(theta,
                     getBounds().getWidth()/2 + getBounds().getX(),
                     getBounds().getHeight()/2 + getBounds().getY());

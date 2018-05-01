@@ -1,20 +1,30 @@
+package controller;
+
+import controller.requests.RequestQueue;
+import model.Model;
+import view.audio.SoundEffect;
+import view.sprites.PollutionBarSprite;
+import view.sprites.ScoreSprite;
+import view.View;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * A class that controls updates of a View and Model
+ * A class that controls updates of a View and model.Model
  * @author Zelinsky
  *
  */
 public class Controller implements ActionListener {
-	
+
+	//TODO: make these NOT be static (please...)
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
 	private static View view;
 	private static GameKeyBindings keyBindings;
 	private static Timer updater;
-	private static double FRAMERATE = 144;
+	private static final double FRAMERATE = 144;
 
 	private RequestQueue requests;
 	
@@ -23,14 +33,14 @@ public class Controller implements ActionListener {
 	 * Initializes both the view and the model and adds any necessary listeners.
 	 * It's the *real* main.
 	 */
-	Controller() {
+	public Controller() {
 		requests = new RequestQueue();
 
 		view = new View(requests);
 		view.setButtonListener(this);
 
-		model = new Model(new Bounds(View.FRAME_WIDTH, View.FRAME_HEIGHT),
-				requests);
+		model = new Model(requests);
+		model.toggleTrashSpawning(false);
 
 		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 
@@ -78,17 +88,40 @@ public class Controller implements ActionListener {
 	
 	/**
 	 * Toggles the timer (start/stop) and updates the pauseButton in the view based on the timer's toggle state.
-	 * @param e The ActionEvent passed in when the pasueButton is pressed
+	 * @param e The ActionEvent passed in when the pauseButton is pressed
 	 * @see View
 	 */
 	@Override public void actionPerformed(ActionEvent e) {
-	  if (updater.isRunning()) {
-		updater.stop();
-	  } else {
-		updater.start();
-	  }
-	  view.updateButton(updater.isRunning());
+		String command = e.getActionCommand();
+
+		switch(command) {
+
+		case "PAUSE":
+
+			if (updater.isRunning()) {
+				updater.stop();
+				model.toggleTrashSpawning(false);
+			} else {
+				updater.start();
+				model.toggleTrashSpawning(true);
+			}
+			break;
+			
+		case "START":
+			start();
+			model.toggleTrashSpawning(true);
+			break;
+		
+		case "RESTART":
+			model.reset();
+			keyBindings = new GameKeyBindings(view, model.getPlayer());
+			requests.fulfillAllRequests();
+			updater.start();
+			break;
+		}
+		view.updateButton(command, updater.isRunning());
 	}
+
 	
 	/**
 	 * Starts the timer.
@@ -103,7 +136,7 @@ public class Controller implements ActionListener {
 	 */
 	public static void endGame() {
 		updater.stop();
-		view.endGame();
+		view.endGame(model.getScore());
 	}
 }
 

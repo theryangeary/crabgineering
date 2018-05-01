@@ -1,3 +1,5 @@
+import controller.Controller;
+
 /**
  * A class containing solely a main method
  * @author Zelinsky
@@ -10,6 +12,5 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Controller controller = new Controller();
-		controller.start();
 	}
 }
