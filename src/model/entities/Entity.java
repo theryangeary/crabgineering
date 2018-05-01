@@ -123,7 +123,7 @@ public abstract class Entity implements BoundsListener {
 	 * @param dx The new speed of the model.entities.Entity in the x direction
 	 * @param dy The new speed of the model.entities.Entity in the y direction
 	 */
-	void setSpeed(int dx, int dy) {
+	void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
