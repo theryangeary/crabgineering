@@ -112,10 +112,12 @@ public class Trash extends Entity {
 	 */
 	public void setThrown(boolean t) { thrown = t; }
 
+    /**
+     * Bounch thrown trash off of other trash
+     * @param t the non-thrown trash to bounce off
+     */
 	public void bounceTrash(Trash t) {
 	    double angle = this.getBounds().getCenterX() - t.getBounds().getCenterX();
-//	    this.setSpeed(-5, this.getYSpeed());
-//	    t.setSpeed(5, t.getYSpeed());
         this.setSpeed(-angle / ANGLE_FACTOR,  this.getYSpeed());
 	    t.setSpeed(angle / ANGLE_FACTOR, this.getYSpeed());
 	}
