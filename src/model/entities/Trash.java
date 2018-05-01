@@ -109,4 +109,12 @@ public class Trash extends Entity {
 	 * @param t boolean to set thrown to.
 	 */
 	public void setThrown(boolean t) { thrown = t; }
+
+	public void bounceTrash(Trash t) {
+	    double angle = this.getBounds().getCenterX() - t.getBounds().getCenterX();
+//	    this.setSpeed(-5, this.getYSpeed());
+//	    t.setSpeed(5, t.getYSpeed());
+        this.setSpeed(-angle / 5,  this.getYSpeed());
+	    t.setSpeed(angle / 5, this.getYSpeed());
+	}
 }

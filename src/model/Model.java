@@ -154,15 +154,16 @@ public class Model implements RequestListener {
 					player.touchTrash(trash);
 				}
 				if (trash.getYSpeed() > 0) {
+					thrownTrash.remove(trash);
 					trash.setThrown(false);
 				}
-			Date date = new Date();
+				Date date = new Date();
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
 					    System.out.println(date.toString() + ": thrown trash intersected trash");
-						//tt.bounceTrash((Trash) entity);
-						//toRemove.add(trash);
-						//toRemove.add(tt);
+						tt.bounceTrash((Trash) entity);
+						toRemove.add(trash);
+						toRemove.add(tt);
 						SoundEffect.TRASH_HIT.play();
 						requestQueue.postRequest(
 								RequestFactory.createUpdateScoreRequest(3)
@@ -171,10 +172,10 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-		
+
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
 		for (Entity e : toRemove) {
-			removeEntity(e);
+//			removeEntity(e);
 			thrownTrash.remove(e);
 		}
 		toRemove.clear();
