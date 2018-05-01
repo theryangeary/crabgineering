@@ -21,6 +21,8 @@ public class Trash extends Entity {
 
 	private int pollutionCount;
 
+	private final int ANGLE_FACTOR = 5;
+
 	private final int POLLUTION = 10;
 	private TrashType type;
 	
@@ -114,7 +116,7 @@ public class Trash extends Entity {
 	    double angle = this.getBounds().getCenterX() - t.getBounds().getCenterX();
 //	    this.setSpeed(-5, this.getYSpeed());
 //	    t.setSpeed(5, t.getYSpeed());
-        this.setSpeed(-angle / 5,  this.getYSpeed());
-	    t.setSpeed(angle / 5, this.getYSpeed());
+        this.setSpeed(-angle / ANGLE_FACTOR,  this.getYSpeed());
+	    t.setSpeed(angle / ANGLE_FACTOR, this.getYSpeed());
 	}
 }
