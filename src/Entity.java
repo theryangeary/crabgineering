@@ -118,9 +118,25 @@ abstract class Entity implements BoundsListener {
 	 * @param dx The new speed of the Entity in the x direction
 	 * @param dy The new speed of the Entity in the y direction
 	 */
-	void setSpeed(int dx, int dy) {
+	void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	/**
+	 * Get this entity's current x speed
+	 * @return Double dx
+	 */
+	double getXSpeed() {
+		return dx;
+	}
+
+	/**
+	 * Get this entity's current y speed
+	 * @return Double d
+	 */
+	double getYSpeed() {
+		return dy;
 	}
 	
 	/**

@@ -6,6 +6,7 @@ public class Trash extends Entity {
 
 	private RequestQueue requestQueue;
 
+	private final double BOUNCE_OFFSET = 0.3;
 
 	public enum TrashType{
 		AGRICULTURAL,
@@ -97,4 +98,32 @@ public class Trash extends Entity {
 	public boolean thrown() {
 		return thrown;
 	}
+
+	/**
+	 * Set thrown back to false (used to make trash that has been thrown throwable again, if it is falling again
+	 */
+	public void resetThrown() { setThrown(false); }
+
+	/**
+	 * Set the "thrown" parameter
+	 * @param t new value for thrown
+	 */
+	public void setThrown(boolean t) { thrown = t; }
+
+	public void bounceTrash(Trash t) {
+		double totalYMomentum = t.getYSpeed() + getYSpeed();
+		double totalXMomentum = t.getXSpeed() + getXSpeed();
+		double xDifference = Math.max(3, (t.getBounds().getX() - getBounds().getX()));
+		System.out.println(xDifference);
+		double angle = xDifference * BOUNCE_OFFSET;
+		if (t.getBounds().getX() < getBounds().getX()) {
+			t.setSpeed(totalXMomentum / 2 - angle, totalYMomentum / 2 + BOUNCE_OFFSET);
+			setSpeed(totalXMomentum / 2 + angle, totalYMomentum / 2 + BOUNCE_OFFSET);
+		} else {
+			t.setSpeed(totalXMomentum / 2 + angle, totalYMomentum / 2 + BOUNCE_OFFSET);
+			setSpeed(totalXMomentum / 2 - angle, totalYMomentum / 2 + BOUNCE_OFFSET);
+		}
+	}
+
+
 }

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
@@ -129,11 +130,16 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-				
+				if (trash.getYSpeed() > 0) {
+					trash.resetThrown();
+				}
+			Date date = new Date();
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
-						toRemove.add(trash);
-						toRemove.add(tt);
+					    System.out.println(date.toString() + "thrown trash intersected trash");
+						tt.bounceTrash((Trash) entity);
+						//toRemove.add(trash);
+						//toRemove.add(tt);
 						SoundEffect.TRASH_HIT.play();
 						requestQueue.postRequest(
 								RequestFactory.createUpdateScoreRequest(3)
