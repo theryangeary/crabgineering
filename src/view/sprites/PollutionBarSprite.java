@@ -2,6 +2,7 @@ package view.sprites;
 
 import controller.requests.Request;
 import controller.requests.RequestListener;
+import model.Model;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -14,19 +15,21 @@ import java.awt.Graphics;
 public class PollutionBarSprite extends JComponent implements RequestListener {
 
     private static final Color SEA_BLUE = new Color(0x3399ff);
+    private int POLLUTION_BAR_SCALAR = 2;
+    private int POLLUTION_BAR_HIEGHT = 40;
 
     private Rectangle maxArea;
-    private int pollutionLevel;
-    private int POLLUTION_BAR_SCALAR = 2;
+    private int pollutionLevel = 0;
 
     /**
      * Create a pollution bar specifying max area and current pollution level
      * @param maxArea The Rectangle representing the maximum size of the pollution bar
      * @param pollutionLevel The current pollutionLevel, between 0 and 100
      */
-    public PollutionBarSprite(Rectangle maxArea, int pollutionLevel) {
-        this.maxArea = maxArea;
-        this.pollutionLevel = pollutionLevel;
+    public PollutionBarSprite() {
+        this.maxArea = new Rectangle(
+                POLLUTION_BAR_SCALAR * Model.MAX_POLLUTION_LEVEL,
+                POLLUTION_BAR_HIEGHT);
     }
 
     /**

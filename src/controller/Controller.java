@@ -47,6 +47,7 @@ public class Controller implements ActionListener {
 		SoundEffect.init();
 
 		//setup pollutionBar
+		/*
 		int progressBarXPosition = 30;
         int progressBarYPosition = 30;
         int progressBarHeight = 40;
@@ -58,11 +59,14 @@ public class Controller implements ActionListener {
                 model.getCurrentPollutionLevel());
         //view.addSprite(pollutionBar);
         requests.addListener(pollutionBar);
+        */
 
+		/*
         //setup score
 		ScoreSprite scoreSprite = new ScoreSprite();
 		//view.addSprite(scoreSprite);
 		requests.addListener(scoreSprite);
+		*/
 
 		initTimer();
 	}

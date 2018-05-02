@@ -46,7 +46,7 @@ public class Model implements RequestListener {
 	/**
 	 * The maximum pollution level. The game ends once this level is reached.
 	 */
-	static final int MAX_POLLUTION_LEVEL = 100;
+	public static final int MAX_POLLUTION_LEVEL = 100;
 
 	/**
 	 * The amounts the score should be incremented by.
