@@ -40,8 +40,23 @@ public class EntitySprite implements Sprite, BoundsListener {
      * @return A SpriteImage depicting that Entity
      */
     static SpriteImage imageOf(Entity entity){
-        String name = entity.getClass().getSimpleName();
-        return SpriteImage.valueOf(name.toUpperCase());
+        //convert from EntityType to SpriteImage
+        switch (entity.getType()){
+            case CRAB:
+                return SpriteImage.CRAB;
+            case TURTLE:
+                return SpriteImage.TURTLE;
+            case CLAM:
+                return SpriteImage.CLAM;
+            case SHRIMP:
+                return SpriteImage.SHRIMP;
+            case TRASH:
+                return SpriteImage.TRASH;
+            case RECYCLING:
+                return SpriteImage.RECYCLING;
+        }
+
+        throw new IllegalArgumentException("Entity without valid EntityType");
     }
 
     /**
