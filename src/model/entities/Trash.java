@@ -53,7 +53,8 @@ public class Trash extends Entity {
 	}
 
 	/**
-	 *
+	 * Indicates whether or not this is recyclable,
+	 * as well as that it is refuse of some sort
 	 * @return either EntityType.TRASH or EntityType.RECYCLING,
 	 * depending on what type of Trash this is
 	 */

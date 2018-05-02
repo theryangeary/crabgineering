@@ -51,6 +51,15 @@ public class Crab extends Player {
 		);
 		requestQueue.addListener(arrowSprite);
 	}
+
+	/**
+	 * Indicates that this is a Crab
+	 * @return EntityType.CRAB
+	 */
+	@Override
+	public EntityType getType(){
+		return EntityType.CRAB;
+	}
 	
 	/**
 	 * Handles how a model.entities.Crab processes an action command.
