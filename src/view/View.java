@@ -5,6 +5,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import view.sprites.PollutionBarSprite;
+import view.sprites.ScoreSprite;
 import view.sprites.Sprite;
 
 import javax.swing.*;
@@ -140,9 +141,20 @@ public class View extends JPanel implements RequestListener {
 		GridBagConstraints barCons = new GridBagConstraints();
 		barCons.gridx = 0;
 		barCons.gridy = 1;
+		barCons.weighty = 1;
 		barCons.anchor = GridBagConstraints.NORTHWEST;
 		viewCons.fill = GridBagConstraints.BOTH;
 		pane.add(pollutionBar, barCons, 0);
+
+		//configure layout for score
+		ScoreSprite score = new ScoreSprite();
+		GridBagConstraints scoreCons = new GridBagConstraints();
+		scoreCons.gridx = 2;
+		scoreCons.gridy = 1;
+		scoreCons.weightx = 1;
+		scoreCons.fill = GridBagConstraints.BOTH;
+		scoreCons.anchor = GridBagConstraints.NORTHEAST;
+		pane.add(score, scoreCons, 0);
 
 		//configure layout for the button
 		GridBagConstraints buttonCons = new GridBagConstraints();
