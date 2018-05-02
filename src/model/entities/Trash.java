@@ -51,6 +51,17 @@ public class Trash extends Entity {
 		//        width, height));
 		this.requestQueue = requestQueue;
 	}
+
+	/**
+	 *
+	 * @return either EntityType.TRASH or EntityType.RECYCLING,
+	 * depending on what type of Trash this is
+	 */
+	@Override
+	public EntityType getType(){
+		//TODO: or RECYCLING
+		return EntityType.TRASH;
+	}
 	
 	/**
  	 * Translates the model.entities.Trash's location a distance specified by the change in x and y.
