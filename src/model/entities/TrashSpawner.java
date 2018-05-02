@@ -40,6 +40,9 @@ public class TrashSpawner {
                                 factory.createEasyTrash(randX,15)
                         )
                 );
+                if (spawnTimer.getDelay() > 500) {
+                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.03));
+                }
             }
         };
 
