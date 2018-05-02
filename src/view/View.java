@@ -4,6 +4,7 @@ import controller.requests.Request;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
+import view.sprites.PollutionBarSprite;
 import view.sprites.Sprite;
 
 import javax.swing.*;
@@ -46,6 +47,7 @@ public class View extends JPanel implements RequestListener {
 		this.setBackground(Color.cyan);
 		sprites = new ArrayList<>();
 		requests.addListener(this::handleRequest);
+		//requests.addListener();
 	}
 	
 	/**
@@ -123,23 +125,34 @@ public class View extends JPanel implements RequestListener {
 		//setup the layout
 		pane.setLayout(new GridBagLayout());
 
-		//configure layout for the button
-		GridBagConstraints buttonCons = new GridBagConstraints();
-		buttonCons.gridx = 0;
-		buttonCons.gridy = 0;
-		buttonCons.weightx = 1; //expand when window gets wider ("" as for view)
-		buttonCons.weighty = 0; //don't expand when the window gets taller
-		buttonCons.fill = GridBagConstraints.HORIZONTAL;
-		pane.add(buttonPanel, buttonCons);
-
 		//configure layout for main game window (ie View)
 		GridBagConstraints viewCons = new GridBagConstraints();
 		viewCons.gridx = 0;
 		viewCons.gridy = 1;
+		viewCons.gridwidth = 3;
 		viewCons.weightx = 1; //expand when window gets wider ("" as button)
 		viewCons.weighty = 1; //give this priority when expanding vertically
 		viewCons.fill = GridBagConstraints.BOTH;
-		pane.add(this, viewCons);
+		pane.add(this, viewCons, 1);
+
+		//configure layout for pollution bar
+		PollutionBarSprite pollutionBar = new PollutionBarSprite();
+		GridBagConstraints barCons = new GridBagConstraints();
+		barCons.gridx = 0;
+		barCons.gridy = 1;
+		barCons.anchor = GridBagConstraints.NORTHWEST;
+		viewCons.fill = GridBagConstraints.BOTH;
+		pane.add(pollutionBar, barCons, 0);
+
+		//configure layout for the button
+		GridBagConstraints buttonCons = new GridBagConstraints();
+		buttonCons.gridx = 1;
+		buttonCons.gridy = 0;
+		//buttonCons.gridwidth = 3;
+		buttonCons.weightx = 1; //expand when window gets wider ("" as for view)
+		buttonCons.weighty = 0; //don't expand when the window gets taller
+		buttonCons.fill = GridBagConstraints.HORIZONTAL;
+		pane.add(buttonPanel, buttonCons, 0);
 	}
 
 	/**

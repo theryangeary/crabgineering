@@ -5,9 +5,7 @@ import controller.requests.RequestListener;
 import model.Model;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.Graphics;
+import java.awt.*;
 
 /**
  * Handles the graphics of the pollution bar
@@ -30,6 +28,7 @@ public class PollutionBarSprite extends JComponent implements RequestListener {
         this.maxArea = new Rectangle(
                 POLLUTION_BAR_SCALAR * Model.MAX_POLLUTION_LEVEL,
                 POLLUTION_BAR_HIEGHT);
+        setPreferredSize(new Dimension(maxArea.getSize()));
     }
 
     /**
