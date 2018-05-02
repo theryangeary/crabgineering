@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
  * Connects Sprites to Entities
  */
 public class EntitySprite implements Sprite, BoundsListener {
+    private final boolean DEBUG = true;
     private final SpriteImage spriteImage;
     private Rectangle bounds;
 
@@ -95,6 +96,14 @@ public class EntitySprite implements Sprite, BoundsListener {
      */
     public void draw(Graphics g){
         Rectangle rectangle = getBounds();
+
+        if(DEBUG){
+            g.drawRect((int) rectangle.getX(),
+                    (int) rectangle.getY(),
+                    (int) rectangle.getWidth(),
+                    (int) rectangle.getHeight());
+        }
+
 
         g.drawImage(getImage(),
                 (int) rectangle.getX(),
