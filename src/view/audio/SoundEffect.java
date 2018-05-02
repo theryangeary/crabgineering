@@ -21,7 +21,8 @@ public enum SoundEffect {
     POINTS("points.wav"),
     THROW("throw.wav"),
     TRASH_HIT("trash_hit.wav"),
-    GET_TRASH("get_trash.wav");
+    GET_TRASH("get_trash.wav"),
+    BOUNCE("bounce.wav");
 
     // Nested class for specifying volume
     public enum Volume {
