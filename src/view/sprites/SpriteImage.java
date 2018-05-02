@@ -14,6 +14,7 @@ public enum SpriteImage {
     SHRIMP("shrimp.png"),
     TURTLE("turtle.png"),
     TRASH("trash.png"),
+    RECYCLING("trash.png"),
     ARROW("arrow.png");
 
     //should be the same for all Sprites

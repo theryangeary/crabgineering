@@ -12,6 +12,18 @@ import java.awt.*;
 
 public abstract class Entity implements BoundsListener {
 
+	/**
+	 * A semantic type indicating what type of Entity this is
+	 */
+	public enum EntityType{
+		CLAM,
+		CRAB,
+		SHRIMP,
+		TURTLE,
+		TRASH,
+		RECYCLING;
+	}
+
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
 	private final Bounds bounds;
@@ -57,9 +69,12 @@ public abstract class Entity implements BoundsListener {
 	}
 
 	/**
-	 * Sets the Bounds of the world for this model.entities.Entity. An model.entities.Entity can't move outside of the worldBounds.
-	 * @param worldBounds A Bounds representing the of the world
+	 * indicates to other classes what type of Entity this is
+	 *
+	 * @return The EntityType which best describes this given Entity
 	 */
+	public abstract EntityType getType();
+
 	public void setWorldBounds(Bounds worldBounds){
 		this.worldBounds = new Rectangle(worldBounds);
 		worldBounds.addListener(this);
