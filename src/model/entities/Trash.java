@@ -30,7 +30,10 @@ public class Trash extends Entity {
 	private boolean thrown = false;
 	private boolean addedPollution = false;
 	private boolean touched = false;
-	
+
+	public static final int TRASH_WIDTH = 50;
+	public static final int TRASH_HEIGHT = 50;
+
 	/**
 	 * Constructs a model.entities.Trash object. Calls model.entities.Entity's constructor with super(x, y, width, height).
 	 * Sets up the model.entities.Trash's controller.requests.RequestQueue.

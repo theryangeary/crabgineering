@@ -99,7 +99,7 @@ public class Model implements RequestListener {
 		spawner = new TrashSpawner(
 		        requestQueue,
 				spawnHeight,
-				(int) worldBounds.getWidth(),
+				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH,
 				spawnInterval);
 		spawner.start();
 		

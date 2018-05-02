@@ -21,7 +21,7 @@ public class TrashFactory {
      * @return Easy trash object at (x, y)
      */
     public Trash createEasyTrash(int x, int y){
-        return new Trash(x,y,50,50, requestQueue);
+        return new Trash(x,y,Trash.TRASH_WIDTH,Trash.TRASH_WIDTH, requestQueue);
     }
 
     /**
