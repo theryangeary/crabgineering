@@ -56,12 +56,12 @@ public class Controller implements ActionListener {
                            model.getMaxPollutionLevel(),
                            progressBarHeight),
                 model.getCurrentPollutionLevel());
-        view.addSprite(pollutionBar);
+        //view.addSprite(pollutionBar);
         requests.addListener(pollutionBar);
 
         //setup score
 		ScoreSprite scoreSprite = new ScoreSprite();
-		view.addSprite(scoreSprite);
+		//view.addSprite(scoreSprite);
 		requests.addListener(scoreSprite);
 
 		initTimer();

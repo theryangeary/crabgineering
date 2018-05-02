@@ -3,6 +3,7 @@ package view.sprites;
 import controller.requests.Request;
 import controller.requests.RequestListener;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Graphics;
@@ -10,7 +11,7 @@ import java.awt.Graphics;
 /**
  * Handles the graphics of the pollution bar
  */
-public class PollutionBarSprite implements Sprite, RequestListener {
+public class PollutionBarSprite extends JComponent implements RequestListener {
 
     private static final Color SEA_BLUE = new Color(0x3399ff);
 
@@ -45,7 +46,7 @@ public class PollutionBarSprite implements Sprite, RequestListener {
      * @param g The Graphics object to add the pollution bar to.
      */
     @Override
-    public void draw(Graphics g){
+    public void paintComponent(Graphics g){
         Color origColor = g.getColor();
 
         g.setColor(Color.black);

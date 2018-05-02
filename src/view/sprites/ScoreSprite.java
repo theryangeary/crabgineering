@@ -5,12 +5,13 @@ import controller.requests.RequestListener;
 import model.Model;
 import view.View;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
  * For handling drawing the Score in game
  */
-public class ScoreSprite implements Sprite, RequestListener {
+public class ScoreSprite extends JComponent implements RequestListener {
     //Position the Score relative to the frame
     private final int x = View.FRAME_WIDTH * 17 / 20;
     private final int y = View.FRAME_HEIGHT / 32;
@@ -36,7 +37,7 @@ public class ScoreSprite implements Sprite, RequestListener {
      * @param g the Graphics object to add the score to
      */
     @Override
-    public void draw(Graphics g) {
+    public void paintComponent(Graphics g) {
         //store old attributes
         Color lastColor = g.getColor();
         Font lastFont = g.getFont();
