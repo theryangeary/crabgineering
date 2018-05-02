@@ -53,6 +53,16 @@ public class Model implements RequestListener {
 	 */
 	public static final int SCORE_INCREMENT = 10;
 	private int score = 0;
+	
+	/**
+	 * The state of the game. True if the game is not running, false if it is. For testing purposes.
+	 */
+	public boolean gameOver = true;
+	
+	/**
+	 * The state of the TrashSpawner. True if it is spawning trash, false if not. For testing purposes.
+	 */
+	public boolean trashSpawning = true;
 
 	/**
 	 * Constructs the model.Model with its Bounds and controller.requests.RequestQueue.
@@ -88,6 +98,7 @@ public class Model implements RequestListener {
 		removeFromThrownTrash.clear();
 		player = null;
 		spawner = null;
+		gameOver = false;
 		
 		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
 		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
@@ -198,8 +209,9 @@ public class Model implements RequestListener {
 	 *
 	 * @see Controller
 	 */
-	void endGame() {
+	public void endGame() {
 		spawner.stop();
+		gameOver = true;
 		//reset()
 		Controller.endGame();
 	}
@@ -307,7 +319,7 @@ public class Model implements RequestListener {
 	 *
 	 * @return The world Bounds
 	 */
-	Rectangle getWorldBounds() {
+	public Rectangle getWorldBounds() {
 		return worldBounds;
 	}
 	
@@ -316,10 +328,27 @@ public class Model implements RequestListener {
 	 * @param state Determines whether the model.entities.Trash Spawner is turned off or on
 	 */
 	public void toggleTrashSpawning(boolean state) {
-		if (state == true) {
+		trashSpawning = state;
+		if (state) {
 			spawner.start();
 		} else {
 			spawner.stop();
 		}
+	}
+	
+	/**
+	 * Returns the ArrayList of Entities in the Model. For testing purposes.
+	 * @return The Model's ArrayList of Entities
+	 */
+	public ArrayList<Entity> getEntities(){
+		return entities;
+	}
+	
+	/**
+	 * Returns the ArrayList of Trash that has been 'thrown'. For testing purposes.
+	 * @return The Model's ArrayList of 'thrown' Trash
+	 */
+	public ArrayList<Trash> getThrownTrash(){
+		return thrownTrash;
 	}
 }

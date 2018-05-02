@@ -79,7 +79,7 @@ public abstract class Entity implements BoundsListener {
 	 * @param x The new x position of the Bounds
 	 * @param y The new y position of the Bounds
 	 */
-	void setLocation(int x, int y) {
+	public void setLocation(int x, int y) {
 		bounds.setLocation(x, y);
 	}
 	
@@ -123,7 +123,7 @@ public abstract class Entity implements BoundsListener {
 	 * @param dx The new speed of the model.entities.Entity in the x direction
 	 * @param dy The new speed of the model.entities.Entity in the y direction
 	 */
-	void setSpeed(double dx, double dy) {
+	public void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
