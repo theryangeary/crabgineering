@@ -92,6 +92,7 @@ public class Model implements RequestListener {
 		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
 		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
 		player = new Crab(crabInitialX, crabInitialY, requestQueue);
+		player = new Turtle(crabInitialX,crabInitialY,requestQueue);
 		addEntity(player);
 		
 		int spawnInterval = 2 * 1000;
@@ -99,7 +100,7 @@ public class Model implements RequestListener {
 		spawner = new TrashSpawner(
 		        requestQueue,
 				spawnHeight,
-				(int) worldBounds.getWidth(),
+				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH,
 				spawnInterval);
 		spawner.start();
 		
