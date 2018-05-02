@@ -2,6 +2,7 @@ package model.entities;
 
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
+import model.Model;
 import view.audio.SoundEffect;
 
 /**
@@ -28,7 +29,11 @@ public class Trash extends Entity {
 	
 	private boolean thrown = false;
 	private boolean addedPollution = false;
-	
+	private boolean touched = false;
+
+	public static final int TRASH_WIDTH = 50;
+	public static final int TRASH_HEIGHT = 50;
+
 	/**
 	 * Constructs a model.entities.Trash object. Calls model.entities.Entity's constructor with super(x, y, width, height).
 	 * Sets up the model.entities.Trash's controller.requests.RequestQueue.
@@ -117,8 +122,27 @@ public class Trash extends Entity {
      * @param t the non-thrown trash to bounce off
      */
 	public void bounceTrash(Trash t) {
+	    t.touch();
+	    touch();
 	    double angle = this.getBounds().getCenterX() - t.getBounds().getCenterX();
         this.setSpeed(-angle / ANGLE_FACTOR,  this.getYSpeed());
 	    t.setSpeed(angle / ANGLE_FACTOR, this.getYSpeed());
 	}
+
+	/**
+	 * Call this function once a trash has been touched, so signify that it can be removed under the right conditions.
+	 */
+	public void touch() {
+		if (!atTop()) {
+			touched = true;
+		}
+	}
+
+	/**
+	 * Check if trash has been touched.
+	 * If trash hasn't been touched and is at the top of the world, it shouldn't be removed.
+	 * If trash HAS been touched and is at the top of the world, it SHOULD be removed.
+	 * @return Boolean: true if the trash has been hit by another piece of trash, touched by a player, etc.
+	 */
+	public boolean touched() { return touched; }
 }

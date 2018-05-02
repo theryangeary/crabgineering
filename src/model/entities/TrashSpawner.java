@@ -37,9 +37,12 @@ public class TrashSpawner {
                 int randX = (int)(Math.random()*spawnWidth);
                 requestQueue.postRequest(
                         RequestFactory.createAddToModelRequest(
-                                factory.createEasyTrash(randX,10)
+                                factory.createEasyTrash(randX,15)
                         )
                 );
+                if (spawnTimer.getDelay() > 500) {
+                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.03));
+                }
             }
         };
 
