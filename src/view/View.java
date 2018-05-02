@@ -119,7 +119,7 @@ public class View extends JPanel implements RequestListener {
 	/**
 	 *
 	 */
-	private void configurePane(Container pane) {
+	private void configurePane(JLayeredPane pane) {
 		//setup the layout
 		pane.setLayout(new GridBagLayout());
 
@@ -148,7 +148,13 @@ public class View extends JPanel implements RequestListener {
 	private void initJFrame() {
 		frame = new JFrame();
 
-		configurePane(frame.getContentPane());
+		//create a new layered pane to hold the frame's content
+		JLayeredPane contentLayeredPane = new JLayeredPane();
+		//populate it
+		configurePane(contentLayeredPane);
+		//and tell the frame to use it
+		frame.setContentPane(contentLayeredPane);
+
 		//frame.getContentPane().add(this);
 		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
