@@ -44,7 +44,7 @@ public class ScoreSprite extends JComponent implements RequestListener {
 
         g.setColor(Color.black);
         g.setFont(font);
-        g.drawString("Score: " + score, 0, 0);
+        g.drawString("Score: " + score, x, y);
 
         //reset old attributes
         g.setColor(lastColor);
