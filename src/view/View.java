@@ -45,7 +45,8 @@ public class View extends JPanel implements RequestListener {
 		endScore.setVisible(false);
 		initButton();
 		initJFrame();
-		this.setBackground(Color.cyan);
+		setOpaque(false);
+		//this.setBackground(Color.cyan);
 		sprites = new ArrayList<>();
 		requests.addListener(this::handleRequest);
 		//requests.addListener();
@@ -125,6 +126,18 @@ public class View extends JPanel implements RequestListener {
 	private void configurePane(JLayeredPane pane) {
 		//setup the layout
 		pane.setLayout(new GridBagLayout());
+
+		//configure layout for background
+		JPanel background = new JPanel();
+		background.setBackground(Color.CYAN);
+		GridBagConstraints backCons = new GridBagConstraints();
+		backCons.gridx = 0;
+		backCons.gridy = 1;
+		backCons.gridwidth = 3;
+		backCons.weightx = 1; //expand when window gets wider ("" as button)
+		backCons.weighty = 1; //give this priority when expanding vertically
+		backCons.fill = GridBagConstraints.BOTH;
+		pane.add(background, backCons, 2);
 
 		//configure layout for main game window (ie View)
 		GridBagConstraints viewCons = new GridBagConstraints();
