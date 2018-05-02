@@ -38,8 +38,9 @@ public class Model implements RequestListener {
 	private TrashSpawner spawner;
 	private Player player;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
+	private ArrayList<Trash> removeFromThrownTrash = new ArrayList<>();
 	private ArrayList<Entity> toRemove = new ArrayList<>();
-	
+
 	//game variables
 	private int currentPollutionLevel = 0;
 	/**
@@ -84,6 +85,7 @@ public class Model implements RequestListener {
 		entities.clear();
 		thrownTrash.clear();
 		toRemove.clear();
+		removeFromThrownTrash.clear();
 		player = null;
 		spawner = null;
 		
@@ -144,26 +146,26 @@ public class Model implements RequestListener {
 	public void update() {
 		for (Entity entity : entities) {
 			entity.update(GRAVITY, DRAG);
-		}
-		
-		//Check for player-trash collision and trash-trash collision
-		for (Entity entity : entities) {
+//			System.out.println(entity.toString());
+			//Check for player-trash collision and trash-trash collision
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
+				if (trash.atTop() && trash.touched()) {
+					toRemove.add(entity);
+					removeFromThrownTrash.add(trash);
+				}
 				if (trash.getYSpeed() > 0) {
 					thrownTrash.remove(trash);
 					trash.setThrown(false);
 				}
-				Date date = new Date();
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
-					    System.out.println(date.toString() + ": thrown trash intersected entity: " + entity.getClass());
 						tt.bounceTrash((Trash) entity);
-						toRemove.add(trash);
-						toRemove.add(tt);
+						removeFromThrownTrash.add(trash);
+						removeFromThrownTrash.add(tt);
 						SoundEffect.TRASH_HIT.play();
 						requestQueue.postRequest(
 								RequestFactory.createUpdateScoreRequest(3)
@@ -174,10 +176,14 @@ public class Model implements RequestListener {
 		}
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
 		for (Entity e : toRemove) {
-//			removeEntity(e);
-			thrownTrash.remove(e);
+			removeEntity(e);
 		}
 		toRemove.clear();
+
+		for (Trash t : removeFromThrownTrash) {
+			thrownTrash.remove(t);
+		}
+		removeFromThrownTrash.clear();
 
 		// Check end game
 		if (currentPollutionLevel >= MAX_POLLUTION_LEVEL) {

@@ -128,6 +128,7 @@ public class Crab extends Player {
 	 * @param t The model.entities.Trash the model.entities.Crab intersects with
 	 */
 	public void touchTrash(Trash t) {
+		t.touch();
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
 			SoundEffect.GET_TRASH.play();
 			hasTrash = true;

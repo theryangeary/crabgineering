@@ -153,6 +153,14 @@ public abstract class Entity implements BoundsListener {
 	}
 
 	/**
+	 * Check if trash is at or above the top of the water
+	 * @return Boolean: true if trash is at or above the top of the world
+	 */
+	public boolean atTop() {
+		return getBounds().getY() <= worldBounds.getY();
+	}
+
+	/**
 	 * Updates the position of the model.entities.Entity's BOunds based on gravity, drag, and the model.entities.Entity's speed.
 	 * The model.entities.Entity will not be updated if it is stopped.
 	 * @param gravity The gravity applied to the model.entities.Entity
