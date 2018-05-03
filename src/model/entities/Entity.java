@@ -75,6 +75,10 @@ public abstract class Entity implements BoundsListener {
 	 */
 	public abstract EntityType getType();
 
+	/**
+	* Sets the Bounds of the world for this model.entities.Entity. An model.entities.Entity can't move outside of the worldBounds.
+	* @param worldBounds A Bounds representing the of the world
+	*/
 	public void setWorldBounds(Bounds worldBounds){
 		this.worldBounds = new Rectangle(worldBounds);
 		worldBounds.addListener(this);
