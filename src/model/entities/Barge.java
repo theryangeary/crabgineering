@@ -14,6 +14,7 @@ public class Barge extends Entity {
         super(x, y, width, height);
         this.bargeType = bargeType;
         this.requestQueue = requestQueue;
+        toggleStopped(); // so that the boat won't sink
     }
 
     /**
