@@ -41,6 +41,8 @@ public class Model implements RequestListener {
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
+	private Barge trashBarge;
+	private Barge recyclingBarge;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> removeFromThrownTrash = new ArrayList<>();
 	private ArrayList<Entity> toRemove = new ArrayList<>();
@@ -118,9 +120,9 @@ public class Model implements RequestListener {
 
 		addEntity(player);
 
-		Barge recyclingBarge = new Barge((int) getWorldBounds().getX(), (int) getWorldBounds().getY(),
+		recyclingBarge = new Barge((int) getWorldBounds().getX(), (int) getWorldBounds().getY(),
 				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
-		Barge trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH),
+		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH),
 				(int) getWorldBounds().getY(),
 				BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
 
