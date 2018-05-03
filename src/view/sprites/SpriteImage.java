@@ -15,7 +15,8 @@ public enum SpriteImage {
     TURTLE("turtle.png"),
     TRASH("trash.png"),
     RECYCLING("trash.png"),
-    ARROW("arrow.png");
+    ARROW("arrow.png"),
+    TITLE("title.png");
 
     //should be the same for all Sprites
     final static String IMAGE_DIR = "src/resources/images/";
