@@ -200,6 +200,13 @@ public class Model implements RequestListener {
 						removeFromThrownTrash.add(trash);
 						removeFromThrownTrash.add(tt);
 						SoundEffect.TRASH_HIT.play();
+					}
+				}
+			}
+			if (entity.getType() == EntityType.TRASH_BARGE || entity.getType() == EntityType.RECYCLING_BARGE) {
+				for (Trash tt: thrownTrash) {
+					if (entity.getType() == EntityType.RECYCLING_BARGE && tt.getType() == EntityType.RECYCLING ||
+							entity.getType() == EntityType.TRASH_BARGE && tt.getType() == EntityType.TRASH) {
 						requestQueue.postRequest(
 								RequestFactory.createUpdateScoreRequest(3)
 						);
