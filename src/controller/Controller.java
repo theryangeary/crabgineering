@@ -2,6 +2,8 @@ package controller;
 
 import controller.requests.RequestQueue;
 import model.Model;
+import model.entities.Entity;
+import model.entities.Entity.EntityType;
 import view.audio.SoundEffect;
 import view.sprites.PollutionBarSprite;
 import view.sprites.ScoreSprite;
@@ -40,9 +42,6 @@ public class Controller implements ActionListener {
 		view.setButtonListener(this);
 
 		model = new Model(requests);
-		model.toggleTrashSpawning(false);
-
-		keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 
 		SoundEffect.init();
 
@@ -107,13 +106,20 @@ public class Controller implements ActionListener {
 			}
 			break;
 			
-		case "START":
+		case "START_CRAB":
+			model.reset(EntityType.CRAB);
+		case "START_TURTLE":
+			if(model.gameOver)
+				model.reset(EntityType.TURTLE);
+			keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
 			start();
-			model.toggleTrashSpawning(true);
 			break;
-		
-		case "RESTART":
-			model.reset();
+			
+		case "RESTART_CRAB":
+			model.reset(EntityType.CRAB);
+		case "RESTART_TURTLE":
+			if(model.gameOver)
+				model.reset(EntityType.TURTLE);
 			keyBindings = new GameKeyBindings(view, model.getPlayer());
 			requests.fulfillAllRequests();
 			updater.start();
