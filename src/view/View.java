@@ -5,10 +5,13 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import view.sprites.Sprite;
+import view.sprites.SpriteImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +33,7 @@ public class View extends JPanel implements RequestListener {
 	private JButton pauseButton;
 	private JPanel buttonPanel;
 
+	private JLabel titleImage;
 	private JLabel endScore = new JLabel("");
 	private JFrame frame;
 
@@ -102,6 +106,7 @@ public class View extends JPanel implements RequestListener {
 		case "START":
 			startButton.setVisible(false);
 			pauseButton.setVisible(true);
+			this.remove(titleImage);
 			frame.revalidate();
 			frame.repaint();
 			break;
@@ -147,8 +152,12 @@ public class View extends JPanel implements RequestListener {
 	 */
 	private void initJFrame() {
 		frame = new JFrame();
-
+		
+		titleImage = new JLabel(new ImageIcon(SpriteImage.TITLE.getImage()));
+		this.add(titleImage);
+		
 		configurePane(frame.getContentPane());
+
 		//frame.getContentPane().add(this);
 		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
