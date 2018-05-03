@@ -205,16 +205,21 @@ public class Model implements RequestListener {
 					}
 				}
 			}
-			if (entity.getType() == EntityType.TRASH_BARGE || entity.getType() == EntityType.RECYCLING_BARGE) {
-				for (Trash tt: thrownTrash) {
-					if (entity.getType() == EntityType.RECYCLING_BARGE && tt.getType() == EntityType.RECYCLING ||
-							entity.getType() == EntityType.TRASH_BARGE && tt.getType() == EntityType.TRASH) {
-						requestQueue.postRequest(
-								RequestFactory.createUpdateScoreRequest(3)
-						);
-					}
-				}
-			}
+//			if (entity.getType() == EntityType.TRASH_BARGE || entity.getType() == EntityType.RECYCLING_BARGE) {
+//				for (Entity e : entities) {
+//					if (e instanceof Trash) {
+//						System.out.println(entity.getType().toString() + " with " + e.getType().toString() + ((Trash) e).touched());
+//					}
+//					if ((entity.getType() == EntityType.RECYCLING_BARGE &&
+//							e.getType() == EntityType.RECYCLING ||
+//							entity.getType() == EntityType.TRASH_BARGE && e.getType() == EntityType.TRASH)
+//						&& ((Trash) e).touched()) {
+//						requestQueue.postRequest(
+//								RequestFactory.createUpdateScoreRequest(3)
+//						);
+//					}
+//				}
+//			}
 		}
 		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
 		for (Entity e : toRemove) {
