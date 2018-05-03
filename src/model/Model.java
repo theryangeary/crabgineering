@@ -113,6 +113,10 @@ public class Model implements RequestListener {
 			break;
 		}
 
+		//Adding boss
+		Entity boss = new Boss(-500,25,requestQueue);
+		//addEntity(boss);
+
 		addEntity(player);
 		
 		int spawnInterval = 2 * 1000;

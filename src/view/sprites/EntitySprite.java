@@ -54,6 +54,8 @@ public class EntitySprite implements Sprite, BoundsListener {
                 return SpriteImage.TRASH;
             case RECYCLING:
                 return SpriteImage.RECYCLING;
+            case BOSS:
+                return SpriteImage.BOSS;
         }
 
         throw new IllegalArgumentException("Entity without valid EntityType");
