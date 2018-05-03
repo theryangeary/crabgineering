@@ -5,6 +5,7 @@ import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
 import controller.Controller;
 import model.entities.*;
+import model.entities.Entity.EntityType;
 import controller.requests.Request;
 import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
@@ -79,15 +80,13 @@ public class Model implements RequestListener {
 		//setup the controller.requests.RequestQueue Entities can use to post controller.requests
 		//for the model.Model
 		requestQueue.addListener(this::handleRequest);
-		
-		reset();
 	}
 	
 	/**
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
 	 * and adds a model.entities.TrashSpawner and model.entities.Player.
 	 */
-	public void reset() {
+	public void reset(EntityType playerType) {
 		toRemove.addAll(entities);
 		for(Entity e : toRemove) {
 			removeEntity(e);
@@ -100,10 +99,20 @@ public class Model implements RequestListener {
 		spawner = null;
 		gameOver = false;
 		
-		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
-		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
-		player = new Crab(crabInitialX, crabInitialY, requestQueue);
-		player = new Turtle(crabInitialX,crabInitialY,requestQueue);
+		int playerInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
+		int playerInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
+		
+		switch (playerType) {
+		case CRAB:
+			player = new Crab(playerInitialX, playerInitialY, requestQueue);
+			break;
+		case TURTLE:
+			player = new Turtle(playerInitialX, playerInitialY,requestQueue);
+			break;
+		default:
+			break;
+		}
+
 		addEntity(player);
 		
 		int spawnInterval = 2 * 1000;
