@@ -34,7 +34,7 @@ public class Model implements RequestListener {
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
 
-	private final int BARGE_WIDTH= 120;
+	private final int BARGE_WIDTH= 200;
 	private final int BARGE_HEIGHT= BARGE_WIDTH * 15 / 40;
 
 	//objects in simulation
