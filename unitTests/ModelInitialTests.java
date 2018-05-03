@@ -8,6 +8,7 @@ import controller.bounds.Bounds;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Player;
+import model.entities.Entity.EntityType;
 
 public class ModelInitialTests {
 	
@@ -25,6 +26,7 @@ public class ModelInitialTests {
 	// Tests the initial state just after a new Model is created
 	@Test 
 	public void initialStateTest() {
+		m.reset(EntityType.CRAB);
 		assertTrue(m.getPlayer() instanceof Player);
 		assertTrue(m.getWorldBounds() instanceof Bounds);
 		assertEquals(0, m.getCurrentPollutionLevel());

@@ -10,6 +10,7 @@ import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Trash;
 import model.entities.TrashFactory;
+import model.entities.Entity.EntityType;
 import view.audio.SoundEffect;
 
 public class ModelRequestTests {
@@ -19,6 +20,7 @@ public class ModelRequestTests {
 	// Tests the handling of the UPDATE_SCORE Request
 	@Test
 	public void updateScoreTest() {
+		m.reset(EntityType.CRAB);
 		assertEquals(0, m.getScore());
 		assertEquals(10, Model.SCORE_INCREMENT);
 		Request r = RequestFactory.createUpdateScoreRequest(1);
@@ -33,6 +35,7 @@ public class ModelRequestTests {
 	// Tests the handling of the UPDATE_POLLUTION Request
 	@Test
 	public void updatePollutionTest() {
+		m.reset(EntityType.CRAB);
 		assertEquals(0, m.getCurrentPollutionLevel());
 		Request r = RequestFactory.createUpdatePollutionRequest(10);
 		m.handleRequest(r);
@@ -43,6 +46,8 @@ public class ModelRequestTests {
 	// Tests the handling of the ADD_TO_MODEL, ADD_THROWN_TRASH, and REMOVE_FROM_MODEL Requests
 	@Test
 	public void addToAndRemoveFromModelTest() {
+		m.reset(EntityType.CRAB);
+
 		// ADD TRASH TO MODEL
 		TrashFactory f = new TrashFactory(new RequestQueue());
 		Trash t = f.createEasyTrash(15, 15);
@@ -66,6 +71,8 @@ public class ModelRequestTests {
 	// Tests the handling of the PLAY_SOUND Request
 	@Test
 	public void playSoundTest() {
+		m.reset(EntityType.CRAB);
+
 		Request r = RequestFactory.createPlaySoundRequest(SoundEffect.POINTS.toString());
 		m.handleRequest(r);
 	}

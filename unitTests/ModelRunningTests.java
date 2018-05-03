@@ -14,6 +14,8 @@ import model.Model;
 import model.entities.Crab;
 import model.entities.Trash;
 import model.entities.TrashFactory;
+import model.entities.Turtle;
+import model.entities.Entity.EntityType;
 
 public class ModelRunningTests {
 	
@@ -26,6 +28,8 @@ public class ModelRunningTests {
 	// Tests the ability of the model to toggle the TrashSpawner
 	@Test
 	public void trashSpawningToggleTest() {
+		m.reset(EntityType.CRAB);
+
 		assertTrue(m.trashSpawning);
 		m.toggleTrashSpawning(false);
 		assertFalse(m.trashSpawning);
@@ -36,6 +40,7 @@ public class ModelRunningTests {
 	// Tests the Trash-thrownTrash intersection in update()
 	@Test
 	public void trashIntersectTests() {
+		m.reset(EntityType.CRAB);
 		m.toggleTrashSpawning(false);
 
 		// ADD SOME TRASH THAT INTERSECTS, ONE IS 'THROWN' BY PLAYER
@@ -60,7 +65,9 @@ public class ModelRunningTests {
 	// Tests the Trash-Player intersection in update()
 	@Test
 	public void trashPlayerIntersectTests() {
+		m.reset(EntityType.CRAB);
 		m.toggleTrashSpawning(false);
+		
 		int crabX = m.getWorldBounds().width/2 - Crab.CRAB_WIDTH/2;
 		int crabY = m.getWorldBounds().height/2 - Crab.CRAB_HEIGHT/2;
 		Trash t = f.createEasyTrash(crabX, crabY);
@@ -73,6 +80,7 @@ public class ModelRunningTests {
 	// Tests the removal of 'touched' Trash at the top of the screen in update()
 	@Test
 	public void trashAtTopTests() {
+		m.reset(EntityType.CRAB);
 		m.toggleTrashSpawning(false);
 		
 		Trash t = f.createEasyTrash(100, 100);
@@ -86,26 +94,29 @@ public class ModelRunningTests {
 	}
 	
 	// Tests that the game ends when endGame() is called
-	// Also tests that the game is restarted when reset() is called
+	// Also tests that the game is restarted when reset() is called with the right Player
 	@Test
 	public void gameEndTest1() {
+		m.reset(EntityType.CRAB);
+		assertTrue(m.getPlayer() instanceof Crab);
 		assertFalse(m.gameOver);
 		m.endGame();
 		assertTrue(m.gameOver);
-		m.reset();
+		m.reset(EntityType.TURTLE);
 		assertFalse(m.gameOver);
+		assertTrue(m.getPlayer() instanceof Turtle);
 	}
 	
 	// Tests that the game ends when the pollution level reaches 100 in update()
-	// Also tests that the game is restarted when reset() is called
 	@Test
 	public void gameEndTest2() {
+		m.reset(EntityType.CRAB);
 		assertFalse(m.gameOver);
 		Request r = RequestFactory.createUpdatePollutionRequest(100);
 		m.handleRequest(r);
 		m.update();
 		assertTrue(m.gameOver);
-		m.reset();
+		m.reset(EntityType.CRAB);
 		assertFalse(m.gameOver);
 		
 	}
