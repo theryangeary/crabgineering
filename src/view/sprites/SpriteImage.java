@@ -16,7 +16,7 @@ public enum SpriteImage {
     TRASH("trash.png"),
     RECYCLING("trash.png"),
     ARROW("arrow.png"),
-    TITLE("title.png"),
+    BOSS("yacht.jpg"),
     RECYCLING_BARGE("recycling-barge.png"),
     TRASH_BARGE("trash-barge.png");
 

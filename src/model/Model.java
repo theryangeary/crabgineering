@@ -118,6 +118,10 @@ public class Model implements RequestListener {
 			break;
 		}
 
+		//Adding boss
+		Entity boss = new Boss(-500,25,requestQueue);
+		//addEntity(boss);
+
 		addEntity(player);
 
 		recyclingBarge = new Barge((int) getWorldBounds().getX(), (int) getWorldBounds().getY(),

@@ -15,6 +15,7 @@ public class TrashSpawner {
     private TrashFactory factory;
     private Action spawnAction;
     private Timer spawnTimer;
+    private int offset;
 
     /**
      * Generate a model.entities.TrashSpawner
@@ -34,10 +35,10 @@ public class TrashSpawner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
-                int randX = (int)(Math.random()*spawnWidth);
+                int randX = (int)(Math.random()*spawnWidth+offset);
                 requestQueue.postRequest(
                         RequestFactory.createAddToModelRequest(
-                                factory.createEasyTrash(randX,15)
+                                factory.createEasyTrash(randX,spawnHeight)
                         )
                 );
                 if (spawnTimer.getDelay() > 500) {
@@ -77,5 +78,9 @@ public class TrashSpawner {
      */
     public void start(){
         spawnTimer.start();
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
     }
 }

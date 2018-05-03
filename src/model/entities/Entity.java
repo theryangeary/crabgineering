@@ -21,7 +21,8 @@ public abstract class Entity implements BoundsListener {
 		SHRIMP,
 		TURTLE,
 		TRASH,
-		RECYCLING,
+		BOSS,
+		RECYCLING;
 		TRASH_BARGE,
 		RECYCLING_BARGE;
 	}
@@ -29,6 +30,10 @@ public abstract class Entity implements BoundsListener {
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
 	private final Bounds bounds;
+
+	//If true, will ignore the bounds of the screen
+	protected boolean ignoreBounds = false;
+
 	private double dx;
 	private double dy;
 
@@ -85,6 +90,14 @@ public abstract class Entity implements BoundsListener {
 		this.worldBounds = new Rectangle(worldBounds);
 		worldBounds.addListener(this);
 	}
+
+	/**
+	 * Gets the world bounds of the object
+	 * @return The world bounds
+	 */
+	public Rectangle getWorldBounds(){
+		return worldBounds;
+	}
 	
 	/**
 	 * Returns the Bounds representing the position for the model.entities.Entity
@@ -111,20 +124,22 @@ public abstract class Entity implements BoundsListener {
 	 * @param dy The distance to translate the Bounds in the y direction
 	 */
 	void translate(double dx, double dy) {
-		
-		// Bounds check
-		if (leftBound() && dx < 0) {
-			dx = 0;
-		}
-		if (rightBound() && dx > 0) {
-			dx = 0;
-		}
-		if (topBound() && dy < 0) {
-			dy = 0;
-		}
-		if (bottomBound() && dy > 0) {
-			dy = 0;
-			isAtBottom = true;
+
+		if(!ignoreBounds) {
+			// Bounds check
+			if (leftBound() && dx < 0) {
+				dx = 0;
+			}
+			if (rightBound() && dx > 0) {
+				dx = 0;
+			}
+			if (topBound() && dy < 0) {
+				dy = 0;
+			}
+			if (bottomBound() && dy > 0) {
+				dy = 0;
+				isAtBottom = true;
+			}
 		}
 		
 		bounds.translate((int) dx, (int) dy);
