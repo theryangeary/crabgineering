@@ -33,11 +33,16 @@ public class Model implements RequestListener {
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
-	
+
+	private final int BARGE_WIDTH= 200;
+	private final int BARGE_HEIGHT= BARGE_WIDTH * 15 / 40;
+
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
+	private Barge trashBarge;
+	private Barge recyclingBarge;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> removeFromThrownTrash = new ArrayList<>();
 	private ArrayList<Entity> toRemove = new ArrayList<>();
@@ -118,7 +123,16 @@ public class Model implements RequestListener {
 		//addEntity(boss);
 
 		addEntity(player);
-		
+
+		recyclingBarge = new Barge((int) getWorldBounds().getX(), (int) getWorldBounds().getY(),
+				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
+		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH),
+				(int) getWorldBounds().getY(),
+				BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
+
+		addEntity(trashBarge);
+		addEntity(recyclingBarge);
+
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
 		spawner = new TrashSpawner(
@@ -178,7 +192,13 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-				if (trash.atTop() && trash.touched()) {
+				if ((trashBarge.intersects(trash) && trash.touched() && trashBarge.bargeMatchesTrash(trash)) ||
+						(recyclingBarge.intersects(trash) && trash.touched() && recyclingBarge.bargeMatchesTrash(trash))) {
+						requestQueue.postRequest(
+								RequestFactory.createUpdateScoreRequest(3)
+						);
+				}
+				if (((recyclingBarge.intersects(trash) || trashBarge.intersects(trash)) || trash.atTop()) && trash.touched()) {
 					toRemove.add(entity);
 					removeFromThrownTrash.add(trash);
 				}
@@ -192,9 +212,6 @@ public class Model implements RequestListener {
 						removeFromThrownTrash.add(trash);
 						removeFromThrownTrash.add(tt);
 						SoundEffect.TRASH_HIT.play();
-						requestQueue.postRequest(
-								RequestFactory.createUpdateScoreRequest(3)
-						);
 					}
 				}
 			}

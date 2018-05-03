@@ -23,6 +23,8 @@ public abstract class Entity implements BoundsListener {
 		TRASH,
 		BOSS,
 		RECYCLING;
+		TRASH_BARGE,
+		RECYCLING_BARGE;
 	}
 
 	//note: x counts pixels left of the left-hand side of the window
