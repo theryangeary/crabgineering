@@ -16,6 +16,7 @@ import model.entities.Trash;
 import model.entities.TrashFactory;
 import model.entities.Turtle;
 import model.entities.Entity.EntityType;
+import model.entities.Player;
 
 public class ModelRunningTests {
 	
@@ -140,6 +141,126 @@ public class ModelRunningTests {
 		assertEquals(9.9, t.getYSpeed(), 0.01);
 		assertEquals(205, t.getBounds().x);
 		assertEquals(209, t.getBounds().y);
+	}
+	
+	// Tests the bounds of Trash
+	@Test
+	public void trashBoundsTests() {
+		
+	}
+	
+	@Test
+	public void playerInputTests() {
+		// CRAB
+		m.reset(EntityType.CRAB);
+		m.toggleTrashSpawning(false);
+		Crab p = (Crab) m.getPlayer();
+		
+		// Give Crab Trash to hold
+		int crabX = m.getWorldBounds().width/2 - Crab.CRAB_WIDTH/2;
+		int crabY = m.getWorldBounds().height/2 - Crab.CRAB_HEIGHT/2;
+		Trash t = f.createEasyTrash(crabX, crabY);
+		Request r = RequestFactory.createAddToModelRequest(t);
+		m.handleRequest(r);
+		m.update();
+		
+		// Rotate Trash Left
+		p.processInput("ROTATE_TRASH_LEFT");
+		assertEquals(Math.PI/2 - Math.PI/32, p.getThrowAngle());
+		
+		// Rotate Trash Right
+		p.processInput("ROTATE_TRASH_RIGHT");
+		p.processInput("ROTATE_TRASH_RIGHT");
+		assertEquals(Math.PI/2 + Math.PI/32, p.getThrowAngle());
+		
+		// Throw Trash
+		p.processInput("SPECIAL_ACTION");
+		rq.fulfillAllRequests();
+		assertTrue(m.getThrownTrash().contains(t));
+		
+		// Left Movement
+		int currentX = p.getBounds().x;
+		assertEquals(0, p.getCurrentSpeed());
+		p.processInput("MOVE_LEFT");
+		m.update();
+		assertEquals(-4, p.getCurrentSpeed());
+		assertEquals(currentX - 4, p.getBounds().x);
+		
+		// Right Movement
+		currentX = p.getBounds().x;
+		p.processInput("MOVE_RIGHT");
+		m.update();
+		assertEquals(4, p.getCurrentSpeed());
+		assertEquals(currentX + 4, p.getBounds().x);
+		m.update();
+		assertEquals(currentX + 8, p.getBounds().x);
+		currentX = p.getBounds().x;
+		
+		// Stop
+		p.processInput("STOP");
+		m.update();
+		assertEquals(0, p.getCurrentSpeed());
+		assertEquals(currentX, p.getBounds().x);
+		
+		// TURTLE
+		m.reset(EntityType.TURTLE);
+		m.toggleTrashSpawning(false);
+		Turtle p2 = (Turtle) m.getPlayer();
+		
+		// Left Bounce
+		Trash t1 = f.createEasyTrash(crabX, crabY);
+		r = RequestFactory.createAddToModelRequest(t1);
+		m.handleRequest(r);
+		
+		// Middle Bounce
+		Trash t2 = f.createEasyTrash(crabX + 50, crabY);
+		r = RequestFactory.createAddToModelRequest(t2);
+		m.handleRequest(r);
+		
+		// Right Bounce
+		Trash t3 = f.createEasyTrash(crabX + 125, crabY);
+		r = RequestFactory.createAddToModelRequest(t3);
+		m.handleRequest(r);
+
+		m.update();
+		int middleThird = p2.getBounds().x+p2.getBounds().width/3;
+		int rightThird = p2.getBounds().x+2*p2.getBounds().width/3;
+
+		int t1MiddleX = t1.getBounds().x+t1.getBounds().width/2;
+		int t2MiddleX = t2.getBounds().x+t2.getBounds().width/2;
+		int t3MiddleX = t3.getBounds().x+t3.getBounds().width/2;
+		
+		assertTrue(t1.intersects(p2) && t1MiddleX < middleThird);
+		assertTrue(t2.intersects(p2) && t2MiddleX >= middleThird && t2MiddleX < rightThird);
+		assertTrue(t3.intersects(p2) && t3MiddleX >= rightThird);
+		
+		// Left Movement
+		currentX = p2.getBounds().x;
+		assertEquals(0, p2.getCurrentSpeed());
+		p2.processInput("MOVE_LEFT");
+		m.update();
+		assertEquals(-2, p2.getCurrentSpeed());
+		assertEquals(currentX - 2, p2.getBounds().x);
+		
+		// Right Movement
+		currentX = p2.getBounds().x;
+		p2.processInput("MOVE_RIGHT");
+		m.update();
+		assertEquals(2, p2.getCurrentSpeed());
+		assertEquals(currentX + 2, p2.getBounds().x);
+		m.update();
+		assertEquals(currentX + 4, p2.getBounds().x);
+		currentX = p2.getBounds().x;
+		
+		// Stop
+		p2.processInput("STOP");
+		m.update();
+		assertEquals(0, p2.getCurrentSpeed());
+		assertEquals(currentX, p2.getBounds().x);
+		
+		
+		
+		
 	}
 	
 	// Tests that the game ends when endGame() is called

@@ -100,4 +100,12 @@ public class Turtle extends Player{
                 (int) Math.round(BOUNCE_SPEED * Math.cos(bounceAngle)));
 
     }
+    
+    /**
+     * Returns the model.entities.Turtle's current speed base on input
+     * @return the Turtle's current speed
+     */
+    public double getCurrentSpeed() {
+    	return currentSpeed;
+    }
 }
