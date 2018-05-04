@@ -88,12 +88,12 @@ public class View extends JPanel implements RequestListener {
         ArrayList<Component> layers = new ArrayList<>();
 
         //Layer 0: background
-        layers.add(createBackground(layeredPane));
+        layers.add(createBackground());
         //Layer 1: the main game sprites
         this.setOpaque(false);
         layers.add(this);
         //Layer 2: foreground
-        layers.add(createForeground(layeredPane));
+        layers.add(createForeground());
         //Layer 3: UI elements
         //layers.add(createUI());
         initButtons();
@@ -130,53 +130,56 @@ public class View extends JPanel implements RequestListener {
 
     /**
      * Creates and configures all the elements of the game's background
-     * @param layeredPane The pane we are creating a background for
      * @return A Component holding all the background elements
      */
-    private Component createBackground(JLayeredPane layeredPane){
+    private Component createBackground(){
+        //create the component to house the background image
+        JLabel background = new JLabel();
 
         //get the background image
-        ImageIcon backgroundImage = new ImageIcon(SpriteImage.BACKGROUND.getImage()) {
+        ImageIcon backgroundIcon = new ImageIcon(SpriteImage.BACKGROUND.getImage()) {
             //make sure the background image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
                 g.drawImage(getImage(),
                             0,
                             0,
-                            layeredPane.getWidth(),
-                            layeredPane.getHeight(),
+                            background.getWidth(),
+                            background.getHeight(),
                             null);
             }
         };
 
         //and put it in a component so that it can be displayed
-        JComponent background = new JLabel(backgroundImage);
+        background.setIcon(backgroundIcon);
         background.setOpaque(false);
         return background;
     }
 
     /**
      * Creates and configures all the elements of the game's foreground
-     * @param layeredPane The pane we are creating a foreground for
      * @return A Component holding all the foreground elements
      */
-    private Component createForeground(JLayeredPane layeredPane){
+    private Component createForeground(){
+        //create a container to hold the image
+        JLabel foreground = new JLabel();
+
         //get the foreground image
-        ImageIcon foregroundImage = new ImageIcon(SpriteImage.FOREGROUND.getImage()) {
+        ImageIcon foregroundIcon = new ImageIcon(SpriteImage.FOREGROUND.getImage()) {
             //make sure the foreground image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
                 g.drawImage(getImage(),
                         0,
                         0,
-                        layeredPane.getWidth(),
-                        layeredPane.getHeight(),
+                        foreground.getWidth(),
+                        foreground.getHeight(),
                         null);
             }
         };
 
         //and put it in a component so that it can be displayed
-        JComponent foreground = new JLabel(foregroundImage);
+        foreground.setIcon(foregroundIcon);
         foreground.setOpaque(false);
         return foreground;
     }
