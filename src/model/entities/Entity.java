@@ -22,7 +22,7 @@ public abstract class Entity implements BoundsListener {
 		TURTLE,
 		TRASH,
 		BOSS,
-		RECYCLING;
+		RECYCLING,
 		TRASH_BARGE,
 		RECYCLING_BARGE;
 	}
@@ -218,7 +218,7 @@ public abstract class Entity implements BoundsListener {
 	/**
 	 * Toggles whether the model.entities.Entity moves or not when updated. If the model.entities.Entity is stopped, it will not move when updated.
 	 */
-	void toggleStopped() {
+	public void toggleStopped() {
 		isStopped = !isStopped;
 	}
 	
