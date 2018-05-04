@@ -65,7 +65,7 @@ public class View extends JPanel implements RequestListener {
 
         //create a layered pane to serve as the content pane for the frame
         JLayeredPane layeredPane = new JLayeredPane();
-        configurePane(layeredPane);
+        configureContentPane(layeredPane);
         frame.setContentPane(layeredPane);
 
         //display the frame
@@ -76,19 +76,51 @@ public class View extends JPanel implements RequestListener {
     /**
      * Creates everything that needs to be in the content pane,
      * adds it all to the pane, then configures the layout
+     * @param layeredPane The content pane to configure
      */
-    private void configurePane(JLayeredPane layeredPane){
+    private void configureContentPane(JLayeredPane layeredPane) {
 
         //create all the layers for the layered pane
         ArrayList<Component> layers = new ArrayList<>();
 
-
+        //Layer 0: background
+        layers.add(createBackground());
+        //Layer 1: the main game sprites
+        layers.add(this);
+        //Layer 2: foreground
+        layers.add(createForeground());
+        //Layer 3: UI elements
+        layers.add(createUI());
 
         //add the layers to the layered pane in the right order
-        for (int i = 0; i < layers.size(); i++){
+        for (int i = 0; i < layers.size(); i++) {
             Component layer = layers.get(i);
             layeredPane.add(layer, i);
         }
+    }
+
+    /**
+     * Creates and configures all the elements of the game's background
+     * @return A Component holding all the background elements
+     */
+    private Component createBackground(){
+        return null;
+    }
+
+    /**
+     * Creates and configures all the elements of the game's foreground
+     * @return A Component holding all the foreground elements
+     */
+    private Component createForeground(){
+        return null;
+    }
+
+    /**
+     * Creates and configures all the elements of the game's UI
+     * @return A Component holding all the UI elements
+     */
+    private Component createUI(){
+        return null;
     }
 
     /**
