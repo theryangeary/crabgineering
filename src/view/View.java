@@ -90,7 +90,7 @@ public class View extends JPanel implements RequestListener {
         //Layer 0: background
         layers.add(createBackground());
         //Layer 1: the main game sprites
-        layers.add(this);
+        layers.add(configureView());
         //Layer 2: foreground
         layers.add(createForeground());
         //Layer 3: in-game UI elements
@@ -154,7 +154,15 @@ public class View extends JPanel implements RequestListener {
         //and put it in a component so that it can be displayed
         background.setIcon(backgroundIcon);
         background.setOpaque(false);
+        background.setFocusable(false);
         return background;
+    }
+
+    private Component configureView(){
+        this.setOpaque(false);
+        this.setFocusable(false);
+
+        return this;
     }
 
     /**
@@ -182,6 +190,7 @@ public class View extends JPanel implements RequestListener {
         //and put it in a component so that it can be displayed
         foreground.setIcon(foregroundIcon);
         foreground.setOpaque(false);
+        foreground.setFocusable(false);
         return foreground;
     }
 
@@ -199,12 +208,16 @@ public class View extends JPanel implements RequestListener {
      * @return A Component holding all the UI elements in the title menu
      */
     private Component createTitleMenu(){
-        initButtons();
-
-        //create
+        //create a container to hold all the menu elements
         JComponent menu = new JPanel();
-        menu.add(buttonPanel);
 
+        //add the buttons to the menu
+        initButtons();
+        menu.add(buttonPanel);
+        //menu.addMouseListener(buttonPanel);
+
+        menu.setOpaque(false);
+        menu.setFocusable(false);
         return menu;
     }
 
@@ -248,6 +261,7 @@ public class View extends JPanel implements RequestListener {
 	}
 	
 	/**
+	/*
 	 * Updates buttons' display text based upon the running state of the timer and the button pressed.
 	 * @param button The button to update
 	 * @param running The running state of the timer

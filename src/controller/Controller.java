@@ -95,7 +95,10 @@ public class Controller implements ActionListener {
 	 * @see View
 	 */
 	@Override public void actionPerformed(ActionEvent e) {
+		System.out.println("here!!!");
+
 		String command = e.getActionCommand();
+		System.out.println(command);
 
 		switch(command) {
 
