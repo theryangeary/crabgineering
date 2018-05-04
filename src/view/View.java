@@ -13,6 +13,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -69,6 +72,7 @@ public class View extends JPanel implements RequestListener {
         frame.setContentPane(layeredPane);
 
         //display the frame
+        frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         frame.pack();
         frame.setVisible(true);
     }
@@ -88,14 +92,38 @@ public class View extends JPanel implements RequestListener {
         //Layer 1: the main game sprites
         layers.add(this);
         //Layer 2: foreground
-        layers.add(createForeground());
+        //layers.add(createForeground());
         //Layer 3: UI elements
-        layers.add(createUI());
+        //layers.add(createUI());
+        initButtons();
 
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {
             Component layer = layers.get(i);
             layeredPane.add(layer, i);
+
+            //make layers resize to match the layered pane
+            layeredPane.addComponentListener(new ComponentListener() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    layer.setBounds(layeredPane.getBounds());
+                }
+
+                @Override
+                public void componentMoved(ComponentEvent e) {
+
+                }
+
+                @Override
+                public void componentShown(ComponentEvent e) {
+
+                }
+
+                @Override
+                public void componentHidden(ComponentEvent e) {
+
+                }
+            });
         }
     }
 
@@ -104,7 +132,11 @@ public class View extends JPanel implements RequestListener {
      * @return A Component holding all the background elements
      */
     private Component createBackground(){
-        return null;
+        //get the background image
+        ImageIcon backgroundImage = new ImageIcon(SpriteImage.BACKGROUND.getImage());
+
+        //and put it in a component so that it can be displayed
+        return new JLabel(backgroundImage);
     }
 
     /**
@@ -120,6 +152,7 @@ public class View extends JPanel implements RequestListener {
      * @return A Component holding all the UI elements
      */
     private Component createUI(){
+        initButtons();
         return null;
     }
 
@@ -271,7 +304,7 @@ public class View extends JPanel implements RequestListener {
 		//create a new layered pane to hold the frame's content
 		JLayeredPane contentLayeredPane = new JLayeredPane();
 		//populate it
-		configurePane(contentLayeredPane);
+		configureContentPane(contentLayeredPane);
 		//and tell the frame to use it
 		frame.setContentPane(contentLayeredPane);
 		

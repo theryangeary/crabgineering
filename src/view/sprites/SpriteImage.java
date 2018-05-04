@@ -19,7 +19,9 @@ public enum SpriteImage {
     BOSS("yacht.png"),
     RECYCLING_BARGE("recycling-barge.png"),
     TRASH_BARGE("trash-barge.png"),
-    TITLE("title.png");
+    TITLE("title.png"),
+    BACKGROUND("background.png"),
+    FOREGROUND("foreground.png");
 
     //should be the same for all Sprites
     final static String IMAGE_DIR = "src/resources/images/";
@@ -45,7 +47,7 @@ public enum SpriteImage {
      * @param imagePath relative image path from PWD
      * @return BufferedImage of either the requested image, or null
      */
-    private BufferedImage createImage(String imagePath) {
+    public BufferedImage createImage(String imagePath) {
         BufferedImage bufferedImage;
         try {
             bufferedImage = ImageIO.read(new File(imagePath));
