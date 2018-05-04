@@ -9,17 +9,17 @@ import java.io.IOException;
  * SpriteImage - an enum to handle inclusion of Sprites in game
  */
 public enum SpriteImage {
-    CLAM("clam.png"),
-    CRAB("crab.png"),
-    SHRIMP("shrimp.png"),
-    TURTLE("turtle.png"),
-    TRASH("trash.png"),
-    RECYCLING("trash.png"),
-    ARROW("arrow.png"),
+	CLAM("clam.png"),
+	CRAB("crab.png"),
+	SHRIMP("shrimp.png"),
+	TURTLE("turtle.png"),
+	TRASH("trash.png"),
+	RECYCLING("recycling.png"),
+	ARROW("arrow.png"),
+	RECYCLING_BARGE("recycling-barge.png"),
+	TRASH_BARGE("trash-barge.png"),
+	TITLE("title.png"),
     BOSS("yacht.png"),
-    RECYCLING_BARGE("recycling-barge.png"),
-    TRASH_BARGE("trash-barge.png"),
-    TITLE("title.png"),
     BACKGROUND("background.png"),
     FOREGROUND("foreground.png");
 

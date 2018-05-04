@@ -33,6 +33,9 @@ public class ModelInitialTests {
 		assertTrue(m.getEntities().contains(m.getPlayer()));
 		assertTrue(m.trashSpawning);
 		assertFalse(m.gameOver);
+		
+		assertEquals(10, m.getPlayer().getMaxHealth());
+		assertEquals(10, m.getPlayer().getCurrentHealth());
 	}
 	
 	
