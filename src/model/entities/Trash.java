@@ -26,6 +26,8 @@ public class Trash extends Entity {
 
 	private final int POLLUTION = 10;
 	private TrashType type;
+
+	private boolean isRecyclable;
 	
 	private boolean thrown = false;
 	private boolean addedPollution = false;
@@ -44,12 +46,13 @@ public class Trash extends Entity {
 	 * @param requestQueue The controller.requests.RequestQueue of the model.entities.Trash
 	 * @see RequestQueue
 	 */
-	Trash(int x, int y, int width, int height, RequestQueue requestQueue) {
+	Trash(int x, int y, int width, int height, RequestQueue requestQueue, boolean isRecyclable) {
 		super(x, y, width, height);
 		//System.out.println(String.format(
 		//        "model.entities.Trash: width=%d height=%d",
 		//        width, height));
 		this.requestQueue = requestQueue;
+		this.isRecyclable = isRecyclable;
 	}
 
 	/**
@@ -60,7 +63,6 @@ public class Trash extends Entity {
 	 */
 	@Override
 	public EntityType getType(){
-		//TODO: or RECYCLING
 		return EntityType.TRASH;
 	}
 	
