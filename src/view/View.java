@@ -90,6 +90,7 @@ public class View extends JPanel implements RequestListener {
         //Layer 0: background
         layers.add(createBackground(layeredPane));
         //Layer 1: the main game sprites
+        this.setOpaque(false);
         layers.add(this);
         //Layer 2: foreground
         layers.add(createForeground(layeredPane));
@@ -100,7 +101,7 @@ public class View extends JPanel implements RequestListener {
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {
             Component layer = layers.get(i);
-            layeredPane.add(layer, i);
+            layeredPane.add(layer, new Integer(i));
 
             //make layers resize to match the layered pane
             layeredPane.addComponentListener(new ComponentListener() {
@@ -149,7 +150,9 @@ public class View extends JPanel implements RequestListener {
         };
 
         //and put it in a component so that it can be displayed
-        return new JLabel(backgroundImage);
+        JComponent background = new JLabel(backgroundImage);
+        background.setOpaque(false);
+        return background;
     }
 
     /**
