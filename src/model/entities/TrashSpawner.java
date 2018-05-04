@@ -36,9 +36,11 @@ public class TrashSpawner {
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
                 int randX = (int)(Math.random()*spawnWidth+offset);
+                //Decide whether trash should be recyclable or not (50-50 chance)
+                boolean recyclable = Math.random() > .5;
                 requestQueue.postRequest(
                         RequestFactory.createAddToModelRequest(
-                                factory.createEasyTrash(randX,spawnHeight)
+                                factory.createEasyTrash(randX,spawnHeight, recyclable)
                         )
                 );
                 if (spawnTimer.getDelay() > 500) {
