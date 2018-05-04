@@ -8,9 +8,9 @@ import java.util.List;
  * A utility class for collecting Requests and distributing
  * them to RequestListeners. Intended to be used to maintain
  * control flow in an organised fashion for
- *  (1) horizontal updates (eg model.Model to View)
- *  (2) vertical updates (eg model.entities.Entity to model.Model)
- *  (3) asynchronous events (eg removing model.entities.Trash outside of update loop)
+ *  (1) horizontal updates (eg Model to View)
+ *  (2) vertical updates (eg Entity to Model)
+ *  (3) asynchronous events (eg removing Trash outside of update loop)
  */
 public class RequestQueue extends ArrayDeque<Request> {
 
@@ -18,7 +18,7 @@ public class RequestQueue extends ArrayDeque<Request> {
     private List<RequestListener> listeners;
 
     /**
-     * Initialises an empty controller.requests.RequestQueue with no Requests or RequestListeners
+     * Initialises an empty RequestQueue with no Requests or RequestListeners
      */
     public RequestQueue (){
         this.listeners = new ArrayList<>();
@@ -26,7 +26,7 @@ public class RequestQueue extends ArrayDeque<Request> {
 
     /**
      * Sets this queue to inform listener whenever it fulfills Requests
-     * @param listener A controller.requests.RequestListener not already listening to this queue
+     * @param listener A RequestListener not already listening to this queue
      */
     public void addListener(RequestListener listener){
         listeners.add(listener);
@@ -34,14 +34,14 @@ public class RequestQueue extends ArrayDeque<Request> {
 
     /**
      * Adds the given request to the queue
-     * @param request A controller.requests.Request to be added to the queue
+     * @param request A Request to be added to the queue
      */
     public void postRequest(Request request){
         add(request);
     }
 
     /**
-     * Hands the controller.requests on the queue over to the listeners to fulfill them,
+     * Hands the on the queue over to the listeners to fulfill them,
      * removing each from the queue in the process
      */
     public void fulfillAllRequests(){

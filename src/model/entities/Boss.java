@@ -50,10 +50,10 @@ public class Boss extends Entity{
     }
 
     /**
-     * Updates the position of the model.entities.Crab's Bounds based on gravity, drag, and the model.entities.Crab's speed.
-     * Calls model.entities.Entity's update(gravity, drag) and handles heldTrash movement..
-     * @param gravity The gravity applied to the model.entities.Entity
-     * @param drag The drag applied to the model.entities.Entity
+     * Updates the position of the Crab's Bounds based on gravity, drag, and the Crab's speed.
+     * Calls Entity's update(gravity, drag) and handles heldTrash movement..
+     * @param gravity The gravity applied to the Entity
+     * @param drag The drag applied to the Entity
      * @see Entity
      */
     @Override

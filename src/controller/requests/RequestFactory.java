@@ -8,17 +8,25 @@ import view.sprites.Sprite;
 import javax.lang.model.type.NullType;
 
 /**
- * controller.requests.RequestFactory is utility for producing different types of controller.requests
+ * RequestFactory is utility for producing different types of controller.requests
  */
 
 public class RequestFactory {
-    public static Request<Player> createStartGameRequest(Player player){
+
+    /**
+     * @param playerType Indicates which type of Player the Model should use
+     * @return A Request to start the game with the given type of Player
+     */
+    public static Request<Entity.EntityType> createStartGameRequest(Entity.EntityType playerType){
         return new Request<>(
-                player,
+                playerType,
                 Request.RequestType.START_GAME
         );
     }
 
+    /**
+     * @return A Request for the game to be paused
+     */
     public static Request<NullType> createPauseGameRequest(){
         return new Request<>(
                 null,
@@ -28,7 +36,7 @@ public class RequestFactory {
 
     /**
      * @param sprite A Sprite not currently in the View
-     * @return A controller.requests.Request for the given Sprite to be added to the View
+     * @return A Request for the given Sprite to be added to the View
      */
     public static Request<Sprite> createAddToViewRequest(Sprite sprite){
         return new Request<>(
@@ -39,7 +47,7 @@ public class RequestFactory {
 
     /**
      * @param sprite A Sprite currently in the View
-     * @return A controller.requests.Request for the given Sprite to be removed from the View
+     * @return A Request for the given Sprite to be removed from the View
      */
     public static Request<Sprite> createRemoveFromViewRequest(Sprite sprite){
         return new Request<>(
@@ -49,8 +57,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param entity An model.entities.Entity not currently in the model.Model
-     * @return A controller.requests.Request for the given model.entities.Entity to be added to the model.Model
+     * @param entity An Entity not currently in the Model
+     * @return A Request for the given Entity to be added to the Model
      */
     public static Request<Entity> createAddToModelRequest(Entity entity){
         return new Request<>(
@@ -60,8 +68,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param entity An model.entities.Entity currently in the model.Model
-     * @return A controller.requests.Request for the given model.entities.Entity to be removed from the model.Model
+     * @param entity An Entity currently in the Model
+     * @return A Request for the given Entity to be removed from the Model
      */
     public static Request<Entity> createRemoveFromModelRequest(Entity entity){
         return new Request<>(
@@ -71,8 +79,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param trash A piece of model.entities.Trash not currently thrown
-     * @return A controller.requests.Request for the given model.entities.Trash to be thrown
+     * @param trash A piece of Trash not currently thrown
+     * @return A Request for the given Trash to be thrown
      */
     public static Request<Trash> createAddThrownTrashRequest(Trash trash){
         return new Request<>(
@@ -83,7 +91,7 @@ public class RequestFactory {
 
     /**
      * @param dPollution The change in pollution level
-     * @return A controller.requests.Request for the pollution level to be changed by
+     * @return A Request for the pollution level to be changed by
      * the specified amount
      */
     public static Request<Integer> createUpdatePollutionRequest(int dPollution){
@@ -95,7 +103,7 @@ public class RequestFactory {
 
     /**
      * @param dScore The change in score
-     * @return A controller.requests.Request for the score to be changed by the specified amount
+     * @return A Request for the score to be changed by the specified amount
      */
     public static Request<Integer> createUpdateScoreRequest(int dScore){
         return new Request<>(
@@ -105,8 +113,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param sound The name of the view.soundeffects.SoundEffect to be played
-     * @return A controller.requests.Request for the view.soundeffects.SoundEffect represented by sound
+     * @param sound The name of the SoundEffect to be played
+     * @return A Request for the SoundEffect represented by sound
      * to be played
      */
     public static Request<String> createPlaySoundRequest(String sound){

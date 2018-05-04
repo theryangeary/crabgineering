@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * A class that controls updates of a View and model.Model
+ * A class that controls updates of a View and Model
  * @author Zelinsky
  *
  */
@@ -53,9 +53,9 @@ public class Controller implements ActionListener {
         PollutionBarSprite pollutionBar = new PollutionBarSprite(
                 new Rectangle(progressBarXPosition,
                            progressBarYPosition,
-                           model.getMaxPollutionLevel(),
+                           getMaxPollutionLevel(),
                            progressBarHeight),
-                model.getCurrentPollutionLevel());
+                getCurrentPollutionLevel());
         //view.addSprite(pollutionBar);
         requests.addListener(pollutionBar);
         */

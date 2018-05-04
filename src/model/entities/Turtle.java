@@ -4,7 +4,7 @@ import controller.requests.RequestQueue;
 import view.audio.SoundEffect;
 
 /**
- * A model.entities.Turtle is a type of model.entities.Player
+ * A Turtle is a type of Player
  * @author Jimmy
  * @see Player
  */
@@ -35,7 +35,7 @@ public class Turtle extends Player{
     }
 
     /**
-     * Handles how a model.entities.Turtle processes an action command.
+     * Handles how a Turtle processes an action command.
      * @param action The action to be performed
      */
     @Override
@@ -53,10 +53,10 @@ public class Turtle extends Player{
     }
 
     /**
-     * Updates the position of the model.entities.Turtle's Bounds based on gravity, drag, and the model.entities.Crab's speed.
-     * Calls model.entities.Entity's update(gravity, drag)
-     * @param gravity The gravity applied to the model.entities.Entity
-     * @param drag The drag applied to the model.entities.Entity
+     * Updates the position of the Turtle's Bounds based on gravity, drag, and the Crab's speed.
+     * Calls Entity's update(gravity, drag)
+     * @param gravity The gravity applied to the Entity
+     * @param drag The drag applied to the Entity
      * @see Entity
      */
     @Override
@@ -66,8 +66,8 @@ public class Turtle extends Player{
     }
 
     /**
-     * Handles how model.entities.Trash and model.entities.Turtle respond to intersecting with a model.entities.Trash.
-     * @param t The model.entities.Trash that the model.entities.Player intersects with
+     * Handles how Trash and Turtle respond to intersecting with a Trash.
+     * @param t The Trash that the Player intersects with
      */
     @Override
     public void touchTrash(Trash t) {

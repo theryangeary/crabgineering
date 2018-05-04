@@ -6,7 +6,7 @@ import model.Model;
 import view.audio.SoundEffect;
 
 /**
- * A class representing a model.entities.Trash object. model.entities.Trash is a type of Entitiy.
+ * A class representing a Trash object. Trash is a type of Entitiy.
  * @author Zelinsky
  */
 public class Trash extends Entity {
@@ -37,19 +37,19 @@ public class Trash extends Entity {
 	public static final int TRASH_HEIGHT = 50;
 
 	/**
-	 * Constructs a model.entities.Trash object. Calls model.entities.Entity's constructor with super(x, y, width, height).
-	 * Sets up the model.entities.Trash's controller.requests.RequestQueue.
-	 * @param x The x position of the model.entities.Trash
-	 * @param y The y position of the model.entities.Trash
-	 * @param width The width of the model.entities.Trash
-	 * @param height The height of the model.entities.Trash
-	 * @param requestQueue The controller.requests.RequestQueue of the model.entities.Trash
+	 * Constructs a Trash object. Calls Entity's constructor with super(x, y, width, height).
+	 * Sets up the Trash's RequestQueue.
+	 * @param x The x position of the Trash
+	 * @param y The y position of the Trash
+	 * @param width The width of the Trash
+	 * @param height The height of the Trash
+	 * @param requestQueue The RequestQueue of the Trash
 	 * @see RequestQueue
 	 */
 	Trash(int x, int y, int width, int height, RequestQueue requestQueue, boolean isRecyclable) {
 		super(x, y, width, height);
 		//System.out.println(String.format(
-		//        "model.entities.Trash: width=%d height=%d",
+		//        "Trash: width=%d height=%d",
 		//        width, height));
 		this.requestQueue = requestQueue;
 		this.isRecyclable = isRecyclable;
@@ -71,11 +71,11 @@ public class Trash extends Entity {
 	}
 	
 	/**
- 	 * Translates the model.entities.Trash's location a distance specified by the change in x and y.
-	 * Once model.entities.Trash touches the bottom of the worldBounds, it will stop moving and increment the pollution level in model.Model.
-	 * If model.entities.Trash touches the top of the worldBounds, it will be removed from the game and increment the score.
-	 * @param dx The distance to translate the model.entities.Trash in the x direction
-	 * @param dy The distance to translate the model.entities.Trash in the y direction
+ 	 * Translates the Trash's location a distance specified by the change in x and y.
+	 * Once Trash touches the bottom of the worldBounds, it will stop moving and increment the pollution level in Model.
+	 * If Trash touches the top of the worldBounds, it will be removed from the game and increment the score.
+	 * @param dx The distance to translate the Trash in the x direction
+	 * @param dy The distance to translate the Trash in the y direction
 	 * @see Model
 	 */
 	@Override
@@ -112,9 +112,9 @@ public class Trash extends Entity {
 	}
 	
 	/**
-	 * Handles how the model.entities.Trash should be thrown. Sets the model.entities.Trash's speed to the specified x and y speeds.
-	 * @param xSpeed The speed of the model.entities.Trash in the x direction
-	 * @param ySpeed The speed of the model.entities.Trash in the y direction
+	 * Handles how the Trash should be thrown. Sets the Trash's speed to the specified x and y speeds.
+	 * @param xSpeed The speed of the Trash in the x direction
+	 * @param ySpeed The speed of the Trash in the y direction
 	 */
 	public void throwTrash(int xSpeed, int ySpeed) {
 		thrown = true;
@@ -122,8 +122,8 @@ public class Trash extends Entity {
 	}
 	
 	/**
-	 * Returns the state of the model.entities.Trash in regards to if it has been thrown with throwTrash().
-	 * @return True if the model.entities.Trash has been thrown, false otherwise
+	 * Returns the state of the Trash in regards to if it has been thrown with throwTrash().
+	 * @return True if the Trash has been thrown, false otherwise
 	 */
 	public boolean thrown() {
 		return thrown;

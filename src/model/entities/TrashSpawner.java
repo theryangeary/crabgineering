@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * model.entities.TrashSpawner, a time based trash generator
+ * TrashSpawner, a time based trash generator
  */
 public class TrashSpawner {
     private int interval = 0;
@@ -18,7 +18,7 @@ public class TrashSpawner {
     private int offset;
 
     /**
-     * Generate a model.entities.TrashSpawner
+     * Generate a TrashSpawner
      * @param requestQueue for controller.requests
      * @param spawnHeight
      * @param spawnWidth Specifies how wide of a range to spawn trash in

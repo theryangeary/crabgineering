@@ -1,7 +1,7 @@
 package controller.requests;
 
 /**
- * A controller.requests.Request is a semantic type used to represent an action
+ * A Request is a semantic type used to represent an action
  * that SHOULD occur, but has not necessarily taken place yet
  *
  * @param <R> The type used for the specifics of the request
@@ -9,7 +9,7 @@ package controller.requests;
 public class Request<R> {
 
     /**
-     * The possible types of actions that can be represented by a controller.requests.Request
+     * The possible types of actions that can be represented by a Request
      */
     public enum RequestType {
         START_GAME,
@@ -26,12 +26,12 @@ public class Request<R> {
         PLAY_SOUND;
     }
 
-    //any extra information that a controller.requests.RequestListener
-    //might need to fulfill the controller.requests.Request
+    //any extra information that a RequestListener
+    //might need to fulfill the Request
     private R specifics;
 
     //lets us know what should happen
-    //when the controller.requests.Request is fulfilled
+    //when the Request is fulfilled
     private RequestType requestedAction;
 
     Request(R specifics, RequestType requestedAction){
@@ -41,7 +41,7 @@ public class Request<R> {
 
     /**
      * @return Any specific information needed to actually fulfill the request
-     * ex: the model.entities.Entity to be added to the model.Model for an ADD_TO_MODEL request
+     * ex: the Entity to be added to the Model for an ADD_TO_MODEL request
      */
     public R getSpecifics() {
         return specifics;
