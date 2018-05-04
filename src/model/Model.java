@@ -84,7 +84,7 @@ public class Model implements RequestListener {
 		
 		//setup the RequestQueue Entities can use to post controller.requests
 		//for the Model
-		requestQueue.addListener(this::handleRequest);
+		requestQueue.addListener(this);
 	}
 	
 	/**
@@ -159,6 +159,9 @@ public class Model implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()) {
+			case TOGGLE_PAUSED:
+				toggleTrashSpawning(!trashSpawning);
+				break;
 			case ADD_TO_MODEL:
 				addEntity((Entity) request.getSpecifics());
 				break;
@@ -352,7 +355,7 @@ public class Model implements RequestListener {
 	public Rectangle getWorldBounds() {
 		return worldBounds;
 	}
-	
+
 	/**
 	 * Turns on the Trash Spawner if the state is true, off if the state is false.
 	 * @param state Determines whether the Trash Spawner is turned off or on

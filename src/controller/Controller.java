@@ -101,6 +101,7 @@ public class Controller implements ActionListener, RequestListener {
 				} else {
 					updater.start();
 				}
+				break;
 		}
 	}
 	
