@@ -44,8 +44,8 @@ public class ModelRunningTests {
 		m.toggleTrashSpawning(false);
 
 		// ADD SOME TRASH THAT INTERSECTS, ONE IS 'THROWN' BY PLAYER
-		Trash t1 = f.createEasyTrash(20, 20);
-		Trash t2 = f.createEasyTrash(20, 20);
+		Trash t1 = f.createEasyTrash(150, 150);
+		Trash t2 = f.createEasyTrash(150, 150);
 		Request r1 = RequestFactory.createAddToModelRequest(t1);
 		Request r2 = RequestFactory.createAddToModelRequest(t2);
 		m.handleRequest(r1);
@@ -58,8 +58,32 @@ public class ModelRunningTests {
 		assertTrue(t2.intersects(t1));
 		m.update();
 		rq.fulfillAllRequests();
-		assertEquals(30, m.getScore());
 		assertFalse(m.getThrownTrash().contains(t1));
+	}
+	
+	// Tests the Trash-Barge intersection
+	@Test
+	public void trashBargeIntersectTest() {
+		m.reset(EntityType.CRAB);
+		m.toggleTrashSpawning(false);
+		
+		Trash trash = f.createEasyTrash(215, 50);
+		//Trash recycle = f.createHardTrash(300, 75);
+		
+		Request r1 = RequestFactory.createAddToModelRequest(trash);
+		//Request r2 = RequestFactory.createAddToModelRequest(recycle);
+		m.handleRequest(r1);
+		//m.handleRequest(r2);
+		trash.touch();
+		//recycle.touch();
+		trash.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - 200), (int) m.getWorldBounds().getY());
+		//recycle.setLocation((int) m.getWorldBounds().getX(), (int) m.getWorldBounds().getY());
+		assertEquals(0, m.getScore());
+		m.update();
+		rq.fulfillAllRequests();
+		assertEquals(30, m.getScore());
+		
+		
 	}
 	
 	// Tests the Trash-Player intersection in update()
@@ -91,6 +115,31 @@ public class ModelRunningTests {
 		t.setLocation(100, 0);
 		m.update();
 		assertFalse(m.getEntities().contains(t));
+	}
+	
+	// Tests the movement of Trash
+	@Test
+	public void trashMovementTest() {
+		m.reset(EntityType.CRAB);
+		m.toggleTrashSpawning(false);
+		
+		Trash t = f.createEasyTrash(200, 200);
+		Request r = RequestFactory.createAddToModelRequest(t);
+		m.handleRequest(r);
+		t.setSpeed(5, 10);
+		assertEquals(5.0, t.getXSpeed());
+		assertEquals(10.0, t.getYSpeed());
+		m.update();
+		assertEquals(5.0, t.getXSpeed());
+		assertEquals(9.95, t.getYSpeed(), 0.01);
+		assertEquals(205, t.getBounds().x);
+		assertEquals(209, t.getBounds().y);
+		t.toggleStopped();
+		m.update();
+		assertEquals(5.0, t.getXSpeed());
+		assertEquals(9.9, t.getYSpeed(), 0.01);
+		assertEquals(205, t.getBounds().x);
+		assertEquals(209, t.getBounds().y);
 	}
 	
 	// Tests that the game ends when endGame() is called
