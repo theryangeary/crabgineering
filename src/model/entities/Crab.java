@@ -156,6 +156,22 @@ public class Crab extends Player {
 		throwAngle += dTheta;
 		arrowSprite.rotate(dTheta);
 	}
+	
+	/**
+	 * Returns the model.entities.Crab's current speed based on input
+	 * @return The Crab's current speed
+	 */
+	public double getCurrentSpeed() {
+		return currentSpeed;
+	}
+	
+	/**
+	 * Returns the model.entities.Crab's throwing angle based on input
+	 * @return The Crab's throwing angle
+	 */
+	public double getThrowAngle() {
+		return throwAngle;
+	}
 
 	/*
 	public boolean arrowVisible() {
