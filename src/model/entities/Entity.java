@@ -168,7 +168,7 @@ public abstract class Entity implements BoundsListener {
 	 * Returns the current health of the model.entities.Entity.
 	 * @return The current health of the model.entities.Entity.
 	 */
-	int getCurrentHealth() {
+	public int getCurrentHealth() {
 		return currentHealth;
 	}
 	
@@ -176,7 +176,7 @@ public abstract class Entity implements BoundsListener {
 	 * Returns the maximum health of the model.entities.Entity.
 	 * @return The maximum health of the model.entities.Entity.
 	 */
-	int getMaxHealth() {
+	public int getMaxHealth() {
 		return maxHealth;
 	}
 	
