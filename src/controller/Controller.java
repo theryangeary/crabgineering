@@ -1,5 +1,7 @@
 package controller;
 
+import controller.requests.Request;
+import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
@@ -19,7 +21,7 @@ import java.awt.event.ActionListener;
  * @author Zelinsky
  *
  */
-public class Controller implements ActionListener {
+public class Controller implements ActionListener, RequestListener {
 
 	//TODO: make these NOT be static (please...)
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
@@ -37,6 +39,7 @@ public class Controller implements ActionListener {
 	 */
 	public Controller() {
 		requests = new RequestQueue();
+		requests.addListener(this);
 
 		view = new View(requests);
 		view.setButtonListener(this);
@@ -87,6 +90,18 @@ public class Controller implements ActionListener {
 		};
 		updater = new Timer(msPerFrame, updateAction);
 		//updater.setDelay();
+	}
+
+	@Override
+	public void handleRequest(Request request){
+		switch (request.getRequestedAction()){
+			case TOGGLE_PAUSED:
+				if (updater.isRunning()){
+					updater.stop();
+				} else {
+					updater.start();
+				}
+		}
 	}
 	
 	/**
