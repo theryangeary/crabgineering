@@ -92,7 +92,7 @@ public class View extends JPanel implements RequestListener {
         //Layer 1: the main game sprites
         layers.add(this);
         //Layer 2: foreground
-        //layers.add(createForeground());
+        layers.add(createForeground(layeredPane));
         //Layer 3: UI elements
         //layers.add(createUI());
         initButtons();
@@ -129,10 +129,10 @@ public class View extends JPanel implements RequestListener {
 
     /**
      * Creates and configures all the elements of the game's background
-     * @param layeredPane The component we are creating a background for
+     * @param layeredPane The pane we are creating a background for
      * @return A Component holding all the background elements
      */
-    private Component createBackground(JComponent layeredPane){
+    private Component createBackground(JLayeredPane layeredPane){
 
         //get the background image
         ImageIcon backgroundImage = new ImageIcon(SpriteImage.BACKGROUND.getImage()) {
@@ -154,10 +154,28 @@ public class View extends JPanel implements RequestListener {
 
     /**
      * Creates and configures all the elements of the game's foreground
+     * @param layeredPane The pane we are creating a foreground for
      * @return A Component holding all the foreground elements
      */
-    private Component createForeground(){
-        return null;
+    private Component createForeground(JLayeredPane layeredPane){
+        //get the foreground image
+        ImageIcon foregroundImage = new ImageIcon(SpriteImage.FOREGROUND.getImage()) {
+            //make sure the foreground image is scaled correctly
+            @Override
+            public void paintIcon(Component component, Graphics g, int x, int y){
+                g.drawImage(getImage(),
+                        0,
+                        0,
+                        layeredPane.getWidth(),
+                        layeredPane.getHeight(),
+                        null);
+            }
+        };
+
+        //and put it in a component so that it can be displayed
+        JComponent foreground = new JLabel(foregroundImage);
+        foreground.setOpaque(false);
+        return foreground;
     }
 
     /**
