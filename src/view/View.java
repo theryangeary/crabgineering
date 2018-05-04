@@ -1,6 +1,7 @@
 package view;
 
 import controller.requests.Request;
+import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
@@ -34,29 +35,35 @@ public class View extends JPanel implements RequestListener {
 	private Dimension scale;
 
 	private ArrayList<Sprite> sprites;
-	
+
+	//buttons
 	private JButton crabButton;
 	private JButton turtleButton;
 	private JButton pauseButton;
 	private JPanel buttonPanel;
 
+	//other components
 	private JLabel titleImage;
 	private JLabel endScore = new JLabel("");
 	private JFrame frame;
+
+	private RequestQueue requestQueue;
 
 	/**
 	 * Constructs the View by initializing the JFrame and components.
 	 * Also sets up the View's RequestQueue.
 	 * @param requests The RequestQueue for the View
 	 */
-	public View(RequestQueue requests) {
+	public View(RequestQueue requestQueue) {
+		this.requestQueue = requestQueue;
+		requestQueue.addListener(this);
+
 		createAndShowGUI();
 
 	    //add(endScore, BorderLayout.PAGE_START);
 		//endScore.setVisible(false);
 
 		sprites = new ArrayList<>();
-		requests.addListener(this::handleRequest);
 	}
 
     /**
@@ -213,23 +220,16 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel();
 
-        //test button
-		JButton testButton = new JButton("test");
-		testButton.addActionListener(new ActionListener() {
+        //create pause button
+		JButton pauseButton = new JButton();
+		pauseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("pushed!");
+				requestQueue.postRequest(
+						RequestFactory.createTogglePausedRequest()
+				);
 			}
 		});
-        menu.add(testButton);
-
-        //add the buttons to the menu
-        initButtons();
-        //menu.add(buttonPanel);
-        //menu.addMouseListener(buttonPanel);
-		menu.add(pauseButton);
-		menu.add(turtleButton);
-		menu.add(crabButton);
 
         menu.setOpaque(false);
         menu.setFocusable(false);

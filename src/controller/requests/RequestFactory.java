@@ -27,10 +27,10 @@ public class RequestFactory {
     /**
      * @return A Request for the game to be paused
      */
-    public static Request<NullType> createPauseGameRequest(){
+    public static Request<NullType> createTogglePausedRequest(){
         return new Request<>(
                 null,
-                Request.RequestType.PAUSE_GAME
+                Request.RequestType.TOGGLE_PAUSED
         );
     }
 

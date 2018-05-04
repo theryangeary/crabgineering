@@ -13,7 +13,7 @@ public class Request<R> {
      */
     public enum RequestType {
         START_GAME,
-        PAUSE_GAME,
+        TOGGLE_PAUSED,
         ADD_TO_MODEL,
         REMOVE_FROM_MODEL,
         ADD_THROWN_TRASH,
