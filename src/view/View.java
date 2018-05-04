@@ -221,15 +221,25 @@ public class View extends JPanel implements RequestListener {
         JComponent menu = new JPanel();
 
         //create pause button
-		JButton pauseButton = new JButton();
+		final String PAUSED_TEXT = "play"; //displayed when game is paused
+		final String UNPAUSED_TEXT = "pause"; //displayed when game is playing
+		JButton pauseButton = new JButton(UNPAUSED_TEXT);
 		pauseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//make a request for game play to be paused/resumed
 				requestQueue.postRequest(
 						RequestFactory.createTogglePausedRequest()
 				);
+
+				if (pauseButton.getText().equals(PAUSED_TEXT)){
+					pauseButton.setText(UNPAUSED_TEXT);
+				} else {
+					pauseButton.setText(PAUSED_TEXT);
+				}
 			}
 		});
+		menu.add(pauseButton);
 
         menu.setOpaque(false);
         menu.setFocusable(false);
