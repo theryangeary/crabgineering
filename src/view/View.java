@@ -90,12 +90,13 @@ public class View extends JPanel implements RequestListener {
         //Layer 0: background
         layers.add(createBackground());
         //Layer 1: the main game sprites
-        this.setOpaque(false);
         layers.add(this);
         //Layer 2: foreground
         layers.add(createForeground());
-        //Layer 3: UI elements
+        //Layer 3: in-game UI elements
         //layers.add(createUI());
+        //Layer 4: title menu UI elements
+        layers.add(createTitleMenu());
         initButtons();
 
         //add the layers to the layered pane in the right order
@@ -189,8 +190,22 @@ public class View extends JPanel implements RequestListener {
      * @return A Component holding all the UI elements
      */
     private Component createUI(){
-        initButtons();
+
         return null;
+    }
+
+    /**
+     * Creates and configures all the elements of the game's title menu
+     * @return A Component holding all the UI elements in the title menu
+     */
+    private Component createTitleMenu(){
+        initButtons();
+
+        //create
+        JComponent menu = new JPanel();
+        menu.add(buttonPanel);
+
+        return menu;
     }
 
     /**
