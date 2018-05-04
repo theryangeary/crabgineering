@@ -5,6 +5,7 @@ import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
 import controller.Controller;
 import model.entities.*;
+import model.entities.Entity.EntityType;
 import controller.requests.Request;
 import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
@@ -32,11 +33,16 @@ public class Model implements RequestListener {
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
-	
+
+	private final int BARGE_WIDTH= 200;
+	private final int BARGE_HEIGHT= BARGE_WIDTH * 15 / 40;
+
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
 	private Player player;
+	private Barge trashBarge;
+	private Barge recyclingBarge;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> removeFromThrownTrash = new ArrayList<>();
 	private ArrayList<Entity> toRemove = new ArrayList<>();
@@ -53,6 +59,16 @@ public class Model implements RequestListener {
 	 */
 	public static final int SCORE_INCREMENT = 10;
 	private int score = 0;
+	
+	/**
+	 * The state of the game. True if the game is not running, false if it is. For testing purposes.
+	 */
+	public boolean gameOver = true;
+	
+	/**
+	 * The state of the TrashSpawner. True if it is spawning trash, false if not. For testing purposes.
+	 */
+	public boolean trashSpawning = true;
 
 	/**
 	 * Constructs the model.Model with its Bounds and controller.requests.RequestQueue.
@@ -69,15 +85,13 @@ public class Model implements RequestListener {
 		//setup the controller.requests.RequestQueue Entities can use to post controller.requests
 		//for the model.Model
 		requestQueue.addListener(this::handleRequest);
-		
-		reset();
 	}
 	
 	/**
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
 	 * and adds a model.entities.TrashSpawner and model.entities.Player.
 	 */
-	public void reset() {
+	public void reset(EntityType playerType) {
 		toRemove.addAll(entities);
 		for(Entity e : toRemove) {
 			removeEntity(e);
@@ -88,13 +102,37 @@ public class Model implements RequestListener {
 		removeFromThrownTrash.clear();
 		player = null;
 		spawner = null;
+		gameOver = false;
 		
-		int crabInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
-		int crabInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
-		player = new Crab(crabInitialX, crabInitialY, requestQueue);
-		player = new Turtle(crabInitialX,crabInitialY,requestQueue);
+		int playerInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
+		int playerInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
+		
+		switch (playerType) {
+		case CRAB:
+			player = new Crab(playerInitialX, playerInitialY, requestQueue);
+			break;
+		case TURTLE:
+			player = new Turtle(playerInitialX, playerInitialY,requestQueue);
+			break;
+		default:
+			break;
+		}
+
+		//Adding boss
+		Entity boss = new Boss(-500,25,requestQueue);
+		//addEntity(boss);
+
 		addEntity(player);
-		
+
+		recyclingBarge = new Barge((int) getWorldBounds().getX(), (int) getWorldBounds().getY(),
+				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
+		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH),
+				(int) getWorldBounds().getY(),
+				BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
+
+		addEntity(trashBarge);
+		addEntity(recyclingBarge);
+
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = 0;
 		spawner = new TrashSpawner(
@@ -154,7 +192,13 @@ public class Model implements RequestListener {
 				if (player.intersects(trash)) {
 					player.touchTrash(trash);
 				}
-				if (trash.atTop() && trash.touched()) {
+				if ((trashBarge.intersects(trash) && trash.touched() && trashBarge.bargeMatchesTrash(trash)) ||
+						(recyclingBarge.intersects(trash) && trash.touched() && recyclingBarge.bargeMatchesTrash(trash))) {
+						requestQueue.postRequest(
+								RequestFactory.createUpdateScoreRequest(3)
+						);
+				}
+				if (((recyclingBarge.intersects(trash) || trashBarge.intersects(trash)) || trash.atTop()) && trash.touched()) {
 					toRemove.add(entity);
 					removeFromThrownTrash.add(trash);
 				}
@@ -168,9 +212,6 @@ public class Model implements RequestListener {
 						removeFromThrownTrash.add(trash);
 						removeFromThrownTrash.add(tt);
 						SoundEffect.TRASH_HIT.play();
-						requestQueue.postRequest(
-								RequestFactory.createUpdateScoreRequest(3)
-						);
 					}
 				}
 			}
@@ -198,8 +239,9 @@ public class Model implements RequestListener {
 	 *
 	 * @see Controller
 	 */
-	void endGame() {
+	public void endGame() {
 		spawner.stop();
+		gameOver = true;
 		//reset()
 		Controller.endGame();
 	}
@@ -307,7 +349,7 @@ public class Model implements RequestListener {
 	 *
 	 * @return The world Bounds
 	 */
-	Rectangle getWorldBounds() {
+	public Rectangle getWorldBounds() {
 		return worldBounds;
 	}
 	
@@ -316,10 +358,27 @@ public class Model implements RequestListener {
 	 * @param state Determines whether the model.entities.Trash Spawner is turned off or on
 	 */
 	public void toggleTrashSpawning(boolean state) {
-		if (state == true) {
+		trashSpawning = state;
+		if (state) {
 			spawner.start();
 		} else {
 			spawner.stop();
 		}
+	}
+	
+	/**
+	 * Returns the ArrayList of Entities in the Model. For testing purposes.
+	 * @return The Model's ArrayList of Entities
+	 */
+	public ArrayList<Entity> getEntities(){
+		return entities;
+	}
+	
+	/**
+	 * Returns the ArrayList of Trash that has been 'thrown'. For testing purposes.
+	 * @return The Model's ArrayList of 'thrown' Trash
+	 */
+	public ArrayList<Trash> getThrownTrash(){
+		return thrownTrash;
 	}
 }

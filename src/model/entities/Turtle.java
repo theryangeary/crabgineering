@@ -26,6 +26,15 @@ public class Turtle extends Player{
     }
 
     /**
+     * Indicates that this is a Turtle
+     * @return EntityType.TURTLE
+     */
+    @Override
+    public EntityType getType(){
+        return EntityType.TURTLE;
+    }
+
+    /**
      * Handles how a model.entities.Turtle processes an action command.
      * @param action The action to be performed
      */

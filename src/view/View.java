@@ -7,10 +7,13 @@ import model.Model;
 import view.sprites.PollutionBarSprite;
 import view.sprites.ScoreSprite;
 import view.sprites.Sprite;
+import view.sprites.SpriteImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -28,10 +31,12 @@ public class View extends JPanel implements RequestListener {
 
 	private ArrayList<Sprite> sprites;
 	
-	private JButton startButton;
+	private JButton crabButton;
+	private JButton turtleButton;
 	private JButton pauseButton;
 	private JPanel buttonPanel;
 
+	private JLabel titleImage;
 	private JLabel endScore = new JLabel("");
 	private JFrame frame;
 
@@ -64,12 +69,18 @@ public class View extends JPanel implements RequestListener {
 		pauseButton.setFocusable(false);
 		pauseButton.setVisible(false);
 
-		//START BUTTON
-		startButton = new JButton("Start");
-		startButton.setActionCommand("START");
-		buttonPanel.add(startButton);
-		startButton.setVisible(true);
-		startButton.setFocusable(false);
+		//START BUTTONS
+		crabButton = new JButton("Crab");
+		crabButton.setActionCommand("START_CRAB");
+		buttonPanel.add(crabButton);
+		crabButton.setVisible(true);
+		crabButton.setFocusable(false);
+		
+		turtleButton = new JButton("Turtle");
+		turtleButton.setActionCommand("START_TURTLE");
+		buttonPanel.add(turtleButton);
+		turtleButton.setVisible(true);
+		turtleButton.setFocusable(false);
 		
 		buttonPanel.setBackground(new Color(0, true));
 		buttonPanel.setFocusable(false);
@@ -81,7 +92,8 @@ public class View extends JPanel implements RequestListener {
 	 */
 	public void setButtonListener(ActionListener l) {
 		pauseButton.addActionListener(l);
-		startButton.addActionListener(l);
+		crabButton.addActionListener(l);
+		turtleButton.addActionListener(l);
 	}
 	
 	/**
@@ -103,15 +115,20 @@ public class View extends JPanel implements RequestListener {
 			}
 			break;
 
-		case "START":
-			startButton.setVisible(false);
+		case "START_CRAB":
+		case "START_TURTLE":
+			crabButton.setVisible(false);
+			turtleButton.setVisible(false);
 			pauseButton.setVisible(true);
+			this.remove(titleImage);
 			frame.revalidate();
 			frame.repaint();
 			break;
 			
-		case "RESTART":
-			startButton.setVisible(false);
+		case "RESTART_CRAB":
+		case "RESTART_TURTLE":
+			crabButton.setVisible(false);
+			turtleButton.setVisible(false);
 			pauseButton.setVisible(true);
 			endScore.setVisible(false);
 			frame.revalidate();
@@ -192,6 +209,9 @@ public class View extends JPanel implements RequestListener {
 		configurePane(contentLayeredPane);
 		//and tell the frame to use it
 		frame.setContentPane(contentLayeredPane);
+		
+		titleImage = new JLabel(new ImageIcon(SpriteImage.TITLE.getImage()));
+		this.add(titleImage);
 
 		//frame.getContentPane().add(this);
 		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
@@ -251,9 +271,10 @@ public class View extends JPanel implements RequestListener {
 	 */
 	public void endGame(int score) {
 		pauseButton.setVisible(false);
-		startButton.setText("Restart");
-		startButton.setActionCommand("RESTART");
-		startButton.setVisible(true);
+		crabButton.setActionCommand("RESTART_CRAB");
+		crabButton.setVisible(true);
+		turtleButton.setActionCommand("RESTART_TURTLE");
+		turtleButton.setVisible(true);
 		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);
 		endScore.setVisible(true);

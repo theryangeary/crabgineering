@@ -12,9 +12,28 @@ import java.awt.*;
 
 public abstract class Entity implements BoundsListener {
 
+	/**
+	 * A semantic type indicating what type of Entity this is
+	 */
+	public enum EntityType{
+		CLAM,
+		CRAB,
+		SHRIMP,
+		TURTLE,
+		TRASH,
+		BOSS,
+		RECYCLING,
+		TRASH_BARGE,
+		RECYCLING_BARGE;
+	}
+
 	//note: x counts pixels left of the left-hand side of the window
 	//      y counts pixels down from the top of the window
 	private final Bounds bounds;
+
+	//If true, will ignore the bounds of the screen
+	protected boolean ignoreBounds = false;
+
 	private double dx;
 	private double dy;
 
@@ -57,12 +76,27 @@ public abstract class Entity implements BoundsListener {
 	}
 
 	/**
-	 * Sets the Bounds of the world for this model.entities.Entity. An model.entities.Entity can't move outside of the worldBounds.
-	 * @param worldBounds A Bounds representing the of the world
+	 * indicates to other classes what type of Entity this is
+	 *
+	 * @return The EntityType which best describes this given Entity
 	 */
+	public abstract EntityType getType();
+
+	/**
+	* Sets the Bounds of the world for this model.entities.Entity. An model.entities.Entity can't move outside of the worldBounds.
+	* @param worldBounds A Bounds representing the of the world
+	*/
 	public void setWorldBounds(Bounds worldBounds){
 		this.worldBounds = new Rectangle(worldBounds);
 		worldBounds.addListener(this);
+	}
+
+	/**
+	 * Gets the world bounds of the object
+	 * @return The world bounds
+	 */
+	public Rectangle getWorldBounds(){
+		return worldBounds;
 	}
 	
 	/**
@@ -79,7 +113,7 @@ public abstract class Entity implements BoundsListener {
 	 * @param x The new x position of the Bounds
 	 * @param y The new y position of the Bounds
 	 */
-	void setLocation(int x, int y) {
+	public void setLocation(int x, int y) {
 		bounds.setLocation(x, y);
 	}
 	
@@ -90,20 +124,22 @@ public abstract class Entity implements BoundsListener {
 	 * @param dy The distance to translate the Bounds in the y direction
 	 */
 	void translate(double dx, double dy) {
-		
-		// Bounds check
-		if (leftBound() && dx < 0) {
-			dx = 0;
-		}
-		if (rightBound() && dx > 0) {
-			dx = 0;
-		}
-		if (topBound() && dy < 0) {
-			dy = 0;
-		}
-		if (bottomBound() && dy > 0) {
-			dy = 0;
-			isAtBottom = true;
+
+		if(!ignoreBounds) {
+			// Bounds check
+			if (leftBound() && dx < 0) {
+				dx = 0;
+			}
+			if (rightBound() && dx > 0) {
+				dx = 0;
+			}
+			if (topBound() && dy < 0) {
+				dy = 0;
+			}
+			if (bottomBound() && dy > 0) {
+				dy = 0;
+				isAtBottom = true;
+			}
 		}
 		
 		bounds.translate((int) dx, (int) dy);
@@ -123,7 +159,7 @@ public abstract class Entity implements BoundsListener {
 	 * @param dx The new speed of the model.entities.Entity in the x direction
 	 * @param dy The new speed of the model.entities.Entity in the y direction
 	 */
-	void setSpeed(double dx, double dy) {
+	public void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
@@ -182,7 +218,7 @@ public abstract class Entity implements BoundsListener {
 	/**
 	 * Toggles whether the model.entities.Entity moves or not when updated. If the model.entities.Entity is stopped, it will not move when updated.
 	 */
-	void toggleStopped() {
+	public void toggleStopped() {
 		isStopped = !isStopped;
 	}
 	
