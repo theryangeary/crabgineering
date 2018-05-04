@@ -63,7 +63,11 @@ public class Trash extends Entity {
 	 */
 	@Override
 	public EntityType getType(){
-		return EntityType.TRASH;
+		if (isRecyclable) {
+			return EntityType.RECYCLING;
+		} else {
+			return EntityType.TRASH;
+		}
 	}
 	
 	/**
