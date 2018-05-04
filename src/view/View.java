@@ -83,6 +83,7 @@ public class View extends JPanel implements RequestListener {
      * @param layeredPane The content pane to configure
      */
     private void configureContentPane(JLayeredPane layeredPane) {
+        layeredPane.setFocusable(false);
 
         //create all the layers for the layered pane
         ArrayList<Component> layers = new ArrayList<>();
@@ -230,24 +231,25 @@ public class View extends JPanel implements RequestListener {
 		pauseButton = new JButton("Pause");
 		pauseButton.setActionCommand("PAUSE");
 		buttonPanel.add(pauseButton);
-		pauseButton.setFocusable(false);
-		pauseButton.setVisible(false);
+		//pauseButton.setFocusable(false);
+		//pauseButton.setVisible(false);
 
 		//START BUTTONS
 		crabButton = new JButton("Crab");
 		crabButton.setActionCommand("START_CRAB");
 		buttonPanel.add(crabButton);
 		crabButton.setVisible(true);
-		crabButton.setFocusable(false);
+		//crabButton.setFocusable(false);
 		
 		turtleButton = new JButton("Turtle");
 		turtleButton.setActionCommand("START_TURTLE");
 		buttonPanel.add(turtleButton);
 		turtleButton.setVisible(true);
-		turtleButton.setFocusable(false);
+		//turtleButton.setFocusable(false);
 		
 		buttonPanel.setBackground(new Color(0, true));
-		buttonPanel.setFocusable(false);
+		//buttonPanel.setFocusable(false);
+        buttonPanel.requestFocus();
 	}
 	
 	/**
