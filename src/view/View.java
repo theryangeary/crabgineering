@@ -12,6 +12,7 @@ import view.sprites.SpriteImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -212,10 +213,23 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel();
 
+        //test button
+		JButton testButton = new JButton("test");
+		testButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("pushed!");
+			}
+		});
+        menu.add(testButton);
+
         //add the buttons to the menu
         initButtons();
-        menu.add(buttonPanel);
+        //menu.add(buttonPanel);
         //menu.addMouseListener(buttonPanel);
+		menu.add(pauseButton);
+		menu.add(turtleButton);
+		menu.add(crabButton);
 
         menu.setOpaque(false);
         menu.setFocusable(false);
