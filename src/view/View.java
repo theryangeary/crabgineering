@@ -88,7 +88,7 @@ public class View extends JPanel implements RequestListener {
         ArrayList<Component> layers = new ArrayList<>();
 
         //Layer 0: background
-        layers.add(createBackground());
+        layers.add(createBackground(layeredPane));
         //Layer 1: the main game sprites
         layers.add(this);
         //Layer 2: foreground
@@ -129,11 +129,24 @@ public class View extends JPanel implements RequestListener {
 
     /**
      * Creates and configures all the elements of the game's background
+     * @param layeredPane The component we are creating a background for
      * @return A Component holding all the background elements
      */
-    private Component createBackground(){
+    private Component createBackground(JComponent layeredPane){
+
         //get the background image
-        ImageIcon backgroundImage = new ImageIcon(SpriteImage.BACKGROUND.getImage());
+        ImageIcon backgroundImage = new ImageIcon(SpriteImage.BACKGROUND.getImage()) {
+            //make sure the background image is scaled correctly
+            @Override
+            public void paintIcon(Component component, Graphics g, int x, int y){
+                g.drawImage(getImage(),
+                            0,
+                            0,
+                            layeredPane.getWidth(),
+                            layeredPane.getHeight(),
+                            null);
+            }
+        };
 
         //and put it in a component so that it can be displayed
         return new JLabel(backgroundImage);
