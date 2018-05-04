@@ -46,21 +46,37 @@ public class View extends JPanel implements RequestListener {
 	 * @param requests The RequestQueue for the View
 	 */
 	public View(RequestQueue requests) {
-		this.add(endScore, BorderLayout.PAGE_START);
+		createAndShowGUI();
+
+	    add(endScore, BorderLayout.PAGE_START);
 		endScore.setVisible(false);
-		initButton();
-		initJFrame();
-		setOpaque(false);
-		//this.setBackground(Color.cyan);
+
 		sprites = new ArrayList<>();
 		requests.addListener(this::handleRequest);
-		//requests.addListener();
 	}
+
+    /**
+     * Sets up the GUI and then makes it visible
+     */
+    private void createAndShowGUI(){
+        //create the JFrame and set it up
+        frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        //create a layered pane to serve as the content pane for the frame
+        JLayeredPane layeredPane = new JLayeredPane();
+        configurePane(layeredPane);
+        frame.setContentPane(layeredPane);
+
+        //display the frame
+        frame.pack();
+        frame.setVisible(true);
+    }
 	
 	/**
 	 * Sets up the pause button for the game.
 	 */
-	private void initButton() {
+	private void initButtons() {
 		buttonPanel = new JPanel();
 		// PAUSE BUTTON
 		pauseButton = new JButton("Pause");
@@ -137,9 +153,7 @@ public class View extends JPanel implements RequestListener {
 		}
 	}
 
-	/**
-	 *
-	 */
+	/*
 	private void configurePane(JLayeredPane pane) {
 		//setup the layout
 		pane.setLayout(new GridBagLayout());
@@ -196,6 +210,7 @@ public class View extends JPanel implements RequestListener {
 		buttonCons.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(buttonPanel, buttonCons, 0);
 	}
+    */
 
 	/**
 	 * Sets up the JFrame for the View.
