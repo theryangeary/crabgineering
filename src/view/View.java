@@ -48,8 +48,8 @@ public class View extends JPanel implements RequestListener {
 	public View(RequestQueue requests) {
 		createAndShowGUI();
 
-	    add(endScore, BorderLayout.PAGE_START);
-		endScore.setVisible(false);
+	    //add(endScore, BorderLayout.PAGE_START);
+		//endScore.setVisible(false);
 
 		sprites = new ArrayList<>();
 		requests.addListener(this::handleRequest);
@@ -72,8 +72,26 @@ public class View extends JPanel implements RequestListener {
         frame.pack();
         frame.setVisible(true);
     }
-	
-	/**
+
+    /**
+     * Creates everything that needs to be in the content pane,
+     * adds it all to the pane, then configures the layout
+     */
+    private void configurePane(JLayeredPane layeredPane){
+
+        //create all the layers for the layered pane
+        ArrayList<Component> layers = new ArrayList<>();
+
+
+
+        //add the layers to the layered pane in the right order
+        for (int i = 0; i < layers.size(); i++){
+            Component layer = layers.get(i);
+            layeredPane.add(layer, i);
+        }
+    }
+
+    /**
 	 * Sets up the pause button for the game.
 	 */
 	private void initButtons() {
