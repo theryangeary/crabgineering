@@ -12,6 +12,8 @@ public class Request<R> {
      * The possible types of actions that can be represented by a controller.requests.Request
      */
     public enum RequestType {
+        START_GAME,
+        PAUSE_GAME,
         ADD_TO_MODEL,
         REMOVE_FROM_MODEL,
         ADD_THROWN_TRASH,
@@ -32,7 +34,7 @@ public class Request<R> {
     //when the controller.requests.Request is fulfilled
     private RequestType requestedAction;
 
-    public Request(R specifics, RequestType requestedAction){
+    Request(R specifics, RequestType requestedAction){
         this.specifics = specifics;
         this.requestedAction = requestedAction;
     }

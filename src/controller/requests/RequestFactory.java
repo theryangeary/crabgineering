@@ -1,14 +1,31 @@
 package controller.requests;
 
 import model.entities.Entity;
+import model.entities.Player;
 import model.entities.Trash;
 import view.sprites.Sprite;
+
+import javax.lang.model.type.NullType;
 
 /**
  * controller.requests.RequestFactory is utility for producing different types of controller.requests
  */
 
 public class RequestFactory {
+    public static Request<Player> createStartGameRequest(Player player){
+        return new Request<>(
+                player,
+                Request.RequestType.START_GAME
+        );
+    }
+
+    public static Request<NullType> createPauseGameRequest(){
+        return new Request<>(
+                null,
+                Request.RequestType.PAUSE_GAME
+        );
+    }
+
     /**
      * @param sprite A Sprite not currently in the View
      * @return A controller.requests.Request for the given Sprite to be added to the View
