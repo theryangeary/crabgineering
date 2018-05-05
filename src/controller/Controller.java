@@ -88,6 +88,10 @@ public class Controller implements RequestListener {
 		//updater.setDelay();
 	}
 
+	/**
+	 * Allows Controller to handle Requests
+	 * @param request The Request to be handled
+	 */
 	@Override
 	public void handleRequest(Request request){
 		switch (request.getRequestedAction()){
