@@ -1,5 +1,6 @@
 package controller.requests;
 
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ public class RequestQueue extends ArrayDeque<Request> {
 
     //anything that might fulfill a request from this queue
     private List<RequestListener> listeners;
+    //to prevent concurrent modification by asynchronous calls
+    private boolean isLocked;
 
     /**
      * Initialises an empty RequestQueue with no Requests or RequestListeners
@@ -45,9 +48,25 @@ public class RequestQueue extends ArrayDeque<Request> {
      * @param request The Request to be fulfilled
      */
     public void postAndFulfillRequest(Request request){
+        //if this is locked, complete the function call as soon as it is unlocked
+        if (isLocked){
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    postAndFulfillRequest(request);
+                }
+            });
+        }
+
+        //establish lock
+        isLocked = true;
+
         for(RequestListener listener: listeners){
             listener.handleRequest(request);
         }
+
+        //relinquish lock
+        isLocked = false;
     }
 
     /**
@@ -55,6 +74,19 @@ public class RequestQueue extends ArrayDeque<Request> {
      * removing each from the queue in the process
      */
     public void fulfillAllRequests(){
+        //if this is locked, complete the function call as soon as it is unlocked
+        if (isLocked){
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    fulfillAllRequests();
+                }
+            });
+        }
+
+        //establish lock
+        isLocked = true;
+
         while (peek() != null) { //while there's still Requests in the queue
             //get the next request
             Request request = poll();
@@ -64,5 +96,8 @@ public class RequestQueue extends ArrayDeque<Request> {
                 listener.handleRequest(request);
             }
         }
+
+        //relinquish lock
+        isLocked = false;
     }
 }

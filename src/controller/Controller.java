@@ -100,6 +100,7 @@ public class Controller implements RequestListener {
 				break;
 			case START_GAME:
 				model.reset((Entity.EntityType) request.getSpecifics());
+				keyBindings = new GameKeyBindings(view, model.getPlayer());
 				start();
 				break;
 		}
