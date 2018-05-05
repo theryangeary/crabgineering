@@ -288,94 +288,6 @@ public class View extends JPanel implements RequestListener {
         return menu;
     }
 
-    /**
-	 * Sets up the pause button for the game.
-	 */
-    /*
-	private void initButtons() {
-		buttonPanel = new JPanel();
-		// PAUSE BUTTON
-		pauseButton = new JButton("Pause");
-		pauseButton.setActionCommand("PAUSE");
-		buttonPanel.add(pauseButton);
-		//pauseButton.setFocusable(false);
-		//pauseButton.setVisible(false);
-
-		//START BUTTONS
-		crabButton = new JButton("Crab");
-		crabButton.setActionCommand("START_CRAB");
-		buttonPanel.add(crabButton);
-		crabButton.setVisible(true);
-		//crabButton.setFocusable(false);
-		
-		turtleButton = new JButton("Turtle");
-		turtleButton.setActionCommand("START_TURTLE");
-		buttonPanel.add(turtleButton);
-		turtleButton.setVisible(true);
-		//turtleButton.setFocusable(false);
-		
-		buttonPanel.setBackground(new Color(0, true));
-		//buttonPanel.setFocusable(false);
-        buttonPanel.requestFocus();
-	}
-	*/
-	
-	/**
-	 * Sets the pause button's listener to the specified ActionListener.
-	 * @param l The ActionListener to add to the pause button
-	 */
-	/*
-	public void setButtonListener(ActionListener l) {
-		pauseButton.addActionListener(l);
-		crabButton.addActionListener(l);
-		turtleButton.addActionListener(l);
-	}
-	*/
-	
-	/**
-	/*
-	 * Updates buttons' display text based upon the running state of the timer and the button pressed.
-	 * @param button The button to update
-	 * @param running The running state of the timer
-	 */
-	/*
-	public void updateButton(String button, boolean running) {
-		switch(button) {
-		case "PAUSE":
-			if (running) {
-				pauseButton.setText("Pause");
-				frame.revalidate();
-				frame.repaint();
-			} else {
-				pauseButton.setText("Play");
-				frame.revalidate();
-				frame.repaint();
-			}
-			break;
-
-		case "START_CRAB":
-		case "START_TURTLE":
-			crabButton.setVisible(false);
-			turtleButton.setVisible(false);
-			pauseButton.setVisible(true);
-			this.remove(titleImage);
-			frame.revalidate();
-			frame.repaint();
-			break;
-			
-		case "RESTART_CRAB":
-		case "RESTART_TURTLE":
-			crabButton.setVisible(false);
-			turtleButton.setVisible(false);
-			pauseButton.setVisible(true);
-			endScore.setVisible(false);
-			frame.revalidate();
-			frame.repaint();
-			break;
-		}
-	}
-	*/
-
 	/*
 	private void configurePane(JLayeredPane pane) {
 		//setup the layout
@@ -436,32 +348,6 @@ public class View extends JPanel implements RequestListener {
     */
 
 	/**
-	 * Sets up the JFrame for the View.
-	 */
-	private void initJFrame() {
-		frame = new JFrame();
-
-		//create a new layered pane to hold the frame's content
-		JLayeredPane contentLayeredPane = new JLayeredPane();
-		//populate it
-		configureContentPane(contentLayeredPane);
-		//and tell the frame to use it
-		frame.setContentPane(contentLayeredPane);
-		
-		titleImage = new JLabel(new ImageIcon(SpriteImage.TITLE.getImage()));
-		this.add(titleImage);
-
-		//frame.getContentPane().add(this);
-		//frame.getContentPane().add(buttonPanel, BorderLayout.NORTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-		frame.pack();
-		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // FULLSCREEN BABY
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-	}
-
-	/**
 	 * Specifies how the View should handle a Request
 	 * @param request The Request that the View should handle
 	 * @see Request
@@ -515,9 +401,7 @@ public class View extends JPanel implements RequestListener {
 	 */
 	public void endGame(int score) {
 		pauseButton.setVisible(false);
-		crabButton.setActionCommand("RESTART_CRAB");
 		crabButton.setVisible(true);
-		turtleButton.setActionCommand("RESTART_TURTLE");
 		turtleButton.setVisible(true);
 		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);

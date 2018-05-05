@@ -120,55 +120,6 @@ public class Controller implements RequestListener {
 	}
 	
 	/**
-	 * Toggles the timer (start/stop) and updates the pauseButton in the view based on the timer's toggle state.
-	 * @param e The ActionEvent passed in when the pauseButton is pressed
-	 * @see View
-	 */
-	/*
-	@Override public void actionPerformed(ActionEvent e) {
-		System.out.println("here!!!");
-
-		String command = e.getActionCommand();
-		System.out.println(command);
-
-		switch(command) {
-
-		case "PAUSE":
-
-			if (updater.isRunning()) {
-				updater.stop();
-				model.toggleTrashSpawning(false);
-			} else {
-				updater.start();
-				model.toggleTrashSpawning(true);
-			}
-			break;
-			
-		case "START_CRAB":
-			model.reset(EntityType.CRAB);
-		case "START_TURTLE":
-			if(model.gameOver)
-				model.reset(EntityType.TURTLE);
-			keyBindings = new GameKeyBindings(view, model.getPlayer()); // Sets the key bindings for the game
-			start();
-			break;
-			
-		case "RESTART_CRAB":
-			model.reset(EntityType.CRAB);
-		case "RESTART_TURTLE":
-			if(model.gameOver)
-				model.reset(EntityType.TURTLE);
-			keyBindings = new GameKeyBindings(view, model.getPlayer());
-			requestQueue.fulfillAllRequests();
-			updater.start();
-			break;
-		}
-		//view.updateButton(command, updater.isRunning());
-	}
-	*/
-
-	
-	/**
 	 * Starts the timer.
 	 */
 	public void start() {
