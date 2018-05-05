@@ -5,6 +5,7 @@ import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
+import model.entities.Entity;
 import view.sprites.PollutionBarSprite;
 import view.sprites.ScoreSprite;
 import view.sprites.Sprite;
@@ -220,10 +221,50 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel();
 
-        //create pause button
+		//create the buttons
+		JButton crabButton = new JButton("Crab");
+		JButton turtleButton = new JButton("Turtle");
+
 		final String PAUSED_TEXT = "play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "pause"; //displayed when game is playing
 		JButton pauseButton = new JButton(UNPAUSED_TEXT);
+
+		//decide whether or not each should initially be visible
+		crabButton.setVisible(true);
+		turtleButton.setVisible(true);
+		pauseButton.setVisible(false);
+
+		//and decide what happens when each button is pressed
+		crabButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//make a request to start a new game with a Crab as the Player
+				requestQueue.postRequest(
+						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
+				);
+
+				//then make the player selection buttons disappear
+				crabButton.setVisible(false);
+				turtleButton.setVisible(false);
+				//and the pause button appear
+				pauseButton.setVisible(true);
+			}
+		});
+		turtleButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//make a request to start a new game with a Turtle as the Player
+				requestQueue.postRequest(
+						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
+				);
+
+				//then make the player selection buttons disappear
+				crabButton.setVisible(false);
+				turtleButton.setVisible(false);
+				//and the pause button appear
+				pauseButton.setVisible(true);
+			}
+		});
 		pauseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -232,6 +273,7 @@ public class View extends JPanel implements RequestListener {
 						RequestFactory.createTogglePausedRequest()
 				);
 
+				//and switch which message we're displaying accordingly
 				if (pauseButton.getText().equals(PAUSED_TEXT)){
 					pauseButton.setText(UNPAUSED_TEXT);
 				} else {
@@ -239,7 +281,7 @@ public class View extends JPanel implements RequestListener {
 				}
 			}
 		});
-		menu.add(pauseButton);
+
 
         menu.setOpaque(false);
         menu.setFocusable(false);
@@ -249,6 +291,7 @@ public class View extends JPanel implements RequestListener {
     /**
 	 * Sets up the pause button for the game.
 	 */
+    /*
 	private void initButtons() {
 		buttonPanel = new JPanel();
 		// PAUSE BUTTON
@@ -275,16 +318,19 @@ public class View extends JPanel implements RequestListener {
 		//buttonPanel.setFocusable(false);
         buttonPanel.requestFocus();
 	}
+	*/
 	
 	/**
 	 * Sets the pause button's listener to the specified ActionListener.
 	 * @param l The ActionListener to add to the pause button
 	 */
+	/*
 	public void setButtonListener(ActionListener l) {
 		pauseButton.addActionListener(l);
 		crabButton.addActionListener(l);
 		turtleButton.addActionListener(l);
 	}
+	*/
 	
 	/**
 	/*
@@ -292,6 +338,7 @@ public class View extends JPanel implements RequestListener {
 	 * @param button The button to update
 	 * @param running The running state of the timer
 	 */
+	/*
 	public void updateButton(String button, boolean running) {
 		switch(button) {
 		case "PAUSE":
@@ -327,6 +374,7 @@ public class View extends JPanel implements RequestListener {
 			break;
 		}
 	}
+	*/
 
 	/*
 	private void configurePane(JLayeredPane pane) {
