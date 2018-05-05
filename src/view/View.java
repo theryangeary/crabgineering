@@ -274,7 +274,11 @@ public class View extends JPanel implements RequestListener {
 				}
 			}
 		});
-
+		
+		//add buttons to menu layer
+		menu.add(crabButton);
+		menu.add(turtleButton);
+		menu.add(pauseButton);
 
         menu.setOpaque(false);
         menu.setFocusable(false);
