@@ -39,7 +39,6 @@ public class RequestQueue extends ArrayDeque<Request> {
      * @param request A Request to be added to the queue
      */
     public void postRequest(Request request){
-
         add(request);
     }
 

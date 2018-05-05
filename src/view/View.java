@@ -233,6 +233,12 @@ public class View extends JPanel implements RequestListener {
 		turtleButton.setVisible(true);
 		pauseButton.setVisible(false);
 
+		//prevent the frame from focusing on the buttons so that
+		//pressing space won't trigger them
+		crabButton.setFocusable(false);
+		turtleButton.setFocusable(false);
+		pauseButton.setFocusable(false);
+
 		//and decide what happens when each button is pressed
 		crabButton.addActionListener(new ActionListener() {
 			@Override
