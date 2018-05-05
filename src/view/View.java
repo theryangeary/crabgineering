@@ -41,7 +41,7 @@ public class View extends JPanel implements RequestListener {
 	private JButton crabButton;
 	private JButton turtleButton;
 	private JButton pauseButton;
-	private JPanel buttonPanel;
+	//private JPanel buttonPanel;
 
 	//other components
 	private JLabel titleImage;
@@ -107,7 +107,6 @@ public class View extends JPanel implements RequestListener {
         //layers.add(createUI());
         //Layer 4: title menu UI elements
         layers.add(createTitleMenu());
-        initButtons();
 
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {
@@ -222,12 +221,12 @@ public class View extends JPanel implements RequestListener {
         JComponent menu = new JPanel();
 
 		//create the buttons
-		JButton crabButton = new JButton("Crab");
-		JButton turtleButton = new JButton("Turtle");
+		crabButton = new JButton("Crab");
+		turtleButton = new JButton("Turtle");
 
 		final String PAUSED_TEXT = "play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "pause"; //displayed when game is playing
-		JButton pauseButton = new JButton(UNPAUSED_TEXT);
+		pauseButton = new JButton(UNPAUSED_TEXT);
 
 		//decide whether or not each should initially be visible
 		crabButton.setVisible(true);
@@ -257,12 +256,6 @@ public class View extends JPanel implements RequestListener {
 				requestQueue.postRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
 				);
-
-				//then make the player selection buttons disappear
-				crabButton.setVisible(false);
-				turtleButton.setVisible(false);
-				//and the pause button appear
-				pauseButton.setVisible(true);
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {
@@ -469,6 +462,12 @@ public class View extends JPanel implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
+			case START_GAME:
+				//make the player selection buttons disappear
+				crabButton.setVisible(false);
+				turtleButton.setVisible(false);
+				//and the pause button appear
+				pauseButton.setVisible(true);
 			case ADD_TO_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
 					addSprite((Sprite) request.getSpecifics());

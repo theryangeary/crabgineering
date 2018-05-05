@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
  * @author Zelinsky
  *
  */
-public class Controller implements ActionListener, RequestListener {
+public class Controller implements RequestListener {
 
 	//TODO: make these NOT be static (please...)
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
@@ -42,7 +42,7 @@ public class Controller implements ActionListener, RequestListener {
 		requests.addListener(this);
 
 		view = new View(requests);
-		view.setButtonListener(this);
+		//view.setButtonListener(this);
 
 		model = new Model(requests);
 
@@ -110,6 +110,7 @@ public class Controller implements ActionListener, RequestListener {
 	 * @param e The ActionEvent passed in when the pauseButton is pressed
 	 * @see View
 	 */
+	/*
 	@Override public void actionPerformed(ActionEvent e) {
 		System.out.println("here!!!");
 
@@ -148,8 +149,9 @@ public class Controller implements ActionListener, RequestListener {
 			updater.start();
 			break;
 		}
-		view.updateButton(command, updater.isRunning());
+		//view.updateButton(command, updater.isRunning());
 	}
+	*/
 
 	
 	/**
