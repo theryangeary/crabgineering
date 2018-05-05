@@ -5,16 +5,12 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
-import model.entities.Entity.EntityType;
 import view.audio.SoundEffect;
-import view.sprites.PollutionBarSprite;
-import view.sprites.ScoreSprite;
 import view.View;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * A class that controls updates of a View and Model
@@ -30,7 +26,7 @@ public class Controller implements RequestListener {
 	private static Timer updater;
 	private static final double FRAMERATE = 144;
 
-	private RequestQueue requests;
+	private RequestQueue requestQueue;
 	
 	/**
 	 * Constructs the Controller.
@@ -38,13 +34,13 @@ public class Controller implements RequestListener {
 	 * It's the *real* main.
 	 */
 	public Controller() {
-		requests = new RequestQueue();
-		requests.addListener(this);
+		requestQueue = new RequestQueue();
+		requestQueue.addListener(this);
 
-		view = new View(requests);
+		view = new View(requestQueue);
 		//view.setButtonListener(this);
 
-		model = new Model(requests);
+		model = new Model(requestQueue);
 
 		SoundEffect.init();
 
@@ -60,14 +56,14 @@ public class Controller implements RequestListener {
                            progressBarHeight),
                 getCurrentPollutionLevel());
         //view.addSprite(pollutionBar);
-        requests.addListener(pollutionBar);
+        requestQueue.addListener(pollutionBar);
         */
 
 		/*
         //setup score
 		ScoreSprite scoreSprite = new ScoreSprite();
 		//view.addSprite(scoreSprite);
-		requests.addListener(scoreSprite);
+		requestQueue.addListener(scoreSprite);
 		*/
 
 		initTimer();
@@ -84,7 +80,7 @@ public class Controller implements RequestListener {
 				//UPDATE ENTITIES
 				//UPDATE VIEW BASED ON UPDATED ENTITIES
 				model.update();
-				requests.fulfillAllRequests();
+				requestQueue.fulfillAllRequests();
 				view.update();
 			}
 		};
@@ -101,6 +97,10 @@ public class Controller implements RequestListener {
 				} else {
 					updater.start();
 				}
+				break;
+			case START_GAME:
+				model.reset((Entity.EntityType) request.getSpecifics());
+				start();
 				break;
 		}
 	}
@@ -145,7 +145,7 @@ public class Controller implements RequestListener {
 			if(model.gameOver)
 				model.reset(EntityType.TURTLE);
 			keyBindings = new GameKeyBindings(view, model.getPlayer());
-			requests.fulfillAllRequests();
+			requestQueue.fulfillAllRequests();
 			updater.start();
 			break;
 		}

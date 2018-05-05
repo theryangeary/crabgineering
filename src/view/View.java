@@ -242,11 +242,8 @@ public class View extends JPanel implements RequestListener {
 						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
 				);
 
-				//then make the player selection buttons disappear
-				crabButton.setVisible(false);
-				turtleButton.setVisible(false);
-				//and the pause button appear
-				pauseButton.setVisible(true);
+				//make sure the request is fulfilled even if we're paused
+				requestQueue.fulfillAllRequests();
 			}
 		});
 		turtleButton.addActionListener(new ActionListener() {
@@ -256,6 +253,9 @@ public class View extends JPanel implements RequestListener {
 				requestQueue.postRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
 				);
+
+				//make sure the request is fulfilled even if we're paused
+				requestQueue.fulfillAllRequests();
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {
@@ -272,9 +272,12 @@ public class View extends JPanel implements RequestListener {
 				} else {
 					pauseButton.setText(PAUSED_TEXT);
 				}
+
+				//make sure the request is fulfilled even if we're paused
+				requestQueue.fulfillAllRequests();
 			}
 		});
-		
+
 		//add buttons to menu layer
 		menu.add(crabButton);
 		menu.add(turtleButton);
