@@ -41,6 +41,16 @@ public class RequestQueue extends ArrayDeque<Request> {
     }
 
     /**
+     * Hands over the given Request directly over to the listeners
+     * @param request The Request to be fulfilled
+     */
+    public void postAndFulfillRequest(Request request){
+        for(RequestListener listener: listeners){
+            listener.handleRequest(request);
+        }
+    }
+
+    /**
      * Hands the on the queue over to the listeners to fulfill them,
      * removing each from the queue in the process
      */

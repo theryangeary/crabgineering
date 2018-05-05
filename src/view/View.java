@@ -238,7 +238,7 @@ public class View extends JPanel implements RequestListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start a new game with a Crab as the Player
-				requestQueue.postRequest(
+				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
 				);
 
@@ -250,19 +250,16 @@ public class View extends JPanel implements RequestListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start a new game with a Turtle as the Player
-				requestQueue.postRequest(
+				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
 				);
-
-				//make sure the request is fulfilled even if we're paused
-				requestQueue.fulfillAllRequests();
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request for game play to be paused/resumed
-				requestQueue.postRequest(
+				requestQueue.postAndFulfillRequest(
 						RequestFactory.createTogglePausedRequest()
 				);
 
@@ -272,9 +269,6 @@ public class View extends JPanel implements RequestListener {
 				} else {
 					pauseButton.setText(PAUSED_TEXT);
 				}
-
-				//make sure the request is fulfilled even if we're paused
-				requestQueue.fulfillAllRequests();
 			}
 		});
 
