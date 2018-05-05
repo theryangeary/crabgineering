@@ -85,7 +85,6 @@ public class Controller implements RequestListener {
 			}
 		};
 		updater = new Timer(msPerFrame, updateAction);
-		start();
 		//updater.setDelay();
 	}
 
@@ -112,6 +111,7 @@ public class Controller implements RequestListener {
 							public void run() {
 								model.reset((Entity.EntityType) request.getSpecifics());
 								keyBindings = new GameKeyBindings(view, model.getPlayer());
+								start();
 							}
 						});
 				break;
