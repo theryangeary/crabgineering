@@ -50,7 +50,7 @@ public class ModelRequestTests {
 
 		// ADD TRASH TO MODEL
 		TrashFactory f = new TrashFactory(new RequestQueue());
-		Trash t = f.createEasyTrash(15, 15);
+		Trash t = f.createEasyTrash(15, 15, false);
 		Request r1 = RequestFactory.createAddToModelRequest(t);
 		m.handleRequest(r1);
 		assertTrue(m.getEntities().contains(t));
