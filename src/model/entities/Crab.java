@@ -14,6 +14,7 @@ public class Crab extends Player {
 	
 	private static final double SPEED = 4;
 	private double currentSpeed = 0;
+	private double currentRotateSpeed = 0;
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 
@@ -22,7 +23,7 @@ public class Crab extends Player {
 
 	private double throwAngle = Math.PI/2;
 	private final int THROW_SPEED = -15;
-	private final double ROTATE_SPEED = Math.PI/32;
+	private final double ROTATE_SPEED = Math.PI/40;
 
 	/**
 	 * The width of the Crab
@@ -69,14 +70,17 @@ public class Crab extends Player {
 		switch (PlayerAction.valueOf(action)) {
             case ROTATE_TRASH_LEFT:
                 if (hasTrash) {
-                    rotateThrow(-ROTATE_SPEED);
+                	currentRotateSpeed = -ROTATE_SPEED;
                 }
                 break;
             case ROTATE_TRASH_RIGHT:
                 if (hasTrash) {
-                    rotateThrow(ROTATE_SPEED);
+                	currentRotateSpeed = ROTATE_SPEED;
                 }
                 break;
+            case STOP_ROTATE:
+            	currentRotateSpeed = 0;
+            	break;
 			case MOVE_LEFT:
 				currentSpeed = -SPEED;
 				break;
@@ -105,6 +109,7 @@ public class Crab extends Player {
 		super.update(gravity,drag);
 		translate(currentSpeed,0);
 		if (hasTrash) {
+			rotateThrow(currentRotateSpeed);
 			heldTrash.setLocation(
 					(int) getBounds().getX(),
 					(int) getBounds().getY());
@@ -129,6 +134,8 @@ public class Crab extends Player {
 			heldTrash = null;
 			hasTrash = false;
 			arrowSprite.setVisiblity(false);
+			arrowSprite.rotate(Math.PI/2 - throwAngle);
+			throwAngle = Math.PI/2;
 		}
 	}
 	
