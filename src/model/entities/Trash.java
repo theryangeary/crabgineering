@@ -13,19 +13,11 @@ public class Trash extends Entity {
 
 	private RequestQueue requestQueue;
 
-
-	public enum TrashType{
-		AGRICULTURAL,
-		INDUSTRIAL,
-		COMMERCIAL;
-	}
-
 	private int pollutionCount;
 
 	private final int ANGLE_FACTOR = 5;
 
 	private final int POLLUTION = 10;
-	private TrashType type;
 
 	private boolean isRecyclable;
 	

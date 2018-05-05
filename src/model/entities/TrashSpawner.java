@@ -1,3 +1,4 @@
+
 package model.entities;
 
 import controller.requests.Request;

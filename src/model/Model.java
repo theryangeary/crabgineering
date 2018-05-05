@@ -35,8 +35,8 @@ public class Model implements RequestListener {
 	private final double DRAG = .01;
 
 	private final int BARGE_WIDTH= 200;
-	private final int BARGE_HEIGHT= BARGE_WIDTH * 15 / 40;
-
+	private final int BARGE_HEIGHT= BARGE_WIDTH * 20 / 40;
+	private final int BARGE_PADDING= 15;
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
@@ -124,10 +124,10 @@ public class Model implements RequestListener {
 
 		addEntity(player);
 
-		recyclingBarge = new Barge((int) getWorldBounds().getX(), (int) getWorldBounds().getY(),
+		recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING, (int) getWorldBounds().getY() + BARGE_PADDING,
 				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
-		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH),
-				(int) getWorldBounds().getY(),
+		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING),
+				(int) getWorldBounds().getY() + BARGE_PADDING,
 				BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
 
 		addEntity(trashBarge);
