@@ -47,6 +47,13 @@ public class ModelRunningTests {
 		m.toggleTrashSpawning(true);
 		assertTrue(m.trashSpawning);
 		
+		// Request
+		Request r = RequestFactory.createTogglePausedRequest();
+		m.handleRequest(r);
+		assertFalse(m.trashSpawning);
+		m.handleRequest(r);
+		assertTrue(m.trashSpawning);
+		
 		// Trash Type
 		Trash trash = f.createEasyTrash(50, 50, false);
 		Trash recycle = f.createEasyTrash(150, 150, true);
@@ -98,8 +105,8 @@ public class ModelRunningTests {
 		m.handleRequest(r2);
 		trash.touch();
 		recycle.touch();
-		trash.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - 200), (int) m.getWorldBounds().getY());
-		recycle.setLocation((int) m.getWorldBounds().getX(), (int) m.getWorldBounds().getY());
+		trash.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - 215), (int) m.getWorldBounds().getY()+15);
+		recycle.setLocation((int) m.getWorldBounds().getX() + 15, (int) m.getWorldBounds().getY()+15);
 		assertEquals(0, m.getScore());
 		m.update();
 		rq.fulfillAllRequests();

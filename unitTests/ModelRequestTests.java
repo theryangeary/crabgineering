@@ -68,6 +68,18 @@ public class ModelRequestTests {
 		assertFalse(m.getEntities().contains(t));
 	}
 	
+	// Tests the TOGGLE_PAUSED Request
+	@Test
+	public void togglePausedTest() {
+		m.reset(EntityType.TURTLE);
+		assertTrue(m.trashSpawning);
+		Request r = RequestFactory.createTogglePausedRequest();
+		m.handleRequest(r);
+		assertFalse(m.trashSpawning);
+		m.handleRequest(r);
+		assertTrue(m.trashSpawning);
+	}
+	
 	// Tests the handling of the PLAY_SOUND Request
 	@Test
 	public void playSoundTest() {
