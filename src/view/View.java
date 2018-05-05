@@ -238,7 +238,7 @@ public class View extends JPanel implements RequestListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start a new game with a Crab as the Player
-				requestQueue.postAndFulfillRequest(
+				requestQueue.postRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
 				);
 
@@ -250,7 +250,7 @@ public class View extends JPanel implements RequestListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start a new game with a Turtle as the Player
-				requestQueue.postAndFulfillRequest(
+				requestQueue.postRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
 				);
 			}
