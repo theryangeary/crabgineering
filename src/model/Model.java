@@ -192,7 +192,7 @@ public class Model implements RequestListener {
 			//Check for player-trash collision and trash-trash collision
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
-				if (player.intersects(trash)) {
+				if (player.intersects(trash) && !trash.atBottom()) {
 					player.touchTrash(trash);
 				}
 				if ((trashBarge.intersects(trash) && trash.touched() && trashBarge.bargeMatchesTrash(trash)) ||
