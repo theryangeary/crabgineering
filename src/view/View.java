@@ -6,20 +6,15 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
-import view.sprites.PollutionBarSprite;
-import view.sprites.ScoreSprite;
 import view.sprites.Sprite;
 import view.sprites.SpriteImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -104,9 +99,9 @@ public class View extends JPanel implements RequestListener {
         //Layer 2: foreground
         layers.add(createForeground());
         //Layer 3: in-game UI elements
-        //layers.add(createUI());
-        //Layer 4: title menu UI elements
-        layers.add(createTitleMenu());
+        layers.add(createHUD());
+        //Layer 4: menu UI elements
+        layers.add(createMenu());
 
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {
@@ -204,19 +199,25 @@ public class View extends JPanel implements RequestListener {
     }
 
     /**
-     * Creates and configures all the elements of the game's UI
-     * @return A Component holding all the UI elements
+     * Creates and configures the game's info display elements
+     * @return A Component holding all the HUD elemends
      */
-    private Component createUI(){
+    private Component createHUD(){
+		//create a container to hold the game's HUD
+		JComponent hud = new JPanel();
 
-        return null;
+
+
+		hud.setOpaque(false);
+		setFocusable(false);
+        return hud;
     }
 
     /**
      * Creates and configures all the elements of the game's title menu
      * @return A Component holding all the UI elements in the title menu
      */
-    private Component createTitleMenu(){
+    private Component createMenu(){
         //create a container to hold all the menu elements
         JComponent menu = new JPanel();
 
