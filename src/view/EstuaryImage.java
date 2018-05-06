@@ -1,4 +1,4 @@
-package view.sprites;
+package view;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * SpriteImage - an enum to handle inclusion of Sprites in game
+ * EstuaryImage - an enum to handle inclusion of Sprites in game
  */
-public enum SpriteImage {
+public enum EstuaryImage {
 	CLAM("clam.png"),
 	CRAB("crab.png"),
 	SHRIMP("shrimp.png"),
@@ -29,10 +29,10 @@ public enum SpriteImage {
     final BufferedImage image;
 
     /**
-     * Constructor to create a SpriteImage
+     * Constructor to create a EstuaryImage
      * @param image_name the type of image to make
      */
-    SpriteImage(String image_name){
+    EstuaryImage(String image_name){
         //get image should be in the folder IMAGE_DIR
         //and have the lowercase version of the name of the constant
         //with the IMAGE_TYPE file extension

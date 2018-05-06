@@ -3,6 +3,7 @@ package view.sprites;
 import controller.bounds.Bounds;
 import controller.requests.Request;
 import controller.requests.RequestListener;
+import view.EstuaryImage;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -12,7 +13,7 @@ public class ArrowSprite extends EntitySprite implements RequestListener, Sprite
     private boolean is_visible = false;
 
     public ArrowSprite(Bounds bounds){
-        super(SpriteImage.ARROW, bounds);
+        super(EstuaryImage.ARROW, bounds);
     }
 
     public void setVisibility(boolean is_visible){

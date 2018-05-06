@@ -3,6 +3,7 @@ package view.sprites;
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
 import model.entities.Entity;
+import view.EstuaryImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,7 @@ import java.awt.image.BufferedImage;
  */
 public class EntitySprite implements Sprite, BoundsListener {
     private final boolean DEBUG = true;
-    private final SpriteImage spriteImage;
+    private final EstuaryImage estuaryImage;
     private Rectangle bounds;
 
     /**
@@ -26,40 +27,40 @@ public class EntitySprite implements Sprite, BoundsListener {
 
     /**
      * Create EntitySprite with specified bounds
-     * @param spriteImage Image for the entity
+     * @param estuaryImage Image for the entity
      * @param bounds Location of the entity
      */
-    EntitySprite(SpriteImage spriteImage, Bounds bounds) {
-        this.spriteImage = spriteImage;
+    EntitySprite(EstuaryImage estuaryImage, Bounds bounds) {
+        this.estuaryImage = estuaryImage;
         setBounds(bounds);
     }
 
     /**
-     * Gets the SpriteImage which corresponds to the given Entity
+     * Gets the EstuaryImage which corresponds to the given Entity
      * @param entity The Entity to be depicted
-     * @return A SpriteImage depicting that Entity
+     * @return A EstuaryImage depicting that Entity
      */
-    static SpriteImage imageOf(Entity entity){
-        //convert from EntityType to SpriteImage
+    static EstuaryImage imageOf(Entity entity){
+        //convert from EntityType to EstuaryImage
         switch (entity.getType()){
             case CRAB:
-                return SpriteImage.CRAB;
+                return EstuaryImage.CRAB;
             case TURTLE:
-                return SpriteImage.TURTLE;
+                return EstuaryImage.TURTLE;
             case CLAM:
-                return SpriteImage.CLAM;
+                return EstuaryImage.CLAM;
             case SHRIMP:
-                return SpriteImage.SHRIMP;
+                return EstuaryImage.SHRIMP;
             case TRASH:
-                return SpriteImage.TRASH;
+                return EstuaryImage.TRASH;
             case RECYCLING:
-                return SpriteImage.RECYCLING;
+                return EstuaryImage.RECYCLING;
             case BOSS:
-                return SpriteImage.BOSS;
+                return EstuaryImage.BOSS;
             case TRASH_BARGE:
-                return SpriteImage.TRASH_BARGE;
+                return EstuaryImage.TRASH_BARGE;
             case RECYCLING_BARGE:
-                return SpriteImage.RECYCLING_BARGE;
+                return EstuaryImage.RECYCLING_BARGE;
         }
 
         throw new IllegalArgumentException("Entity without valid EntityType");
@@ -88,7 +89,7 @@ public class EntitySprite implements Sprite, BoundsListener {
      * @return BufferedImage sprite
      */
     protected BufferedImage getImage(){
-        return spriteImage.getImage();
+        return estuaryImage.getImage();
     }
 
     /**

@@ -9,7 +9,6 @@ import model.entities.Entity;
 import view.jcomponents.JPollutionBar;
 import view.jcomponents.JScoreLabel;
 import view.sprites.Sprite;
-import view.sprites.SpriteImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -144,7 +143,7 @@ public class View extends JPanel implements RequestListener {
         JLabel background = new JLabel();
 
         //get the background image
-        ImageIcon backgroundIcon = new ImageIcon(SpriteImage.BACKGROUND.getImage()) {
+        ImageIcon backgroundIcon = new ImageIcon(EstuaryImage.BACKGROUND.getImage()) {
             //make sure the background image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
@@ -180,7 +179,7 @@ public class View extends JPanel implements RequestListener {
         JLabel foreground = new JLabel();
 
         //get the foreground image
-        ImageIcon foregroundIcon = new ImageIcon(SpriteImage.FOREGROUND.getImage()) {
+        ImageIcon foregroundIcon = new ImageIcon(EstuaryImage.FOREGROUND.getImage()) {
             //make sure the foreground image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
@@ -252,8 +251,8 @@ public class View extends JPanel implements RequestListener {
         JComponent menu = new JPanel();
 
 		//create the buttons
-		crabButton = new JButton("Crab", new ImageIcon(SpriteImage.CRAB.getImage()));
-		turtleButton = new JButton("Turtle", new ImageIcon(SpriteImage.TURTLE.getImage()));
+		crabButton = new JButton("Crab", new ImageIcon(EstuaryImage.CRAB.getImage()));
+		turtleButton = new JButton("Turtle", new ImageIcon(EstuaryImage.TURTLE.getImage()));
 
 		final String PAUSED_TEXT = "Play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
