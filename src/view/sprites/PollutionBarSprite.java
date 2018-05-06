@@ -13,23 +13,8 @@ import java.awt.*;
 public class PollutionBarSprite extends JComponent implements RequestListener, Sprite {
 
     private static final Color SEA_BLUE = new Color(0x3399ff);
-    private int POLLUTION_BAR_SCALAR = 2;
-    private int POLLUTION_BAR_HIEGHT = 40;
 
-    private Rectangle maxArea;
     private int pollutionLevel = 0;
-
-    /**
-     * Create a pollution bar specifying max area and current pollution level
-     * @param maxArea The Rectangle representing the maximum size of the pollution bar
-     * @param pollutionLevel The current pollutionLevel, between 0 and 100
-     */
-    public PollutionBarSprite() {
-        this.maxArea = new Rectangle(
-                POLLUTION_BAR_SCALAR * Model.MAX_POLLUTION_LEVEL,
-                POLLUTION_BAR_HIEGHT);
-        setPreferredSize(new Dimension(maxArea.getSize()));
-    }
 
     /**
      * Update the pollution level if it is an UPDATE_POLLUTION request
@@ -51,17 +36,21 @@ public class PollutionBarSprite extends JComponent implements RequestListener, S
     public void paintComponent(Graphics g){
         Color origColor = g.getColor();
 
+        //determine how big the bar should be
+        Rectangle bounds = getBounds();
+        double progress = ((double) pollutionLevel) / Model.MAX_POLLUTION_LEVEL;
+
         g.setColor(Color.black);
-        g.fillRect((int) maxArea.getX(),
-                   (int) maxArea.getY(),
-                   (int) (maxArea.getWidth() * POLLUTION_BAR_SCALAR),
-                   (int) maxArea.getHeight());
+        g.fillRect((int) bounds.getX(),
+                   (int) bounds.getY(),
+                   (int) bounds.getWidth(),
+                   (int) bounds.getHeight());
 
         g.setColor(SEA_BLUE);
-        g.fillRect((int) maxArea.getX(),
-                   (int) maxArea.getY(),
-                   (int) (pollutionLevel * POLLUTION_BAR_SCALAR),
-                   (int) maxArea.getHeight());
+        g.fillRect((int) bounds.getX(),
+                   (int) bounds.getY(),
+                   (int) (progress * bounds.getWidth()),
+                   (int) bounds.getHeight());
 
         //restore the original color
         g.setColor(origColor);

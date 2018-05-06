@@ -6,6 +6,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
+import view.sprites.PollutionBarSprite;
 import view.sprites.ScoreSprite;
 import view.sprites.Sprite;
 import view.sprites.SpriteImage;
@@ -205,19 +206,31 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createHUD(){
 		//create a container to hold the game's HUD
-		JComponent hud = new JPanel(new GridBagLayout());
+		JComponent hud = new JPanel(new GridLayout(10,3));
 
-		//create ScoreSprite
+		//create pollution bar display
+		PollutionBarSprite pollutionBarSprite = new PollutionBarSprite();
+		//make it take Requests
+		requestQueue.addListener(pollutionBarSprite);
+		//and configure it's location in the HUD
+		hud.add(pollutionBarSprite);
+
+		//make an empty space
+		JLabel empty = new JLabel();
+		empty.setVisible(false);
+		hud.add(empty);
+
+		//create score display
 		ScoreSprite scoreSprite = new ScoreSprite();
 		//make it take Requests
 		requestQueue.addListener(scoreSprite);
-		//and configure it's location in the View
+		//and configure it's location in the HUD
 		GridBagConstraints scoreConstraints = new GridBagConstraints();
 		scoreConstraints.gridx = 3;
 		scoreConstraints.weightx = 1;
 		scoreConstraints.fill = GridBagConstraints.HORIZONTAL;
 		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(scoreSprite, scoreConstraints);
+		hud.add(scoreSprite);
 
 		hud.setOpaque(false);
 		setFocusable(false);
