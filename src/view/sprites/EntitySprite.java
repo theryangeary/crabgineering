@@ -113,9 +113,9 @@ public class EntitySprite implements Sprite, BoundsListener {
 
     /**
      * Draw this sprite at its bounds
-     * @param g Graphics object to draw on
+     * @param g Graphics object to paintComponent on
      */
-    public void draw(Graphics g){
+    public void paintComponent(Graphics g){
         Rectangle rectangle = getBounds();
 
         if(DEBUG){

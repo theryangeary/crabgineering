@@ -206,7 +206,7 @@ public class View extends JPanel implements RequestListener {
 		//create a container to hold the game's HUD
 		JComponent hud = new JPanel();
 
-
+		//create ScoreSprite
 
 		hud.setOpaque(false);
 		setFocusable(false);
@@ -426,7 +426,7 @@ public class View extends JPanel implements RequestListener {
 				  size.getHeight() / Model.WORLD_HEIGHT);
 
         for (Sprite sprite: sprites) {
-            sprite.draw(g2d);
+            sprite.paintComponent(g2d);
         }
 	}
 }
