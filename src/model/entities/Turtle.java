@@ -74,33 +74,20 @@ public class Turtle extends Player{
      */
     @Override
     public void touchTrash(Trash t) {
+        t.touch();
         t.setThrown(true);
 
-        //Splits the turtle into thirds
-        int middleThird = getBounds().x+getBounds().width/3;
-        int rightThird = getBounds().x+2*getBounds().width/3;
-
-        int trashMiddleX = t.getBounds().x+t.getBounds().width/2;
-
-        double bounceAngle = 0;
-
-        /**
-         *  Depending on where the middle of the trash is relative to the Turtle, it goes left, up, or right.
-         */
-
-        if(trashMiddleX < middleThird){
-            bounceAngle = BOUNCE_ANGLE;
-        }else if(trashMiddleX >= middleThird && trashMiddleX < rightThird){
-            bounceAngle = 0;
-        }else if(trashMiddleX >= rightThird){
-            bounceAngle = -BOUNCE_ANGLE;
-        }
+        double bounceAngle = (
+                (this.getBounds().getCenterX() + (this.getBounds().getWidth() / TURTLE_CENTER_OFFSET)) -
+                t.getBounds().getCenterX()) / ANGLE_FACTOR;
 
         SoundEffect.BOUNCE.play();
         //Apply the velocity to the trash
         t.throwTrash(
-                (int) Math.round(BOUNCE_SPEED * Math.sin(bounceAngle)),
-                (int) Math.round(BOUNCE_SPEED * Math.cos(bounceAngle)));
+                (int) - bounceAngle,
+                (int) - (t.getYSpeed() * BOUNCE_SPEED));
+        requestQueue.postRequest(
+            RequestFactory.createAddThrownTrashRequest(t));
 
     }
     
