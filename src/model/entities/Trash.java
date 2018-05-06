@@ -17,7 +17,7 @@ public class Trash extends Entity {
 
 	private final int ANGLE_FACTOR = 5;
 
-	private final int POLLUTION = 10;
+	public static final int POLLUTION = 10;
 
 	private boolean isRecyclable;
 	
