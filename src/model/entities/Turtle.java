@@ -11,8 +11,8 @@ import view.audio.SoundEffect;
  */
 public class Turtle extends Player{
 
-    public static final int TURTLE_WIDTH = 200;
-    public static final int TURTLE_HEIGHT = 100;
+    public static final int TURTLE_WIDTH = 150;
+    public static final int TURTLE_HEIGHT = 75;
     private final int BOUNCE_SPEED = 2;
     private final int ANGLE_FACTOR = 10;
     private final double BOUNCE_ANGLE = Math.PI/4;
