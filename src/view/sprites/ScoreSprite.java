@@ -15,12 +15,15 @@ public class ScoreSprite extends JLabel implements RequestListener {
     private static final Font font = new Font("TimesRoman", Font.PLAIN, 20);
     private int score = 0;
 
+    /**
+     * Sets up the score at zero
+     */
     public ScoreSprite(){
-        setText("Score: 0");
+        super("Score: 0", SwingConstants.RIGHT);
         setFont(font);
     }
 
-    private void int incrementScore(int dScore){
+    private void incrementScore(int dScore){
         score += dScore;
         setText("Score: " + score);
     }

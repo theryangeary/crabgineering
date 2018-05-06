@@ -210,28 +210,30 @@ public class View extends JPanel implements RequestListener {
 
 		//create pollution bar display
 		PollutionBarSprite pollutionBarSprite = new PollutionBarSprite();
-		pollutionBarSprite.setPreferredSize(new Dimension(0, 64));
+		pollutionBarSprite.setPreferredSize(new Dimension(0, PollutionBarSprite.HEIGHT));
 		//make it take Requests
 		requestQueue.addListener(pollutionBarSprite);
 		//and configure it's location in the HUD
 		GridBagConstraints pollutionConstraints = new GridBagConstraints();
 		pollutionConstraints.gridx = 1;
 		pollutionConstraints.weightx = 1;
-		pollutionConstraints.weighty = .1;
+		pollutionConstraints.weighty = 1;
+		pollutionConstraints.insets = new Insets(16, 16, 80, 64);
 		pollutionConstraints.fill = GridBagConstraints.HORIZONTAL;
 		pollutionConstraints.anchor = GridBagConstraints.NORTHWEST;
 		hud.add(pollutionBarSprite, pollutionConstraints);
 
 		//create score display
 		ScoreSprite scoreSprite = new ScoreSprite();
-		scoreSprite.setPreferredSize(new Dimension(0, 64));
+		scoreSprite.setPreferredSize(pollutionBarSprite.getPreferredSize());
 		//make it take Requests
 		requestQueue.addListener(scoreSprite);
 		//and configure it's location in the HUD
 		GridBagConstraints scoreConstraints = new GridBagConstraints();
 		scoreConstraints.gridx = 3;
 		scoreConstraints.weightx = 1;
-		scoreConstraints.weighty = .1;
+		scoreConstraints.weighty = 1;
+		scoreConstraints.insets = new Insets(16, 16, 16, 16);
 		scoreConstraints.fill = GridBagConstraints.HORIZONTAL;
 		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
 		hud.add(scoreSprite, scoreConstraints);
