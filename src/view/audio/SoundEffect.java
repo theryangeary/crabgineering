@@ -24,14 +24,16 @@ public enum SoundEffect {
     GET_TRASH("get_trash.wav"),
     BOUNCE("bounce.wav");
 
-    // Nested class for specifying volume
+    /**
+     * Nested class for specifying volume
+      */
     public enum Volume {
         MUTE, LOW, MEDIUM, HIGH
     }
 
     public static Volume volume = Volume.LOW;
 
-    private final String IMAGE_DIR = "resources/soundeffects/";
+    private final String SOUND_DIR = "resources/soundeffects/";
 
     // Each sound effect has its own clip, loaded with its own sound file.
     private Clip clip;
@@ -43,7 +45,7 @@ public enum SoundEffect {
         try {
             // Use URL (instead of File) to read from disk and JAR.
             //URL url = this.getClass().getClassLoader().getResource(soundFileName);
-            URL url = this.getClass().getClassLoader().getResource(IMAGE_DIR+soundFileName);
+            URL url = this.getClass().getClassLoader().getResource(SOUND_DIR +soundFileName);
 
             //this.getClass().getClassLoader().getR
             // Set up an soundeffects input stream piped from the sound file.

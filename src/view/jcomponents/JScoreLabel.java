@@ -3,6 +3,7 @@ package view.jcomponents;
 import controller.requests.Request;
 import controller.requests.RequestListener;
 import model.Model;
+import view.EstuaryFont;
 import view.View;
 
 import javax.swing.*;
@@ -12,7 +13,6 @@ import java.awt.*;
  * For handling drawing the Score in game
  */
 public class JScoreLabel extends JLabel implements RequestListener {
-    private static final Font font = new Font("TimesRoman", Font.PLAIN, 20);
     private int score = 0;
 
     /**
@@ -20,7 +20,8 @@ public class JScoreLabel extends JLabel implements RequestListener {
      */
     public JScoreLabel(){
         super("Score: 0", SwingConstants.RIGHT);
-        setFont(font);
+
+        setFont(new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 32));
     }
 
     private void incrementScore(int dScore){
