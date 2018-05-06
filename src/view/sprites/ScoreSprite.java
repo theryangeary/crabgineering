@@ -21,11 +21,10 @@ public class ScoreSprite extends JComponent implements RequestListener, Sprite {
      */
     @Override
     public void handleRequest(Request request) {
-        switch (request.getRequestedAction()){
-            case UPDATE_SCORE:
-                System.out.println(getBounds());
-                score += Model.SCORE_INCREMENT
-                         * ((int) request.getSpecifics());
+        if (request.getRequestedAction().equals(Request.RequestType.UPDATE_SCORE)) {
+            System.out.println(getBounds());
+            score += Model.SCORE_INCREMENT
+                    * ((int) request.getSpecifics());
         }
     }
 

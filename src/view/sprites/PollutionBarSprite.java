@@ -22,9 +22,8 @@ public class PollutionBarSprite extends JComponent implements RequestListener, S
      */
     @Override
     public void handleRequest(Request request){
-        switch (request.getRequestedAction()){
-            case UPDATE_POLLUTION:
-                this.pollutionLevel += (int) request.getSpecifics();
+        if (request.getRequestedAction().equals(Request.RequestType.UPDATE_POLLUTION)) {
+            this.pollutionLevel += (int) request.getSpecifics();
         }
     }
 
