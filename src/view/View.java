@@ -7,6 +7,7 @@ import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
 import view.estuaryenums.EstuaryImage;
+import view.jcomponents.JEstuaryImageLabel;
 import view.jcomponents.JPollutionBar;
 import view.jcomponents.JScoreLabel;
 import view.sprites.Sprite;
@@ -141,7 +142,7 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createBackground(){
         //create the component to house the background image
-        JLabel background = new JLabel();
+        JLabel background = new JEstuaryImageLabel(EstuaryImage.BACKGROUND);
 
         //get the background image
         ImageIcon backgroundIcon = new ImageIcon(EstuaryImage.BACKGROUND.getImage()) {
@@ -177,7 +178,7 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createForeground(){
         //create a container to hold the image
-        JLabel foreground = new JLabel();
+        JLabel foreground = new JEstuaryImageLabel(EstuaryImage.FOREGROUND);
 
         //get the foreground image
         ImageIcon foregroundIcon = new ImageIcon(EstuaryImage.FOREGROUND.getImage()) {
