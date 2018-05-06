@@ -13,10 +13,12 @@ public class Turtle extends Player{
 
     public static final int TURTLE_WIDTH = 200;
     public static final int TURTLE_HEIGHT = 100;
-    private final int BOUNCE_SPEED = -10;
+    private final int BOUNCE_SPEED = 2;
+    private final int ANGLE_FACTOR = 10;
     private final double BOUNCE_ANGLE = Math.PI/4;
+    private final int TURTLE_CENTER_OFFSET = 4;
 
-    private static final double SPEED = 2;
+    private static final double SPEED = 5;
     private double currentSpeed = 0;
 
     private RequestQueue requestQueue;
