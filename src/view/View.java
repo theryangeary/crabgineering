@@ -6,8 +6,8 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
-import view.sprites.PollutionBarSprite;
-import view.sprites.ScoreSprite;
+import view.sprites.JPollutionBar;
+import view.sprites.JScoreLabel;
 import view.sprites.Sprite;
 import view.sprites.SpriteImage;
 
@@ -209,10 +209,10 @@ public class View extends JPanel implements RequestListener {
 		JComponent hud = new JPanel(new GridBagLayout());
 
 		//create pollution bar display
-		PollutionBarSprite pollutionBarSprite = new PollutionBarSprite();
-		pollutionBarSprite.setPreferredSize(new Dimension(0, PollutionBarSprite.HEIGHT));
+		JPollutionBar pollutionBar = new JPollutionBar();
+		pollutionBar.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
 		//make it take Requests
-		requestQueue.addListener(pollutionBarSprite);
+		requestQueue.addListener(pollutionBar);
 		//and configure it's location in the HUD
 		GridBagConstraints pollutionConstraints = new GridBagConstraints();
 		pollutionConstraints.gridx = 1;
@@ -221,13 +221,13 @@ public class View extends JPanel implements RequestListener {
 		pollutionConstraints.insets = new Insets(16, 16, 80, 64);
 		pollutionConstraints.fill = GridBagConstraints.HORIZONTAL;
 		pollutionConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(pollutionBarSprite, pollutionConstraints);
+		hud.add(pollutionBar, pollutionConstraints);
 
 		//create score display
-		ScoreSprite scoreSprite = new ScoreSprite();
-		scoreSprite.setPreferredSize(pollutionBarSprite.getPreferredSize());
+		JScoreLabel scoreLabel = new JScoreLabel();
+		scoreLabel.setPreferredSize(pollutionBar.getPreferredSize());
 		//make it take Requests
-		requestQueue.addListener(scoreSprite);
+		requestQueue.addListener(scoreLabel);
 		//and configure it's location in the HUD
 		GridBagConstraints scoreConstraints = new GridBagConstraints();
 		scoreConstraints.gridx = 3;
@@ -236,7 +236,7 @@ public class View extends JPanel implements RequestListener {
 		scoreConstraints.insets = new Insets(16, 16, 16, 16);
 		scoreConstraints.fill = GridBagConstraints.HORIZONTAL;
 		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(scoreSprite, scoreConstraints);
+		hud.add(scoreLabel, scoreConstraints);
 
 		hud.setOpaque(false);
 		setFocusable(false);
@@ -347,7 +347,7 @@ public class View extends JPanel implements RequestListener {
 		pane.add(this, viewCons, 1);
 
 		//configure layout for pollution bar
-		PollutionBarSprite pollutionBar = new PollutionBarSprite();
+		JPollutionBar pollutionBar = new JPollutionBar();
 		GridBagConstraints barCons = new GridBagConstraints();
 		barCons.gridx = 0;
 		barCons.gridy = 1;
@@ -357,7 +357,7 @@ public class View extends JPanel implements RequestListener {
 		pane.add(pollutionBar, barCons, 0);
 
 		//configure layout for score
-		ScoreSprite score = new ScoreSprite();
+		JScoreLabel score = new JScoreLabel();
 		GridBagConstraints scoreCons = new GridBagConstraints();
 		scoreCons.gridx = 2;
 		scoreCons.gridy = 1;

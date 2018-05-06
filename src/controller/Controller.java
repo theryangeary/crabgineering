@@ -49,7 +49,7 @@ public class Controller implements RequestListener {
 		int progressBarXPosition = 30;
         int progressBarYPosition = 30;
         int progressBarHeight = 40;
-        PollutionBarSprite pollutionBar = new PollutionBarSprite(
+        JPollutionBar pollutionBar = new JPollutionBar(
                 new Rectangle(progressBarXPosition,
                            progressBarYPosition,
                            getMaxPollutionLevel(),
@@ -61,7 +61,7 @@ public class Controller implements RequestListener {
 
 		/*
         //setup score
-		ScoreSprite scoreSprite = new ScoreSprite();
+		JScoreLabel scoreSprite = new JScoreLabel();
 		//view.addSprite(scoreSprite);
 		requestQueue.addListener(scoreSprite);
 		*/
