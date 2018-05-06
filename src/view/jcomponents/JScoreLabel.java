@@ -1,4 +1,4 @@
-package view.sprites;
+package view.jcomponents;
 
 import controller.requests.Request;
 import controller.requests.RequestListener;
