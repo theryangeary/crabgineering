@@ -12,10 +12,6 @@ import java.awt.*;
  * For handling drawing the Score in game
  */
 public class ScoreSprite extends JComponent implements RequestListener, Sprite {
-    //Position the Score relative to the frame
-    private final int x = View.FRAME_WIDTH * 17 / 20;
-    private final int y = View.FRAME_HEIGHT / 32;
-
     private Font font = new Font("TimesRoman", Font.PLAIN, 20);
     private int score = 0;
 
@@ -27,6 +23,7 @@ public class ScoreSprite extends JComponent implements RequestListener, Sprite {
     public void handleRequest(Request request) {
         switch (request.getRequestedAction()){
             case UPDATE_SCORE:
+                System.out.println(getBounds());
                 score += Model.SCORE_INCREMENT
                          * ((int) request.getSpecifics());
         }
@@ -44,7 +41,7 @@ public class ScoreSprite extends JComponent implements RequestListener, Sprite {
 
         g.setColor(Color.black);
         g.setFont(font);
-        g.drawString("Score: " + score, x, y);
+        g.drawString("Score: " + score, 0, 0);
 
         //reset old attributes
         g.setColor(lastColor);

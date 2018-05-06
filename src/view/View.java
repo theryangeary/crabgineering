@@ -6,6 +6,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
+import view.sprites.ScoreSprite;
 import view.sprites.Sprite;
 import view.sprites.SpriteImage;
 
@@ -204,9 +205,19 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createHUD(){
 		//create a container to hold the game's HUD
-		JComponent hud = new JPanel();
+		JComponent hud = new JPanel(new GridBagLayout());
 
 		//create ScoreSprite
+		ScoreSprite scoreSprite = new ScoreSprite();
+		//make it take Requests
+		requestQueue.addListener(scoreSprite);
+		//and configure it's location in the View
+		GridBagConstraints scoreConstraints = new GridBagConstraints();
+		scoreConstraints.gridx = 3;
+		scoreConstraints.weightx = 1;
+		scoreConstraints.fill = GridBagConstraints.HORIZONTAL;
+		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
+		hud.add(scoreSprite, scoreConstraints);
 
 		hud.setOpaque(false);
 		setFocusable(false);
