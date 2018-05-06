@@ -1,9 +1,6 @@
 package model.entities;
 
-import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
-import model.Model;
-import view.audio.SoundEffect;
 
 public class Barge extends Entity {
 

@@ -5,7 +5,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
-import view.audio.SoundEffect;
+import view.estuaryenums.EstuarySound;
 import view.View;
 
 import javax.swing.*;
@@ -42,7 +42,7 @@ public class Controller implements RequestListener {
 
 		model = new Model(requestQueue);
 
-		SoundEffect.init();
+		EstuarySound.init();
 
 		//setup pollutionBar
 		/*

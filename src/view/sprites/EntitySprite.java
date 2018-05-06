@@ -3,7 +3,7 @@ package view.sprites;
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
 import model.entities.Entity;
-import view.EstuaryImage;
+import view.estuaryenums.EstuaryImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

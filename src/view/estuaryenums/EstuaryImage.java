@@ -1,4 +1,4 @@
-package view;
+package view.estuaryenums;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

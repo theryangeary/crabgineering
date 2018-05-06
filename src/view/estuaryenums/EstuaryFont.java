@@ -1,4 +1,4 @@
-package view;
+package view.estuaryenums;
 
 import java.awt.*;
 import java.io.File;

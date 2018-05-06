@@ -6,6 +6,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
+import view.estuaryenums.EstuaryImage;
 import view.jcomponents.JPollutionBar;
 import view.jcomponents.JScoreLabel;
 import view.sprites.Sprite;

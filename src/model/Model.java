@@ -1,6 +1,6 @@
 package model;
 
-import view.audio.SoundEffect;
+import view.estuaryenums.EstuarySound;
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
 import controller.Controller;
@@ -15,7 +15,6 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
@@ -214,7 +213,7 @@ public class Model implements RequestListener {
 						tt.bounceTrash((Trash) entity);
 						removeFromThrownTrash.add(trash);
 						removeFromThrownTrash.add(tt);
-						SoundEffect.TRASH_HIT.play();
+						EstuarySound.TRASH_HIT.play();
 					}
 				}
 			}
@@ -255,7 +254,7 @@ public class Model implements RequestListener {
 	 * @param modifier The amount to multiply SCORE_INCREMENT by
 	 */
 	public void incrementScore(int modifier) {
-		SoundEffect.POINTS.play();
+		EstuarySound.POINTS.play();
 		score += SCORE_INCREMENT * modifier;
 	}
 

@@ -2,7 +2,7 @@ package model.entities;
 
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
-import view.audio.SoundEffect;
+import view.estuaryenums.EstuarySound;
 import view.sprites.ArrowSprite;
 
 /**
@@ -146,7 +146,7 @@ public class Crab extends Player {
 	public void touchTrash(Trash t) {
 		t.touch();
 		if (!t.atBottom() && !t.thrown() && !hasTrash) {
-			SoundEffect.GET_TRASH.play();
+			EstuarySound.GET_TRASH.play();
 			hasTrash = true;
 			t.toggleStopped();
 			arrowSprite.setVisibility(true);

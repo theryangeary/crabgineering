@@ -3,7 +3,7 @@ package model.entities;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import model.Model;
-import view.audio.SoundEffect;
+import view.estuaryenums.EstuarySound;
 
 /**
  * A class representing a Trash object. Trash is a type of Entitiy.
@@ -92,7 +92,7 @@ public class Trash extends Entity {
 			dy = 0;
 			isAtBottom = true;
 			if (!addedPollution) {
-				SoundEffect.HIT_GROUND.play();
+				EstuarySound.HIT_GROUND.play();
 				requestQueue.postRequest(
 						RequestFactory.createUpdatePollutionRequest(POLLUTION)
 				);

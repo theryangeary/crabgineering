@@ -113,8 +113,8 @@ public class RequestFactory {
     }
 
     /**
-     * @param sound The name of the SoundEffect to be played
-     * @return A Request for the SoundEffect represented by sound
+     * @param sound The name of the EstuarySound to be played
+     * @return A Request for the EstuarySound represented by sound
      * to be played
      */
     public static Request<String> createPlaySoundRequest(String sound){

@@ -2,7 +2,7 @@ package model.entities;
 
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
-import view.audio.SoundEffect;
+import view.estuaryenums.EstuarySound;
 
 /**
  * A Turtle is a type of Player
@@ -81,7 +81,7 @@ public class Turtle extends Player{
                 (this.getBounds().getCenterX() + (this.getBounds().getWidth() / TURTLE_CENTER_OFFSET)) -
                 t.getBounds().getCenterX()) / ANGLE_FACTOR;
 
-        SoundEffect.BOUNCE.play();
+        EstuarySound.BOUNCE.play();
         //Apply the velocity to the trash
         t.throwTrash(
                 (int) - bounceAngle,

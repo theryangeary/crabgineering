@@ -3,8 +3,7 @@ package view.jcomponents;
 import controller.requests.Request;
 import controller.requests.RequestListener;
 import model.Model;
-import view.EstuaryFont;
-import view.View;
+import view.estuaryenums.EstuaryFont;
 
 import javax.swing.*;
 import java.awt.*;
