@@ -206,31 +206,35 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createHUD(){
 		//create a container to hold the game's HUD
-		JComponent hud = new JPanel(new GridLayout(10,3));
+		JComponent hud = new JPanel(new GridBagLayout());
 
 		//create pollution bar display
 		PollutionBarSprite pollutionBarSprite = new PollutionBarSprite();
+		pollutionBarSprite.setPreferredSize(new Dimension(0, 64));
 		//make it take Requests
 		requestQueue.addListener(pollutionBarSprite);
 		//and configure it's location in the HUD
-		hud.add(pollutionBarSprite);
-
-		//make an empty space
-		JLabel empty = new JLabel();
-		empty.setVisible(false);
-		hud.add(empty);
+		GridBagConstraints pollutionConstraints = new GridBagConstraints();
+		pollutionConstraints.gridx = 1;
+		pollutionConstraints.weightx = 1;
+		pollutionConstraints.weighty = .1;
+		pollutionConstraints.fill = GridBagConstraints.HORIZONTAL;
+		pollutionConstraints.anchor = GridBagConstraints.NORTHWEST;
+		hud.add(pollutionBarSprite, pollutionConstraints);
 
 		//create score display
 		ScoreSprite scoreSprite = new ScoreSprite();
+		scoreSprite.setPreferredSize(new Dimension(0, 64));
 		//make it take Requests
 		requestQueue.addListener(scoreSprite);
 		//and configure it's location in the HUD
 		GridBagConstraints scoreConstraints = new GridBagConstraints();
 		scoreConstraints.gridx = 3;
 		scoreConstraints.weightx = 1;
+		scoreConstraints.weighty = .1;
 		scoreConstraints.fill = GridBagConstraints.HORIZONTAL;
 		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(scoreSprite);
+		hud.add(scoreSprite, scoreConstraints);
 
 		hud.setOpaque(false);
 		setFocusable(false);
@@ -450,7 +454,7 @@ public class View extends JPanel implements RequestListener {
 				  size.getHeight() / Model.WORLD_HEIGHT);
 
         for (Sprite sprite: sprites) {
-            sprite.paintComponent(g2d);
+            sprite.draw(g2d);
         }
 	}
 }

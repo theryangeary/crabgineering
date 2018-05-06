@@ -32,7 +32,7 @@ public class ArrowSprite extends EntitySprite implements RequestListener, Sprite
     }
 
     @Override
-    public void paintComponent(Graphics g){
+    public void draw(Graphics g){
         if (is_visible){
             //get the old transform
             Graphics2D g2d = (Graphics2D) g;
@@ -45,8 +45,8 @@ public class ArrowSprite extends EntitySprite implements RequestListener, Sprite
                     getBounds().getHeight()/2 + getBounds().getY());
             g2d.setTransform(transform);
 
-            //paintComponent the image
-            super.paintComponent(g2d);
+            //draw the image
+            super.draw(g2d);
 
             g2d.setTransform(oldTransf);
         }
