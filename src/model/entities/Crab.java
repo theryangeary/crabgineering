@@ -133,7 +133,7 @@ public class Crab extends Player {
 
 			heldTrash = null;
 			hasTrash = false;
-			arrowSprite.setVisiblity(false);
+			arrowSprite.setVisibility(false);
 			arrowSprite.rotate(Math.PI/2 - throwAngle);
 			throwAngle = Math.PI/2;
 		}
@@ -149,7 +149,7 @@ public class Crab extends Player {
 			SoundEffect.GET_TRASH.play();
 			hasTrash = true;
 			t.toggleStopped();
-			arrowSprite.setVisiblity(true);
+			arrowSprite.setVisibility(true);
 			heldTrash = t;
 		}
 	}

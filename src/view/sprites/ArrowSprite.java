@@ -7,7 +7,7 @@ import controller.requests.RequestListener;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-public class ArrowSprite extends EntitySprite implements RequestListener {
+public class ArrowSprite extends EntitySprite implements RequestListener, Sprite {
     private double theta;
     private boolean is_visible = false;
 
@@ -15,7 +15,7 @@ public class ArrowSprite extends EntitySprite implements RequestListener {
         super(SpriteImage.ARROW, bounds);
     }
 
-    public void setVisiblity(boolean is_visible){
+    public void setVisibility(boolean is_visible){
         this.is_visible = is_visible;
     }
 

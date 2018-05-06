@@ -11,7 +11,7 @@ import java.awt.*;
 /**
  * For handling drawing the Score in game
  */
-public class ScoreSprite extends JComponent implements RequestListener {
+public class ScoreSprite extends JComponent implements RequestListener, Sprite {
     //Position the Score relative to the frame
     private final int x = View.FRAME_WIDTH * 17 / 20;
     private final int y = View.FRAME_HEIGHT / 32;

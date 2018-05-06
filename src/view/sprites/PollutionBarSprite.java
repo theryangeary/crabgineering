@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Handles the graphics of the pollution bar
  */
-public class PollutionBarSprite extends JComponent implements RequestListener {
+public class PollutionBarSprite extends JComponent implements RequestListener, Sprite {
 
     private static final Color SEA_BLUE = new Color(0x3399ff);
     private int POLLUTION_BAR_SCALAR = 2;
