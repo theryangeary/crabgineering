@@ -1,5 +1,6 @@
 package model.entities;
 
+import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import view.audio.SoundEffect;
 

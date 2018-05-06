@@ -149,7 +149,7 @@ public class Model implements RequestListener {
 				RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
 		);
 	}
-	
+
 	/**
 	 * Handles how a Request is processed.
 	 *
