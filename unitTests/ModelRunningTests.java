@@ -291,12 +291,19 @@ public class ModelRunningTests {
 		
 		// Rotate Trash Left
 		p.processInput("ROTATE_TRASH_LEFT");
-		assertEquals(Math.PI/2 - Math.PI/32, p.getThrowAngle());
+		m.update();
+		assertEquals(Math.PI/2 - Math.PI/40, p.getThrowAngle());
+		
+		// Stop rotating Trash
+		p.processInput("STOP_ROTATE");
+		m.update();
+		assertEquals(Math.PI/2 - Math.PI/40, p.getThrowAngle());
 		
 		// Rotate Trash Right
 		p.processInput("ROTATE_TRASH_RIGHT");
-		p.processInput("ROTATE_TRASH_RIGHT");
-		assertEquals(Math.PI/2 + Math.PI/32, p.getThrowAngle());
+		m.update();
+		m.update();
+		assertEquals(Math.PI/2 + Math.PI/40, p.getThrowAngle());
 		
 		// Throw Trash
 		p.processInput("SPECIAL_ACTION");
@@ -365,17 +372,17 @@ public class ModelRunningTests {
 		assertEquals(0, p2.getCurrentSpeed());
 		p2.processInput("MOVE_LEFT");
 		m.update();
-		assertEquals(-2, p2.getCurrentSpeed());
-		assertEquals(currentX - 2, p2.getBounds().x);
+		assertEquals(-5, p2.getCurrentSpeed());
+		assertEquals(currentX - 5, p2.getBounds().x);
 		
 		// Right Movement
 		currentX = p2.getBounds().x;
 		p2.processInput("MOVE_RIGHT");
 		m.update();
-		assertEquals(2, p2.getCurrentSpeed());
-		assertEquals(currentX + 2, p2.getBounds().x);
+		assertEquals(5, p2.getCurrentSpeed());
+		assertEquals(currentX + 5, p2.getBounds().x);
 		m.update();
-		assertEquals(currentX + 4, p2.getBounds().x);
+		assertEquals(currentX + 10, p2.getBounds().x);
 		currentX = p2.getBounds().x;
 		
 		// Stop
