@@ -280,11 +280,8 @@ public class View extends JPanel implements RequestListener {
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start a new game with a Crab as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
-
-				//make sure the request is fulfilled even if we're paused
-				requestQueue.fulfillAllRequests();
 			}
 		});
 		turtleButton.addActionListener(new ActionListener() {

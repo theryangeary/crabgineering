@@ -1,6 +1,8 @@
 package view.jcomponents;
 
+import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
+import model.entities.Entity;
 import org.omg.CORBA.Request;
 import view.View;
 import view.estuaryenums.EstuaryFont;
@@ -23,7 +25,7 @@ public class JTutorialPanel extends JPanel {
      * Sets up the quick tutorial to be displayed
      * @param requestQueue
      */
-    public JTutorialPanel(ActionListener onButtonPress){
+    public JTutorialPanel(RequestQueue requestQueue, Entity.EntityType playerType){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(SEA_BLUE);
 
@@ -44,8 +46,17 @@ public class JTutorialPanel extends JPanel {
         add(bargeTable);
 
         JButton okayButton = new JButton("okay");
-        okayButton.addActionListener(onButtonPress);
-        add(okayButton);
+        okayButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //make a request to start a new game with the specified Player
+                        requestQueue.postAndFulfillRequest(
+                                RequestFactory.createStartGameRequest(playerType)
+                        );
+                    }
+                }
+                add(okayButton);
     }
 
     /**
