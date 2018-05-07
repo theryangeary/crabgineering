@@ -13,6 +13,7 @@ import java.awt.*;
 public class JTutorialPanel extends JPanel {
 
     private Font font;
+    private static final Color SEA_BLUE = new Color(0x3399ff);
 
     /**
      * Sets up the quick tutorial to be displayed
@@ -20,17 +21,18 @@ public class JTutorialPanel extends JPanel {
      */
     public JTutorialPanel(RequestQueue requestQueue){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBackground(SEA_BLUE);
 
         font = new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 32);
 
-        JLabel intro = new JLabel("The estuary needs your help! Place");
+        JLabel intro = new JLabel("The estuary needs your help!\n Place");
         intro.setFont(font);
         add(intro);
 
         JPanel trashTable = createTrashTable();
         add(trashTable);
 
-        JLabel mid = new JLabel("into the", JLabel.CENTER);
+        JLabel mid = new JLabel("into the");
         mid.setFont(font);
         add(mid);
 
@@ -41,8 +43,13 @@ public class JTutorialPanel extends JPanel {
         add(okayButton);
     }
 
+    /**
+     * Layout out all the different types of trash and recycling
+     * @return a JPanel containing the trash images and labels
+     */
     private JPanel createTrashTable(){
         JPanel trashTable = new JPanel(new GridBagLayout());
+        trashTable.setBackground(SEA_BLUE);
 
         //set up the constraints for the recyclables column
         GridBagConstraints recyclableConstraints = new GridBagConstraints();
@@ -85,8 +92,13 @@ public class JTutorialPanel extends JPanel {
         return trashTable;
     }
 
+    /**
+     * lays out the different barges
+     * @return a JPanel containing the barge images and labels
+     */
     private JPanel createBargeTable(){
         JPanel bargeTable = new JPanel(new GridBagLayout());
+        bargeTable.setBackground(SEA_BLUE);
 
         //set up the constraints for the recyclables column
         GridBagConstraints recyclableConstraints = new GridBagConstraints();
@@ -98,16 +110,29 @@ public class JTutorialPanel extends JPanel {
         //create label for the column of recyclables
         JLabel recyclingLabel = new JLabel("recycling barge", JLabel.CENTER);
         recyclingLabel.setFont(font);
-        bargeTable.add(recyclingLabel);
+        recyclableConstraints.gridy = 0;
+        bargeTable.add(recyclingLabel, recyclableConstraints);
+
+        //add the barge image
+        recyclableConstraints.gridy = 1;
+        bargeTable.add(new JEstuaryImageLabel(EstuaryImage.RECYCLING_BARGE), recyclableConstraints);
+
+        //set up the constraints for the trash column
+        GridBagConstraints trashConstraints = new GridBagConstraints();
+        trashConstraints.weighty = 1;
+        trashConstraints.weightx = 1;
+        trashConstraints.gridx = 1;
+        //trashConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         //create label for the column of trash
         JLabel trashLabel = new JLabel("trash barge", JLabel.CENTER);
         trashLabel.setFont(font);
-        bargeTable.add(trashLabel);
+        trashConstraints.gridy = 0;
+        bargeTable.add(trashLabel, trashConstraints);
 
-        //add all the images
-        bargeTable.add(new JEstuaryImageLabel(EstuaryImage.RECYCLING_BARGE));
-        bargeTable.add(new JEstuaryImageLabel(EstuaryImage.TRASH_BARGE));
+        //add the barge image
+        trashConstraints.gridy = 1;
+        bargeTable.add(new JEstuaryImageLabel(EstuaryImage.TRASH_BARGE), trashConstraints);
 
         return bargeTable;
     }
