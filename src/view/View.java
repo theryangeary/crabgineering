@@ -7,6 +7,7 @@ import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
 import view.jcomponents.JPollutionBar;
+import view.jcomponents.JPollutionColor;
 import view.jcomponents.JScoreLabel;
 import view.sprites.Sprite;
 import view.sprites.SpriteImage;
@@ -100,9 +101,11 @@ public class View extends JPanel implements RequestListener {
         layers.add(configureView());
         //Layer 2: foreground
         layers.add(createForeground());
-        //Layer 3: in-game UI elements
+        //Layer 3: pollution
+        layers.add(createPollution());
+        //Layer 4: in-game UI elements
         layers.add(createHUD());
-        //Layer 4: menu UI elements
+        //Layer 5: menu UI elements
         layers.add(createMenu());
 
         //add the layers to the layered pane in the right order
@@ -209,10 +212,10 @@ public class View extends JPanel implements RequestListener {
 		JComponent hud = new JPanel(new GridBagLayout());
 
 		//create pollution bar display
-		JPollutionBar pollutionBar = new JPollutionBar();
-		pollutionBar.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
+		//JPollutionBar pollutionBar = new JPollutionBar();
+		//pollutionBar.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
 		//make it take Requests
-		requestQueue.addListener(pollutionBar);
+		/*requestQueue.addListener(pollutionBar);
 		//and configure it's location in the HUD
 		GridBagConstraints pollutionConstraints = new GridBagConstraints();
 		pollutionConstraints.gridx = 1;
@@ -221,11 +224,11 @@ public class View extends JPanel implements RequestListener {
 		pollutionConstraints.insets = new Insets(16, 16, 80, 64);
 		pollutionConstraints.fill = GridBagConstraints.HORIZONTAL;
 		pollutionConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(pollutionBar, pollutionConstraints);
+		hud.add(pollutionBar, pollutionConstraints);*/
 
 		//create score display
 		JScoreLabel scoreLabel = new JScoreLabel();
-		scoreLabel.setPreferredSize(pollutionBar.getPreferredSize());
+		scoreLabel.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
 		//make it take Requests
 		requestQueue.addListener(scoreLabel);
 		//and configure it's location in the HUD
@@ -317,6 +320,16 @@ public class View extends JPanel implements RequestListener {
         menu.setOpaque(false);
         menu.setFocusable(false);
         return menu;
+    }
+    
+    /**
+     * Creates an AlphaContainer that changes color over time according to the pollution level.
+     * @return A Component representing the pollution level with color opacity
+     */
+    private Component createPollution() {
+    	JPollutionColor pc  = new JPollutionColor();
+    	requestQueue.addListener(pc);
+    	return pc;
     }
 
 	/*
