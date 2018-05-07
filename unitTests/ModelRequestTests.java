@@ -10,8 +10,8 @@ import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Trash;
 import model.entities.TrashFactory;
+import view.estuaryenums.EstuarySound;
 import model.entities.Entity.EntityType;
-import view.audio.SoundEffect;
 
 public class ModelRequestTests {
 	
@@ -85,7 +85,7 @@ public class ModelRequestTests {
 	public void playSoundTest() {
 		m.reset(EntityType.CRAB);
 
-		Request r = RequestFactory.createPlaySoundRequest(SoundEffect.POINTS.toString());
+		Request r = RequestFactory.createPlaySoundRequest(EstuarySound.POINTS.toString());
 		m.handleRequest(r);
 	}
 	
