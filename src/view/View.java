@@ -6,6 +6,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
+import view.estuaryenums.EstuaryFont;
 import view.estuaryenums.EstuaryImage;
 import view.jcomponents.JEstuaryImageLabel;
 import view.jcomponents.JPollutionBar;
@@ -397,7 +398,7 @@ public class View extends JPanel implements RequestListener {
 		pauseButton.setVisible(false);
 		crabButton.setVisible(true);
 		turtleButton.setVisible(true);
-		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
+		endScore.setFont(new Font(EstuaryFont.MINECRAFT.name(), Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);
 		endScore.setVisible(true);
 		frame.revalidate();
