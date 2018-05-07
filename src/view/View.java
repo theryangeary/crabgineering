@@ -46,6 +46,7 @@ public class View extends JPanel implements RequestListener {
 	private JLabel titleImage;
 	private JLabel endScore = new JLabel("");
 	private JFrame frame;
+	private JPanel tutorial;
 
 	private RequestQueue requestQueue;
 
@@ -278,7 +279,7 @@ public class View extends JPanel implements RequestListener {
 		crabButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//make a request to start a new game with a Crab as the Player
+				//make a request to start the tutorial with a Crab as the Player
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
@@ -287,9 +288,9 @@ public class View extends JPanel implements RequestListener {
 		turtleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//make a request to start a new game with a Turtle as the Player
+				//make a request to start the tutorial with a Turtle as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.TURTLE)
 				);
 			}
 		});
@@ -328,12 +329,32 @@ public class View extends JPanel implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
-			case START_GAME:
+			case START_TUTORIAL:
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);
 				turtleButton.setVisible(false);
+
+				if (tutorial == null) {
+					//setup the tutorial if it hasn't been displayed already
+					tutorial = new JTutorialPanel(
+							requestQueue,
+							(Entity.EntityType) request.getSpecifics());
+					frame.getContentPane().add(tutorial, JLayeredPane.POPUP_LAYER);
+				} else {
+					//if we're already seen the tutorial, just start the game
+					requestQueue.postAndFulfillRequest(
+							RequestFactory.createStartGameRequest(
+									(Entity.EntityType) request.getSpecifics()
+							)
+					);
+					break;
+				}
+			case START_GAME:
+				//make the tutorial disappear
+				tutorial.setVisible(false);
 				//and the pause button appear
 				pauseButton.setVisible(true);
+				break;
 			case ADD_TO_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
 					addSprite((Sprite) request.getSpecifics());
