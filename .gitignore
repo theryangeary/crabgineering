@@ -126,3 +126,4 @@ local.properties
 .worksheet
 .idea/
 *.png~
+*.ora~
