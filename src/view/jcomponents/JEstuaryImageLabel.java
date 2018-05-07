@@ -12,12 +12,12 @@ public class JEstuaryImageLabel extends JLabel {
 
     /**
      * Creates a JLabel with an ImageIcon that scales to fit the label's size
-     * @param image The EstuaryImage that should be displayed in the label
+     * @param estuaryImage The EstuaryImage that should be displayed in the label
      */
-    public JEstuaryImageLabel (EstuaryImage image){
+    public JEstuaryImageLabel (EstuaryImage estuaryImage){
         final JLabel parent = this;
 
-        ImageIcon imageIcon = new ImageIcon(image.getImage()){
+        ImageIcon imageIcon = new ImageIcon(estuaryImage.getImage()){
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
                 g.drawImage(getImage(),

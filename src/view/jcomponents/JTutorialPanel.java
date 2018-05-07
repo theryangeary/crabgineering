@@ -42,29 +42,58 @@ public class JTutorialPanel extends JPanel {
     }
 
     private JPanel createTrashTable(){
-        JPanel trashTable = new JPanel(new GridLayout(0,2));
+        JPanel trashTable = new JPanel(new GridBagLayout());
+
+        //set up the constraints for the recyclables column
+        GridBagConstraints recyclableConstraints = new GridBagConstraints();
+        recyclableConstraints.weighty = 1;
+        recyclableConstraints.weightx = 1;
+        recyclableConstraints.gridx = 0;
+        //trashConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         //create label for the column of recyclables
         JLabel recyclingHeader = new JLabel("recyclables", JLabel.CENTER);
         recyclingHeader.setFont(font);
-        trashTable.add(recyclingHeader);
+        recyclableConstraints.gridy = 0;
+        trashTable.add(recyclingHeader, recyclableConstraints);
+
+        //add all the recyclable images
+        recyclableConstraints.gridy = 1;
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.SODA_CAN), recyclableConstraints);
+        recyclableConstraints.gridy = 2;
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.MILK_JUG), recyclableConstraints);
+
+        //set up the constraints for the trash column
+        GridBagConstraints trashConstraints = new GridBagConstraints();
+        trashConstraints.weighty = 1;
+        trashConstraints.weightx = 1;
+        trashConstraints.gridx = 1;
+        //trashConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         //create label for the column of trash
         JLabel trashHeader = new JLabel("trash", JLabel.CENTER);
         trashHeader.setFont(font);
-        trashTable.add(trashHeader);
+        trashConstraints.gridy = 0;
+        trashTable.add(trashHeader, trashConstraints);
 
-        //add all the images
-        trashTable.add(new JEstuaryImageLabel(EstuaryImage.SODA_CAN));
-        trashTable.add(new JEstuaryImageLabel(EstuaryImage.SNACK_BAG));
-        trashTable.add(new JEstuaryImageLabel(EstuaryImage.MILK_JUG));
-        trashTable.add(new JEstuaryImageLabel(EstuaryImage.STYROFOAM_CUP));
+        //add all the trash images
+        trashConstraints.gridy = 1;
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.SNACK_BAG), trashConstraints);
+        trashConstraints.gridy = 2;
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.STYROFOAM_CUP), trashConstraints);
 
         return trashTable;
     }
 
     private JPanel createBargeTable(){
-        JPanel bargeTable = new JPanel(new GridLayout(0, 2));
+        JPanel bargeTable = new JPanel(new GridBagLayout());
+
+        //set up the constraints for the recyclables column
+        GridBagConstraints recyclableConstraints = new GridBagConstraints();
+        recyclableConstraints.weighty = 1;
+        recyclableConstraints.weightx = 1;
+        recyclableConstraints.gridx = 0;
+        //trashConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         //create label for the column of recyclables
         JLabel recyclingLabel = new JLabel("recycling barge", JLabel.CENTER);
