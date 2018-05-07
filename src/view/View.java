@@ -6,6 +6,7 @@ import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
+import view.estuaryenums.EstuaryFont;
 import view.estuaryenums.EstuaryImage;
 import view.jcomponents.JEstuaryImageLabel;
 import view.jcomponents.JPollutionBar;
@@ -228,6 +229,15 @@ public class View extends JPanel implements RequestListener {
 		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
 		hud.add(scoreLabel, scoreConstraints);
 
+		GridBagConstraints endScoreConstraints = new GridBagConstraints();
+		endScoreConstraints.gridx = 2;
+		endScoreConstraints.gridy = 1;
+		endScoreConstraints.weighty = 1;
+		endScoreConstraints.weightx = 1;
+		endScoreConstraints.anchor = GridBagConstraints.EAST;
+		endScoreConstraints.fill = GridBagConstraints.BOTH;
+		hud.add(endScore, endScoreConstraints);
+
 		hud.setOpaque(false);
 		setFocusable(false);
         return hud;
@@ -342,6 +352,7 @@ public class View extends JPanel implements RequestListener {
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);
 				turtleButton.setVisible(false);
+				endScore.setVisible(false);
 
 				//and the pause button appear
 				pauseButton.setVisible(true);
@@ -388,7 +399,7 @@ public class View extends JPanel implements RequestListener {
 		pauseButton.setVisible(false);
 		crabButton.setVisible(true);
 		turtleButton.setVisible(true);
-		endScore.setFont(new Font("TimesRoman", Font.BOLD, 50));
+		endScore.setFont(new Font(EstuaryFont.MINECRAFT.name(), Font.BOLD, 50));
 		endScore.setText("Final Score: " + score);
 		endScore.setVisible(true);
 		frame.revalidate();
