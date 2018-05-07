@@ -354,7 +354,12 @@ public class View extends JPanel implements RequestListener {
 				}
 			case START_GAME:
 				//make the tutorial disappear
-				tutorial.setVisible(false);
+				//tutorial.setVisible(false);
+
+				//make the player selection buttons disappear
+				crabButton.setVisible(false);
+				turtleButton.setVisible(false);
+
 				//and the pause button appear
 				pauseButton.setVisible(true);
 				break;
