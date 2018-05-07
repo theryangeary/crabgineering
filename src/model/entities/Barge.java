@@ -1,11 +1,16 @@
 package model.entities;
 
 import controller.requests.RequestQueue;
+import model.Model;
 
 public class Barge extends Entity {
 
     EntityType bargeType;
     RequestQueue requestQueue;
+
+    public static final int BARGE_WIDTH = 200;
+    public static final int BARGE_HEIGHT = BARGE_WIDTH * 20 / 40;
+    public static final int BARGE_PADDING = Model.WATER_HEIGHT - (BARGE_HEIGHT / 2);
 
     public Barge(int x, int y, int width, int height, EntityType bargeType, RequestQueue requestQueue) {
         super(x, y, width, height);

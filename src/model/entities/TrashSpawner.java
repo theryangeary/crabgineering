@@ -45,7 +45,7 @@ public class TrashSpawner {
                         )
                 );
                 if (spawnTimer.getDelay() > 500) {
-                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.03));
+                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.02));
                 }
             }
         };
