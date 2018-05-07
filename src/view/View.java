@@ -106,6 +106,7 @@ public class View extends JPanel implements RequestListener {
         layers.add(createHUD());
         //Layer 4: menu UI elements
         layers.add(createMenu());
+        layers.add(new JTutorialPanel(requestQueue));
 
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {

@@ -21,9 +21,9 @@ public class JTutorialPanel extends JPanel {
     public JTutorialPanel(RequestQueue requestQueue){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        font = new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 36);
+        font = new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 32);
 
-        JLabel intro = new JLabel("The estuary needs you help! Place", JLabel.CENTER);
+        JLabel intro = new JLabel("The estuary needs your help! Place");
         intro.setFont(font);
         add(intro);
 
@@ -57,6 +57,8 @@ public class JTutorialPanel extends JPanel {
         //add all the images
         trashTable.add(new JEstuaryImageLabel(EstuaryImage.SODA_CAN));
         trashTable.add(new JEstuaryImageLabel(EstuaryImage.SNACK_BAG));
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.MILK_JUG));
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.STYROFOAM_CUP));
 
         return trashTable;
     }
