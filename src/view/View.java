@@ -261,6 +261,8 @@ public class View extends JPanel implements RequestListener {
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
 		pauseButton = new JButton(UNPAUSED_TEXT);
 
+		JPanel tutorial = new JTutorialPanel(requestQueue);
+
 		//decide whether or not each should initially be visible
 		crabButton.setVisible(true);
 		turtleButton.setVisible(true);
@@ -320,65 +322,6 @@ public class View extends JPanel implements RequestListener {
         menu.setFocusable(false);
         return menu;
     }
-
-	/*
-	private void configurePane(JLayeredPane pane) {
-		//setup the layout
-		pane.setLayout(new GridBagLayout());
-
-		//configure layout for background
-		JPanel background = new JPanel();
-		background.setBackground(Color.CYAN);
-		GridBagConstraints backCons = new GridBagConstraints();
-		backCons.gridx = 0;
-		backCons.gridy = 1;
-		backCons.gridwidth = 3;
-		backCons.weightx = 1; //expand when window gets wider ("" as button)
-		backCons.weighty = 1; //give this priority when expanding vertically
-		backCons.fill = GridBagConstraints.BOTH;
-		pane.add(background, backCons, 2);
-
-		//configure layout for main game window (ie View)
-		GridBagConstraints viewCons = new GridBagConstraints();
-		viewCons.gridx = 0;
-		viewCons.gridy = 1;
-		viewCons.gridwidth = 3;
-		viewCons.weightx = 1; //expand when window gets wider ("" as button)
-		viewCons.weighty = 1; //give this priority when expanding vertically
-		viewCons.fill = GridBagConstraints.BOTH;
-		pane.add(this, viewCons, 1);
-
-		//configure layout for pollution bar
-		JPollutionBar pollutionBar = new JPollutionBar();
-		GridBagConstraints barCons = new GridBagConstraints();
-		barCons.gridx = 0;
-		barCons.gridy = 1;
-		barCons.weighty = 1;
-		barCons.anchor = GridBagConstraints.NORTHWEST;
-		viewCons.fill = GridBagConstraints.BOTH;
-		pane.add(pollutionBar, barCons, 0);
-
-		//configure layout for score
-		JScoreLabel score = new JScoreLabel();
-		GridBagConstraints scoreCons = new GridBagConstraints();
-		scoreCons.gridx = 2;
-		scoreCons.gridy = 1;
-		scoreCons.weightx = 1;
-		scoreCons.fill = GridBagConstraints.BOTH;
-		scoreCons.anchor = GridBagConstraints.NORTHEAST;
-		pane.add(score, scoreCons, 0);
-
-		//configure layout for the button
-		GridBagConstraints buttonCons = new GridBagConstraints();
-		buttonCons.gridx = 1;
-		buttonCons.gridy = 0;
-		//buttonCons.gridwidth = 3;
-		buttonCons.weightx = 1; //expand when window gets wider ("" as for view)
-		buttonCons.weighty = 0; //don't expand when the window gets taller
-		buttonCons.fill = GridBagConstraints.HORIZONTAL;
-		pane.add(buttonPanel, buttonCons, 0);
-	}
-    */
 
 	/**
 	 * Specifies how the View should handle a Request

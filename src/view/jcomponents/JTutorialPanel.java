@@ -21,7 +21,7 @@ public class JTutorialPanel extends JPanel {
     public JTutorialPanel(RequestQueue requestQueue){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        font = new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 12);
+        font = new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 36);
 
         JLabel intro = new JLabel("The estuary needs you help! Place", JLabel.CENTER);
         intro.setFont(font);
