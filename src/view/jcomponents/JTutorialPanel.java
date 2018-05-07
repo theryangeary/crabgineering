@@ -23,7 +23,7 @@ public class JTutorialPanel extends JPanel {
      * Sets up the quick tutorial to be displayed
      * @param requestQueue
      */
-    public JTutorialPanel(controller.requests.Request startGameRequest, RequestQueue requestQueue){
+    public JTutorialPanel(ActionListener onButtonPress){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(SEA_BLUE);
 
@@ -43,14 +43,9 @@ public class JTutorialPanel extends JPanel {
         JPanel bargeTable = createBargeTable();
         add(bargeTable);
 
-        JButton startGame = new JButton("start game");
-        startGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                requestQueue.postAndFulfillRequest(startGameRequest);
-            }
-        });
-        add(startGame);
+        JButton okayButton = new JButton("okay");
+        okayButton.addActionListener(onButtonPress);
+        add(okayButton);
     }
 
     /**
