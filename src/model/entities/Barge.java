@@ -11,19 +11,25 @@ public class Barge extends Entity {
     public static final int BARGE_WIDTH = 200;
     public static final int BARGE_HEIGHT = BARGE_WIDTH * 20 / 40;
     public static final int BARGE_PADDING = Model.WATER_HEIGHT - (BARGE_HEIGHT / 2);
+    public double swayCounter = 0;
+    public final double SWAY_FREQ = 0.2;
+    public final double SWAY_AMP = 1.5;
+    private double offset = Math.random()*10;
 
     public Barge(int x, int y, int width, int height, EntityType bargeType, RequestQueue requestQueue) {
         super(x, y, width, height);
         this.bargeType = bargeType;
         this.requestQueue = requestQueue;
-        toggleStopped(); // so that the boat won't sink
+      //  toggleStopped(); // so that the boat won't sink
     }
 
     /**
      * Overrides Entity's update method so that the barge doesn't sink and contribute to the world's overwhelmingly large amount of pollution.
      */
-    public void update () {
-
+    @Override
+    public void update (double gravity, double drag) {
+        swayCounter+=SWAY_FREQ;
+        translate(0,(int)(SWAY_AMP*Math.cos(swayCounter+offset)));
     }
 
     /**
