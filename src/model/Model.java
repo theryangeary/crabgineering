@@ -27,7 +27,7 @@ public class Model implements RequestListener {
 	RequestQueue requestQueue;
 	
 	//constants relevant to simulation's physics
-	public static final int WORLD_WIDTH = 750;
+	public static final int WORLD_WIDTH = 500;
 	public static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
