@@ -14,6 +14,18 @@ import javax.lang.model.type.NullType;
 public class RequestFactory {
 
     /**
+     * @param playerType Indicates which type of Player the Model should use when the tutorial
+     *                   is completed and the game begins
+     * @return A Request to start the tutorial with the given type of Player
+     */
+    public static Request<Entity.EntityType> createStartTutorialRequest(Entity.EntityType playerType){
+        return new Request<>(
+                playerType,
+                Request.RequestType.START_GAME
+        );
+    }
+
+    /**
      * @param playerType Indicates which type of Player the Model should use
      * @return A Request to start the game with the given type of Player
      */

@@ -262,8 +262,6 @@ public class View extends JPanel implements RequestListener {
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
 		pauseButton = new JButton(UNPAUSED_TEXT);
 
-		JPanel tutorial = new JTutorialPanel(requestQueue);
-
 		//decide whether or not each should initially be visible
 		crabButton.setVisible(true);
 		turtleButton.setVisible(true);
@@ -342,11 +340,16 @@ public class View extends JPanel implements RequestListener {
 					frame.getContentPane().add(tutorial, JLayeredPane.POPUP_LAYER);
 				} else {
 					//if we're already seen the tutorial, just start the game
-					requestQueue.postAndFulfillRequest(
-							RequestFactory.createStartGameRequest(
-									(Entity.EntityType) request.getSpecifics()
-							)
-					);
+					EventQueue.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							requestQueue.postAndFulfillRequest(
+									RequestFactory.createStartGameRequest(
+											(Entity.EntityType) request.getSpecifics()
+									)
+							);
+						}
+					});
 					break;
 				}
 			case START_GAME:

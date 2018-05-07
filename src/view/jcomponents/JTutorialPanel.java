@@ -54,9 +54,8 @@ public class JTutorialPanel extends JPanel {
                         requestQueue.postAndFulfillRequest(
                                 RequestFactory.createStartGameRequest(playerType)
                         );
-                    }
-                }
-                add(okayButton);
+                    }});
+        add(okayButton);
     }
 
     /**
