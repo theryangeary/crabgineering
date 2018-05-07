@@ -14,7 +14,7 @@ public enum EstuaryImage {
 	SHRIMP("shrimp.png"),
 	TURTLE("turtle.png"),
 	TRASH("snack-bag.png"),
-	RECYCLING("recycling.png"),
+	RECYCLING("soda-can.png"),
 	ARROW("arrow.png"),
 	RECYCLING_BARGE("recycling-barge.png"),
 	TRASH_BARGE("trash-barge.png"),
