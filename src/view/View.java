@@ -255,8 +255,17 @@ public class View extends JPanel implements RequestListener {
         JComponent menu = new JPanel();
 
 		//create the buttons
-		crabButton = new JButton("Crab", new ImageIcon(SpriteImage.CRAB.getImage()));
-		turtleButton = new JButton("Turtle", new ImageIcon(SpriteImage.TURTLE.getImage()));
+		crabButton = new JButton("", new ImageIcon(SpriteImage.CRAB_BUTTON.getImage()));
+		turtleButton = new JButton("", new ImageIcon(SpriteImage.TURTLE_BUTTON.getImage()));
+		
+		crabButton.setOpaque(false);
+		turtleButton.setOpaque(false);
+		crabButton.setContentAreaFilled(false);
+		turtleButton.setContentAreaFilled(false);
+		crabButton.setBorderPainted(false);
+		turtleButton.setBorderPainted(false);
+		crabButton.setFocusPainted(false);
+		turtleButton.setFocusPainted(false);
 
 		final String PAUSED_TEXT = "Play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
