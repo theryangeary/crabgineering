@@ -16,6 +16,10 @@ import view.sprites.Sprite;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static model.entities.Barge.BARGE_HEIGHT;
+import static model.entities.Barge.BARGE_PADDING;
+import static model.entities.Barge.BARGE_WIDTH;
+
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
  *
@@ -27,15 +31,13 @@ public class Model implements RequestListener {
 	RequestQueue requestQueue;
 	
 	//constants relevant to simulation's physics
-	public static final int WORLD_WIDTH = 500;
+	public static final int WORLD_WIDTH = 750;
 	public static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
+	public static final int WATER_HEIGHT = 100;
 
-	private final int BARGE_WIDTH= 200;
-	private final int BARGE_HEIGHT= BARGE_WIDTH * 20 / 40;
-	private final int BARGE_PADDING= 15;
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
@@ -133,12 +135,13 @@ public class Model implements RequestListener {
 		addEntity(recyclingBarge);
 
 		int spawnInterval = 2 * 1000;
-		int spawnHeight = 0;
+		int spawnHeight = - Trash.TRASH_HEIGHT;
 		spawner = new TrashSpawner(
 		        requestQueue,
 				spawnHeight,
-				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH,
-				spawnInterval);
+				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2*BARGE_WIDTH) - BARGE_PADDING,
+				spawnInterval,
+				BARGE_PADDING + BARGE_WIDTH);
 		spawner.start();
 		
 		requestQueue.postRequest(
