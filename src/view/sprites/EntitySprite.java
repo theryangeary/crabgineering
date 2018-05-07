@@ -12,7 +12,8 @@ import java.awt.image.BufferedImage;
  * Connects Sprites to Entities
  */
 public class EntitySprite implements Sprite, BoundsListener {
-    private final boolean DEBUG = true;
+
+    private final boolean DEBUG = false;
     private final EstuaryImage estuaryImage;
     private Rectangle bounds;
 

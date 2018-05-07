@@ -8,6 +8,7 @@ import model.Model;
 import model.entities.Entity;
 import view.estuaryenums.EstuaryImage;
 import view.jcomponents.JPollutionBar;
+import view.jcomponents.JPollutionColor;
 import view.jcomponents.JScoreLabel;
 import view.sprites.Sprite;
 
@@ -28,6 +29,10 @@ public class View extends JPanel implements RequestListener {
 	// define size of game
 	public final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
+	
+	// Button Image dimension
+	private final int BUTTON_WIDTH = 100;
+	private final int BUTTON_HEIGHT = 100;
 
 	// relative to model
 	private Dimension scale;
@@ -100,9 +105,11 @@ public class View extends JPanel implements RequestListener {
         layers.add(configureView());
         //Layer 2: foreground
         layers.add(createForeground());
-        //Layer 3: in-game UI elements
+        //Layer 3: pollution
+        layers.add(createPollution());
+        //Layer 4: in-game UI elements
         layers.add(createHUD());
-        //Layer 4: menu UI elements
+        //Layer 5: menu UI elements
         layers.add(createMenu());
 
         //add the layers to the layered pane in the right order
@@ -209,10 +216,10 @@ public class View extends JPanel implements RequestListener {
 		JComponent hud = new JPanel(new GridBagLayout());
 
 		//create pollution bar display
-		JPollutionBar pollutionBar = new JPollutionBar();
-		pollutionBar.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
+		//JPollutionBar pollutionBar = new JPollutionBar();
+		//pollutionBar.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
 		//make it take Requests
-		requestQueue.addListener(pollutionBar);
+		/*requestQueue.addListener(pollutionBar);
 		//and configure it's location in the HUD
 		GridBagConstraints pollutionConstraints = new GridBagConstraints();
 		pollutionConstraints.gridx = 1;
@@ -221,11 +228,11 @@ public class View extends JPanel implements RequestListener {
 		pollutionConstraints.insets = new Insets(16, 16, 80, 64);
 		pollutionConstraints.fill = GridBagConstraints.HORIZONTAL;
 		pollutionConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(pollutionBar, pollutionConstraints);
+		hud.add(pollutionBar, pollutionConstraints);*/
 
 		//create score display
 		JScoreLabel scoreLabel = new JScoreLabel();
-		scoreLabel.setPreferredSize(pollutionBar.getPreferredSize());
+		scoreLabel.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
 		//make it take Requests
 		requestQueue.addListener(scoreLabel);
 		//and configure it's location in the HUD
@@ -251,9 +258,22 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel();
 
-		//create the buttons
-		crabButton = new JButton("Crab", new ImageIcon(EstuaryImage.CRAB.getImage()));
-		turtleButton = new JButton("Turtle", new ImageIcon(EstuaryImage.TURTLE.getImage()));
+		//create the buttons with images
+        Image crabButtonImage = EstuaryImage.CRAB_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+        Image turtleButtonImage = EstuaryImage.TURTLE_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+
+        
+		crabButton = new JButton("", new ImageIcon(crabButtonImage));
+		turtleButton = new JButton("", new ImageIcon(turtleButtonImage));
+		
+		crabButton.setOpaque(false);
+		turtleButton.setOpaque(false);
+		crabButton.setContentAreaFilled(false);
+		turtleButton.setContentAreaFilled(false);
+		crabButton.setBorderPainted(false);
+		turtleButton.setBorderPainted(false);
+		crabButton.setFocusPainted(false);
+		turtleButton.setFocusPainted(false);
 
 		final String PAUSED_TEXT = "Play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
@@ -318,65 +338,16 @@ public class View extends JPanel implements RequestListener {
         menu.setFocusable(false);
         return menu;
     }
-
-	/*
-	private void configurePane(JLayeredPane pane) {
-		//setup the layout
-		pane.setLayout(new GridBagLayout());
-
-		//configure layout for background
-		JPanel background = new JPanel();
-		background.setBackground(Color.CYAN);
-		GridBagConstraints backCons = new GridBagConstraints();
-		backCons.gridx = 0;
-		backCons.gridy = 1;
-		backCons.gridwidth = 3;
-		backCons.weightx = 1; //expand when window gets wider ("" as button)
-		backCons.weighty = 1; //give this priority when expanding vertically
-		backCons.fill = GridBagConstraints.BOTH;
-		pane.add(background, backCons, 2);
-
-		//configure layout for main game window (ie View)
-		GridBagConstraints viewCons = new GridBagConstraints();
-		viewCons.gridx = 0;
-		viewCons.gridy = 1;
-		viewCons.gridwidth = 3;
-		viewCons.weightx = 1; //expand when window gets wider ("" as button)
-		viewCons.weighty = 1; //give this priority when expanding vertically
-		viewCons.fill = GridBagConstraints.BOTH;
-		pane.add(this, viewCons, 1);
-
-		//configure layout for pollution bar
-		JPollutionBar pollutionBar = new JPollutionBar();
-		GridBagConstraints barCons = new GridBagConstraints();
-		barCons.gridx = 0;
-		barCons.gridy = 1;
-		barCons.weighty = 1;
-		barCons.anchor = GridBagConstraints.NORTHWEST;
-		viewCons.fill = GridBagConstraints.BOTH;
-		pane.add(pollutionBar, barCons, 0);
-
-		//configure layout for score
-		JScoreLabel score = new JScoreLabel();
-		GridBagConstraints scoreCons = new GridBagConstraints();
-		scoreCons.gridx = 2;
-		scoreCons.gridy = 1;
-		scoreCons.weightx = 1;
-		scoreCons.fill = GridBagConstraints.BOTH;
-		scoreCons.anchor = GridBagConstraints.NORTHEAST;
-		pane.add(score, scoreCons, 0);
-
-		//configure layout for the button
-		GridBagConstraints buttonCons = new GridBagConstraints();
-		buttonCons.gridx = 1;
-		buttonCons.gridy = 0;
-		//buttonCons.gridwidth = 3;
-		buttonCons.weightx = 1; //expand when window gets wider ("" as for view)
-		buttonCons.weighty = 0; //don't expand when the window gets taller
-		buttonCons.fill = GridBagConstraints.HORIZONTAL;
-		pane.add(buttonPanel, buttonCons, 0);
-	}
-    */
+    
+    /**
+     * Creates an AlphaContainer that changes color over time according to the pollution level.
+     * @return A Component representing the pollution level with color opacity
+     */
+    private Component createPollution() {
+    	JPollutionColor pc  = new JPollutionColor();
+    	requestQueue.addListener(pc);
+    	return pc;
+    }
 
 	/**
 	 * Specifies how the View should handle a Request
