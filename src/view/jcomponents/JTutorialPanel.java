@@ -1,11 +1,15 @@
 package view.jcomponents;
 
 import controller.requests.RequestQueue;
+import org.omg.CORBA.Request;
+import view.View;
 import view.estuaryenums.EstuaryFont;
 import view.estuaryenums.EstuaryImage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Displays a quick tutorial at the start of the game
@@ -19,7 +23,7 @@ public class JTutorialPanel extends JPanel {
      * Sets up the quick tutorial to be displayed
      * @param requestQueue
      */
-    public JTutorialPanel(RequestQueue requestQueue){
+    public JTutorialPanel(controller.requests.Request startGameRequest, RequestQueue requestQueue){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(SEA_BLUE);
 
@@ -39,8 +43,14 @@ public class JTutorialPanel extends JPanel {
         JPanel bargeTable = createBargeTable();
         add(bargeTable);
 
-        JButton okayButton = new JButton("okay");
-        add(okayButton);
+        JButton startGame = new JButton("start game");
+        startGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                requestQueue.postAndFulfillRequest(startGameRequest);
+            }
+        });
+        add(startGame);
     }
 
     /**
