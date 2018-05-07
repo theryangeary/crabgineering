@@ -10,6 +10,7 @@ import view.estuaryenums.EstuaryImage;
 import view.jcomponents.JEstuaryImageLabel;
 import view.jcomponents.JPollutionBar;
 import view.jcomponents.JScoreLabel;
+import view.jcomponents.JTutorialPanel;
 import view.sprites.Sprite;
 
 import javax.swing.*;
