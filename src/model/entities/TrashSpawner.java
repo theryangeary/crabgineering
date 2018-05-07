@@ -50,9 +50,23 @@ public class TrashSpawner {
             }
         };
 
+        System.out.println("a");
         spawnTimer = new Timer(interval, spawnAction);
     }
+    /**
+     * Generate a TrashSpawner
+     * @param requestQueue for controller.requests
+     * @param spawnHeight
+     * @param spawnWidth Specifies how wide of a range to spawn trash in
+     * @param interval time between trash spawning
+     * @param offset x offset for the trash spawner
+     * @see Request
+     */
+    public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval, int offset){
+       this(requestQueue, spawnHeight, spawnWidth, interval);
+       this.offset = offset;
 
+    }
     /**
      * Set the time interval to spawn trash
      * @param interval time, in ms, between trash generation

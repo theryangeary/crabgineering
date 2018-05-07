@@ -139,8 +139,9 @@ public class Model implements RequestListener {
 		spawner = new TrashSpawner(
 		        requestQueue,
 				spawnHeight,
-				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH,
-				spawnInterval);
+				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2*BARGE_WIDTH) - BARGE_PADDING,
+				spawnInterval,
+				BARGE_PADDING + BARGE_WIDTH);
 		spawner.start();
 		
 		requestQueue.postRequest(
