@@ -29,6 +29,10 @@ public class View extends JPanel implements RequestListener {
 	// define size of game
 	public final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
+	
+	// Button Image dimension
+	private final int BUTTON_WIDTH = 100;
+	private final int BUTTON_HEIGHT = 100;
 
 	// relative to model
 	private Dimension scale;
@@ -254,9 +258,13 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel();
 
-		//create the buttons
-		crabButton = new JButton("", new ImageIcon(SpriteImage.CRAB_BUTTON.getImage()));
-		turtleButton = new JButton("", new ImageIcon(SpriteImage.TURTLE_BUTTON.getImage()));
+		//create the buttons with images
+        Image crabButtonImage = SpriteImage.CRAB_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+        Image turtleButtonImage = SpriteImage.TURTLE_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+
+        
+		crabButton = new JButton("", new ImageIcon(crabButtonImage));
+		turtleButton = new JButton("", new ImageIcon(turtleButtonImage));
 		
 		crabButton.setOpaque(false);
 		turtleButton.setOpaque(false);
