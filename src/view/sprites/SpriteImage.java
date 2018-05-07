@@ -11,8 +11,10 @@ import java.io.IOException;
 public enum SpriteImage {
 	CLAM("clam.png"),
 	CRAB("crab.png"),
+	CRAB_BUTTON("crab-button.png"),
 	SHRIMP("shrimp.png"),
 	TURTLE("turtle.png"),
+	TURTLE_BUTTON("turtle-button.png"),
 	TRASH("trash.png"),
 	RECYCLING("recycling.png"),
 	ARROW("arrow.png"),
