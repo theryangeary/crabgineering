@@ -228,6 +228,15 @@ public class View extends JPanel implements RequestListener {
 		scoreConstraints.anchor = GridBagConstraints.NORTHWEST;
 		hud.add(scoreLabel, scoreConstraints);
 
+		GridBagConstraints endScoreConstraints = new GridBagConstraints();
+		endScoreConstraints.gridx = 2;
+		endScoreConstraints.gridy = 1;
+		endScoreConstraints.weighty = 1;
+		endScoreConstraints.weightx = 1;
+		endScoreConstraints.anchor = GridBagConstraints.EAST;
+		endScoreConstraints.fill = GridBagConstraints.BOTH;
+		hud.add(endScore, endScoreConstraints);
+
 		hud.setOpaque(false);
 		setFocusable(false);
         return hud;
