@@ -71,7 +71,7 @@ public class ModelRunningTests {
 
 		m.toggleTrashSpawning(false);
 
-		// ADD SOME TRASH THAT INTERSECTS, ONE IS 'THROWN' BY PLAYER
+		// ADD SOME SNACK_BAG THAT INTERSECTS, ONE IS 'THROWN' BY PLAYER
 		Trash t1 = f.createEasyTrash(150, 150, false);
 		Trash t2 = f.createEasyTrash(150, 150, false);
 		Request r1 = RequestFactory.createAddToModelRequest(t1);
@@ -187,7 +187,7 @@ public class ModelRunningTests {
 		int left = (int) m.getWorldBounds().getX();
 		int right = (int) m.getWorldBounds().getMaxX();
 
-		// TRASH
+		// SNACK_BAG
 		// Bottom
 		assertEquals(0, m.getCurrentPollutionLevel());
 		Trash t = f.createEasyTrash(5, bottom - 100, false);

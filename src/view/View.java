@@ -7,6 +7,7 @@ import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Entity;
 import view.estuaryenums.EstuaryImage;
+import view.jcomponents.JEstuaryImageLabel;
 import view.jcomponents.JPollutionBar;
 import view.jcomponents.JPollutionColor;
 import view.jcomponents.JScoreLabel;
@@ -62,9 +63,6 @@ public class View extends JPanel implements RequestListener {
 		requestQueue.addListener(this);
 
 		createAndShowGUI();
-
-	    //add(endScore, BorderLayout.PAGE_START);
-		//endScore.setVisible(false);
 
 		sprites = new ArrayList<>();
 	}
@@ -148,7 +146,7 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createBackground(){
         //create the component to house the background image
-        JLabel background = new JLabel();
+        JLabel background = new JEstuaryImageLabel(EstuaryImage.BACKGROUND);
 
         //get the background image
         ImageIcon backgroundIcon = new ImageIcon(EstuaryImage.BACKGROUND.getImage()) {
@@ -184,7 +182,7 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createForeground(){
         //create a container to hold the image
-        JLabel foreground = new JLabel();
+        JLabel foreground = new JEstuaryImageLabel(EstuaryImage.FOREGROUND);
 
         //get the foreground image
         ImageIcon foregroundIcon = new ImageIcon(EstuaryImage.FOREGROUND.getImage()) {
@@ -214,21 +212,6 @@ public class View extends JPanel implements RequestListener {
     private Component createHUD(){
 		//create a container to hold the game's HUD
 		JComponent hud = new JPanel(new GridBagLayout());
-
-		//create pollution bar display
-		//JPollutionBar pollutionBar = new JPollutionBar();
-		//pollutionBar.setPreferredSize(new Dimension(0, JPollutionBar.HEIGHT));
-		//make it take Requests
-		/*requestQueue.addListener(pollutionBar);
-		//and configure it's location in the HUD
-		GridBagConstraints pollutionConstraints = new GridBagConstraints();
-		pollutionConstraints.gridx = 1;
-		pollutionConstraints.weightx = 1;
-		pollutionConstraints.weighty = 1;
-		pollutionConstraints.insets = new Insets(16, 16, 80, 64);
-		pollutionConstraints.fill = GridBagConstraints.HORIZONTAL;
-		pollutionConstraints.anchor = GridBagConstraints.NORTHWEST;
-		hud.add(pollutionBar, pollutionConstraints);*/
 
 		//create score display
 		JScoreLabel scoreLabel = new JScoreLabel();
@@ -294,19 +277,16 @@ public class View extends JPanel implements RequestListener {
 		crabButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//make a request to start a new game with a Crab as the Player
+				//make a request to start the game with a Crab as the Player
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
 				);
-
-				//make sure the request is fulfilled even if we're paused
-				requestQueue.fulfillAllRequests();
 			}
 		});
 		turtleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//make a request to start a new game with a Turtle as the Player
+				//make a request to start the game with a Turtle as the Player
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
 				);
@@ -358,11 +338,14 @@ public class View extends JPanel implements RequestListener {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
 			case START_GAME:
+
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);
 				turtleButton.setVisible(false);
+
 				//and the pause button appear
 				pauseButton.setVisible(true);
+				break;
 			case ADD_TO_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
 					addSprite((Sprite) request.getSpecifics());

@@ -48,21 +48,21 @@ public class ModelRequestTests {
 	public void addToAndRemoveFromModelTest() {
 		m.reset(EntityType.CRAB);
 
-		// ADD TRASH TO MODEL
+		// ADD SNACK_BAG TO MODEL
 		TrashFactory f = new TrashFactory(new RequestQueue());
 		Trash t = f.createEasyTrash(15, 15, false);
 		Request r1 = RequestFactory.createAddToModelRequest(t);
 		m.handleRequest(r1);
 		assertTrue(m.getEntities().contains(t));
 		
-		// ADD THROWN TRASH
+		// ADD THROWN SNACK_BAG
 		t.setThrown(true);
 		Request r2 = RequestFactory.createAddThrownTrashRequest(t);
 		m.handleRequest(r2);
 		assertTrue(m.getEntities().contains(t));
 		assertTrue(m.getThrownTrash().contains(t));
 		
-		// REMOVE TRASH
+		// REMOVE SNACK_BAG
 		Request r3 = RequestFactory.createRemoveFromModelRequest(t);
 		m.handleRequest(r3);
 		assertFalse(m.getEntities().contains(t));
