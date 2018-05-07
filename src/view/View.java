@@ -352,6 +352,7 @@ public class View extends JPanel implements RequestListener {
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);
 				turtleButton.setVisible(false);
+				endScore.setVisible(false);
 
 				//and the pause button appear
 				pauseButton.setVisible(true);
