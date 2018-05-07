@@ -55,8 +55,8 @@ public class JTutorialPanel extends JPanel {
         trashTable.add(trashHeader);
 
         //add all the images
-        trashTable.add(new JEstuaryImageLabel(EstuaryImage.RECYCLING));
-        trashTable.add(new JEstuaryImageLabel(EstuaryImage.TRASH));
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.SODA_CAN));
+        trashTable.add(new JEstuaryImageLabel(EstuaryImage.SNACK_BAG));
 
         return trashTable;
     }
