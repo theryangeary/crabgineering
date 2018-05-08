@@ -50,7 +50,6 @@ public class TrashSpawner {
             }
         };
 
-        System.out.println("a");
         spawnTimer = new Timer(interval, spawnAction);
     }
     /**
