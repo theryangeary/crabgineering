@@ -59,18 +59,21 @@ public class TrashSpawner {
      * @return
      */
     protected Action createSpawnAction(RequestQueue requestQueue, int spawnWidth, int spawnHeight){
-        spawnAction = new AbstractAction() {
+        Action spawnAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
                 int randX = (int)(Math.random()*spawnWidth+offset);
+
                 //Decide whether trash should be recyclable or not (50-50 chance)
                 boolean recyclable = Math.random() > .5;
+
                 requestQueue.postRequest(
                         RequestFactory.createAddToModelRequest(
                                 factory.createEasyTrash(randX,spawnHeight, recyclable)
                         )
                 );
+
                 if (spawnTimer.getDelay() > 500) {
                     spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.02));
                 }
@@ -94,6 +97,14 @@ public class TrashSpawner {
      */
     public int getInterval(){
         return interval;
+    }
+
+    /**
+     * Get the instance of Factory used by this TrashSpawner
+     * @return the factory instance used by this TrashSpawner
+     */
+    TrashFactory getFactory(){
+        return factory;
     }
 
     /**
