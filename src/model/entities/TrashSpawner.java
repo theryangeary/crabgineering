@@ -20,7 +20,7 @@ public class TrashSpawner {
 
     /**
      * Generate a TrashSpawner
-     * @param requestQueue for controller.requests
+     * @param requestQueue for requests
      * @param spawnHeight
      * @param spawnWidth Specifies how wide of a range to spawn trash in
      * @param interval time between trash spawning
@@ -32,6 +32,33 @@ public class TrashSpawner {
         factory = new TrashFactory(requestQueue);
 
         //Abstract action that spawns trash randomly
+        spawnAction = createSpawnAction(requestQueue, spawnWidth, spawnHeight);
+
+        spawnTimer = new Timer(interval, spawnAction);
+    }
+    /**
+     * Generate a TrashSpawner
+     * @param requestQueue for requests
+     * @param spawnHeight Specifies the height at which trash spawns
+     * @param spawnWidth Specifies how wide of a range to spawn trash in
+     * @param interval time between trash spawning
+     * @param offset x offset for the trash spawner
+     * @see Request
+     */
+    public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval, int offset){
+       this(requestQueue, spawnHeight, spawnWidth, interval);
+       this.offset = offset;
+
+    }
+
+    /**
+     * Creates the action used by the timer to spawn trash
+     * @param requestQueue ADD_TO_MODEL requests for spawned trash are passed to this
+     * @param spawnWidth the width of the area where spawning should occur
+     * @param spawnHeight the height at which trash should spawn
+     * @return
+     */
+    protected Action createSpawnAction(RequestQueue requestQueue, int spawnWidth, int spawnHeight){
         spawnAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,22 +77,9 @@ public class TrashSpawner {
             }
         };
 
-        spawnTimer = new Timer(interval, spawnAction);
+        return spawnAction;
     }
-    /**
-     * Generate a TrashSpawner
-     * @param requestQueue for controller.requests
-     * @param spawnHeight
-     * @param spawnWidth Specifies how wide of a range to spawn trash in
-     * @param interval time between trash spawning
-     * @param offset x offset for the trash spawner
-     * @see Request
-     */
-    public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval, int offset){
-       this(requestQueue, spawnHeight, spawnWidth, interval);
-       this.offset = offset;
 
-    }
     /**
      * Set the time interval to spawn trash
      * @param interval time, in ms, between trash generation
