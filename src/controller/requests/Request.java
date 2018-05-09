@@ -12,6 +12,7 @@ public class Request<R> {
      * The possible types of actions that can be represented by a Request
      */
     public enum RequestType {
+        START_TUTORIAL,
         START_GAME,
         TOGGLE_PAUSED,
         ADD_TO_MODEL,
