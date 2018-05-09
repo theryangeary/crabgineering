@@ -16,7 +16,6 @@ public class TrashSpawner {
     private TrashFactory factory;
     private Action spawnAction;
     private Timer spawnTimer;
-    private int offset;
 
     /**
      * Generate a TrashSpawner
@@ -27,15 +26,9 @@ public class TrashSpawner {
      * @see Request
      */
     public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
-        //Interval is how long it talks between spawns
-        this.interval = interval;
-        factory = new TrashFactory(requestQueue);
-
-        //Abstract action that spawns trash randomly
-        spawnAction = createSpawnAction(requestQueue, spawnWidth, spawnHeight);
-
-        spawnTimer = new Timer(interval, spawnAction);
+        this(requestQueue, spawnHeight, spawnWidth, interval, 0);
     }
+
     /**
      * Generate a TrashSpawner
      * @param requestQueue for requests
@@ -46,19 +39,22 @@ public class TrashSpawner {
      * @see Request
      */
     public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval, int offset){
-       this(requestQueue, spawnHeight, spawnWidth, interval);
-       this.offset = offset;
+        //Interval is how long it talks between spawns
+        this.interval = interval;
+        factory = new TrashFactory(requestQueue);
 
+        //start the spawning process
+        initSpawning(requestQueue, spawnWidth, spawnHeight, offset);
     }
 
     /**
-     * Creates the action used by the timer to spawn trash
+     * Configures everything so that this TrashSpawner will actually spawn trash
      * @param requestQueue ADD_TO_MODEL requests for spawned trash are passed to this
      * @param spawnWidth the width of the area where spawning should occur
      * @param spawnHeight the height at which trash should spawn
-     * @return
+     * @param offset the x-position where we start spawning thrash
      */
-    protected Action createSpawnAction(RequestQueue requestQueue, int spawnWidth, int spawnHeight){
+    void initSpawning(RequestQueue requestQueue, int spawnWidth, int spawnHeight, int offset){
         Action spawnAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +76,7 @@ public class TrashSpawner {
             }
         };
 
-        return spawnAction;
+        spawnTimer = new Timer(interval, spawnAction);
     }
 
     /**

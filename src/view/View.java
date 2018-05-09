@@ -348,6 +348,8 @@ public class View extends JPanel implements RequestListener {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
 			case START_GAME:
+				//reset the sprites
+				sprites.clear();
 
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);
