@@ -1,5 +1,6 @@
 package model;
 
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import view.estuaryenums.EstuarySound;
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
@@ -91,7 +92,7 @@ public class Model implements RequestListener {
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
 	 * and adds a TrashSpawner and Player.
 	 */
-	public void reset(EntityType playerType) {
+	public void reset(EntityType playerType, Request.RequestType resetMode) {
 		entities.clear();
 		thrownTrash.clear();
 		removeFromThrownTrash.clear();
@@ -110,14 +111,41 @@ public class Model implements RequestListener {
 			player = new Turtle(playerInitialX, playerInitialY,requestQueue);
 			break;
 		default:
-			break;
+			throw new ValueException(playerType.name() + " not a valid player type");
 		}
-
-		//Adding boss
-		Entity boss = new Boss(-500,25,requestQueue);
-		//addEntity(boss);
-
 		addEntity(player);
+
+		//set up the spawner
+		int spawnInterval = 2 * 1000;
+		int spawnHeight = -Trash.TRASH_HEIGHT;
+		switch (resetMode) {
+			case START_TUTORIAL:
+				spawner = new TutorialTrashSpawner(
+						requestQueue,
+						spawnHeight,
+						(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2 * BARGE_WIDTH) - BARGE_PADDING,
+						BARGE_PADDING + BARGE_WIDTH);
+				spawner.start();
+
+				break;
+			case START_GAME:
+
+				//set up the spawner for the regular game
+				spawner = new TimerTrashSpawner(
+						requestQueue,
+						spawnHeight,
+						(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2 * BARGE_WIDTH) - BARGE_PADDING,
+						spawnInterval,
+						BARGE_PADDING + BARGE_WIDTH);
+				spawner.start();
+
+				//Adding boss
+				Entity boss = new Boss(-500, 25, requestQueue);
+				//addEntity(boss);
+				break;
+			default:
+				throw new ValueException(resetMode.name() + " not a valid game mode");
+		}
 
 		recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING, (int) getWorldBounds().getY() + BARGE_PADDING,
 				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
@@ -127,16 +155,6 @@ public class Model implements RequestListener {
 
 		addEntity(trashBarge);
 		addEntity(recyclingBarge);
-
-		int spawnInterval = 2 * 1000;
-		int spawnHeight = - Trash.TRASH_HEIGHT;
-		spawner = new TimerTrashSpawner(
-		        requestQueue,
-				spawnHeight,
-				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2*BARGE_WIDTH) - BARGE_PADDING,
-				spawnInterval,
-				BARGE_PADDING + BARGE_WIDTH);
-		spawner.start();
 		
 		requestQueue.postRequest(
 				RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
