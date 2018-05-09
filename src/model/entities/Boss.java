@@ -29,7 +29,7 @@ public class Boss extends Entity{
             }
         };
 
-        spawner = new TrashSpawner(
+        spawner = new TimerTrashSpawner(
                 requestQueue,
                 y+BOSS_HEIGHT/2,
                 0,

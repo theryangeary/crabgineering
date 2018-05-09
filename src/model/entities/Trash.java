@@ -2,14 +2,21 @@ package model.entities;
 
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import model.Model;
 import view.estuaryenums.EstuarySound;
+
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Random;
 
 /**
  * A class representing a Trash object. Trash is a type of Entitiy.
  * @author Zelinsky
  */
 public class Trash extends Entity {
+
+    private static Random random = new Random();
 
 	private RequestQueue requestQueue;
 
@@ -18,8 +25,6 @@ public class Trash extends Entity {
 	private final int ANGLE_FACTOR = 5;
 
 	public static final int POLLUTION = 10;
-
-	private boolean isRecyclable;
 	
 	private boolean thrown = false;
 	private boolean addedPollution = false;
@@ -27,6 +32,18 @@ public class Trash extends Entity {
 
 	public static final int TRASH_WIDTH = 50;
 	public static final int TRASH_HEIGHT = 50;
+
+	private EntityType type;
+    /**
+     * Contains all of the different types of [non-recyclable] Trash
+     */
+    public static final EnumSet<EntityType> TRASH_TYPES =
+            EnumSet.of(EntityType.SNACK_BAG, EntityType.STYROFOAM_CUP);
+    /**
+     * Contains all of the different types of recyclables
+     */
+    public static final EnumSet<EntityType> RECYCLING_TYPES =
+            EnumSet.of(EntityType.SODA_CAN, EntityType.MILK_JUG);
 
 	/**
 	 * Constructs a Trash object. Calls Entity's constructor with super(x, y, width, height).
@@ -40,26 +57,50 @@ public class Trash extends Entity {
 	 */
 	Trash(int x, int y, int width, int height, RequestQueue requestQueue, boolean isRecyclable) {
 		super(x, y, width, height);
-		//System.out.println(String.format(
-		//        "Trash: width=%d height=%d",
-		//        width, height));
 		this.requestQueue = requestQueue;
-		this.isRecyclable = isRecyclable;
+
+		//choose specific type of trash depending on isRecyclable
+        if (isRecyclable){
+            //if recyclable, choose one of the EntityTypes in RECYCLING_TYPES
+            int typeNum = random.nextInt(RECYCLING_TYPES.size());
+            this.type = (EntityType) RECYCLING_TYPES.toArray()[typeNum];
+        } else {
+            //otherwise, choose one of the EntityTypes in TRASH_TYPES
+            int typeNum = random.nextInt(TRASH_TYPES.size());
+            this.type = (EntityType) TRASH_TYPES.toArray()[typeNum];
+        }
 	}
+
+    /**
+     * Constructs a Trash object. Calls Entity's constructor with super(x, y, width, height).
+     * Sets up the Trash's RequestQueue.
+     * @param x The x position of the Trash
+     * @param y The y position of the Trash
+     * @param width The width of the Trash
+     * @param height The height of the Trash
+     * @param requestQueue The RequestQueue of the Trash
+     * @see RequestQueue
+     */
+    Trash(int x, int y, int width, int height, RequestQueue requestQueue, EntityType type) {
+        super(x, y, width, height);
+        this.requestQueue = requestQueue;
+
+        //make sure a valid type was passed in
+        if (TRASH_TYPES.contains(type) || RECYCLING_TYPES.contains(type)) {
+            this.type = type;
+        } else {
+            throw new ValueException("tried to make Trash with non-trash EntityType");
+        }
+    }
 
 	/**
 	 * Indicates whether or not this is recyclable,
 	 * as well as that it is refuse of some sort
-	 * @return either EntityType.SNACK_BAG or EntityType.SODA_CAN,
-	 * depending on what type of Trash this is
+	 * @return one of the types in TRASH_TYPES or RECYCLING_TYPES
 	 */
 	@Override
 	public EntityType getType(){
-		if (isRecyclable) {
-			return EntityType.RECYCLING;
-		} else {
-			return EntityType.TRASH;
-		}
+		return type;
 	}
 	
 	/**
@@ -81,12 +122,7 @@ public class Trash extends Entity {
 			dx = 0;
 		}
 		if (topBound() && dy < 0) {
-			requestQueue.postRequest(
-					RequestFactory.createRemoveFromModelRequest(this)
-			);
-			requestQueue.postRequest(
-					RequestFactory.createUpdateScoreRequest(1)
-			);
+
 		}
 		if (bottomBound() && dy > 0) {
 			dy = 0;

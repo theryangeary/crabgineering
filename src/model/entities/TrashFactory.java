@@ -26,6 +26,17 @@ public class TrashFactory {
     }
 
     /**
+     * Create easy trash at specified x and y coordinates
+     * @param x x coordinate to spawn trash
+     * @param y y coordinate to spawn trash
+     * @param trashType indicates which type of trash should be generated
+     * @return Easy trash object at (x, y)
+     */
+    public Trash createEasyTrash(int x, int y, Entity.EntityType trashType){
+        return new Trash(x,y,Trash.TRASH_WIDTH,Trash.TRASH_WIDTH, requestQueue, trashType);
+    }
+
+    /**
      * Create hard trash at specified x and y coordinates
      * @param x x coordinate to spawn trash
      * @param y y coordinate to spawn trash

@@ -20,9 +20,11 @@ public abstract class Entity implements BoundsListener {
 		CRAB,
 		SHRIMP,
 		TURTLE,
-		TRASH,
 		BOSS,
-		RECYCLING,
+        SNACK_BAG,
+        STYROFOAM_CUP,
+        SODA_CAN,
+        MILK_JUG,
 		TRASH_BARGE,
 		RECYCLING_BARGE;
 	}
@@ -42,13 +44,6 @@ public abstract class Entity implements BoundsListener {
 	private int currentHealth;
 	private final int maxHealth;
 
-	//TODO: switch to enum flag
-	// States, i.e. booleans that are used to perform actions and check for things
-	private boolean isMovingRight = false;
-	private boolean isMovingLeft = false;
-	private boolean isMovingUp = false;
-	private boolean isMovingDown = false;
-	private boolean isAlive = true;
 	/**
 	 * The boolean representing whether or not the Entity is at the bottom of the worldBounds Rectangle.
 	 * Objects that extend Entity may need access to this attribute.
@@ -162,6 +157,14 @@ public abstract class Entity implements BoundsListener {
 	public void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	/**
+	 * Returns the current velocity along the y-axis
+	 * @return dy
+	 */
+	double getDY(){
+		return dy;
 	}
 	
 	/**

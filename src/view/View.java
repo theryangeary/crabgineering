@@ -289,7 +289,7 @@ public class View extends JPanel implements RequestListener {
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Crab as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
 			}
 		});
@@ -298,7 +298,7 @@ public class View extends JPanel implements RequestListener {
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Turtle as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.TURTLE)
 				);
 			}
 		});
@@ -347,7 +347,14 @@ public class View extends JPanel implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
+			case START_TUTORIAL:
+				//same as when starting a normal game here
 			case START_GAME:
+				//make sure we're not just continuing a game
+				if (request.getSpecifics() != null) {
+					//reset the sprites
+					sprites.clear();
+				}
 
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);
