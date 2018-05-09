@@ -27,6 +27,8 @@ public abstract class TrashSpawner {
     public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int offset){
         this.offset = offset;
         factory = new TrashFactory(requestQueue);
+        this.spawnHeight = spawnHeight;
+        this.spawnWidth = spawnWidth;
 
         //start the spawning process
         initSpawning(requestQueue);
