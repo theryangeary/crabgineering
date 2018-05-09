@@ -93,27 +93,50 @@ public class Model implements RequestListener {
 	 * and adds a TrashSpawner and Player.
 	 */
 	public void reset(EntityType playerType, Request.RequestType resetMode) {
-		entities.clear();
-		thrownTrash.clear();
-		removeFromThrownTrash.clear();
-		player = null;
-		spawner = null;
-		gameOver = false;
-		
-		int playerInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
-		int playerInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
-		
-		switch (playerType) {
-		case CRAB:
-			player = new Crab(playerInitialX, playerInitialY, requestQueue);
-			break;
-		case TURTLE:
-			player = new Turtle(playerInitialX, playerInitialY,requestQueue);
-			break;
-		default:
-			throw new ValueException(playerType.name() + " not a valid player type");
+		System.out.println(playerType);
+
+		//if playerType is null, we're continuing a game,
+		//so only reset the spawner
+		if (playerType != null) {
+			entities.clear();
+			thrownTrash.clear();
+			removeFromThrownTrash.clear();
+			player = null;
+			spawner = null;
+			gameOver = false;
+
+			int playerInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
+			int playerInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
+
+			switch (playerType) {
+				case CRAB:
+					player = new Crab(playerInitialX, playerInitialY, requestQueue);
+					break;
+				case TURTLE:
+					player = new Turtle(playerInitialX, playerInitialY, requestQueue);
+					break;
+				default:
+					throw new ValueException(playerType.name() + " not a valid player type");
+			}
+			addEntity(player);
+
+
+			recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING, (int) getWorldBounds().getY() + BARGE_PADDING,
+					BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
+			trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING),
+					(int) getWorldBounds().getY() + BARGE_PADDING,
+					BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
+
+			addEntity(trashBarge);
+			addEntity(recyclingBarge);
+
+			requestQueue.postRequest(
+					RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
+			);
+			requestQueue.postRequest(
+					RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
+			);
 		}
-		addEntity(player);
 
 		//set up the spawner
 		int spawnInterval = 2 * 1000;
@@ -146,22 +169,6 @@ public class Model implements RequestListener {
 			default:
 				throw new ValueException(resetMode.name() + " not a valid game mode");
 		}
-
-		recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING, (int) getWorldBounds().getY() + BARGE_PADDING,
-				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
-		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING),
-				(int) getWorldBounds().getY() + BARGE_PADDING,
-				BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
-
-		addEntity(trashBarge);
-		addEntity(recyclingBarge);
-		
-		requestQueue.postRequest(
-				RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
-		);
-		requestQueue.postRequest(
-				RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
-		);
 	}
 
 	/**

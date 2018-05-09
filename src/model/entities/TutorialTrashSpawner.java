@@ -11,6 +11,8 @@ import java.util.EnumSet;
  * Generates one piece of trash at a time, in a specific order
  */
 public class TutorialTrashSpawner extends TrashSpawner implements RequestListener {
+    public static final int NUM_CYCLES = 2;
+
     private RequestQueue requestQueue;
     private int curTrash;
     private Entity.EntityType[] trashTypes;
@@ -74,7 +76,7 @@ public class TutorialTrashSpawner extends TrashSpawner implements RequestListene
         //Generates a random x position within rage 0
         int randX = (int)(Math.random()*getSpawnWidth()+getOffset());
 
-        Entity.EntityType trashType = trashTypes[curTrash];
+        Entity.EntityType trashType = trashTypes[curTrash % trashTypes.length];
 
         return getFactory().createEasyTrash(randX,getSpawnHeight(), trashType);
     }
@@ -83,8 +85,21 @@ public class TutorialTrashSpawner extends TrashSpawner implements RequestListene
     public void handleRequest(Request request){
         switch (request.getRequestedAction()){
             case UPDATE_SCORE:
+                //ignore the reset versions:
+                //they don't actually indicate that trash has been disposed of
+                if ((int) request.getSpecifics() <= 0) {
+                    break;
+                }
+
                 //move on to the next trash type, since the player got rid of it correctly
                 curTrash++;
+
+                //start the real game if the player's shown their worth
+                if (curTrash > trashTypes.length * NUM_CYCLES) {
+                    requestQueue.postRequest(
+                            RequestFactory.createStartGameRequest(null)
+                    );
+                }
                 break;
 
             case UPDATE_POLLUTION:
