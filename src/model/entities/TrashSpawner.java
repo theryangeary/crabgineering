@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * TrashSpawner, a time based trash generator
  */
 public class TrashSpawner {
-    private int interval = 0;
+    private int interval;
     private TrashFactory factory;
     private Action spawnAction;
     private Timer spawnTimer;
@@ -49,8 +49,7 @@ public class TrashSpawner {
                 }
             }
         };
-
-        System.out.println("a");
+        
         spawnTimer = new Timer(interval, spawnAction);
     }
     /**
