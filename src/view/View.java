@@ -298,7 +298,7 @@ public class View extends JPanel implements RequestListener {
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Turtle as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.TURTLE)
 				);
 			}
 		});
