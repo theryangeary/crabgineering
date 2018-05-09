@@ -46,9 +46,10 @@ public class Barge extends Entity {
      * @return true if the trash matches the barge
      */
     public boolean bargeMatchesTrash(Trash t) {
-        return (getType().equals(EntityType.RECYCLING_BARGE) &&
-                t.getType().equals(EntityType.RECYCLING)) ||
-                (getType().equals(EntityType.TRASH_BARGE) &&
-                        t.getType().equals(EntityType.TRASH));
+        return (getType().equals(EntityType.RECYCLING_BARGE)
+                 && Trash.RECYCLING_TYPES.contains(t.getType()))
+                ||
+                (getType().equals(EntityType.TRASH_BARGE)
+                  && Trash.TRASH_TYPES.contains(t.getType()));
     }
 }

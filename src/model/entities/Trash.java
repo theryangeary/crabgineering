@@ -36,12 +36,12 @@ public class Trash extends Entity {
     /**
      * Contains all of the different types of [non-recyclable] Trash
      */
-    public final EnumSet<EntityType> TRASH_TYPES =
+    public static final EnumSet<EntityType> TRASH_TYPES =
             EnumSet.of(EntityType.SNACK_BAG, EntityType.STYROFOAM_CUP);
     /**
      * Contains all of the different types of recyclables
      */
-    public final EnumSet<EntityType> RECYCLING_TYPES =
+    public static final EnumSet<EntityType> RECYCLING_TYPES =
             EnumSet.of(EntityType.SODA_CAN, EntityType.MILK_JUG);
 
 	/**
