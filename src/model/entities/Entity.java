@@ -20,9 +20,11 @@ public abstract class Entity implements BoundsListener {
 		CRAB,
 		SHRIMP,
 		TURTLE,
-		TRASH,
 		BOSS,
-		RECYCLING,
+        SNACK_BAG,
+        STYROFOAM_CUP,
+        SODA_CAN,
+        MILK_JUG,
 		TRASH_BARGE,
 		RECYCLING_BARGE;
 	}
