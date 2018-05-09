@@ -8,11 +8,11 @@ import controller.requests.RequestQueue;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-/**
- * TrashSpawner, a time based trash generator
- */
+
 public abstract class TrashSpawner {
     private int offset;
+    private int spawnHeight;
+    private int spawnWidth;
     private TrashFactory factory;
 
     /**
@@ -29,7 +29,7 @@ public abstract class TrashSpawner {
         factory = new TrashFactory(requestQueue);
 
         //start the spawning process
-        initSpawning(requestQueue, spawnWidth, spawnHeight);
+        initSpawning(requestQueue);
     }
 
     /**
@@ -39,7 +39,7 @@ public abstract class TrashSpawner {
      * @param spawnHeight the height at which trash should spawn
      * @param offset the x-position where we start spawning thrash
      */
-    abstract void initSpawning(RequestQueue requestQueue, int spawnWidth, int spawnHeight);
+    abstract void initSpawning(RequestQueue requestQueue);
 
     /**
      * Get the instance of Factory used by this TrashSpawner
@@ -53,8 +53,24 @@ public abstract class TrashSpawner {
      * Get the offset used by this spawner
      * @return the offset for spawning used by this TrashSpawner
      */
-    int getOffset(){
+    public int getOffset(){
         return offset;
+    }
+
+    /**
+     * Get the height at which this spawner spawns trash
+     * @return the height at which this spawner spawns trash
+     */
+    public int getSpawnHeight() {
+        return spawnHeight;
+    }
+
+    /**
+     * Get the width of the spawning area
+     * @return the width of the spawning area
+     */
+    public int getSpawnWidth() {
+        return spawnWidth;
     }
 
     /**

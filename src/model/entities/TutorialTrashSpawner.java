@@ -4,7 +4,12 @@ import controller.requests.Request;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 
+/**
+ * Generates one piece of trash at a time, in a specific order
+ */
 public class TutorialTrashSpawner extends TrashSpawner {
+    private RequestQueue requestQueue;
+
     /**
      * Generate a TrashSpawner
      *
@@ -30,6 +35,8 @@ public class TutorialTrashSpawner extends TrashSpawner {
      */
     public TutorialTrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int offset) {
         super(requestQueue, spawnHeight, spawnWidth, offset);
+
+        this.requestQueue = requestQueue;
     }
 
     /**
@@ -40,8 +47,24 @@ public class TutorialTrashSpawner extends TrashSpawner {
      * @param offset the x-position where we start spawning thrash
      */
     @Override
-    void initSpawning(RequestQueue requestQueue, int spawnWidth, int spawnHeight){
+    void initSpawning(RequestQueue requestQueue){
+        //post the first piece of trash
+        requestQueue.postRequest(
+                RequestFactory.createAddToModelRequest(getNextTrash())
+        );
+    }
 
+    /**
+     * @return the next piece of trash to be added to the model
+     */
+    private Trash getNextTrash(){
+        //Generates a random x position within rage 0
+        int randX = (int)(Math.random()*getSpawnWidth()+getOffset());
+
+        //Decide whether trash should be recyclable or not (50-50 chance)
+        boolean recyclable = Math.random() > .5;
+
+        return getFactory().createEasyTrash(randX,getSpawnHeight(), recyclable);
     }
 
     /**

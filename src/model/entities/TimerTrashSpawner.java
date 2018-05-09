@@ -7,6 +7,9 @@ import controller.requests.RequestQueue;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * TrashSpawner, a time based trash generator
+ */
 public class TimerTrashSpawner extends TrashSpawner {
     private int interval;
     private Timer spawnTimer;
@@ -51,19 +54,19 @@ public class TimerTrashSpawner extends TrashSpawner {
      * @param offset the x-position where we start spawning thrash
      */
     @Override
-    void initSpawning(RequestQueue requestQueue, int spawnWidth, int spawnHeight){
+    void initSpawning(RequestQueue requestQueue){
         Action spawnAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
-                int randX = (int)(Math.random()*spawnWidth+getOffset());
+                int randX = (int)(Math.random()*getSpawnWidth()+getOffset());
 
                 //Decide whether trash should be recyclable or not (50-50 chance)
                 boolean recyclable = Math.random() > .5;
 
                 requestQueue.postRequest(
                         RequestFactory.createAddToModelRequest(
-                                getFactory().createEasyTrash(randX,spawnHeight, recyclable)
+                                getFactory().createEasyTrash(randX,getSpawnHeight(), recyclable)
                         )
                 );
 
@@ -73,7 +76,7 @@ public class TimerTrashSpawner extends TrashSpawner {
             }
         };
 
-        //NOTE: interval may not have been intialised yert
+        //NOTE: interval may not have been intialised yet
         spawnTimer = new Timer(interval, spawnAction);
     }
 
