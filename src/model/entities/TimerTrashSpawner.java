@@ -40,6 +40,7 @@ public class TimerTrashSpawner extends TrashSpawner {
 
         //Interval is how long it takes between spawns
         this.interval = interval;
+        spawnTimer.setDelay(this.interval);
     }
 
     /**
@@ -72,6 +73,7 @@ public class TimerTrashSpawner extends TrashSpawner {
             }
         };
 
+        //NOTE: interval may not have been intialised yert
         spawnTimer = new Timer(interval, spawnAction);
     }
 
