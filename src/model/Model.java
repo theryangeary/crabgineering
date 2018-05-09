@@ -46,7 +46,6 @@ public class Model implements RequestListener {
 	private Barge recyclingBarge;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> removeFromThrownTrash = new ArrayList<>();
-	private ArrayList<Entity> toRemove = new ArrayList<>();
 
 	//game variables
 	private int currentPollutionLevel = 0;
@@ -93,13 +92,8 @@ public class Model implements RequestListener {
 	 * and adds a TrashSpawner and Player.
 	 */
 	public void reset(EntityType playerType) {
-		toRemove.addAll(entities);
-		for(Entity e : toRemove) {
-			removeEntity(e);
-		}
 		entities.clear();
 		thrownTrash.clear();
-		toRemove.clear();
 		removeFromThrownTrash.clear();
 		player = null;
 		spawner = null;
@@ -204,7 +198,9 @@ public class Model implements RequestListener {
 						);
 				}
 				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash) || trash.atTop()) && trash.touched()) {
-					toRemove.add(entity);
+					requestQueue.postRequest(
+							RequestFactory.createRemoveFromModelRequest(trash)
+					);
 					removeFromThrownTrash.add(trash);
 				}
 				if (trash.getYSpeed() > 0) {
@@ -221,11 +217,6 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
-		for (Entity e : toRemove) {
-			removeEntity(e);
-		}
-		toRemove.clear();
 
 		for (Trash t : removeFromThrownTrash) {
 			thrownTrash.remove(t);

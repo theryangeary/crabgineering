@@ -108,6 +108,14 @@ public class TrashSpawner {
     }
 
     /**
+     * Get the offset used by this spawner
+     * @return the offset for spawning used by this TrashSpawner
+     */
+    int getOffset(){
+        return offset;
+    }
+
+    /**
      * Stop or pause the trash spawner
      */
     public void stop(){

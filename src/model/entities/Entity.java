@@ -41,7 +41,7 @@ public abstract class Entity implements BoundsListener {
 	
 	private int currentHealth;
 	private final int maxHealth;
-	
+
 	/**
 	 * The boolean representing whether or not the Entity is at the bottom of the worldBounds Rectangle.
 	 * Objects that extend Entity may need access to this attribute.
@@ -155,6 +155,14 @@ public abstract class Entity implements BoundsListener {
 	public void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	/**
+	 * Returns the current velocity along the y-axis
+	 * @return dy
+	 */
+	double getDY(){
+		return dy;
 	}
 	
 	/**

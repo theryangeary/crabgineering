@@ -48,7 +48,7 @@ public class TutorialTrashSpawner extends TrashSpawner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Generates a random x position within rage 0
-                int randX = (int)(Math.random()*spawnWidth+offset);
+                int randX = (int)(Math.random()*spawnWidth+getOffset());
 
                 //Decide whether trash should be recyclable or not (50-50 chance)
                 boolean recyclable = Math.random() > .5;
