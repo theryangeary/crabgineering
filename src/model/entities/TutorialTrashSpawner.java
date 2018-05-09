@@ -4,11 +4,15 @@ import controller.requests.Request;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 
+import java.util.EnumSet;
+
 /**
  * Generates one piece of trash at a time, in a specific order
  */
 public class TutorialTrashSpawner extends TrashSpawner {
     private RequestQueue requestQueue;
+    private int curTrash;
+    private Entity.EntityType[] trashTypes;
 
     /**
      * Generate a TrashSpawner
@@ -16,7 +20,6 @@ public class TutorialTrashSpawner extends TrashSpawner {
      * @param requestQueue for requests
      * @param spawnHeight
      * @param spawnWidth   Specifies how wide of a range to spawn trash in
-     * @param interval     time between trash spawning
      * @see Request
      */
     public TutorialTrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth) {
@@ -29,7 +32,6 @@ public class TutorialTrashSpawner extends TrashSpawner {
      * @param requestQueue for requests
      * @param spawnHeight  Specifies the height at which trash spawns
      * @param spawnWidth   Specifies how wide of a range to spawn trash in
-     * @param interval     time between trash spawning
      * @param offset       x offset for the trash spawner
      * @see Request
      */
@@ -37,6 +39,13 @@ public class TutorialTrashSpawner extends TrashSpawner {
         super(requestQueue, spawnHeight, spawnWidth, offset);
 
         this.requestQueue = requestQueue;
+
+        //combines all of the types of recycling and all the types of trash
+        EnumSet<Entity.EntityType> allTrash = EnumSet.copyOf(Trash.TRASH_TYPES);
+        allTrash.addAll(Trash.RECYCLING_TYPES);
+        this.trashTypes = allTrash.toArray(this.trashTypes);
+
+        this.curTrash = 0;
     }
 
     /**
@@ -61,10 +70,10 @@ public class TutorialTrashSpawner extends TrashSpawner {
         //Generates a random x position within rage 0
         int randX = (int)(Math.random()*getSpawnWidth()+getOffset());
 
-        //Decide whether trash should be recyclable or not (50-50 chance)
-        boolean recyclable = Math.random() > .5;
+        Entity.EntityType trashType = trashTypes[curTrash];
+        curTrash = (curTrash + 1) % trashTypes.length;
 
-        return getFactory().createEasyTrash(randX,getSpawnHeight(), recyclable);
+        return getFactory().createEasyTrash(randX,getSpawnHeight(), trashType);
     }
 
     /**

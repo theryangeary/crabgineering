@@ -2,6 +2,7 @@ package model.entities;
 
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import model.Model;
 import view.estuaryenums.EstuarySound;
 
@@ -69,6 +70,28 @@ public class Trash extends Entity {
             this.type = (EntityType) TRASH_TYPES.toArray()[typeNum];
         }
 	}
+
+    /**
+     * Constructs a Trash object. Calls Entity's constructor with super(x, y, width, height).
+     * Sets up the Trash's RequestQueue.
+     * @param x The x position of the Trash
+     * @param y The y position of the Trash
+     * @param width The width of the Trash
+     * @param height The height of the Trash
+     * @param requestQueue The RequestQueue of the Trash
+     * @see RequestQueue
+     */
+    Trash(int x, int y, int width, int height, RequestQueue requestQueue, EntityType type) {
+        super(x, y, width, height);
+        this.requestQueue = requestQueue;
+
+        //make sure a valid type was passed in
+        if (TRASH_TYPES.contains(type) || RECYCLING_TYPES.contains(type)) {
+            this.type = type;
+        } else {
+            throw new ValueException("tried to make Trash with non-trash EntityType");
+        }
+    }
 
 	/**
 	 * Indicates whether or not this is recyclable,
