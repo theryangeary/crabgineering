@@ -52,19 +52,14 @@ public class EntitySprite implements Sprite, BoundsListener {
                 return EstuaryImage.CLAM;
             case SHRIMP:
                 return EstuaryImage.SHRIMP;
-            case TRASH:
-                if (Math.random() > .5) {
-                    return EstuaryImage.SNACK_BAG;
-                } else {
-                    return EstuaryImage.STYROFOAM_CUP;
-                }
-
-            case RECYCLING:
-                if (Math.random() > .5) {
+            case SNACK_BAG:
+                return EstuaryImage.SNACK_BAG;
+            case STYROFOAM_CUP:
+                return EstuaryImage.STYROFOAM_CUP;
+            case SODA_CAN:
                     return EstuaryImage.SODA_CAN;
-                } else {
+            case MILK_JUG:
                     return EstuaryImage.MILK_JUG;
-                }
             case BOSS:
                 return EstuaryImage.BOSS;
             case TRASH_BARGE:
