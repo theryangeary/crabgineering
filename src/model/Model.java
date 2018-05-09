@@ -130,7 +130,7 @@ public class Model implements RequestListener {
 
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = - Trash.TRASH_HEIGHT;
-		spawner = new TrashSpawner(
+		spawner = new TimerTrashSpawner(
 		        requestQueue,
 				spawnHeight,
 				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2*BARGE_WIDTH) - BARGE_PADDING,
