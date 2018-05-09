@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 public class TimerTrashSpawner extends TrashSpawner {
     private int interval;
     private Timer spawnTimer;
+    public static final double SPEED_UP = 1.02;
 
     /**
      * Generate a TrashSpawner
@@ -66,7 +67,7 @@ public class TimerTrashSpawner extends TrashSpawner {
                 );
 
                 if (spawnTimer.getDelay() > 500) {
-                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.02));
+                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / SPEED_UP));
                 }
             }
         };
