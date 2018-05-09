@@ -289,7 +289,7 @@ public class View extends JPanel implements RequestListener {
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Crab as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
 			}
 		});
