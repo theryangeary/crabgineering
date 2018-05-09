@@ -350,8 +350,11 @@ public class View extends JPanel implements RequestListener {
 			case START_TUTORIAL:
 				//same as when starting a normal game here
 			case START_GAME:
-				//reset the sprites
-				sprites.clear();
+				//make sure we're not just continuing a game
+				if (request.getSpecifics() != null) {
+					//reset the sprites
+					sprites.clear();
+				}
 
 				//make the player selection buttons disappear
 				crabButton.setVisible(false);

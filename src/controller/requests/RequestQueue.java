@@ -30,8 +30,15 @@ public class RequestQueue extends ArrayDeque<Request> {
      * @param listener A RequestListener not already listening to this queue
      */
     public void addListener(RequestListener listener){
-
         listeners.add(listener);
+    }
+
+    /**
+     * Have this queue stop informing listener when it fulfils requests
+     * @param listener A RequestListener already listening to this queue
+     */
+    public void removeListener(RequestListener listener){
+        listeners.remove(listener);
     }
 
     /**

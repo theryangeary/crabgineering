@@ -5,6 +5,7 @@ import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 
+import java.awt.*;
 import java.util.EnumSet;
 
 /**
@@ -95,7 +96,22 @@ public class TutorialTrashSpawner extends TrashSpawner implements RequestListene
                 curTrash++;
 
                 //start the real game if the player's shown their worth
-                if (curTrash > trashTypes.length * NUM_CYCLES) {
+                if (completed()) {
+                    RequestListener listener = this;
+
+                    //do this later, so as to avoid concurrent modification
+                    EventQueue.invokeLater(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    //we've fulfilled our task...
+                                    //and don't want to exponentially
+                                    //increase the amount of trash onscreen
+                                    requestQueue.removeListener(listener);
+                                    }
+                            }
+                    );
+
                     requestQueue.postRequest(
                             RequestFactory.createStartGameRequest(null)
                     );
@@ -115,10 +131,19 @@ public class TutorialTrashSpawner extends TrashSpawner implements RequestListene
             case REMOVE_FROM_MODEL:
 
                 //either way, post a new piece of trash
-                requestQueue.postRequest(
-                        RequestFactory.createAddToModelRequest(getNextTrash())
-                );
+                if (!completed()) {
+                    requestQueue.postRequest(
+                            RequestFactory.createAddToModelRequest(getNextTrash())
+                    );
+                }
         }
+    }
+
+    /**
+     * @return a boolean indicating whether or not the tutorial has been completed
+     */
+    private boolean completed(){
+        return curTrash > trashTypes.length * NUM_CYCLES;
     }
 
     /**
