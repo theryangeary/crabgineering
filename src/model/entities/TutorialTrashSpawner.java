@@ -2,6 +2,7 @@ package model.entities;
 
 import controller.requests.Request;
 import controller.requests.RequestFactory;
+import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 
 import java.util.EnumSet;
@@ -9,7 +10,7 @@ import java.util.EnumSet;
 /**
  * Generates one piece of trash at a time, in a specific order
  */
-public class TutorialTrashSpawner extends TrashSpawner {
+public class TutorialTrashSpawner extends TrashSpawner implements RequestListener {
     private RequestQueue requestQueue;
     private int curTrash;
     private Entity.EntityType[] trashTypes;
@@ -39,13 +40,7 @@ public class TutorialTrashSpawner extends TrashSpawner {
         super(requestQueue, spawnHeight, spawnWidth, offset);
 
         this.requestQueue = requestQueue;
-
-        //combines all of the types of recycling and all the types of trash
-        EnumSet<Entity.EntityType> allTrash = EnumSet.copyOf(Trash.TRASH_TYPES);
-        allTrash.addAll(Trash.RECYCLING_TYPES);
-        this.trashTypes = allTrash.toArray(this.trashTypes);
-
-        this.curTrash = 0;
+        requestQueue.addListener(this);
     }
 
     /**
@@ -57,6 +52,15 @@ public class TutorialTrashSpawner extends TrashSpawner {
      */
     @Override
     void initSpawning(RequestQueue requestQueue){
+        //combines all of the types of recycling and all the types of trash
+        EnumSet<Entity.EntityType> allTrash = EnumSet.copyOf(Trash.TRASH_TYPES);
+        allTrash.addAll(Trash.RECYCLING_TYPES);
+
+        trashTypes = new Entity.EntityType[allTrash.size()];
+        trashTypes = allTrash.toArray(trashTypes);
+
+        curTrash = 0;
+
         //post the first piece of trash
         requestQueue.postRequest(
                 RequestFactory.createAddToModelRequest(getNextTrash())
@@ -71,22 +75,48 @@ public class TutorialTrashSpawner extends TrashSpawner {
         int randX = (int)(Math.random()*getSpawnWidth()+getOffset());
 
         Entity.EntityType trashType = trashTypes[curTrash];
-        curTrash = (curTrash + 1) % trashTypes.length;
 
         return getFactory().createEasyTrash(randX,getSpawnHeight(), trashType);
+    }
+
+    @Override
+    public void handleRequest(Request request){
+        switch (request.getRequestedAction()){
+            case UPDATE_SCORE:
+                //move on to the next trash type, since the player got rid of it correctly
+                curTrash++;
+                break;
+
+            case UPDATE_POLLUTION:
+                //stick with the current trash type since the player
+                //didn't deal with it right
+
+                //ignore the reset versions:
+                //they don't actually indicate that trash has been disposed of
+                if ((int) request.getSpecifics() <= 0) {
+                    break;
+                }
+
+            case REMOVE_FROM_MODEL:
+
+                //either way, post a new piece of trash
+                requestQueue.postRequest(
+                        RequestFactory.createAddToModelRequest(getNextTrash())
+                );
+        }
     }
 
     /**
      * Stop or pause the trash spawner
      */
     public void stop(){
-
+        //don't really need to do anything?
     }
 
     /**
      * Start or resume the trash spawner
      */
     public void start(){
-
+        //don't really need to do anything?
     }
 }
