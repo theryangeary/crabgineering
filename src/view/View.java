@@ -347,6 +347,8 @@ public class View extends JPanel implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
+			case START_TUTORIAL:
+				//same as when starting a normal game here
 			case START_GAME:
 				//reset the sprites
 				sprites.clear();

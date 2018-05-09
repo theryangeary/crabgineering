@@ -80,6 +80,20 @@ public class Controller implements RequestListener {
 					updater.start();
 				}
 				break;
+			case START_TUTORIAL:
+				//if we do this right away, the model will post a bunch of ADD_TO_VIEW Requests
+				//and cause concurrent modification problems, so just wait a bit
+				EventQueue.invokeLater(
+						new Runnable() {
+							@Override
+							public void run() {
+								model.reset((Entity.EntityType) request.getSpecifics());
+								keyBindings = new GameKeyBindings(view, model.getPlayer());
+								requestQueue.fulfillAllRequests();
+								start();
+							}
+						});
+				break;
 			case START_GAME:
 				//if we do this right away, the model will post a bunch of ADD_TO_VIEW Requests
 				//and cause concurrent modification problems, so just wait a bit
