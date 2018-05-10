@@ -19,6 +19,7 @@ public class Boss extends Entity{
 
     public Boss(int x, int y, RequestQueue requestQueue) {
         super(x, y, BOSS_WIDTH, BOSS_HEIGHT);
+        System.out.println("CREATE BOS");
         this.requestQueue = requestQueue;
         this.ignoreBounds = true;
 
@@ -59,6 +60,7 @@ public class Boss extends Entity{
     @Override
     public void update(double gravity, double drag){
         spawner.setOffset(getBounds().x+BOSS_WIDTH/2);
+        System.out.println("BOOS IS LIVE");
         //super.update(gravity,drag);
         int padding = 50;
 

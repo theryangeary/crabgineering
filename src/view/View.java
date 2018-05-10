@@ -291,6 +291,10 @@ public class View extends JPanel implements RequestListener {
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
+
+				requestQueue.postAndFulfillRequest(
+						RequestFactory.createStartBossRequest(null)
+				);
 			}
 		});
 		turtleButton.addActionListener(new ActionListener() {
@@ -300,6 +304,8 @@ public class View extends JPanel implements RequestListener {
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartTutorialRequest(Entity.EntityType.TURTLE)
 				);
+
+
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {

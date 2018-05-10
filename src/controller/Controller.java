@@ -1,6 +1,7 @@
 package controller;
 
 import controller.requests.Request;
+import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
 import model.Model;
@@ -96,6 +97,11 @@ public class Controller implements RequestListener {
 								start();
 							}
 						});
+				break;
+			case START_BOSS:
+				model.reset((Entity.EntityType) request.getSpecifics(),
+						request.getRequestedAction());
+				requestQueue.fulfillAllRequests();
 				break;
 		}
 	}

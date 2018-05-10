@@ -93,7 +93,7 @@ public class Model implements RequestListener {
 	 * and adds a TrashSpawner and Player.
 	 */
 	public void reset(EntityType playerType, Request.RequestType resetMode) {
-
+		//System.out.println(resetMode);
 		//if playerType is null, we're continuing a game,
 		//so only reset the spawner
 		if (playerType != null) {
@@ -137,6 +137,7 @@ public class Model implements RequestListener {
 			);
 		}
 
+
 		//set up the spawner
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = -Trash.TRASH_HEIGHT;
@@ -162,8 +163,15 @@ public class Model implements RequestListener {
 				spawner.start();
 
 				//Adding boss
-				Entity boss = new Boss(-500, 25, requestQueue);
+
 				//addEntity(boss);
+
+				break;
+
+			case START_BOSS:
+				System.out.println("STARTED BOSS");
+				Entity boss = new Boss(-500, 25, requestQueue);
+				addEntity(boss);
 				break;
 			default:
 				throw new ValueException(resetMode.name() + " not a valid game mode");
@@ -207,9 +215,14 @@ public class Model implements RequestListener {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
+			//System.out.println(entity.getType());
+			if(entity instanceof Boss){
+				System.out.println("yeet");
+			}
 			entity.update(GRAVITY, DRAG);
 //			System.out.println(entity.toString());
 			//Check for player-trash collision and trash-trash collision
+
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
 				if (player.intersects(trash) && !trash.atBottom()) {
@@ -293,8 +306,17 @@ public class Model implements RequestListener {
 	 */
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
+		if(entity instanceof Boss){
+			System.out.println("yote");
+		}
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
+
+		for(Entity e : entities){
+			if(e instanceof Boss){
+				System.out.println("YEET");
+			}
+		}
 
 		//create the corresponding sprite
 		Sprite sprite = new EntitySprite(entity);
@@ -303,6 +325,7 @@ public class Model implements RequestListener {
 		requestQueue.postRequest(
 				RequestFactory.createAddToViewRequest(sprite)
 		);
+
 	}
 
 	/**
@@ -312,6 +335,7 @@ public class Model implements RequestListener {
 	 * @param entity The Entity to be removed from the Model
 	 */
 	public void removeEntity(Entity entity) {
+
 		entities.remove(entity);
 
 		//remove any Sprites that are following the entity's movements
