@@ -39,10 +39,10 @@ public class GameKeyBindings {
 				Player.PlayerAction.MOVE_RIGHT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),
 				Player.PlayerAction.SPECIAL_ACTION);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0),
-				Player.PlayerAction.ROTATE_TRASH_LEFT);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
-				Player.PlayerAction.ROTATE_TRASH_RIGHT);
+//		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0),
+//				Player.PlayerAction.ROTATE_TRASH_LEFT);
+//		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0),
+//				Player.PlayerAction.ROTATE_TRASH_RIGHT);
 
 		//when left or right is released, stop
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true),
