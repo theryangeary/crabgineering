@@ -49,10 +49,10 @@ public class GameKeyBindings {
 				Player.PlayerAction.STOP);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true),
 				Player.PlayerAction.STOP);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true),
-				Player.PlayerAction.STOP_ROTATE);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true),
-				Player.PlayerAction.STOP_ROTATE);
+//		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true),
+//				Player.PlayerAction.STOP_ROTATE);
+//		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true),
+//				Player.PlayerAction.STOP_ROTATE);
 		
 		actionMap.put(Player.PlayerAction.MOVE_LEFT,
 				new KeyAction(Player.PlayerAction.MOVE_LEFT.name(), player));
@@ -60,14 +60,14 @@ public class GameKeyBindings {
 				new KeyAction(Player.PlayerAction.MOVE_RIGHT.name(), player));
 		actionMap.put(Player.PlayerAction.SPECIAL_ACTION,
 				new KeyAction(Player.PlayerAction.SPECIAL_ACTION.name(), player));
-		actionMap.put(Player.PlayerAction.ROTATE_TRASH_LEFT,
-				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
-		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
-				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
-		actionMap.put(Player.PlayerAction.STOP,
-				new KeyAction(Player.PlayerAction.STOP.name(), player));
-		actionMap.put(Player.PlayerAction.STOP_ROTATE,
-				new KeyAction(Player.PlayerAction.STOP_ROTATE.name(), player));
+//		actionMap.put(Player.PlayerAction.ROTATE_TRASH_LEFT,
+//				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
+//		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
+//				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
+//		actionMap.put(Player.PlayerAction.STOP,
+//				new KeyAction(Player.PlayerAction.STOP.name(), player));
+//		actionMap.put(Player.PlayerAction.STOP_ROTATE,
+//				new KeyAction(Player.PlayerAction.STOP_ROTATE.name(), player));
 	}
 	
 	/**
