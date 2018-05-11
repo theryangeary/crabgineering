@@ -19,7 +19,7 @@ public enum EstuaryImage {
     STYROFOAM_CUP("styrofoam-cup.png"),
 	SODA_CAN("soda-can.png"),
     MILK_JUG("milk-jug.png"),
-	ARROW("arrow.png"),
+//	ARROW("arrow.png"),
 	RECYCLING_BARGE("recycling-barge.png"),
 	TRASH_BARGE("trash-barge.png"),
 	TITLE("title.png"),
