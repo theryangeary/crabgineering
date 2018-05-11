@@ -64,8 +64,8 @@ public class GameKeyBindings {
 //				new KeyAction(Player.PlayerAction.ROTATE_TRASH_LEFT.name(), player));
 //		actionMap.put(Player.PlayerAction.ROTATE_TRASH_RIGHT,
 //				new KeyAction(Player.PlayerAction.ROTATE_TRASH_RIGHT.name(), player));
-//		actionMap.put(Player.PlayerAction.STOP,
-//				new KeyAction(Player.PlayerAction.STOP.name(), player));
+		actionMap.put(Player.PlayerAction.STOP,
+				new KeyAction(Player.PlayerAction.STOP.name(), player));
 //		actionMap.put(Player.PlayerAction.STOP_ROTATE,
 //				new KeyAction(Player.PlayerAction.STOP_ROTATE.name(), player));
 	}
