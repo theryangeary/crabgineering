@@ -45,12 +45,12 @@ public class GameKeyBindings implements Serializable {
 				Player.PlayerAction.SPECIAL_ACTION);
 		
 		// DEBUG
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0),
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true),
 				Controller.DebugAction.SAVE);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0),
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0, true),
 				Controller.DebugAction.LOAD);
-
-
+		
+		
 		//when left or right is released, stop
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true),
 				Player.PlayerAction.STOP);

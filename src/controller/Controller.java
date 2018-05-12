@@ -157,21 +157,28 @@ public class Controller implements RequestListener, Serializable {
 	
 	private void load() {
 		Model m = null;
-		
 		try {
 			FileInputStream fis = new FileInputStream(fileName);
 			ObjectInputStream in = new ObjectInputStream(fis);
-			m = (Model) in.readObject();
-			
-			model = m;
-			model.addRequestQueue(requestQueue);
-			keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
-			
-			
+			m = (Model) in.readObject();		
 			in.close();
 			fis.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		
+		if (m != null) {
+			updater.stop();
+			int score = model.getScore();
+			int pollution = model.getCurrentPollutionLevel();
+			model.removeAllEntities();
+			model = m;
+			model.setRequestQueue(requestQueue);
+			model.restore(score, pollution);
+			keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
+			requestQueue.fulfillAllRequests();
+			updater.start();
+			model.toggleTrashSpawning(true);
 		}
 	}
 }

@@ -403,8 +403,43 @@ public class Model implements RequestListener, Serializable {
 		return thrownTrash;
 	}
 	
-	public void addRequestQueue(RequestQueue requests) {
-		this.requestQueue = requests;
+	public void removeAllEntities() {
+		toggleTrashSpawning(false);
+		for (Entity e : entities) {
+			requestQueue.postRequest(
+					RequestFactory.createRemoveFromModelRequest(e)
+			);
+		}
+		requestQueue.fulfillAllRequests();
+		requestQueue.removeListener(this);
+	}
+	
+	public void restore(int score, int pollution) {		
+		for (Entity e: entities) {
+			
+			//create the corresponding sprite
+			Sprite sprite = new EntitySprite(e);
+
+			//and post a request for it to be added to the view
+			requestQueue.postRequest(
+					RequestFactory.createAddToViewRequest(sprite)
+			);
+		}
+		
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(currentPollutionLevel - pollution)
+		);
+		
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(this.score/SCORE_INCREMENT - score/SCORE_INCREMENT)
+		);
+		
+		System.out.println(this.score + " " + score);
+
+	}
+	
+	public void setRequestQueue(RequestQueue rq) {
+		this.requestQueue = rq;
 		requestQueue.addListener(this);
 	}
 }
