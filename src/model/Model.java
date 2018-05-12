@@ -93,7 +93,6 @@ public class Model implements RequestListener {
 	 * and adds a TrashSpawner and Player.
 	 */
 	public void reset(EntityType playerType, Request.RequestType resetMode) {
-		//System.out.println(resetMode);
 		//if playerType is null, we're continuing a game,
 		//so only reset the spawner
 		if (playerType != null) {
@@ -162,14 +161,9 @@ public class Model implements RequestListener {
 						BARGE_PADDING + BARGE_WIDTH);
 				spawner.start();
 
-				//Adding boss
-
-				//addEntity(boss);
-
 				break;
 
 			case START_BOSS:
-				System.out.println("STARTED BOSS");
 				Entity boss = new Boss(-500, 25, requestQueue);
 				addEntity(boss);
 				break;
@@ -215,14 +209,9 @@ public class Model implements RequestListener {
 	 */
 	public void update() {
 		for (Entity entity : entities) {
-			//System.out.println(entity.getType());
-			if(entity instanceof Boss){
-				System.out.println("yeet");
-			}
 			entity.update(GRAVITY, DRAG);
-//			System.out.println(entity.toString());
-			//Check for player-trash collision and trash-trash collision
 
+			//Check for player-trash collision and trash-trash collision
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
 				if (player.intersects(trash) && !trash.atBottom()) {
@@ -306,17 +295,9 @@ public class Model implements RequestListener {
 	 */
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
-		if(entity instanceof Boss){
-			System.out.println("yote");
-		}
+
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
-
-		for(Entity e : entities){
-			if(e instanceof Boss){
-				System.out.println("YEET");
-			}
-		}
 
 		//create the corresponding sprite
 		Sprite sprite = new EntitySprite(entity);
