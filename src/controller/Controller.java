@@ -83,6 +83,8 @@ public class Controller implements RequestListener {
 				break;
 			case START_TUTORIAL:
 				//reset handles the distinction between starting a tutorial and a normal game
+			case START_BOSS:
+				//reset handles the distinction between starting the boss fight and a normal game
 			case START_GAME:
 				//if we do this right away, the model will post a bunch of ADD_TO_VIEW Requests
 				//and cause concurrent modification problems, so just wait a bit
@@ -97,11 +99,6 @@ public class Controller implements RequestListener {
 								start();
 							}
 						});
-				break;
-			case START_BOSS:
-				model.reset((Entity.EntityType) request.getSpecifics(),
-						request.getRequestedAction());
-				requestQueue.fulfillAllRequests();
 				break;
 		}
 	}
