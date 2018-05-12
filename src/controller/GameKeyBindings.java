@@ -18,8 +18,8 @@ public class GameKeyBindings {
 	 * @param panel The JPanel to get input from
 	 * @param player The Player to modify based on inputs from panel
 	 */
-	public GameKeyBindings(JPanel panel, Player player, Model model) {
-		setKeyBindings(panel, player, model);
+	public GameKeyBindings(JPanel panel, Player player, Controller controller) {
+		setKeyBindings(panel, player, controller);
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class GameKeyBindings {
 	 * @param panel The JPanel to get input from
 	 * @param player The Player to modify based on inputs from panel
 	 */
-	private void setKeyBindings(JPanel panel, Player player, Model model) {
+	private void setKeyBindings(JPanel panel, Player player, Controller controller) {
 		//get the necessary maps from the JPanel
 		ActionMap actionMap = panel.getActionMap();
 		int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -45,9 +45,9 @@ public class GameKeyBindings {
 		
 		// DEBUG
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0),
-				Model.DebugAction.SAVE);
+				Controller.DebugAction.SAVE);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0),
-				Model.DebugAction.LOAD);
+				Controller.DebugAction.LOAD);
 
 
 		//when left or right is released, stop
@@ -76,10 +76,10 @@ public class GameKeyBindings {
 //				new KeyAction(Player.PlayerAction.STOP_ROTATE.name(), player));
 		
 		// DEBUG
-		actionMap.put(Model.DebugAction.SAVE,
-				new DebugKeyAction(Model.DebugAction.SAVE.name(), model));
-		actionMap.put(Model.DebugAction.LOAD,
-				new DebugKeyAction(Model.DebugAction.LOAD.name(), model));
+		actionMap.put(Controller.DebugAction.SAVE,
+				new DebugKeyAction(Controller.DebugAction.SAVE.name(), controller));
+		actionMap.put(Controller.DebugAction.LOAD,
+				new DebugKeyAction(Controller.DebugAction.LOAD.name(), controller));
 	}
 	
 	
@@ -115,16 +115,16 @@ public class GameKeyBindings {
 	 * A type of AbstractAction specifically used for model debugging.
 	 */
 	private class DebugKeyAction extends AbstractAction{
-		private Model model;
+		private Controller controller;
 		
 		/**
 		 * Constructs a DebugKeyAction
 		 * @param command The command corresponding to the key input
 		 * @param model The Model to run the debug command on
 		 */
-		public DebugKeyAction(String command, Model model) {
+		public DebugKeyAction(String command, Controller controller) {
 			putValue(ACTION_COMMAND_KEY, command);
-			this.model = model;
+			this.controller = controller;
 		}
 		
 		/**
@@ -134,7 +134,7 @@ public class GameKeyBindings {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.processDebug(e.getActionCommand());
+			controller.processDebug(e.getActionCommand());
 		}
 		
 	}

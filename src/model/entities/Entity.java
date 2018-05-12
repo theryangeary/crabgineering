@@ -4,13 +4,14 @@ import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * An abstract class that represents a moving component/image of the game.
  * @author Zelinsky
  */
 
-public abstract class Entity implements BoundsListener {
+public abstract class Entity implements BoundsListener, Serializable {
 
 	/**
 	 * A semantic type indicating what type of Entity this is

@@ -18,6 +18,14 @@ import java.awt.event.ActionEvent;
  *
  */
 public class Controller implements RequestListener {
+	
+	/**
+	 * An enumeration that represents the different debugging actions that can be done with the game. Used for mapping and handling inputs.
+	 */
+	public enum DebugAction{
+		SAVE,
+		LOAD;
+	}
 
 	//TODO: make these NOT be static (please...)
 	private static Model model; // It's a static global variable because there's only one model we're ever going to use.
@@ -91,7 +99,7 @@ public class Controller implements RequestListener {
 							public void run() {
 								model.reset((Entity.EntityType) request.getSpecifics(),
 										request.getRequestedAction());
-								keyBindings = new GameKeyBindings(view, model.getPlayer(), model);
+								keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
 								requestQueue.fulfillAllRequests();
 								start();
 							}
@@ -114,6 +122,19 @@ public class Controller implements RequestListener {
 	public static void endGame() {
 		updater.stop();
 		view.endGame(model.getScore());
+	}
+	
+	/**
+	 * Processes Debug Actions.
+	 * @param action The action to process based on an input key
+	 */
+	public void processDebug(String action) {
+		switch (DebugAction.valueOf(action)) {
+		case SAVE: System.out.println("SAVED");
+			break;
+		case LOAD: System.out.println("LOADED");
+			break;
+		}
 	}
 }
 

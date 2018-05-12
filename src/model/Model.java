@@ -27,17 +27,7 @@ import static model.entities.Barge.BARGE_WIDTH;
  * @author Zelinsky
  * @see Controller
  */
-public class Model implements RequestListener {
-	
-	/**
-	 * An enumeration that represents the different debugging actions that can be done with the Model. Used for mapping and handling inputs.
-	 */
-	public enum DebugAction{
-		SAVE,
-		LOAD;
-	}
-	
-	
+public class Model implements RequestListener {	
 	//listeners
 	RequestQueue requestQueue;
 	
@@ -332,15 +322,6 @@ public class Model implements RequestListener {
 								(Sprite) listener
 						)
 				);
-		}
-	}
-	
-	public void processDebug(String action) {
-		switch (Model.DebugAction.valueOf(action)) {
-		case SAVE: System.out.println("SAVED");
-			break;
-		case LOAD: System.out.println("LOADED");
-			break;
 		}
 	}
 
