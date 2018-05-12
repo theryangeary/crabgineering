@@ -1,24 +1,26 @@
 package controller;
 
+import model.Model;
 import model.entities.Player;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 /**
  * The Game's Key Bindings for Player Movement and Action
  * @author Zelinsky
  */
-public class GameKeyBindings {
+public class GameKeyBindings implements Serializable {
 	
 	/**
 	 * Constructs a controller.GameKeyBindings by calling setKeyBindings(panel, player). Maps the inputs from the panel to the player.
 	 * @param panel The JPanel to get input from
 	 * @param player The Player to modify based on inputs from panel
 	 */
-	public GameKeyBindings(JPanel panel, Player player) {
-		setKeyBindings(panel, player);
+	public GameKeyBindings(JPanel panel, Player player, Controller controller) {
+		setKeyBindings(panel, player, controller);
 	}
 	
 	/**
@@ -26,7 +28,7 @@ public class GameKeyBindings {
 	 * @param panel The JPanel to get input from
 	 * @param player The Player to modify based on inputs from panel
 	 */
-	private void setKeyBindings(JPanel panel, Player player) {
+	private void setKeyBindings(JPanel panel, Player player, Controller controller) {
 		//get the necessary maps from the JPanel
 		ActionMap actionMap = panel.getActionMap();
 		int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -41,8 +43,14 @@ public class GameKeyBindings {
 				Player.PlayerAction.SPECIAL_ACTION);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),
 				Player.PlayerAction.SPECIAL_ACTION);
-
-
+		
+		// DEBUG
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true),
+				Controller.DebugAction.SAVE);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0, true),
+				Controller.DebugAction.LOAD);
+		
+		
 		//when left or right is released, stop
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true),
 				Player.PlayerAction.STOP);
@@ -67,7 +75,14 @@ public class GameKeyBindings {
 				new KeyAction(Player.PlayerAction.STOP.name(), player));
 //		actionMap.put(Player.PlayerAction.STOP_ROTATE,
 //				new KeyAction(Player.PlayerAction.STOP_ROTATE.name(), player));
+		
+		// DEBUG
+		actionMap.put(Controller.DebugAction.SAVE,
+				new DebugKeyAction(Controller.DebugAction.SAVE.name(), controller));
+		actionMap.put(Controller.DebugAction.LOAD,
+				new DebugKeyAction(Controller.DebugAction.LOAD.name(), controller));
 	}
+	
 	
 	/**
 	 * A type of AbstractAction specifically for key inputs
@@ -93,6 +108,34 @@ public class GameKeyBindings {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			player.processInput(e.getActionCommand());
+		}
+		
+	}
+	
+	/**
+	 * A type of AbstractAction specifically used for model debugging.
+	 */
+	private class DebugKeyAction extends AbstractAction{
+		private Controller controller;
+		
+		/**
+		 * Constructs a DebugKeyAction
+		 * @param command The command corresponding to the key input
+		 * @param model The Model to run the debug command on
+		 */
+		public DebugKeyAction(String command, Controller controller) {
+			putValue(ACTION_COMMAND_KEY, command);
+			this.controller = controller;
+		}
+		
+		/**
+		 * Handles what happens when a debug key is registered.
+		 * Calls Model's processDebug(e.getActionCommand());
+		 * @see Model
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.processDebug(e.getActionCommand());
 		}
 		
 	}

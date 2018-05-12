@@ -7,8 +7,9 @@ import controller.requests.RequestQueue;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 
-public abstract class TrashSpawner {
+public abstract class TrashSpawner implements Serializable {
     private int offset;
     private int spawnHeight;
     private int spawnWidth;
