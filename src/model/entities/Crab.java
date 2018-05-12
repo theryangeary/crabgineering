@@ -18,7 +18,6 @@ public class Crab extends Player {
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 
-	private RequestQueue requestQueue;
 //	private ArrowSprite arrowSprite;
 
 	private double throwAngle = Math.PI/2;
@@ -43,8 +42,7 @@ public class Crab extends Player {
 	 * @see Player
 	 */
 	public Crab(int x, int y, RequestQueue requestQueue) {
-		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
-		this.requestQueue = requestQueue;
+		super(x, y, CRAB_WIDTH, CRAB_HEIGHT, requestQueue);
 
 //		arrowSprite = new ArrowSprite(getBounds());
 //		requestQueue.postRequest(

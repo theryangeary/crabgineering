@@ -172,8 +172,7 @@ public class Controller implements RequestListener, Serializable {
 			int pollution = model.getCurrentPollutionLevel();
 			model.removeAllEntities();
 			model = m;
-			model.setRequestQueue(requestQueue);
-			model.restore(pollution);
+			model.restore(requestQueue, pollution);
 			keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
 			requestQueue.fulfillAllRequests();
 			updater.start();

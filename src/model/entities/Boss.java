@@ -15,11 +15,8 @@ public class Boss extends Entity{
     private Timer waitTimer;
     private TrashSpawner spawner;
 
-    private RequestQueue requestQueue;
-
     public Boss(int x, int y, RequestQueue requestQueue) {
-        super(x, y, BOSS_WIDTH, BOSS_HEIGHT);
-        this.requestQueue = requestQueue;
+        super(x, y, BOSS_WIDTH, BOSS_HEIGHT, requestQueue);
         this.ignoreBounds = true;
 
         turningAction = new AbstractAction() {

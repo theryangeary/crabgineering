@@ -1,5 +1,7 @@
 package model.entities;
 
+import controller.requests.RequestQueue;
+
 /**
  * An abstract class that represents a generic Player. A Player is a type of Entity.
  * @author Zelinsky
@@ -28,8 +30,8 @@ public abstract class Player extends Entity {
 	 * @param height The height of the Player
 	 * @see Entity
 	 */
-	Player(int x, int y, int width, int height){
-		super(x,y,width,height);
+	Player(int x, int y, int width, int height, RequestQueue requestQueue){
+		super(x,y,width,height, requestQueue);
 	}
 	
 	/**

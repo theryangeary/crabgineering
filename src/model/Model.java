@@ -414,9 +414,12 @@ public class Model implements RequestListener, Serializable {
 		requestQueue.removeListener(this);
 	}
 	
-	public void restore(int pollution) {		
+	public void restore(RequestQueue rq, int pollution) {	
+		setRequestQueue(rq);
+		//spawner.setRequestQueue(rq);
 		for (Entity e: entities) {
 			
+			e.setRequestQueue(rq);
 			//create the corresponding sprite
 			Sprite sprite = new EntitySprite(e);
 
@@ -426,6 +429,7 @@ public class Model implements RequestListener, Serializable {
 			);
 		}
 		
+		currentPollutionLevel+= pollution;
 		requestQueue.postRequest(
 				RequestFactory.createUpdatePollutionRequest(currentPollutionLevel - pollution)
 		);

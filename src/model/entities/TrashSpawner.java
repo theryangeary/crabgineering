@@ -88,4 +88,5 @@ public abstract class TrashSpawner implements Serializable {
     public void setOffset(int offset){
         this.offset = offset;
     }
+
 }
