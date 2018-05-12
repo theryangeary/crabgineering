@@ -15,6 +15,7 @@ import view.sprites.EntitySprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static model.entities.Barge.BARGE_HEIGHT;
@@ -27,7 +28,7 @@ import static model.entities.Barge.BARGE_WIDTH;
  * @author Zelinsky
  * @see Controller
  */
-public class Model implements RequestListener {	
+public class Model implements RequestListener, Serializable {	
 	//listeners
 	RequestQueue requestQueue;
 	
@@ -400,5 +401,10 @@ public class Model implements RequestListener {
 	 */
 	public ArrayList<Trash> getThrownTrash(){
 		return thrownTrash;
+	}
+	
+	public void addRequestQueue(RequestQueue requests) {
+		this.requestQueue = requests;
+		requestQueue.addListener(this);
 	}
 }

@@ -1,8 +1,10 @@
 package model.entities;
 
+import java.io.Serializable;
+
 import controller.requests.RequestQueue;
 
-public class TrashFactory {
+public class TrashFactory implements Serializable{
 
     private RequestQueue requestQueue;
 

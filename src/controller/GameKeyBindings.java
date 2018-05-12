@@ -6,12 +6,13 @@ import model.entities.Player;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 /**
  * The Game's Key Bindings for Player Movement and Action
  * @author Zelinsky
  */
-public class GameKeyBindings {
+public class GameKeyBindings implements Serializable {
 	
 	/**
 	 * Constructs a controller.GameKeyBindings by calling setKeyBindings(panel, player). Maps the inputs from the panel to the player.

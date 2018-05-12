@@ -11,13 +11,18 @@ import view.View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A class that controls updates of a View and Model
  * @author Zelinsky
  *
  */
-public class Controller implements RequestListener {
+public class Controller implements RequestListener, Serializable {
 	
 	/**
 	 * An enumeration that represents the different debugging actions that can be done with the game. Used for mapping and handling inputs.
@@ -33,6 +38,7 @@ public class Controller implements RequestListener {
 	private static GameKeyBindings keyBindings;
 	private static Timer updater;
 	private static final double FRAMERATE = 144;
+	private static String fileName = "DEBUG_FILE";
 
 	private RequestQueue requestQueue;
 	
@@ -130,12 +136,42 @@ public class Controller implements RequestListener {
 	 */
 	public void processDebug(String action) {
 		switch (DebugAction.valueOf(action)) {
-		case SAVE: System.out.println("SAVED");
+		case SAVE: requestQueue.fulfillAllRequests(); save();
 			break;
-		case LOAD: System.out.println("LOADED");
-			break;
+		case LOAD: requestQueue.fulfillAllRequests(); load();
+			break; 
+		}
+	}
+	
+	private void save() {
+		try {
+		FileOutputStream fos = new FileOutputStream(fileName);
+		ObjectOutputStream out = new ObjectOutputStream(fos);
+		out.writeObject(model);
+		out.close();
+		fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void load() {
+		Model m = null;
+		
+		try {
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream in = new ObjectInputStream(fis);
+			m = (Model) in.readObject();
+			
+			model = m;
+			model.addRequestQueue(requestQueue);
+			keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
+			
+			
+			in.close();
+			fis.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
-
-
