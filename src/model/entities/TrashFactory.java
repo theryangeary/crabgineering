@@ -48,4 +48,8 @@ public class TrashFactory implements Serializable{
     public Trash createHardTrash(int x, int y, boolean recyclable){
         return new Trash(x,y,10,10, requestQueue, recyclable);
     }
+    
+    public void setRequestQueue(RequestQueue rq) {
+    	requestQueue = rq;
+    }
 }

@@ -416,7 +416,7 @@ public class Model implements RequestListener, Serializable {
 	
 	public void restore(RequestQueue rq, int pollution) {	
 		setRequestQueue(rq);
-		//spawner.setRequestQueue(rq);
+		spawner.setRequestQueue(rq);
 		for (Entity e: entities) {
 			
 			e.setRequestQueue(rq);

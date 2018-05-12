@@ -14,6 +14,7 @@ public abstract class TrashSpawner implements Serializable {
     private int spawnHeight;
     private int spawnWidth;
     private TrashFactory factory;
+    RequestQueue requestQueue;
 
     /**
      * Generate a TrashSpawner
@@ -25,13 +26,14 @@ public abstract class TrashSpawner implements Serializable {
      * @see Request
      */
     public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int offset){
+    	this.requestQueue = requestQueue;
         this.offset = offset;
         factory = new TrashFactory(requestQueue);
         this.spawnHeight = spawnHeight;
         this.spawnWidth = spawnWidth;
 
         //start the spawning process
-        initSpawning(requestQueue);
+        initSpawning();
     }
 
     /**
@@ -41,7 +43,7 @@ public abstract class TrashSpawner implements Serializable {
      * @param spawnHeight the height at which trash should spawn
      * @param offset the x-position where we start spawning thrash
      */
-    abstract void initSpawning(RequestQueue requestQueue);
+    abstract void initSpawning();
 
     /**
      * Get the instance of Factory used by this TrashSpawner
@@ -87,6 +89,11 @@ public abstract class TrashSpawner implements Serializable {
 
     public void setOffset(int offset){
         this.offset = offset;
+    }
+    
+    public void setRequestQueue(RequestQueue rq) {
+    	requestQueue = rq;
+    	factory.setRequestQueue(rq);
     }
 
 }
