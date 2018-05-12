@@ -122,7 +122,7 @@ public class Trash extends Entity {
 			dx = 0;
 		}
 		if (topBound() && dy < 0) {
-
+			this.setSpeed(getXSpeed(), 1);
 		}
 		if (bottomBound() && dy > 0) {
 			dy = 0;

@@ -221,7 +221,7 @@ public class Model implements RequestListener {
 								RequestFactory.createUpdateScoreRequest(3)
 						);
 				}
-				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash) || trash.atTop()) && trash.touched()) {
+				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash))) {
 					requestQueue.postRequest(
 							RequestFactory.createRemoveFromModelRequest(trash)
 					);
