@@ -134,7 +134,7 @@ public class Model implements RequestListener, Serializable {
 					RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
 			);
 			requestQueue.postRequest(
-					RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
+					RequestFactory.createUpdateScoreRequest(0)
 			);
 		}
 
@@ -193,7 +193,7 @@ public class Model implements RequestListener, Serializable {
 				thrownTrash.add((Trash) request.getSpecifics());
 				break;
 			case UPDATE_SCORE:
-				incrementScore((int) request.getSpecifics());
+				setScore((int) request.getSpecifics());
 				break;
 			case UPDATE_POLLUTION:
 				incrementPollutionLevel((int) request.getSpecifics());
@@ -219,7 +219,7 @@ public class Model implements RequestListener, Serializable {
 				if ((trashBarge.intersects(trash) && trash.touched() && trashBarge.bargeMatchesTrash(trash)) ||
 						(recyclingBarge.intersects(trash) && trash.touched() && recyclingBarge.bargeMatchesTrash(trash))) {
 						requestQueue.postRequest(
-								RequestFactory.createUpdateScoreRequest(3)
+								RequestFactory.createUpdateScoreRequest(this.score + (SCORE_INCREMENT * 3))
 						);
 				}
 				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash))) {
@@ -268,13 +268,13 @@ public class Model implements RequestListener, Serializable {
 	}
 
 	/**
-	 * Increments the score by the (modifier * SCORE_INCREMENT).
+	 * Sets the score by the score specified.
 	 *
-	 * @param modifier The amount to multiply SCORE_INCREMENT by
+	 * @param score The new score
 	 */
-	public void incrementScore(int modifier) {
+	public void setScore(int score) {
 		EstuarySound.POINTS.play();
-		score += SCORE_INCREMENT * modifier;
+		this.score = score;
 	}
 
 	/**
@@ -414,7 +414,7 @@ public class Model implements RequestListener, Serializable {
 		requestQueue.removeListener(this);
 	}
 	
-	public void restore(int score, int pollution) {		
+	public void restore(int pollution) {		
 		for (Entity e: entities) {
 			
 			//create the corresponding sprite
@@ -431,10 +431,9 @@ public class Model implements RequestListener, Serializable {
 		);
 		
 		requestQueue.postRequest(
-				RequestFactory.createUpdateScoreRequest(this.score/SCORE_INCREMENT - score/SCORE_INCREMENT)
+				RequestFactory.createUpdateScoreRequest(this.score)
 		);
 		
-		System.out.println(this.score + " " + score);
 
 	}
 	

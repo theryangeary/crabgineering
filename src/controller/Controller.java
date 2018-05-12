@@ -169,12 +169,11 @@ public class Controller implements RequestListener, Serializable {
 		
 		if (m != null) {
 			updater.stop();
-			int score = model.getScore();
 			int pollution = model.getCurrentPollutionLevel();
 			model.removeAllEntities();
 			model = m;
 			model.setRequestQueue(requestQueue);
-			model.restore(score, pollution);
+			model.restore(pollution);
 			keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
 			requestQueue.fulfillAllRequests();
 			updater.start();
