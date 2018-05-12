@@ -3,7 +3,6 @@ package model.entities;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import view.estuaryenums.EstuarySound;
-import view.sprites.ArrowSprite;
 
 /**
  * A Crab is a type of Player.
