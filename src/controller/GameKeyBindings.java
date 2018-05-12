@@ -1,5 +1,6 @@
 package controller;
 
+import model.Model;
 import model.entities.Player;
 
 import javax.swing.*;
@@ -17,8 +18,8 @@ public class GameKeyBindings {
 	 * @param panel The JPanel to get input from
 	 * @param player The Player to modify based on inputs from panel
 	 */
-	public GameKeyBindings(JPanel panel, Player player) {
-		setKeyBindings(panel, player);
+	public GameKeyBindings(JPanel panel, Player player, Model model) {
+		setKeyBindings(panel, player, model);
 	}
 	
 	/**
@@ -26,7 +27,7 @@ public class GameKeyBindings {
 	 * @param panel The JPanel to get input from
 	 * @param player The Player to modify based on inputs from panel
 	 */
-	private void setKeyBindings(JPanel panel, Player player) {
+	private void setKeyBindings(JPanel panel, Player player, Model model) {
 		//get the necessary maps from the JPanel
 		ActionMap actionMap = panel.getActionMap();
 		int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -41,6 +42,12 @@ public class GameKeyBindings {
 				Player.PlayerAction.SPECIAL_ACTION);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),
 				Player.PlayerAction.SPECIAL_ACTION);
+		
+		// DEBUG
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0),
+				Model.DebugAction.SAVE);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0),
+				Model.DebugAction.LOAD);
 
 
 		//when left or right is released, stop
@@ -67,7 +74,14 @@ public class GameKeyBindings {
 				new KeyAction(Player.PlayerAction.STOP.name(), player));
 //		actionMap.put(Player.PlayerAction.STOP_ROTATE,
 //				new KeyAction(Player.PlayerAction.STOP_ROTATE.name(), player));
+		
+		// DEBUG
+		actionMap.put(Model.DebugAction.SAVE,
+				new DebugKeyAction(Model.DebugAction.SAVE.name(), model));
+		actionMap.put(Model.DebugAction.LOAD,
+				new DebugKeyAction(Model.DebugAction.LOAD.name(), model));
 	}
+	
 	
 	/**
 	 * A type of AbstractAction specifically for key inputs
@@ -93,6 +107,34 @@ public class GameKeyBindings {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			player.processInput(e.getActionCommand());
+		}
+		
+	}
+	
+	/**
+	 * A type of AbstractAction specifically used for model debugging.
+	 */
+	private class DebugKeyAction extends AbstractAction{
+		private Model model;
+		
+		/**
+		 * Constructs a DebugKeyAction
+		 * @param command The command corresponding to the key input
+		 * @param model The Model to run the debug command on
+		 */
+		public DebugKeyAction(String command, Model model) {
+			putValue(ACTION_COMMAND_KEY, command);
+			this.model = model;
+		}
+		
+		/**
+		 * Handles what happens when a debug key is registered.
+		 * Calls Model's processDebug(e.getActionCommand());
+		 * @see Model
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			model.processDebug(e.getActionCommand());
 		}
 		
 	}

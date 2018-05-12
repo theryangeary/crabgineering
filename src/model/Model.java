@@ -28,6 +28,16 @@ import static model.entities.Barge.BARGE_WIDTH;
  * @see Controller
  */
 public class Model implements RequestListener {
+	
+	/**
+	 * An enumeration that represents the different debugging actions that can be done with the Model. Used for mapping and handling inputs.
+	 */
+	public enum DebugAction{
+		SAVE,
+		LOAD;
+	}
+	
+	
 	//listeners
 	RequestQueue requestQueue;
 	
@@ -221,7 +231,7 @@ public class Model implements RequestListener {
 								RequestFactory.createUpdateScoreRequest(3)
 						);
 				}
-				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash) || trash.atTop()) && trash.touched()) {
+				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash))) {
 					requestQueue.postRequest(
 							RequestFactory.createRemoveFromModelRequest(trash)
 					);
@@ -322,6 +332,15 @@ public class Model implements RequestListener {
 								(Sprite) listener
 						)
 				);
+		}
+	}
+	
+	public void processDebug(String action) {
+		switch (Model.DebugAction.valueOf(action)) {
+		case SAVE: System.out.println("SAVED");
+			break;
+		case LOAD: System.out.println("LOADED");
+			break;
 		}
 	}
 

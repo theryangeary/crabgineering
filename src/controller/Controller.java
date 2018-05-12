@@ -91,7 +91,7 @@ public class Controller implements RequestListener {
 							public void run() {
 								model.reset((Entity.EntityType) request.getSpecifics(),
 										request.getRequestedAction());
-								keyBindings = new GameKeyBindings(view, model.getPlayer());
+								keyBindings = new GameKeyBindings(view, model.getPlayer(), model);
 								requestQueue.fulfillAllRequests();
 								start();
 							}
