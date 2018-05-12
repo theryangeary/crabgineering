@@ -18,8 +18,6 @@ public class Trash extends Entity {
 
     private static Random random = new Random();
 
-	private RequestQueue requestQueue;
-
 	private int pollutionCount;
 
 	private final int ANGLE_FACTOR = 5;
@@ -56,8 +54,7 @@ public class Trash extends Entity {
 	 * @see RequestQueue
 	 */
 	Trash(int x, int y, int width, int height, RequestQueue requestQueue, boolean isRecyclable) {
-		super(x, y, width, height);
-		this.requestQueue = requestQueue;
+		super(x, y, width, height, requestQueue);
 
 		//choose specific type of trash depending on isRecyclable
         if (isRecyclable){
@@ -82,8 +79,7 @@ public class Trash extends Entity {
      * @see RequestQueue
      */
     Trash(int x, int y, int width, int height, RequestQueue requestQueue, EntityType type) {
-        super(x, y, width, height);
-        this.requestQueue = requestQueue;
+        super(x, y, width, height, requestQueue);
 
         //make sure a valid type was passed in
         if (TRASH_TYPES.contains(type) || RECYCLING_TYPES.contains(type)) {

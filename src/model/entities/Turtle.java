@@ -21,10 +21,8 @@ public class Turtle extends Player{
     private static final double SPEED = 5;
     private double currentSpeed = 0;
 
-    private RequestQueue requestQueue;
-
     public Turtle(int x, int y, RequestQueue requestQueue){
-        super(x,y,TURTLE_WIDTH,TURTLE_HEIGHT);
+        super(x,y,TURTLE_WIDTH,TURTLE_HEIGHT, requestQueue);
         this.requestQueue = requestQueue;
     }
 
