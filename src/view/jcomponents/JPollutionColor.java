@@ -47,7 +47,11 @@ public class JPollutionColor extends JPanel implements RequestListener{
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		Color oldColor = g.getColor();
+
 		g.setColor(brown);
 		g.fillRect(0, 0, getWidth(), getHeight());
+
+		g.setColor(oldColor);
 	}
 }
