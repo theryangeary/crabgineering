@@ -16,6 +16,7 @@ public class Request<R> implements Serializable{
     public enum RequestType {
         START_TUTORIAL,
         START_GAME,
+        SHOW_POPUP_REQUEST,
         TOGGLE_PAUSED,
         ADD_TO_MODEL,
         REMOVE_FROM_MODEL,

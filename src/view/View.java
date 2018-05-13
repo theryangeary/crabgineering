@@ -42,6 +42,12 @@ public class View extends JPanel implements RequestListener {
 
 	private ArrayList<Sprite> sprites;
 
+	public enum PopupType{
+		CRAB_TUTORIAL,
+		TURTLE_TUTORIAL,
+		SORTING_TUTORIAL;
+	}
+
 	//buttons
 	private JButton crabButton;
 	private JButton turtleButton;
@@ -356,7 +362,7 @@ public class View extends JPanel implements RequestListener {
     	//create a container to hold all of the popups
 		JComponent popups = new JPanel(new GridBagLayout());
 
-		ArrayList<JButton> popList;
+		ArrayList<JButton> popList = new ArrayList<>();
 
 		//create the popups
 		crabPopup = new JButton(new ImageIcon(
@@ -425,6 +431,18 @@ public class View extends JPanel implements RequestListener {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
 			case START_TUTORIAL:
+				Entity.EntityType player = (Entity.EntityType) request.getSpecifics();
+
+				if (player.equals(Entity.EntityType.CRAB)) {
+					requestQueue.postAndFulfillRequest(
+							RequestFactory.createShowPopupRequest(PopupType.CRAB_TUTORIAL)
+					);
+				}
+				if (player.equals(Entity.EntityType.TURTLE)) {
+					requestQueue.postAndFulfillRequest(
+							RequestFactory.createShowPopupRequest(PopupType.TURTLE_TUTORIAL)
+					);
+				}
 			case START_BOSS:
 				//same as when starting a normal game here
 			case START_GAME:
@@ -450,6 +468,23 @@ public class View extends JPanel implements RequestListener {
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
 				break;
+			case SHOW_POPUP_REQUEST:
+				pauseButton.setVisible(false);
+				requestQueue.postAndFulfillRequest(
+						RequestFactory.createTogglePausedRequest()
+				);
+
+				switch ((PopupType) request.getSpecifics()){
+					case CRAB_TUTORIAL:
+						crabPopup.setVisible(true);
+						break;
+					case TURTLE_TUTORIAL:
+						turtlePopup.setVisible(true);
+						break;
+					case SORTING_TUTORIAL:
+						sortingPopup.setVisible(true);
+						break;
+				}
 		}
 	}
 
