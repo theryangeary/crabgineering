@@ -109,6 +109,8 @@ public class View extends JPanel implements RequestListener {
         layers.add(createHUD());
         //Layer 5: menu UI elements
         layers.add(createMenu());
+        //Layer 6: popups
+		layers.add(createPopups());
 
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {
@@ -269,30 +271,20 @@ public class View extends JPanel implements RequestListener {
         
 		crabButton = new JButton("", new ImageIcon(crabButtonImage));
 		turtleButton = new JButton("", new ImageIcon(turtleButtonImage));
-		
-		crabButton.setOpaque(false);
-		turtleButton.setOpaque(false);
-		crabButton.setContentAreaFilled(false);
-		turtleButton.setContentAreaFilled(false);
-		crabButton.setBorderPainted(false);
-		turtleButton.setBorderPainted(false);
-		crabButton.setFocusPainted(false);
-		turtleButton.setFocusPainted(false);
 
 		final String PAUSED_TEXT = "Play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
 		pauseButton = new JButton(UNPAUSED_TEXT);
 
+		//set drawing settings for the buttons
+		configureButton(crabButton, true);
+		configureButton(turtleButton, true);
+		configureButton(pauseButton, false);
+
 		//decide whether or not each should initially be visible
 		crabButton.setVisible(true);
 		turtleButton.setVisible(true);
 		pauseButton.setVisible(false);
-
-		//prevent the frame from focusing on the buttons so that
-		//pressing space won't trigger them
-		crabButton.setFocusable(false);
-		turtleButton.setFocusable(false);
-		pauseButton.setFocusable(false);
 
 		//and decide what happens when each button is pressed
 		crabButton.addActionListener(new ActionListener() {
@@ -352,15 +344,52 @@ public class View extends JPanel implements RequestListener {
         return menu;
     }
 
-    public Component createPopups(){
+	/**
+	 * creates all the popups for the tutorial and groups them into a component
+	 * @return a component holding all the popups for the tutorial
+	 */
+	private Component createPopups(){
     	//create a container to hold all of the popups
-		JComponent popups = new JPanel();
+		JComponent popups = new JPanel(new GridBagLayout());
 
 		//create the popups
 		crabPopup = new JTimedPopup();
 		turtlePopup = new JTimedPopup();
+		sortingPopup = new JTimedPopup();
 
+		//make all of the popups invisible
+		crabPopup.setVisible(false);
+		turtlePopup.setVisible(false);
+		sortingPopup.setVisible(false);
+
+		configureButton(crabButton, true);
+		configureButton(turtleButton, true);
+		configureButton(sortingPopup, true);
+
+		popups.add(crabPopup);
+		popups.add(turtlePopup);
+		popups.add(sortingPopup);
+
+		popups.setOpaque(false);
+		popups.setFocusable(false);
 		return popups;
+	}
+
+	/**
+	 * Sets up the given button so that it will be interacted with
+	 * and displayed correctly
+	 * @param button the button to be configured
+	 * @param hasImage whether or not the button has a custom image
+	 */
+	private void configureButton(JButton button, boolean hasImage){
+    	button.setFocusable(false);
+
+    	if (hasImage) {
+    		button.setContentAreaFilled(false);
+			button.setOpaque(false);
+			button.setBorderPainted(false);
+			button.setFocusPainted(false);
+		}
 	}
 
 	/**
