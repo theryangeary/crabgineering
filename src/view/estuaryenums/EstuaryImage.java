@@ -77,6 +77,13 @@ public enum EstuaryImage {
         return image;
     }
 
+    /**
+     * Gets a copy of the image held by this EstuaryImage,
+     * scaled to the requested size
+     * @param width the desired width of the image
+     * @param height the desired height of the image
+     * @return the scaled image
+     */
     public BufferedImage getScaledImage(int width, int height){
         //if we want the same scale as last time...
         if (width == lastWidth && height == lastHeight){
