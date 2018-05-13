@@ -94,7 +94,7 @@ public class EntitySprite implements Sprite, BoundsListener, Serializable {
      * Return the image drawn by this sprite
      * @return BufferedImage the image
      */
-    protected BufferedImage getImage(){
+    protected Image getImage(){
         return estuaryImage.getImage();
     }
 
@@ -104,7 +104,7 @@ public class EntitySprite implements Sprite, BoundsListener, Serializable {
      * @param height the desired height
      * @return BufferedImage the image, scaled to the given size
      */
-    protected BufferedImage getScaledImage(int width, int height) {
+    protected Image getScaledImage(int width, int height) {
         return estuaryImage.getScaledImage(width, height);
     }
 

@@ -31,10 +31,10 @@ public enum EstuaryImage {
     //should be the same for all Sprites
     private final static String IMAGE_DIR = "src/resources/images/";
 
-    private final BufferedImage image;
+    private final Image image;
 
     //info for scale caching
-    private BufferedImage lastScaledImage;
+    private Image lastScaledImage;
     private int lastWidth;
     private int lastHeight;
 
@@ -73,7 +73,7 @@ public enum EstuaryImage {
      * Get BufferedImage
      * @return The image
      */
-    public BufferedImage getImage() {
+    public Image getImage() {
         return image;
     }
 
@@ -84,14 +84,14 @@ public enum EstuaryImage {
      * @param height the desired height of the image
      * @return the scaled image
      */
-    public BufferedImage getScaledImage(int width, int height){
+    public Image getScaledImage(int width, int height){
         //if we want the same scale as last time...
         if (width == lastWidth && height == lastHeight){
             //...just reuse the result from last time
             return lastScaledImage;
         } else {
             //...otherwise scale the image to the new size...
-            lastScaledImage = (BufferedImage) image.getScaledInstance(
+            lastScaledImage = image.getScaledInstance(
                     width, height, Image.SCALE_SMOOTH);
 
             //...and recall the new size
