@@ -34,8 +34,8 @@ public class View extends JPanel implements RequestListener {
 	private final int BUTTON_HEIGHT = 100;
 
 	//Popup image dimensions
-	private final int POPUP_WIDTH = 300;
-	private final int POPUP_HEIGHT = 100;
+	private final int POPUP_WIDTH = 110 * 2;
+	private final int POPUP_HEIGHT = 82 * 2;
 
 	// relative to model
 	private Dimension scale;

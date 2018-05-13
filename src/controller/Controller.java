@@ -89,6 +89,7 @@ public class Controller implements RequestListener, Serializable {
 	public void handleRequest(Request request){
 		switch (request.getRequestedAction()){
 			case TOGGLE_PAUSED:
+			    System.out.println((boolean) request.getSpecifics());
 				if ((boolean) request.getSpecifics()){
 					updater.stop();
 				} else {
@@ -96,7 +97,19 @@ public class Controller implements RequestListener, Serializable {
 				}
 				break;
 			case START_TUTORIAL:
-				//reset handles the distinction between starting a tutorial and a normal game
+			    //same as boss or regular game, except game doesn't start right away
+                EventQueue.invokeLater(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                model.reset((Entity.EntityType) request.getSpecifics(),
+                                        request.getRequestedAction());
+                                keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);
+                                requestQueue.fulfillAllRequests();
+                                view.repaint();
+                            }
+                        });
+                break;
 			case START_BOSS:
 				//reset handles the distinction between starting the boss fight and a normal game
 			case START_GAME:
