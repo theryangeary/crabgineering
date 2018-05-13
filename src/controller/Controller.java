@@ -146,6 +146,9 @@ public class Controller implements RequestListener, Serializable {
 		}
 	}
 	
+	/**
+	 * Saves the current Model to fileName using Serialization
+	 */
 	private void save() {
 		try {
 		FileOutputStream fos = new FileOutputStream(fileName);
@@ -158,6 +161,9 @@ public class Controller implements RequestListener, Serializable {
 		}
 	}
 	
+	/**
+	 * Loads a new Model from fileName using Serialization
+	 */
 	private void load() {
 		Model m = null;
 		try {
@@ -172,7 +178,7 @@ public class Controller implements RequestListener, Serializable {
 		
 		if (m != null) {
 			updater.stop();
-			model.removeAllEntities();
+			model.retireModel();
 			model = m;
 			model.restore(requestQueue);
 			keyBindings = new GameKeyBindings(view, model.getPlayer(), Controller.this);

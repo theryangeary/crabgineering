@@ -91,6 +91,10 @@ public abstract class TrashSpawner implements Serializable {
         this.offset = offset;
     }
     
+    /**
+     * Sets the RequestQueue for the TrashSpawner.
+     * @param rq The RequestQueue to set for the TrashSpawner
+     */
     public void setRequestQueue(RequestQueue rq) {
     	requestQueue = rq;
     	factory.setRequestQueue(rq);

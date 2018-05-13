@@ -258,7 +258,7 @@ public class Model implements RequestListener, Serializable {
 						EstuarySound.TRASH_WRONG.play();
 				}
 
-				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash) || trash.atTop()) && trash.touched()) {
+				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash))) {
 					requestQueue.postRequest(
 							RequestFactory.createRemoveFromModelRequest(trash)
 					);
@@ -445,7 +445,11 @@ public class Model implements RequestListener, Serializable {
 		return thrownTrash;
 	}
 	
-	public void removeAllEntities() {
+	/**
+	 * Removes all Entities from the Model and View, and removes self from the RequestListener.
+	 * For the purpose of loading in a new file, this one must be called on the old Model.
+	 */
+	public void retireModel() {
 		toggleTrashSpawning(false);
 		for (Entity e : entities) {
 			requestQueue.postRequest(
@@ -456,6 +460,11 @@ public class Model implements RequestListener, Serializable {
 		requestQueue.removeListener(this);
 	}
 	
+	/**
+	 * Adds all Entities in the Model to the View, sets the correct score and pollution level, and sets the RequestQueue
+	 * for all Entities and components of the Model.
+	 * @param rq The RequestQueue to set for the Model and all components
+	 */
 	public void restore(RequestQueue rq) {	
 		setRequestQueue(rq);
 		spawner.setRequestQueue(rq);
@@ -486,6 +495,10 @@ public class Model implements RequestListener, Serializable {
 
 	}
 	
+	/**
+	 * Sets the RequestQueue for the Model
+	 * @param rq The RequestQueue to set the Model to
+	 */
 	public void setRequestQueue(RequestQueue rq) {
 		this.requestQueue = rq;
 		requestQueue.addListener(this);
