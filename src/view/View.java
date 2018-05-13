@@ -8,10 +8,7 @@ import model.Model;
 import model.entities.Entity;
 import view.estuaryenums.EstuaryFont;
 import view.estuaryenums.EstuaryImage;
-import view.jcomponents.JEstuaryImageLabel;
-import view.jcomponents.JPollutionBar;
-import view.jcomponents.JPollutionEffect;
-import view.jcomponents.JScoreLabel;
+import view.jcomponents.*;
 import view.sprites.Sprite;
 
 import javax.swing.*;
@@ -32,7 +29,7 @@ public class View extends JPanel implements RequestListener {
 	public final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 	
-	// Button Image dimension
+	// Button Image dimensions
 	private final int BUTTON_WIDTH = 100;
 	private final int BUTTON_HEIGHT = 100;
 
@@ -45,7 +42,9 @@ public class View extends JPanel implements RequestListener {
 	private JButton crabButton;
 	private JButton turtleButton;
 	private JButton pauseButton;
-	//private JPanel buttonPanel;
+	private JTimedPopup crabPopup;
+	private JTimedPopup turtlePopup;
+	private JTimedPopup sortingPopup;
 
 	//other components
 	private JLabel titleImage;
@@ -206,6 +205,16 @@ public class View extends JPanel implements RequestListener {
         return foreground;
     }
 
+	/**
+	 * Creates an AlphaContainer that changes color over time according to the pollution level.
+	 * @return A Component representing the pollution level with color opacity
+	 */
+	private Component createPollution() {
+		JPollutionEffect pc  = new JPollutionEffect();
+		requestQueue.addListener(pc);
+		return pc;
+	}
+
     /**
      * Creates and configures the game's info display elements
      * @return A Component holding all the HUD elemends
@@ -249,14 +258,14 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createMenu(){
         //create a container to hold all the menu elements
-        JComponent menu = new JPanel();
+        JComponent menu = new JPanel(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
 
 		//create the buttons with images
         Image crabButtonImage = EstuaryImage.CRAB_BUTTON
 				.getScaledImage(BUTTON_WIDTH, BUTTON_HEIGHT);
         Image turtleButtonImage = EstuaryImage.TURTLE_BUTTON
 				.getScaledImage(BUTTON_WIDTH, BUTTON_HEIGHT);
-
         
 		crabButton = new JButton("", new ImageIcon(crabButtonImage));
 		turtleButton = new JButton("", new ImageIcon(turtleButtonImage));
@@ -330,24 +339,29 @@ public class View extends JPanel implements RequestListener {
 		});
 
 		//add buttons to menu layer
-		menu.add(crabButton);
-		menu.add(turtleButton);
-		menu.add(pauseButton);
+		menu.add(crabButton, constraints);
+		menu.add(turtleButton, constraints);
+		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.ipady = 5;
+		menu.add(pauseButton, constraints);
 
         menu.setOpaque(false);
         menu.setFocusable(false);
         return menu;
     }
-    
-    /**
-     * Creates an AlphaContainer that changes color over time according to the pollution level.
-     * @return A Component representing the pollution level with color opacity
-     */
-    private Component createPollution() {
-    	JPollutionEffect pc  = new JPollutionEffect();
-    	requestQueue.addListener(pc);
-    	return pc;
-    }
+
+    public Component createPopups(){
+    	//create a container to hold all of the popups
+		JComponent popups = new JPanel();
+
+		//create the popups
+		crabPopup = new JTimedPopup();
+		turtlePopup = new JTimedPopup();
+
+		return popups;
+	}
 
 	/**
 	 * Specifies how the View should handle a Request
