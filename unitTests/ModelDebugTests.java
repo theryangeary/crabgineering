@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import controller.Controller;
+import controller.requests.Request.RequestType;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import model.Model;
@@ -20,7 +21,7 @@ public class ModelDebugTests {
 	// Tests debug-specific commands
 	@Test
 	public void debugTests() {
-		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
+		m.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		
@@ -32,7 +33,7 @@ public class ModelDebugTests {
 		
 		RequestQueue rq2 = new RequestQueue();
 		Model m2 = new Model(rq2);
-		m2.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
+		m2.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
 		rq2.fulfillAllRequests();
 		m2.toggleTrashSpawning(false);
 		

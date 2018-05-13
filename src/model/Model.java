@@ -489,6 +489,9 @@ public class Model implements RequestListener, Serializable {
 	 */
 	public void retireModel() {
 		toggleTrashSpawning(false);
+		if (spawner instanceof TutorialTrashSpawner) {
+			requestQueue.removeListener((TutorialTrashSpawner) spawner);
+		}
 		for (Entity e : entities) {
 			requestQueue.postRequest(
 					RequestFactory.createRemoveFromModelRequest(e)
@@ -506,6 +509,9 @@ public class Model implements RequestListener, Serializable {
 	public void restore(RequestQueue rq) {	
 		setRequestQueue(rq);
 		spawner.setRequestQueue(rq);
+		if (spawner instanceof TutorialTrashSpawner) {
+			requestQueue.addListener((TutorialTrashSpawner) spawner);
+		}
 		for (Entity e: entities) {
 			
 			e.setRequestQueue(rq);
