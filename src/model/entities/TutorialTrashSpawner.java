@@ -4,6 +4,7 @@ import controller.requests.Request;
 import controller.requests.RequestFactory;
 import controller.requests.RequestListener;
 import controller.requests.RequestQueue;
+import view.View;
 
 import java.awt.*;
 import java.util.EnumSet;
@@ -14,6 +15,7 @@ import java.util.EnumSet;
 public class TutorialTrashSpawner extends TrashSpawner implements RequestListener {
     public static final int NUM_CYCLES = 2;
 
+    private boolean onFirst = true;
     private int curTrash;
     private Entity.EntityType[] trashTypes;
 
@@ -127,6 +129,16 @@ public class TutorialTrashSpawner extends TrashSpawner implements RequestListene
                 }
 
             case REMOVE_FROM_MODEL:
+
+                //after the first piece of trash is picked up,
+                //the sorting popup should be displayed
+                if (onFirst) {
+                    requestQueue.postAndFulfillRequest(
+                            RequestFactory.createShowPopupRequest(View.PopupType.SORTING_TUTORIAL)
+                    );
+
+                    onFirst = false;
+                }
 
                 //either way, post a new piece of trash
                 if (!completed()) {
