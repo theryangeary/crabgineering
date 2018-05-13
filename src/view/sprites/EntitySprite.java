@@ -91,11 +91,21 @@ public class EntitySprite implements Sprite, BoundsListener, Serializable {
     }
 
     /**
-     * Return the sprite for the entity
-     * @return BufferedImage sprite
+     * Return the image drawn by this sprite
+     * @return BufferedImage the image
      */
     protected BufferedImage getImage(){
         return estuaryImage.getImage();
+    }
+
+    /**
+     * Gets a scaled copy of the image drawn by this sprite
+     * @param width the desired width
+     * @param height the desired height
+     * @return BufferedImage the image, scaled to the given size
+     */
+    protected BufferedImage getScaledImage(int width, int height) {
+        return estuaryImage.getScaledImage(width, height);
     }
 
     /**
@@ -121,23 +131,26 @@ public class EntitySprite implements Sprite, BoundsListener, Serializable {
     /**
      * Draw this sprite at its bounds
      * @param g Graphics object to draw on
+     * @param scaleX
+     * @param scaleY
      */
-    public void draw(Graphics g){
+    public void draw(Graphics g, double scaleX, double scaleY){
         Rectangle rectangle = getBounds();
 
+        //scale bounds
+        int drawX = (int) (rectangle.getX() * scaleX);
+        int drawY = (int) (rectangle.getY() * scaleY);
+        int drawWidth = (int) (rectangle.getWidth() * scaleX);
+        int drawHeight = (int) (rectangle.getHeight() * scaleY);
+
         if(DEBUG){
-            g.drawRect((int) rectangle.getX(),
-                    (int) rectangle.getY(),
-                    (int) rectangle.getWidth(),
-                    (int) rectangle.getHeight());
+            g.drawRect(drawX, drawY, drawWidth, drawHeight);
         }
 
-
-        g.drawImage(getImage(),
-                (int) rectangle.getX(),
-                (int) rectangle.getY(),
-                (int) rectangle.getWidth(),
-                (int) rectangle.getHeight(),
+        g.drawImage(
+                getScaledImage(drawWidth, drawHeight),
+                drawX,
+                drawY,
                 //a BufferedImage won't change while
                 //the image is being loaded, so null
                 //will work for our observer

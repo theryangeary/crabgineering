@@ -437,7 +437,7 @@ public class View extends JPanel implements RequestListener {
 				  size.getHeight() / Model.WORLD_HEIGHT);
 
         for (Sprite sprite: sprites) {
-            sprite.draw(g2d);
+            sprite.draw(g2d, , );
         }
 	}
 }
