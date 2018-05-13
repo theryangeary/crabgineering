@@ -33,6 +33,10 @@ public class View extends JPanel implements RequestListener {
 	private final int BUTTON_WIDTH = 100;
 	private final int BUTTON_HEIGHT = 100;
 
+	//Popup image dimensions
+	private final int POPUP_WIDTH = 300;
+	private final int POPUP_HEIGHT = 100;
+
 	// relative to model
 	private Dimension scale;
 
@@ -42,9 +46,9 @@ public class View extends JPanel implements RequestListener {
 	private JButton crabButton;
 	private JButton turtleButton;
 	private JButton pauseButton;
-	private JTimedPopup crabPopup;
-	private JTimedPopup turtlePopup;
-	private JTimedPopup sortingPopup;
+	private JButton crabPopup;
+	private JButton turtlePopup;
+	private JButton sortingPopup;
 
 	//other components
 	private JLabel titleImage;
@@ -352,23 +356,43 @@ public class View extends JPanel implements RequestListener {
     	//create a container to hold all of the popups
 		JComponent popups = new JPanel(new GridBagLayout());
 
+		ArrayList<JButton> popList;
+
 		//create the popups
-		crabPopup = new JTimedPopup();
-		turtlePopup = new JTimedPopup();
-		sortingPopup = new JTimedPopup();
+		crabPopup = new JButton(new ImageIcon(
+				EstuaryImage.CRAB_TUTORIAL.getScaledImage(
+						POPUP_WIDTH, POPUP_HEIGHT
+				)));
+		popList.add(crabPopup);
+		turtlePopup = new JButton(new ImageIcon(
+				EstuaryImage.TURTLE_TUTORIAL.getScaledImage(
+						POPUP_WIDTH, POPUP_HEIGHT
+				)));
+		popList.add(turtlePopup);
+		sortingPopup = new JButton(new ImageIcon(
+				EstuaryImage.SORTING_TUTORIAL.getScaledImage(
+						POPUP_WIDTH, POPUP_HEIGHT
+				)));
+		popList.add(sortingPopup);
 
-		//make all of the popups invisible
-		crabPopup.setVisible(false);
-		turtlePopup.setVisible(false);
-		sortingPopup.setVisible(false);
+		for (JButton popup: popList){
+			popup.setVisible(false);
+			configureButton(popup, true);
 
-		configureButton(crabButton, true);
-		configureButton(turtleButton, true);
-		configureButton(sortingPopup, true);
+			popup.addActionListener(new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					pauseButton.setVisible(true);
+					popup.setVisible(false);
 
-		popups.add(crabPopup);
-		popups.add(turtlePopup);
-		popups.add(sortingPopup);
+					requestQueue.postAndFulfillRequest(
+							RequestFactory.createTogglePausedRequest()
+					);
+				}
+			});
+
+			popups.add(popup);
+		}
 
 		popups.setOpaque(false);
 		popups.setFocusable(false);
