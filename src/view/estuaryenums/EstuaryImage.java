@@ -20,13 +20,17 @@ public enum EstuaryImage {
     STYROFOAM_CUP("styrofoam-cup.png"),
 	SODA_CAN("soda-can.png"),
     MILK_JUG("milk-jug.png"),
-//	ARROW("arrow.png"),
+	ARROW("arrow.png"),
 	RECYCLING_BARGE("recycling-barge.png"),
 	TRASH_BARGE("trash-barge.png"),
 	TITLE("title.png"),
     BOSS("boss.png"),
     BACKGROUND("background.png"),
-    FOREGROUND("foreground.png");
+    FOREGROUND("foreground.png"),
+    POLLUTION_EFFECT("pollution-effect.png"),
+    CRAB_TUTORIAL("crab-tutorial.png"),
+    TURTLE_TUTORIAL("turtle-tutorial.png"),
+    SORTING_TUTORIAL("sorting-tutorial.png");
 
     //should be the same for all Sprites
     private final static String IMAGE_DIR = "src/resources/images/";
