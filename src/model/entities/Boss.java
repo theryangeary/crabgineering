@@ -7,34 +7,21 @@ import java.awt.event.ActionEvent;
 
 public class Boss extends Entity{
 
-    private Action turningAction;
     private static final int BOSS_HEIGHT = 100;
     private static final int BOSS_WIDTH = 200;
     private static final double SPEED = 6;
     private double currentSpeed = SPEED;
-    private Timer waitTimer;
     private TrashSpawner spawner;
 
     public Boss(int x, int y, RequestQueue requestQueue) {
         super(x, y, BOSS_WIDTH, BOSS_HEIGHT, requestQueue);
         this.ignoreBounds = true;
 
-        turningAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentSpeed = -currentSpeed;
-            }
-        };
-
         spawner = new TimerTrashSpawner(
                 requestQueue,
                 y+BOSS_HEIGHT/2,
                 0,
-                100);
-        //spawner.start();
-
-        waitTimer = new Timer(2000,turningAction);
-        waitTimer.start();
+                1000);
     }
 
     /**
@@ -56,21 +43,21 @@ public class Boss extends Entity{
     @Override
     public void update(double gravity, double drag){
         spawner.setOffset(getBounds().x+BOSS_WIDTH/2);
-        //super.update(gravity,drag);
         int padding = 50;
 
+
+        //Check if the center of the ship is in bounds of the screen
         if(getBounds().x+getBounds().getWidth()/2 > getWorldBounds().x+padding
                 && getBounds().x+getBounds().getWidth()/2+padding <getWorldBounds().x+getWorldBounds().width){
             spawner.start();
-            System.out.println("IN");
         }else{
             spawner.stop();
         }
 
-        if(getBounds().x > getWorldBounds().x+getWorldBounds().getWidth()){
-          //  System.out.println("RIGHT");
-        }else if(getBounds().x+getBounds().getWidth() < getWorldBounds().x){
-          //  System.out.println("LEFT");
+        //Change direction if out of bounds
+        if((getBounds().x > getWorldBounds().x+getWorldBounds().getWidth() && currentSpeed > 0) ||
+            (getBounds().x+getBounds().getWidth() < getWorldBounds().x && currentSpeed < 0)){
+            currentSpeed*=-1;
         }
         translate(currentSpeed,0);
     }

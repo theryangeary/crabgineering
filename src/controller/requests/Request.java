@@ -23,6 +23,7 @@ public class Request<R> implements Serializable{
         ADD_TO_VIEW,
         REMOVE_FROM_VIEW,
         UPDATE_POLLUTION,
+        START_BOSS,
         UPDATE_SCORE,
         UPDATE_THROW_ANGLE,
         TOGGLE_DISPLAY,

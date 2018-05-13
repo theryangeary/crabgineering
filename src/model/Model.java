@@ -14,7 +14,9 @@ import controller.requests.RequestQueue;
 import view.sprites.EntitySprite;
 import view.sprites.Sprite;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -73,6 +75,16 @@ public class Model implements RequestListener, Serializable {
 	public boolean trashSpawning = true;
 
 	/**
+	 * Timer to count until the boss shows up.
+	 */
+	private Timer startBossTimer;
+
+	/**
+	 * How long until the boss shows up after the game starts. Set to 2:30
+	 */
+	private final int TIME_TILL_BOSS=150*1000;
+
+	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
@@ -87,6 +99,11 @@ public class Model implements RequestListener, Serializable {
 		//setup the RequestQueue Entities can use to post controller.requests
 		//for the Model
 		requestQueue.addListener(this);
+
+
+
+
+
 	}
 	
 	/**
@@ -94,7 +111,6 @@ public class Model implements RequestListener, Serializable {
 	 * and adds a TrashSpawner and Player.
 	 */
 	public void reset(EntityType playerType, Request.RequestType resetMode) {
-
 		//if playerType is null, we're continuing a game,
 		//so only reset the spawner
 		if (playerType != null) {
@@ -138,6 +154,7 @@ public class Model implements RequestListener, Serializable {
 			);
 		}
 
+
 		//set up the spawner
 		int spawnInterval = 2 * 1000;
 		int spawnHeight = -Trash.TRASH_HEIGHT;
@@ -152,6 +169,15 @@ public class Model implements RequestListener, Serializable {
 
 				break;
 			case START_GAME:
+				Action startBossAction = new AbstractAction() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						requestQueue.postRequest(RequestFactory.createStartBossRequest(null));
+					}
+				};
+
+				startBossTimer = new Timer(TIME_TILL_BOSS, startBossAction);
+				startBossTimer.start();
 
 				//set up the spawner for the regular game
 				spawner = new TimerTrashSpawner(
@@ -162,9 +188,13 @@ public class Model implements RequestListener, Serializable {
 						BARGE_PADDING + BARGE_WIDTH);
 				spawner.start();
 
-				//Adding boss
-				Entity boss = new Boss(-500, 25, requestQueue);
-				//addEntity(boss);
+				break;
+
+			case START_BOSS:
+				startBossTimer.stop();
+				spawner.stop();
+				Entity boss = new Boss(-200, 25, requestQueue);
+				addEntity(boss);
 				break;
 			default:
 				throw new ValueException(resetMode.name() + " not a valid game mode");
@@ -209,7 +239,7 @@ public class Model implements RequestListener, Serializable {
 	public void update() {
 		for (Entity entity : entities) {
 			entity.update(GRAVITY, DRAG);
-//			System.out.println(entity.toString());
+
 			//Check for player-trash collision and trash-trash collision
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
@@ -222,7 +252,13 @@ public class Model implements RequestListener, Serializable {
 								RequestFactory.createUpdateScoreRequest(this.score + (SCORE_INCREMENT * 3))
 						);
 				}
-				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash))) {
+
+				if ((trashBarge.intersects(trash) && trash.touched() && !trashBarge.bargeMatchesTrash(trash)) ||
+						(recyclingBarge.intersects(trash) && trash.touched() && !recyclingBarge.bargeMatchesTrash(trash))) {
+						EstuarySound.TRASH_WRONG.play();
+				}
+
+				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash) || trash.atTop()) && trash.touched()) {
 					requestQueue.postRequest(
 							RequestFactory.createRemoveFromModelRequest(trash)
 					);
@@ -294,6 +330,7 @@ public class Model implements RequestListener, Serializable {
 	 */
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
+
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
 
@@ -304,6 +341,7 @@ public class Model implements RequestListener, Serializable {
 		requestQueue.postRequest(
 				RequestFactory.createAddToViewRequest(sprite)
 		);
+
 	}
 
 	/**
@@ -313,6 +351,7 @@ public class Model implements RequestListener, Serializable {
 	 * @param entity The Entity to be removed from the Model
 	 */
 	public void removeEntity(Entity entity) {
+
 		entities.remove(entity);
 
 		//remove any Sprites that are following the entity's movements

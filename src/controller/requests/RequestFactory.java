@@ -26,6 +26,17 @@ public class RequestFactory {
 
     /**
      * @param playerType Indicates which type of Player the Model should use
+     * @return A Request to start the boss fight
+     */
+    public static Request<Entity.EntityType> createStartBossRequest(Entity.EntityType playerType){
+        return new Request<>(
+                playerType,
+                Request.RequestType.START_BOSS
+        );
+    }
+
+    /**
+     * @param playerType Indicates which type of Player the Model should use
      * @return A Request to start the game with the given type of Player
      */
     public static Request<Entity.EntityType> createStartTutorialRequest(Entity.EntityType playerType){
