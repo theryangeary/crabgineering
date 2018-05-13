@@ -73,8 +73,15 @@ public class Model implements RequestListener {
 	 */
 	public boolean trashSpawning = true;
 
+	/**
+	 * Timer to count until the boss shows up.
+	 */
 	private Timer startBossTimer;
-	private final int TIME_TILL_BOSS=5*1000;
+
+	/**
+	 * How long until the boss shows up after the game starts. Set to 2:30
+	 */
+	private final int TIME_TILL_BOSS=150*1000;
 
 	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
@@ -244,6 +251,12 @@ public class Model implements RequestListener {
 								RequestFactory.createUpdateScoreRequest(3)
 						);
 				}
+
+				if ((trashBarge.intersects(trash) && trash.touched() && !trashBarge.bargeMatchesTrash(trash)) ||
+						(recyclingBarge.intersects(trash) && trash.touched() && !recyclingBarge.bargeMatchesTrash(trash))) {
+						EstuarySound.TRASH_WRONG.play();
+				}
+
 				if ((recyclingBarge.intersects(trash) || trashBarge.intersects(trash) || trash.atTop()) && trash.touched()) {
 					requestQueue.postRequest(
 							RequestFactory.createRemoveFromModelRequest(trash)

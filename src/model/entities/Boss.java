@@ -7,12 +7,10 @@ import java.awt.event.ActionEvent;
 
 public class Boss extends Entity{
 
-    private Action turningAction;
     private static final int BOSS_HEIGHT = 100;
     private static final int BOSS_WIDTH = 200;
     private static final double SPEED = 6;
     private double currentSpeed = SPEED;
-    private Timer waitTimer;
     private TrashSpawner spawner;
 
     private RequestQueue requestQueue;
@@ -22,22 +20,11 @@ public class Boss extends Entity{
         this.requestQueue = requestQueue;
         this.ignoreBounds = true;
 
-//        turningAction = new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                currentSpeed = -currentSpeed;
-//            }
-//        };
-
         spawner = new TimerTrashSpawner(
                 requestQueue,
                 y+BOSS_HEIGHT/2,
                 0,
                 1000);
-        //spawner.start();
-
-        //waitTimer = new Timer(2000,turningAction);
-        //waitTimer.start();
     }
 
     /**
@@ -70,6 +57,7 @@ public class Boss extends Entity{
             spawner.stop();
         }
 
+        //Change direction if out of bounds
         if((getBounds().x > getWorldBounds().x+getWorldBounds().getWidth() && currentSpeed > 0) ||
             (getBounds().x+getBounds().getWidth() < getWorldBounds().x && currentSpeed < 0)){
             currentSpeed*=-1;
