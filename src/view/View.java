@@ -154,11 +154,11 @@ public class View extends JPanel implements RequestListener {
             //make sure the background image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
-                g.drawImage(getImage(),
+                g.drawImage(EstuaryImage.BACKGROUND.getScaledImage(
+                		background.getWidth(),
+						background.getHeight()),
                             0,
                             0,
-                            background.getWidth(),
-                            background.getHeight(),
                             null);
             }
         };
@@ -190,12 +190,12 @@ public class View extends JPanel implements RequestListener {
             //make sure the foreground image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
-                g.drawImage(getImage(),
-                        0,
-                        0,
-                        foreground.getWidth(),
-                        foreground.getHeight(),
-                        null);
+				g.drawImage(EstuaryImage.FOREGROUND.getScaledImage(
+						foreground.getWidth(),
+						foreground.getHeight()),
+						0,
+						0,
+						null);
             }
         };
 
@@ -252,8 +252,10 @@ public class View extends JPanel implements RequestListener {
         JComponent menu = new JPanel();
 
 		//create the buttons with images
-        Image crabButtonImage = EstuaryImage.CRAB_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
-        Image turtleButtonImage = EstuaryImage.TURTLE_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+        Image crabButtonImage = EstuaryImage.CRAB_BUTTON
+				.getScaledImage(BUTTON_WIDTH, BUTTON_HEIGHT);
+        Image turtleButtonImage = EstuaryImage.TURTLE_BUTTON
+				.getScaledImage(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         
 		crabButton = new JButton("", new ImageIcon(crabButtonImage));

@@ -94,7 +94,9 @@ public enum EstuaryImage {
             lastScaledImage = image.getScaledInstance(
                     width, height, Image.SCALE_SMOOTH);
 
-            //...and recall the new size
+            //...and store the new size
+            System.out.println(String.format("%s scaled to %d by %d ",
+                    name(), width, height));
             lastWidth = width;
             lastHeight = height;
 
