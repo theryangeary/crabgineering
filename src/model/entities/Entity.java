@@ -168,7 +168,7 @@ public abstract class Entity implements BoundsListener, Serializable {
 	 * Returns the current velocity along the y-axis
 	 * @return dy
 	 */
-	double getDY(){
+	public double getDY(){
 		return dy;
 	}
 	

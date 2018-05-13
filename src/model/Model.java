@@ -387,7 +387,7 @@ public class Model implements RequestListener, Serializable {
 	 * @return The new pollution level
 	 */
 	// returns new pollution level
-	int incrementPollutionLevel(int addition) {
+	public int incrementPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
 		if (this.currentPollutionLevel < 0) {
 			this.currentPollutionLevel = 0;
@@ -441,6 +441,14 @@ public class Model implements RequestListener, Serializable {
 	 */
 	public ArrayList<Entity> getEntities(){
 		return entities;
+	}
+	
+	/**
+	 * Returns the TrashSpawner for the Model. For testing purposes.
+	 * @return The Model's TrashSpawner
+	 */
+	public TrashSpawner getSpawner() {
+		return spawner;
 	}
 	
 	/**

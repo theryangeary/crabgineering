@@ -107,7 +107,7 @@ public class Crab extends Player {
 		super.update(gravity,drag);
 		translate(currentSpeed,0);
 		if (hasTrash) {
-			rotateThrow(currentRotateSpeed);
+			//rotateThrow(currentRotateSpeed);
 			heldTrash.setLocation(
 					(int) getBounds().getX(),
 					(int) getBounds().getY());
@@ -156,11 +156,11 @@ public class Crab extends Player {
 	 * Rotates the Crab's throwing direction for throwing Trash by the degrees specified
 	 * @param dTheta The degrees to rotate the throwing direction by
 	 */
-	public void rotateThrow(double dTheta) {
+	/*public void rotateThrow(double dTheta) {
 		// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
 		throwAngle += dTheta;
 //		arrowSprite.rotate(dTheta);
-	}
+	}*/
 	
 	/**
 	 * Returns the model.entities.Crab's current speed based on input
@@ -174,9 +174,9 @@ public class Crab extends Player {
 	 * Returns the model.entities.Crab's throwing angle based on input
 	 * @return The Crab's throwing angle
 	 */
-	public double getThrowAngle() {
+	/*public double getThrowAngle() {
 		return throwAngle;
-	}
+	}/*
 
 	/*
 	public boolean arrowVisible() {
