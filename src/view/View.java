@@ -295,7 +295,7 @@ public class View extends JPanel implements RequestListener {
 				*/
 
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
 			}
 		});
