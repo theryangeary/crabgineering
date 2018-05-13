@@ -13,10 +13,9 @@ import static view.estuaryenums.EstuaryImage.POLLUTION_EFFECT;
 
 public class JPollutionColor extends JPanel implements RequestListener{
 
-	private int alpha = 0;
 	private int pollutionLevel = 0;
-	private final double MAX_OPACITY = 128.0;
-	private final double OPACITY_INCREMENT = MAX_OPACITY * ((double) Trash.POLLUTION / (double) Model.MAX_POLLUTION_LEVEL);
+	//private final double MAX_OPACITY = 128.0;
+	//private final double OPACITY_INCREMENT = MAX_OPACITY * ((double) Trash.POLLUTION / (double) Model.MAX_POLLUTION_LEVEL);
 
 	public JPollutionColor(){
 		super();
@@ -31,10 +30,12 @@ public class JPollutionColor extends JPanel implements RequestListener{
             if (this.pollutionLevel < 0) {
             	this.pollutionLevel = 0;
             }
+            /*
             alpha += OPACITY_INCREMENT;
             if (pollutionLevel <= 0) {
             	alpha = 0;
             }
+            */
         }
     }
 
@@ -45,13 +46,23 @@ public class JPollutionColor extends JPanel implements RequestListener{
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		Image pollutionEffect = EstuaryImage.POLLUTION_EFFECT.getScaledImage(
-				getWidth(),
-				getHeight());
+        Graphics2D g2d = (Graphics2D) g;
+        Composite oldComposite = g2d.getComposite();
 
-		g.drawImage(,
+        //System.out.println(((float) pollutionLevel) / Model.MAX_POLLUTION_LEVEL);
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(
+                AlphaComposite.SRC_OVER,
+                ((float) pollutionLevel) / Model.MAX_POLLUTION_LEVEL
+        );
+        g2d.setComposite(alphaComposite);
+
+		g2d.drawImage(EstuaryImage.POLLUTION_EFFECT.getScaledImage(
+                getWidth(),
+                getHeight()),
 				0,
 				0,
 				null);
+
+		g2d.setComposite(oldComposite);
 	}
 }
