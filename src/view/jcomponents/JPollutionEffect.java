@@ -11,13 +11,13 @@ import view.estuaryenums.EstuaryImage;
 
 import static view.estuaryenums.EstuaryImage.POLLUTION_EFFECT;
 
-public class JPollutionColor extends JPanel implements RequestListener{
+public class JPollutionEffect extends JPanel implements RequestListener{
 
 	private int pollutionLevel = 0;
 	//private final double MAX_OPACITY = 128.0;
 	//private final double OPACITY_INCREMENT = MAX_OPACITY * ((double) Trash.POLLUTION / (double) Model.MAX_POLLUTION_LEVEL);
 
-	public JPollutionColor(){
+	public JPollutionEffect(){
 		super();
 		//setLayout( new BorderLayout() );
 		setOpaque(false);

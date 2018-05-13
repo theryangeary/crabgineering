@@ -10,7 +10,7 @@ import view.estuaryenums.EstuaryFont;
 import view.estuaryenums.EstuaryImage;
 import view.jcomponents.JEstuaryImageLabel;
 import view.jcomponents.JPollutionBar;
-import view.jcomponents.JPollutionColor;
+import view.jcomponents.JPollutionEffect;
 import view.jcomponents.JScoreLabel;
 import view.sprites.Sprite;
 
@@ -344,7 +344,7 @@ public class View extends JPanel implements RequestListener {
      * @return A Component representing the pollution level with color opacity
      */
     private Component createPollution() {
-    	JPollutionColor pc  = new JPollutionColor();
+    	JPollutionEffect pc  = new JPollutionEffect();
     	requestQueue.addListener(pc);
     	return pc;
     }
