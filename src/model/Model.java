@@ -259,16 +259,21 @@ public class Model implements RequestListener, Serializable {
 
 				if ((trashBarge.intersects(trash) && trash.touched() && !trashBarge.bargeMatchesTrash(trash)) ||
 						(recyclingBarge.intersects(trash) && trash.touched() && !recyclingBarge.bargeMatchesTrash(trash))) {
-						EstuarySound.TRASH_WRONG.play();
-						requestQueue.postRequest(
-								RequestFactory.createRemoveFromModelRequest(trash)
-						);
-						removeFromThrownTrash.add(trash);
+						if (!trash.getPlayedSound()) {
+							EstuarySound.TRASH_WRONG.play();
+							trash.setPlayedSound(true);
+							}
 				}
 
 				if (trash.getYSpeed() > 0) {
 					thrownTrash.remove(trash);
 					trash.setThrown(false);
+					if ((trash.getBounds().getMinY() > trashBarge.getBounds().getMaxY()) && (trash.getBounds().getMinY() > recyclingBarge.getBounds().getMaxY())) {
+						if (trash.getPlayedSound()) {
+							trash.setPlayedSound(false);
+						}
+					}
+					
 				}
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {

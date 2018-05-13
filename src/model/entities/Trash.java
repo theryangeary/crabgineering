@@ -27,6 +27,7 @@ public class Trash extends Entity {
 	private boolean thrown = false;
 	private boolean addedPollution = false;
 	private boolean touched = false;
+	private boolean playedSound = false;
 
 	public static final int TRASH_WIDTH = 50;
 	public static final int TRASH_HEIGHT = 50;
@@ -187,4 +188,22 @@ public class Trash extends Entity {
 	 * @return Boolean: true if the trash has been hit by another piece of trash, touched by a player, etc.
 	 */
 	public boolean touched() { return touched; }
+	
+	/**
+	 * Returns the current state of whether or not a sound has been played for this Trash
+	 * @return True if a sound has been played for this Trash; False if not
+	 */
+	public boolean getPlayedSound() {
+		return this.playedSound;
+	}
+	
+	/**
+	 * Sets the state of whether or not a sound has been played for this Trash
+	 * @param state True is a sound has been played; False if not
+	 */
+	public void setPlayedSound(boolean state) {
+		this.playedSound = state;
+	}
 }
+
+
