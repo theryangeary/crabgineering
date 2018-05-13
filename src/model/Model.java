@@ -383,6 +383,9 @@ public class Model implements RequestListener, Serializable {
 	// returns new pollution level
 	int incrementPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
+		if (this.currentPollutionLevel < 0) {
+			this.currentPollutionLevel = 0;
+		}
 		return this.currentPollutionLevel;
 	}
 
@@ -453,7 +456,7 @@ public class Model implements RequestListener, Serializable {
 		requestQueue.removeListener(this);
 	}
 	
-	public void restore(RequestQueue rq, int pollution) {	
+	public void restore(RequestQueue rq) {	
 		setRequestQueue(rq);
 		spawner.setRequestQueue(rq);
 		for (Entity e: entities) {
@@ -468,9 +471,12 @@ public class Model implements RequestListener, Serializable {
 			);
 		}
 		
-		currentPollutionLevel+= pollution;
+		int tempPollution = this.currentPollutionLevel;
 		requestQueue.postRequest(
-				RequestFactory.createUpdatePollutionRequest(currentPollutionLevel - pollution)
+				RequestFactory.createUpdatePollutionRequest(-100)
+		);
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(tempPollution)
 		);
 		
 		requestQueue.postRequest(
