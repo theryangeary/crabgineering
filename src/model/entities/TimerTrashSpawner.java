@@ -48,7 +48,6 @@ public class TimerTrashSpawner extends TrashSpawner {
 
     /**
      * Configures everything so that this TrashSpawner will actually spawn trash
-     * @param requestQueue ADD_TO_MODEL requests for spawned trash are passed to this
      * @param spawnWidth the width of the area where spawning should occur
      * @param spawnHeight the height at which trash should spawn
      * @param offset the x-position where we start spawning thrash
