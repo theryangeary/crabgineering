@@ -203,7 +203,7 @@ public class ModelRunningTests {
 		assertEquals(10, m.getCurrentPollutionLevel());
 		assertEquals(bottom, t.getBounds().getMaxY(), 25);
 		
-		/* NOT A FEATURE ANYMORE
+		
 		// Top
 		// TO CHANGE
 		t = f.createEasyTrash(right/2 + 50, top - 100, false);
@@ -217,8 +217,8 @@ public class ModelRunningTests {
 			rq.fulfillAllRequests();
 		}
 		rq.fulfillAllRequests();
-		assertFalse(m.getEntities().contains(t));
-		assertEquals(10, m.getScore());*/
+		assertTrue(m.getEntities().contains(t));
+		assertTrue(t.getYSpeed() > 0);
 		
 		// Left
 		t = f.createEasyTrash(25, bottom - 150, false);

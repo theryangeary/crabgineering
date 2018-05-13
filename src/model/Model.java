@@ -223,7 +223,7 @@ public class Model implements RequestListener, Serializable {
 				thrownTrash.add((Trash) request.getSpecifics());
 				break;
 			case UPDATE_SCORE:
-				setScore((int) request.getSpecifics());
+				incrementScore((int) request.getSpecifics());
 				break;
 			case UPDATE_POLLUTION:
 				incrementPollutionLevel((int) request.getSpecifics());
@@ -249,7 +249,7 @@ public class Model implements RequestListener, Serializable {
 				if ((trashBarge.intersects(trash) && trash.touched() && trashBarge.bargeMatchesTrash(trash)) ||
 						(recyclingBarge.intersects(trash) && trash.touched() && recyclingBarge.bargeMatchesTrash(trash))) {
 						requestQueue.postRequest(
-								RequestFactory.createUpdateScoreRequest(this.score + (SCORE_INCREMENT * 3))
+								RequestFactory.createUpdateScoreRequest(3)
 						);
 				}
 
@@ -304,13 +304,19 @@ public class Model implements RequestListener, Serializable {
 	}
 
 	/**
-	 * Sets the score by the score specified.
+	 * Increments the score by the specified modifer times SCORE_INCREMENT.
 	 *
-	 * @param score The new score
+	 * @param modifier The amount to multiply the SCORE_INCREMENT by
 	 */
-	public void setScore(int score) {
-		EstuarySound.POINTS.play();
-		this.score = score;
+	public void incrementScore(int modifier) {
+		if (modifier > 0) {
+			EstuarySound.POINTS.play();
+		}
+		if (modifier == 0) {
+			this.score = 0;
+		} else {
+			this.score = this.score + (modifier * SCORE_INCREMENT);
+		}
 	}
 
 	/**
@@ -488,11 +494,13 @@ public class Model implements RequestListener, Serializable {
 				RequestFactory.createUpdatePollutionRequest(tempPollution)
 		);
 		
+		int tempScore = this.score;
 		requestQueue.postRequest(
-				RequestFactory.createUpdateScoreRequest(this.score)
+				RequestFactory.createUpdateScoreRequest(0)
 		);
-		
-
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(tempScore/SCORE_INCREMENT)
+		);		
 	}
 	
 	/**

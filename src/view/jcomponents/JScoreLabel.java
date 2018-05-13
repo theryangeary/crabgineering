@@ -23,8 +23,12 @@ public class JScoreLabel extends JLabel implements RequestListener {
         setFont(new Font(EstuaryFont.MINECRAFT.name(), Font.PLAIN, 32));
     }
 
-    private void setScore(int score){
-        this.score += score;
+    private void incrementScore(int modifier){
+    	if (modifier == 0) {
+    		this.score = 0;
+    	} else {
+        this.score = this.score + (modifier * Model.SCORE_INCREMENT);
+    	}
         setText("Score: " + score);
     }
 
@@ -35,7 +39,7 @@ public class JScoreLabel extends JLabel implements RequestListener {
     @Override
     public void handleRequest(Request request) {
         if (request.getRequestedAction().equals(Request.RequestType.UPDATE_SCORE)) {
-            setScore(((int) request.getSpecifics()));
+            incrementScore(((int) request.getSpecifics()));
         }
     }
 }
