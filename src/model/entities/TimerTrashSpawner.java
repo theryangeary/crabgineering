@@ -54,7 +54,7 @@ public class TimerTrashSpawner extends TrashSpawner {
      * @param offset the x-position where we start spawning thrash
      */
     @Override
-    void initSpawning(RequestQueue requestQueue){
+    void initSpawning(){
         Action spawnAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

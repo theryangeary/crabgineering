@@ -1,6 +1,7 @@
 package controller.bounds;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -8,7 +9,7 @@ import java.util.Collection;
  * Bounds is a utility for handling movement and intersection
  * @see java.awt.Rectangle
  */
-public class Bounds extends Rectangle {
+public class Bounds extends Rectangle implements Serializable {
     private Collection<BoundsListener> listeners;
 
     /**

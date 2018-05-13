@@ -7,11 +7,12 @@ import view.estuaryenums.EstuaryImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 /**
  * Connects Sprites to Entities
  */
-public class EntitySprite implements Sprite, BoundsListener {
+public class EntitySprite implements Sprite, BoundsListener, Serializable {
 
     private final boolean DEBUG = false;
     private final EstuaryImage estuaryImage;

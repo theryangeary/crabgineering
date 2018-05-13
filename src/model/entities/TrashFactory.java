@@ -1,8 +1,10 @@
 package model.entities;
 
+import java.io.Serializable;
+
 import controller.requests.RequestQueue;
 
-public class TrashFactory {
+public class TrashFactory implements Serializable{
 
     private RequestQueue requestQueue;
 
@@ -45,5 +47,9 @@ public class TrashFactory {
      */
     public Trash createHardTrash(int x, int y, boolean recyclable){
         return new Trash(x,y,10,10, requestQueue, recyclable);
+    }
+    
+    public void setRequestQueue(RequestQueue rq) {
+    	requestQueue = rq;
     }
 }

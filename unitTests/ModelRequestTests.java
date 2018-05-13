@@ -20,7 +20,7 @@ public class ModelRequestTests {
 	// Tests the handling of the UPDATE_SCORE Request
 	@Test
 	public void updateScoreTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		assertEquals(0, m.getScore());
 		assertEquals(10, Model.SCORE_INCREMENT);
 		Request r = RequestFactory.createUpdateScoreRequest(1);
@@ -35,7 +35,7 @@ public class ModelRequestTests {
 	// Tests the handling of the UPDATE_POLLUTION Request
 	@Test
 	public void updatePollutionTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		assertEquals(0, m.getCurrentPollutionLevel());
 		Request r = RequestFactory.createUpdatePollutionRequest(10);
 		m.handleRequest(r);
@@ -46,7 +46,7 @@ public class ModelRequestTests {
 	// Tests the handling of the ADD_TO_MODEL, ADD_THROWN_TRASH, and REMOVE_FROM_MODEL Requests
 	@Test
 	public void addToAndRemoveFromModelTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 
 		// ADD SNACK_BAG TO MODEL
 		TrashFactory f = new TrashFactory(new RequestQueue());
@@ -71,7 +71,7 @@ public class ModelRequestTests {
 	// Tests the TOGGLE_PAUSED Request
 	@Test
 	public void togglePausedTest() {
-		m.reset(EntityType.TURTLE);
+		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		assertTrue(m.trashSpawning);
 		Request r = RequestFactory.createTogglePausedRequest();
 		m.handleRequest(r);
@@ -83,7 +83,7 @@ public class ModelRequestTests {
 	// Tests the handling of the PLAY_SOUND Request
 	@Test
 	public void playSoundTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 
 		Request r = RequestFactory.createPlaySoundRequest(EstuarySound.POINTS.toString());
 		m.handleRequest(r);

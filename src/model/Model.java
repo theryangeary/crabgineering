@@ -17,6 +17,7 @@ import view.sprites.Sprite;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static model.entities.Barge.BARGE_HEIGHT;
@@ -29,7 +30,7 @@ import static model.entities.Barge.BARGE_WIDTH;
  * @author Zelinsky
  * @see Controller
  */
-public class Model implements RequestListener {
+public class Model implements RequestListener, Serializable {	
 	//listeners
 	RequestQueue requestQueue;
 	
@@ -149,7 +150,7 @@ public class Model implements RequestListener {
 					RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
 			);
 			requestQueue.postRequest(
-					RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
+					RequestFactory.createUpdateScoreRequest(0)
 			);
 		}
 
@@ -222,7 +223,7 @@ public class Model implements RequestListener {
 				thrownTrash.add((Trash) request.getSpecifics());
 				break;
 			case UPDATE_SCORE:
-				incrementScore((int) request.getSpecifics());
+				setScore((int) request.getSpecifics());
 				break;
 			case UPDATE_POLLUTION:
 				incrementPollutionLevel((int) request.getSpecifics());
@@ -248,7 +249,7 @@ public class Model implements RequestListener {
 				if ((trashBarge.intersects(trash) && trash.touched() && trashBarge.bargeMatchesTrash(trash)) ||
 						(recyclingBarge.intersects(trash) && trash.touched() && recyclingBarge.bargeMatchesTrash(trash))) {
 						requestQueue.postRequest(
-								RequestFactory.createUpdateScoreRequest(3)
+								RequestFactory.createUpdateScoreRequest(this.score + (SCORE_INCREMENT * 3))
 						);
 				}
 
@@ -303,13 +304,13 @@ public class Model implements RequestListener {
 	}
 
 	/**
-	 * Increments the score by the (modifier * SCORE_INCREMENT).
+	 * Sets the score by the score specified.
 	 *
-	 * @param modifier The amount to multiply SCORE_INCREMENT by
+	 * @param score The new score
 	 */
-	public void incrementScore(int modifier) {
+	public void setScore(int score) {
 		EstuarySound.POINTS.play();
-		score += SCORE_INCREMENT * modifier;
+		this.score = score;
 	}
 
 	/**
@@ -439,5 +440,48 @@ public class Model implements RequestListener {
 	 */
 	public ArrayList<Trash> getThrownTrash(){
 		return thrownTrash;
+	}
+	
+	public void removeAllEntities() {
+		toggleTrashSpawning(false);
+		for (Entity e : entities) {
+			requestQueue.postRequest(
+					RequestFactory.createRemoveFromModelRequest(e)
+			);
+		}
+		requestQueue.fulfillAllRequests();
+		requestQueue.removeListener(this);
+	}
+	
+	public void restore(RequestQueue rq, int pollution) {	
+		setRequestQueue(rq);
+		spawner.setRequestQueue(rq);
+		for (Entity e: entities) {
+			
+			e.setRequestQueue(rq);
+			//create the corresponding sprite
+			Sprite sprite = new EntitySprite(e);
+
+			//and post a request for it to be added to the view
+			requestQueue.postRequest(
+					RequestFactory.createAddToViewRequest(sprite)
+			);
+		}
+		
+		currentPollutionLevel+= pollution;
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(currentPollutionLevel - pollution)
+		);
+		
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(this.score)
+		);
+		
+
+	}
+	
+	public void setRequestQueue(RequestQueue rq) {
+		this.requestQueue = rq;
+		requestQueue.addListener(this);
 	}
 }

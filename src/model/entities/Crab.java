@@ -18,12 +18,11 @@ public class Crab extends Player {
 	private boolean hasTrash = false;
 	private Trash heldTrash = null;
 
-	private RequestQueue requestQueue;
-	private ArrowSprite arrowSprite;
+//	private ArrowSprite arrowSprite;
 
 	private double throwAngle = Math.PI/2;
 	private final int THROW_SPEED = -15;
-	private final double ROTATE_SPEED = Math.PI/40;
+//	private final double ROTATE_SPEED = Math.PI/40;
 
 	/**
 	 * The width of the Crab
@@ -43,14 +42,13 @@ public class Crab extends Player {
 	 * @see Player
 	 */
 	public Crab(int x, int y, RequestQueue requestQueue) {
-		super(x, y, CRAB_WIDTH, CRAB_HEIGHT);
-		this.requestQueue = requestQueue;
+		super(x, y, CRAB_WIDTH, CRAB_HEIGHT, requestQueue);
 
-		arrowSprite = new ArrowSprite(getBounds());
-		requestQueue.postRequest(
-				RequestFactory.createAddToViewRequest(arrowSprite)
-		);
-		requestQueue.addListener(arrowSprite);
+//		arrowSprite = new ArrowSprite(getBounds());
+//		requestQueue.postRequest(
+//				RequestFactory.createAddToViewRequest(arrowSprite)
+//		);
+//		requestQueue.addListener(arrowSprite);
 	}
 
 	/**
@@ -68,19 +66,19 @@ public class Crab extends Player {
 	@Override
 	public void processInput(String action) {
 		switch (PlayerAction.valueOf(action)) {
-            case ROTATE_TRASH_LEFT:
-                if (hasTrash) {
-                	currentRotateSpeed = -ROTATE_SPEED;
-                }
-                break;
-            case ROTATE_TRASH_RIGHT:
-                if (hasTrash) {
-                	currentRotateSpeed = ROTATE_SPEED;
-                }
-                break;
-            case STOP_ROTATE:
-            	currentRotateSpeed = 0;
-            	break;
+//            case ROTATE_TRASH_LEFT:
+//                if (hasTrash) {
+//                	currentRotateSpeed = -ROTATE_SPEED;
+//                }
+//                break;
+//            case ROTATE_TRASH_RIGHT:
+//                if (hasTrash) {
+//                	currentRotateSpeed = ROTATE_SPEED;
+//                }
+//                break;
+//            case STOP_ROTATE:
+//            	currentRotateSpeed = 0;
+//            	break;
 			case MOVE_LEFT:
 				currentSpeed = -SPEED;
 				break;
@@ -133,8 +131,8 @@ public class Crab extends Player {
 
 			heldTrash = null;
 			hasTrash = false;
-			arrowSprite.setVisibility(false);
-			arrowSprite.rotate(Math.PI/2 - throwAngle);
+//			arrowSprite.setVisibility(false);
+//			arrowSprite.rotate(Math.PI/2 - throwAngle);
 			throwAngle = Math.PI/2;
 		}
 	}
@@ -149,7 +147,7 @@ public class Crab extends Player {
 			EstuarySound.GET_TRASH.play();
 			hasTrash = true;
 			t.toggleStopped();
-			arrowSprite.setVisibility(true);
+//			arrowSprite.setVisibility(true);
 			heldTrash = t;
 		}
 	}
@@ -161,7 +159,7 @@ public class Crab extends Player {
 	public void rotateThrow(double dTheta) {
 		// ROTATE TRAJECTORY ARROW AND CHANGE xThrow and yThrow ACCORDINGLY
 		throwAngle += dTheta;
-		arrowSprite.rotate(dTheta);
+//		arrowSprite.rotate(dTheta);
 	}
 	
 	/**
