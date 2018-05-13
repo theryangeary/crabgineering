@@ -32,8 +32,11 @@ public class JPollutionColor extends JPanel implements RequestListener{
     public void handleRequest(Request request){
         if (request.getRequestedAction().equals(Request.RequestType.UPDATE_POLLUTION)) {
             this.pollutionLevel += (int) request.getSpecifics();
+            if (this.pollutionLevel < 0) {
+            	this.pollutionLevel = 0;
+            }
             alpha += OPACITY_INCREMENT;
-            if (pollutionLevel == 0) {
+            if (pollutionLevel <= 0) {
             	alpha = 0;
             }
             brown = new Color(RED, BLUE, GREEN, alpha);

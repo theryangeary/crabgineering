@@ -14,7 +14,6 @@ import java.util.EnumSet;
 public class TutorialTrashSpawner extends TrashSpawner implements RequestListener {
     public static final int NUM_CYCLES = 2;
 
-    private RequestQueue requestQueue;
     private int curTrash;
     private Entity.EntityType[] trashTypes;
 
@@ -48,13 +47,12 @@ public class TutorialTrashSpawner extends TrashSpawner implements RequestListene
 
     /**
      * Configures everything so that this TrashSpawner will actually spawn trash
-     * @param requestQueue ADD_TO_MODEL requests for spawned trash are passed to this
      * @param spawnWidth the width of the area where spawning should occur
      * @param spawnHeight the height at which trash should spawn
      * @param offset the x-position where we start spawning thrash
      */
     @Override
-    void initSpawning(RequestQueue requestQueue){
+    void initSpawning(){
         //combines all of the types of recycling and all the types of trash
         EnumSet<Entity.EntityType> allTrash = EnumSet.copyOf(Trash.TRASH_TYPES);
         allTrash.addAll(Trash.RECYCLING_TYPES);

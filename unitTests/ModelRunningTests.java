@@ -9,17 +9,21 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.bounds.Bounds;
 import controller.requests.Request;
+import controller.requests.Request.RequestType;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Barge;
 import model.entities.Boss;
 import model.entities.Crab;
+import model.entities.Entity;
 import model.entities.Trash;
 import model.entities.TrashFactory;
 import model.entities.TrashSpawner;
 import model.entities.Turtle;
+import model.entities.TutorialTrashSpawner;
 import model.entities.Entity.EntityType;
+import model.entities.TimerTrashSpawner;
 
 public class ModelRunningTests {
 	
@@ -56,8 +60,8 @@ public class ModelRunningTests {
 		assertTrue(m.trashSpawning);*/
 		
 		// Trash Type
-		Trash trash = f.createEasyTrash(50, 50, false);
-		Trash recycle = f.createEasyTrash(150, 150, true);
+		//Trash trash = f.createEasyTrash(50, 50, false);
+		//Trash recycle = f.createEasyTrash(150, 150, true);
 		//assertEquals(EntityType.TRASH, trash.getType());
 		//assertEquals(EntityType.RECYCLING, recycle.getType());
 		
@@ -100,6 +104,7 @@ public class ModelRunningTests {
 		Trash trash = f.createEasyTrash(215, 50, false);
 		Trash recycle = f.createHardTrash(300, 75, true);
 		
+		// Correct barges: change in score
 		Request r1 = RequestFactory.createAddToModelRequest(trash);
 		Request r2 = RequestFactory.createAddToModelRequest(recycle);
 		m.handleRequest(r1);
@@ -109,6 +114,23 @@ public class ModelRunningTests {
 		trash.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - Barge.BARGE_WIDTH - Barge.BARGE_PADDING), (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
 		recycle.setLocation((int) m.getWorldBounds().getX() + Barge.BARGE_PADDING, (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
 		assertEquals(0, m.getScore());
+		m.update();
+		rq.fulfillAllRequests();
+		assertEquals(60, m.getScore());
+		
+		// Wrong barges: no change in score
+		
+		Trash trash2 = f.createEasyTrash(215, 50, false);
+		Trash recycle2 = f.createHardTrash(300, 75, true);
+		
+		Request r3 = RequestFactory.createAddToModelRequest(trash2);
+		Request r4 = RequestFactory.createAddToModelRequest(recycle2);
+		m.handleRequest(r3);
+		m.handleRequest(r4);
+		trash2.touch();
+		recycle2.touch();
+		recycle2.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - Barge.BARGE_WIDTH - Barge.BARGE_PADDING), (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
+		trash2.setLocation((int) m.getWorldBounds().getX() + Barge.BARGE_PADDING, (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
 		m.update();
 		rq.fulfillAllRequests();
 		assertEquals(60, m.getScore());
@@ -130,25 +152,10 @@ public class ModelRunningTests {
 		m.handleRequest(r);
 		m.update();
 		assertTrue(m.getPlayer().intersects(t));
-	}
-	
-	/* NOT A FEATURE ANYMORE
-	// Tests the removal of 'touched' Trash at the top of the screen in update()
-	@Test
-	public void trashAtTopTests() {
-		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
-		m.toggleTrashSpawning(false);
-		
-		Trash t = f.createEasyTrash(100, 100, false);
-		Request r = RequestFactory.createAddToModelRequest(t);
-		m.handleRequest(r);
-		assertTrue(m.getEntities().contains(t));
-		t.touch();
-		t.setLocation(100, 0);
 		m.update();
-		assertFalse(m.getEntities().contains(t));
-	}*/
+		
+	}
 	
 	// Tests the movement of Trash
 	@Test
@@ -203,9 +210,8 @@ public class ModelRunningTests {
 		assertEquals(10, m.getCurrentPollutionLevel());
 		assertEquals(bottom, t.getBounds().getMaxY(), 25);
 		
-		/* NOT A FEATURE ANYMORE
+		
 		// Top
-		// TO CHANGE
 		t = f.createEasyTrash(right/2 + 50, top - 100, false);
 		t.setSpeed(0, -50);
 		r = RequestFactory.createAddToModelRequest(t);
@@ -217,8 +223,9 @@ public class ModelRunningTests {
 			rq.fulfillAllRequests();
 		}
 		rq.fulfillAllRequests();
-		assertFalse(m.getEntities().contains(t));
-		assertEquals(10, m.getScore());*/
+		assertTrue(m.getEntities().contains(t));
+		assertTrue(t.getYSpeed() > 0);
+		assertEquals(4.0, t.getDY(), .5);
 		
 		// Left
 		t = f.createEasyTrash(25, bottom - 150, false);
@@ -412,6 +419,11 @@ public class ModelRunningTests {
 		t.handleTranslate(5, 10);
 		assertEquals(10, t.getWorldBounds().x);
 		assertEquals(20, t.getWorldBounds().y);
+		
+		m.incrementPollutionLevel(10);
+		assertEquals(10, m.getCurrentPollutionLevel());
+		m.incrementPollutionLevel(-50);
+		assertEquals(0, m.getCurrentPollutionLevel());
 	}
 	
 	// Tests the Boss's behavior TODO
@@ -425,10 +437,60 @@ public class ModelRunningTests {
 		
 		Request r = RequestFactory.createAddToModelRequest(b);
 		m.handleRequest(r);
+		assertTrue(m.getEntities().contains(b));
 		
 		m.update();
 	}
 	
+	// Tests the different start modes of the game
+	@Test
+	public void startModeTests() {
+		m.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
+		rq.fulfillAllRequests();
+		
+		assertTrue(m.getSpawner() instanceof TutorialTrashSpawner);
+		
+		m.reset(null, RequestType.START_GAME);
+		rq.fulfillAllRequests();
+		
+		assertTrue(m.getSpawner() instanceof TimerTrashSpawner);
+		
+		m.reset(null, RequestType.START_BOSS);
+		rq.fulfillAllRequests();
+		
+		boolean hasBoss = false;
+		for (Entity e : m.getEntities()) {
+			if (e instanceof Boss) {
+				hasBoss = true;
+				break;
+			}
+		}
+		assertTrue(hasBoss);
+		
+	}
+	
+	//Tests the Tutorial Mode
+	@Test
+	public void tutorialTests() {
+		m.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
+		rq.fulfillAllRequests();
+		
+		TutorialTrashSpawner spawner = (TutorialTrashSpawner) m.getSpawner();
+		spawner.handleRequest(RequestFactory.createUpdateScoreRequest(3));
+		
+		Trash t = f.createEasyTrash(100, 100, false);
+		spawner.handleRequest(RequestFactory.createAddToModelRequest(t));
+		spawner.handleRequest(RequestFactory.createRemoveFromModelRequest(t));
+		rq.fulfillAllRequests();
+		
+		for (int i=0; i<15; i++) {
+		spawner.handleRequest(RequestFactory.createUpdateScoreRequest(3));
+		}
+		
+		
+		
+	}
+		
 	// Tests that the game ends when endGame() is called
 	// Also tests that the game is restarted when reset() is called with the right Player
 	@Test
@@ -460,6 +522,4 @@ public class ModelRunningTests {
 		assertFalse(m.gameOver);
 		
 	}
-	
-
 }

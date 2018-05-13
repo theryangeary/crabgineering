@@ -1,12 +1,14 @@
 package controller.requests;
 
+import java.io.Serializable;
+
 /**
  * A Request is a semantic type used to represent an action
  * that SHOULD occur, but has not necessarily taken place yet
  *
  * @param <R> The type used for the specifics of the request
  */
-public class Request<R> {
+public class Request<R> implements Serializable{
 
     /**
      * The possible types of actions that can be represented by a Request
@@ -21,6 +23,7 @@ public class Request<R> {
         ADD_TO_VIEW,
         REMOVE_FROM_VIEW,
         UPDATE_POLLUTION,
+        START_BOSS,
         UPDATE_SCORE,
         UPDATE_THROW_ANGLE,
         TOGGLE_DISPLAY,

@@ -6,7 +6,6 @@ import model.Model;
 public class Barge extends Entity {
 
     EntityType bargeType;
-    RequestQueue requestQueue;
 
     public static final int BARGE_WIDTH = 200;
     public static final int BARGE_HEIGHT = BARGE_WIDTH * 20 / 40;
@@ -17,9 +16,8 @@ public class Barge extends Entity {
     private double offset = Math.random()*10;
 
     public Barge(int x, int y, int width, int height, EntityType bargeType, RequestQueue requestQueue) {
-        super(x, y, width, height);
+        super(x, y, width, height, requestQueue);
         this.bargeType = bargeType;
-        this.requestQueue = requestQueue;
       //  toggleStopped(); // so that the boat won't sink
     }
 

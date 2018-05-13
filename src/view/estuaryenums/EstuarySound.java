@@ -21,6 +21,7 @@ public enum EstuarySound {
     POINTS("points.wav"),
     THROW("throw.wav"),
     TRASH_HIT("trash_hit.wav"),
+    TRASH_WRONG("wrong.wav"),
     GET_TRASH("get_trash.wav"),
     BOUNCE("bounce.wav");
 

@@ -2,15 +2,17 @@ package model.entities;
 
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
+import controller.requests.RequestQueue;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * An abstract class that represents a moving component/image of the game.
  * @author Zelinsky
  */
 
-public abstract class Entity implements BoundsListener {
+public abstract class Entity implements BoundsListener, Serializable {
 
 	/**
 	 * A semantic type indicating what type of Entity this is
@@ -51,6 +53,8 @@ public abstract class Entity implements BoundsListener {
 	protected boolean isAtBottom = false;
 	private boolean isStopped = false;
 	
+	RequestQueue requestQueue;
+	
 	
 	//double trashRate = 1;
 	
@@ -62,12 +66,13 @@ public abstract class Entity implements BoundsListener {
 	 * @param height The height of the Bounds
 	 * @see Bounds
 	 */
-	Entity(int x, int y, int width, int height) {
+	Entity(int x, int y, int width, int height, RequestQueue rq) {
 		bounds = new Bounds(x, y, width, height);
 		dx = 0;
 		dy = 0;
 		currentHealth = 10;
 		maxHealth = 10;
+		requestQueue = rq;
 	}
 
 	/**
@@ -163,7 +168,7 @@ public abstract class Entity implements BoundsListener {
 	 * Returns the current velocity along the y-axis
 	 * @return dy
 	 */
-	double getDY(){
+	public double getDY(){
 		return dy;
 	}
 	
@@ -292,5 +297,13 @@ public abstract class Entity implements BoundsListener {
 	 */
 	public double getYSpeed() {
 		return dy;
+	}
+	
+	/**
+	 * Sets the RequestQueue for this Entity.
+	 * @param rq The RequestQueue to set for this Entity
+	 */
+	public void setRequestQueue(RequestQueue rq) {
+		requestQueue = rq;
 	}
 }

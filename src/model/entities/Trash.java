@@ -18,8 +18,6 @@ public class Trash extends Entity {
 
     private static Random random = new Random();
 
-	private RequestQueue requestQueue;
-
 	private int pollutionCount;
 
 	private final int ANGLE_FACTOR = 5;
@@ -29,6 +27,7 @@ public class Trash extends Entity {
 	private boolean thrown = false;
 	private boolean addedPollution = false;
 	private boolean touched = false;
+	private boolean playedSound = false;
 
 	public static final int TRASH_WIDTH = 50;
 	public static final int TRASH_HEIGHT = 50;
@@ -56,8 +55,7 @@ public class Trash extends Entity {
 	 * @see RequestQueue
 	 */
 	Trash(int x, int y, int width, int height, RequestQueue requestQueue, boolean isRecyclable) {
-		super(x, y, width, height);
-		this.requestQueue = requestQueue;
+		super(x, y, width, height, requestQueue);
 
 		//choose specific type of trash depending on isRecyclable
         if (isRecyclable){
@@ -82,8 +80,7 @@ public class Trash extends Entity {
      * @see RequestQueue
      */
     Trash(int x, int y, int width, int height, RequestQueue requestQueue, EntityType type) {
-        super(x, y, width, height);
-        this.requestQueue = requestQueue;
+        super(x, y, width, height, requestQueue);
 
         //make sure a valid type was passed in
         if (TRASH_TYPES.contains(type) || RECYCLING_TYPES.contains(type)) {
@@ -122,7 +119,7 @@ public class Trash extends Entity {
 			dx = 0;
 		}
 		if (topBound() && dy < 0) {
-
+			this.setSpeed(getXSpeed(), 1);
 		}
 		if (bottomBound() && dy > 0) {
 			dy = 0;
@@ -191,4 +188,22 @@ public class Trash extends Entity {
 	 * @return Boolean: true if the trash has been hit by another piece of trash, touched by a player, etc.
 	 */
 	public boolean touched() { return touched; }
+	
+	/**
+	 * Returns the current state of whether or not a sound has been played for this Trash
+	 * @return True if a sound has been played for this Trash; False if not
+	 */
+	public boolean getPlayedSound() {
+		return this.playedSound;
+	}
+	
+	/**
+	 * Sets the state of whether or not a sound has been played for this Trash
+	 * @param state True is a sound has been played; False if not
+	 */
+	public void setPlayedSound(boolean state) {
+		this.playedSound = state;
+	}
 }
+
+

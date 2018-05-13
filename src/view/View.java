@@ -288,6 +288,12 @@ public class View extends JPanel implements RequestListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Crab as the Player
+				/*
+				requestQueue.postAndFulfillRequest(
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
+				);
+				*/
+
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
@@ -300,6 +306,8 @@ public class View extends JPanel implements RequestListener {
 				requestQueue.postAndFulfillRequest(
 						RequestFactory.createStartTutorialRequest(Entity.EntityType.TURTLE)
 				);
+
+
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {
@@ -348,21 +356,22 @@ public class View extends JPanel implements RequestListener {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
 			case START_TUTORIAL:
+			case START_BOSS:
 				//same as when starting a normal game here
 			case START_GAME:
 				//make sure we're not just continuing a game
 				if (request.getSpecifics() != null) {
 					//reset the sprites
 					sprites.clear();
+
+					//make the player selection buttons disappear
+					crabButton.setVisible(false);
+					turtleButton.setVisible(false);
+					endScore.setVisible(false);
+
+					//and the pause button appear
+					pauseButton.setVisible(true);
 				}
-
-				//make the player selection buttons disappear
-				crabButton.setVisible(false);
-				turtleButton.setVisible(false);
-				endScore.setVisible(false);
-
-				//and the pause button appear
-				pauseButton.setVisible(true);
 				break;
 			case ADD_TO_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
