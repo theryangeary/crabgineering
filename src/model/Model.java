@@ -14,7 +14,9 @@ import controller.requests.RequestQueue;
 import view.sprites.EntitySprite;
 import view.sprites.Sprite;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import static model.entities.Barge.BARGE_HEIGHT;
@@ -71,6 +73,9 @@ public class Model implements RequestListener {
 	 */
 	public boolean trashSpawning = true;
 
+	private Timer startBossTimer;
+	private final int TIME_TILL_BOSS=5*1000;
+
 	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
 	 * Starts a new game by calling reset().
@@ -86,6 +91,11 @@ public class Model implements RequestListener {
 		//setup the RequestQueue Entities can use to post controller.requests
 		//for the Model
 		requestQueue.addListener(this);
+
+
+
+
+
 	}
 	
 	/**
@@ -151,6 +161,15 @@ public class Model implements RequestListener {
 
 				break;
 			case START_GAME:
+				Action startBossAction = new AbstractAction() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						requestQueue.postRequest(RequestFactory.createStartBossRequest(null));
+					}
+				};
+
+				startBossTimer = new Timer(TIME_TILL_BOSS, startBossAction);
+				startBossTimer.start();
 
 				//set up the spawner for the regular game
 				spawner = new TimerTrashSpawner(
@@ -164,7 +183,9 @@ public class Model implements RequestListener {
 				break;
 
 			case START_BOSS:
-				Entity boss = new Boss(-500, 25, requestQueue);
+				startBossTimer.stop();
+				spawner.stop();
+				Entity boss = new Boss(-200, 25, requestQueue);
 				addEntity(boss);
 				break;
 			default:

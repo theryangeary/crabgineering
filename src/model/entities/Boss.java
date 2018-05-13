@@ -19,26 +19,25 @@ public class Boss extends Entity{
 
     public Boss(int x, int y, RequestQueue requestQueue) {
         super(x, y, BOSS_WIDTH, BOSS_HEIGHT);
-        System.out.println("CREATE BOS");
         this.requestQueue = requestQueue;
         this.ignoreBounds = true;
 
-        turningAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentSpeed = -currentSpeed;
-            }
-        };
+//        turningAction = new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                currentSpeed = -currentSpeed;
+//            }
+//        };
 
         spawner = new TimerTrashSpawner(
                 requestQueue,
                 y+BOSS_HEIGHT/2,
                 0,
-                100);
+                1000);
         //spawner.start();
 
-        waitTimer = new Timer(2000,turningAction);
-        waitTimer.start();
+        //waitTimer = new Timer(2000,turningAction);
+        //waitTimer.start();
     }
 
     /**
@@ -60,22 +59,20 @@ public class Boss extends Entity{
     @Override
     public void update(double gravity, double drag){
         spawner.setOffset(getBounds().x+BOSS_WIDTH/2);
-        System.out.println("BOOS IS LIVE");
-        //super.update(gravity,drag);
         int padding = 50;
 
+
+        //Check if the center of the ship is in bounds of the screen
         if(getBounds().x+getBounds().getWidth()/2 > getWorldBounds().x+padding
                 && getBounds().x+getBounds().getWidth()/2+padding <getWorldBounds().x+getWorldBounds().width){
             spawner.start();
-            System.out.println("IN");
         }else{
             spawner.stop();
         }
 
-        if(getBounds().x > getWorldBounds().x+getWorldBounds().getWidth()){
-          //  System.out.println("RIGHT");
-        }else if(getBounds().x+getBounds().getWidth() < getWorldBounds().x){
-          //  System.out.println("LEFT");
+        if((getBounds().x > getWorldBounds().x+getWorldBounds().getWidth() && currentSpeed > 0) ||
+            (getBounds().x+getBounds().getWidth() < getWorldBounds().x && currentSpeed < 0)){
+            currentSpeed*=-1;
         }
         translate(currentSpeed,0);
     }
