@@ -324,15 +324,18 @@ public class View extends JPanel implements RequestListener {
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean isPaused = pauseButton.getText().equals(PAUSED_TEXT);
+
 				//make a request for game play to be paused/resumed
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createTogglePausedRequest()
+						RequestFactory.createTogglePausedRequest(!isPaused)
 				);
 
 				//and switch which message we're displaying accordingly
-				if (pauseButton.getText().equals(PAUSED_TEXT)){
+				if (isPaused){
 					pauseButton.setText(UNPAUSED_TEXT);
 				} else {
 					pauseButton.setText(PAUSED_TEXT);
@@ -392,7 +395,7 @@ public class View extends JPanel implements RequestListener {
 					popup.setVisible(false);
 
 					requestQueue.postAndFulfillRequest(
-							RequestFactory.createTogglePausedRequest()
+							RequestFactory.createTogglePausedRequest(false)
 					);
 				}
 			});
@@ -431,18 +434,6 @@ public class View extends JPanel implements RequestListener {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
 			case START_TUTORIAL:
-				Entity.EntityType player = (Entity.EntityType) request.getSpecifics();
-
-				if (player.equals(Entity.EntityType.CRAB)) {
-					requestQueue.postAndFulfillRequest(
-							RequestFactory.createShowPopupRequest(PopupType.CRAB_TUTORIAL)
-					);
-				}
-				if (player.equals(Entity.EntityType.TURTLE)) {
-					requestQueue.postAndFulfillRequest(
-							RequestFactory.createShowPopupRequest(PopupType.TURTLE_TUTORIAL)
-					);
-				}
 			case START_BOSS:
 				//same as when starting a normal game here
 			case START_GAME:
@@ -471,7 +462,7 @@ public class View extends JPanel implements RequestListener {
 			case SHOW_POPUP_REQUEST:
 				pauseButton.setVisible(false);
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createTogglePausedRequest()
+						RequestFactory.createTogglePausedRequest(true)
 				);
 
 				switch ((PopupType) request.getSpecifics()){

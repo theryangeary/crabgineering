@@ -1,6 +1,7 @@
 package model;
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import view.View;
 import view.estuaryenums.EstuarySound;
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
@@ -167,6 +168,22 @@ public class Model implements RequestListener, Serializable {
 						BARGE_PADDING + BARGE_WIDTH);
 				spawner.start();
 
+				switch (player.getType()){
+					case CRAB:
+						requestQueue.postAndFulfillRequest(
+								RequestFactory.createShowPopupRequest(
+										View.PopupType.CRAB_TUTORIAL
+								)
+						);
+						break;
+					case TURTLE:
+						requestQueue.postAndFulfillRequest(
+								RequestFactory.createShowPopupRequest(
+										View.PopupType.TURTLE_TUTORIAL
+								)
+						);
+				}
+
 				break;
 			case START_GAME:
 				Action startBossAction = new AbstractAction() {
@@ -211,7 +228,7 @@ public class Model implements RequestListener, Serializable {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()) {
 			case TOGGLE_PAUSED:
-				toggleTrashSpawning(!trashSpawning);
+				toggleTrashSpawning((boolean) request.getSpecifics());
 				break;
 			case ADD_TO_MODEL:
 				addEntity((Entity) request.getSpecifics());
