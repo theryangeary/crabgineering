@@ -1,6 +1,7 @@
 package view.estuaryenums;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +29,14 @@ public enum EstuaryImage {
     FOREGROUND("foreground.png");
 
     //should be the same for all Sprites
-    final static String IMAGE_DIR = "src/resources/images/";
+    private final static String IMAGE_DIR = "src/resources/images/";
 
-    final BufferedImage image;
+    private final BufferedImage image;
+
+    //info for scale caching
+    private BufferedImage lastScaledImage;
+    private int lastWidth;
+    private int lastHeight;
 
     /**
      * Constructor to create a EstuaryImage
@@ -69,5 +75,23 @@ public enum EstuaryImage {
      */
     public BufferedImage getImage() {
         return image;
+    }
+
+    public BufferedImage getScaledImage(int width, int height){
+        //if we want the same scale as last time...
+        if (width == lastWidth && height == lastHeight){
+            //...just reuse the result from last time
+            return lastScaledImage;
+        } else {
+            //...otherwise scale the image to the new size...
+            lastScaledImage = (BufferedImage) image.getScaledInstance(
+                    width, height, Image.SCALE_SMOOTH);
+
+            //...and recall the new size
+            lastWidth = width;
+            lastHeight = height;
+
+            return lastScaledImage;
+        }
     }
 }
