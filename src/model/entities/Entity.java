@@ -2,15 +2,17 @@ package model.entities;
 
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
+import controller.requests.RequestQueue;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * An abstract class that represents a moving component/image of the game.
  * @author Zelinsky
  */
 
-public abstract class Entity implements BoundsListener {
+public abstract class Entity implements BoundsListener, Serializable {
 
 	/**
 	 * A semantic type indicating what type of Entity this is
@@ -20,11 +22,13 @@ public abstract class Entity implements BoundsListener {
 		CRAB,
 		SHRIMP,
 		TURTLE,
-		TRASH,
 		BOSS,
-		RECYCLING,
+        SNACK_BAG,
+        STYROFOAM_CUP,
+        SODA_CAN,
+        MILK_JUG,
 		TRASH_BARGE,
-		RECYCLING_BARGE;
+		RECYCLING_BARGE
 	}
 
 	//note: x counts pixels left of the left-hand side of the window
@@ -42,19 +46,14 @@ public abstract class Entity implements BoundsListener {
 	private int currentHealth;
 	private final int maxHealth;
 
-	//TODO: switch to enum flag
-	// States, i.e. booleans that are used to perform actions and check for things
-	private boolean isMovingRight = false;
-	private boolean isMovingLeft = false;
-	private boolean isMovingUp = false;
-	private boolean isMovingDown = false;
-	private boolean isAlive = true;
 	/**
 	 * The boolean representing whether or not the Entity is at the bottom of the worldBounds Rectangle.
 	 * Objects that extend Entity may need access to this attribute.
 	 */
 	protected boolean isAtBottom = false;
 	private boolean isStopped = false;
+	
+	RequestQueue requestQueue;
 	
 	
 	//double trashRate = 1;
@@ -67,12 +66,13 @@ public abstract class Entity implements BoundsListener {
 	 * @param height The height of the Bounds
 	 * @see Bounds
 	 */
-	Entity(int x, int y, int width, int height) {
+	Entity(int x, int y, int width, int height, RequestQueue rq) {
 		bounds = new Bounds(x, y, width, height);
 		dx = 0;
 		dy = 0;
 		currentHealth = 10;
 		maxHealth = 10;
+		requestQueue = rq;
 	}
 
 	/**
@@ -162,6 +162,14 @@ public abstract class Entity implements BoundsListener {
 	public void setSpeed(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	/**
+	 * Returns the current velocity along the y-axis
+	 * @return dy
+	 */
+	public double getDY(){
+		return dy;
 	}
 	
 	/**
@@ -289,5 +297,13 @@ public abstract class Entity implements BoundsListener {
 	 */
 	public double getYSpeed() {
 		return dy;
+	}
+	
+	/**
+	 * Sets the RequestQueue for this Entity.
+	 * @param rq The RequestQueue to set for this Entity
+	 */
+	public void setRequestQueue(RequestQueue rq) {
+		requestQueue = rq;
 	}
 }

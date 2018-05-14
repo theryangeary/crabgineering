@@ -9,16 +9,21 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.bounds.Bounds;
 import controller.requests.Request;
+import controller.requests.Request.RequestType;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import model.Model;
+import model.entities.Barge;
 import model.entities.Boss;
 import model.entities.Crab;
+import model.entities.Entity;
 import model.entities.Trash;
 import model.entities.TrashFactory;
 import model.entities.TrashSpawner;
 import model.entities.Turtle;
+import model.entities.TutorialTrashSpawner;
 import model.entities.Entity.EntityType;
+import model.entities.TimerTrashSpawner;
 
 public class ModelRunningTests {
 	
@@ -31,7 +36,7 @@ public class ModelRunningTests {
 	// Tests the ability of the model to toggle the TrashSpawner
 	@Test
 	public void trashSpawningTest() {
-		m.reset(EntityType.CRAB);
+		/*m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		
 		// Spawner
@@ -52,13 +57,13 @@ public class ModelRunningTests {
 		m.handleRequest(r);
 		assertFalse(m.trashSpawning);
 		m.handleRequest(r);
-		assertTrue(m.trashSpawning);
+		assertTrue(m.trashSpawning);*/
 		
 		// Trash Type
-		Trash trash = f.createEasyTrash(50, 50, false);
-		Trash recycle = f.createEasyTrash(150, 150, true);
-		assertEquals(EntityType.TRASH, trash.getType());
-		assertEquals(EntityType.RECYCLING, recycle.getType());
+		//Trash trash = f.createEasyTrash(50, 50, false);
+		//Trash recycle = f.createEasyTrash(150, 150, true);
+		//assertEquals(EntityType.TRASH, trash.getType());
+		//assertEquals(EntityType.RECYCLING, recycle.getType());
 		
 		
 	}
@@ -66,7 +71,7 @@ public class ModelRunningTests {
 	// Tests the Trash-thrownTrash intersection in update()
 	@Test
 	public void trashIntersectTests() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 
 		m.toggleTrashSpawning(false);
@@ -92,22 +97,40 @@ public class ModelRunningTests {
 	// Tests the Trash-Barge and Recycle-Barge intersection
 	@Test
 	public void trashBargeIntersectTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		
 		Trash trash = f.createEasyTrash(215, 50, false);
 		Trash recycle = f.createHardTrash(300, 75, true);
 		
+		// Correct barges: change in score
 		Request r1 = RequestFactory.createAddToModelRequest(trash);
 		Request r2 = RequestFactory.createAddToModelRequest(recycle);
 		m.handleRequest(r1);
 		m.handleRequest(r2);
 		trash.touch();
 		recycle.touch();
-		trash.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - 215), (int) m.getWorldBounds().getY()+15);
-		recycle.setLocation((int) m.getWorldBounds().getX() + 15, (int) m.getWorldBounds().getY()+15);
+		trash.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - Barge.BARGE_WIDTH - Barge.BARGE_PADDING), (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
+		recycle.setLocation((int) m.getWorldBounds().getX() + Barge.BARGE_PADDING, (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
 		assertEquals(0, m.getScore());
+		m.update();
+		rq.fulfillAllRequests();
+		assertEquals(60, m.getScore());
+		
+		// Wrong barges: no change in score
+		
+		Trash trash2 = f.createEasyTrash(215, 50, false);
+		Trash recycle2 = f.createHardTrash(300, 75, true);
+		
+		Request r3 = RequestFactory.createAddToModelRequest(trash2);
+		Request r4 = RequestFactory.createAddToModelRequest(recycle2);
+		m.handleRequest(r3);
+		m.handleRequest(r4);
+		trash2.touch();
+		recycle2.touch();
+		recycle2.setLocation((int) (m.getWorldBounds().getX() + m.getWorldBounds().getWidth() - Barge.BARGE_WIDTH - Barge.BARGE_PADDING), (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
+		trash2.setLocation((int) m.getWorldBounds().getX() + Barge.BARGE_PADDING, (int) m.getWorldBounds().getY() + Barge.BARGE_PADDING);
 		m.update();
 		rq.fulfillAllRequests();
 		assertEquals(60, m.getScore());
@@ -118,7 +141,7 @@ public class ModelRunningTests {
 	// Tests the Trash-Player intersection in update()
 	@Test
 	public void trashPlayerIntersectTests() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		
@@ -129,29 +152,15 @@ public class ModelRunningTests {
 		m.handleRequest(r);
 		m.update();
 		assertTrue(m.getPlayer().intersects(t));
-	}
-	
-	// Tests the removal of 'touched' Trash at the top of the screen in update()
-	@Test
-	public void trashAtTopTests() {
-		m.reset(EntityType.CRAB);
 		rq.fulfillAllRequests();
-		m.toggleTrashSpawning(false);
-		
-		Trash t = f.createEasyTrash(100, 100, false);
-		Request r = RequestFactory.createAddToModelRequest(t);
-		m.handleRequest(r);
-		assertTrue(m.getEntities().contains(t));
-		t.touch();
-		t.setLocation(100, 0);
 		m.update();
-		assertFalse(m.getEntities().contains(t));
+		
 	}
 	
 	// Tests the movement of Trash
 	@Test
 	public void trashMovementTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		
@@ -169,7 +178,7 @@ public class ModelRunningTests {
 		t.toggleStopped();
 		m.update();
 		assertEquals(5.0, t.getXSpeed());
-		assertEquals(9.9, t.getYSpeed(), 0.01);
+		assertEquals(9.95, t.getYSpeed(), 0.01);
 		assertEquals(205, t.getBounds().x);
 		assertEquals(209, t.getBounds().y);
 	}
@@ -177,7 +186,7 @@ public class ModelRunningTests {
 	// Tests the bounds of Trash and Player
 	@Test
 	public void trashAndPlayerWorldBoundsTests() {
-		m.reset(EntityType.TURTLE);
+		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		Turtle p = (Turtle) m.getPlayer();
@@ -201,8 +210,8 @@ public class ModelRunningTests {
 		assertEquals(10, m.getCurrentPollutionLevel());
 		assertEquals(bottom, t.getBounds().getMaxY(), 25);
 		
+		
 		// Top
-		// TO CHANGE
 		t = f.createEasyTrash(right/2 + 50, top - 100, false);
 		t.setSpeed(0, -50);
 		r = RequestFactory.createAddToModelRequest(t);
@@ -214,8 +223,9 @@ public class ModelRunningTests {
 			rq.fulfillAllRequests();
 		}
 		rq.fulfillAllRequests();
-		assertFalse(m.getEntities().contains(t));
-		assertEquals(10, m.getScore());
+		assertTrue(m.getEntities().contains(t));
+		assertTrue(t.getYSpeed() > 0);
+		assertEquals(4.0, t.getDY(), .5);
 		
 		// Left
 		t = f.createEasyTrash(25, bottom - 150, false);
@@ -276,7 +286,7 @@ public class ModelRunningTests {
 	@Test
 	public void playerInputTests() {
 		// CRAB
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		Crab p = (Crab) m.getPlayer();
@@ -289,6 +299,7 @@ public class ModelRunningTests {
 		m.handleRequest(r);
 		m.update();
 		
+		/* NOT A FEATURE ANYMORE
 		// Rotate Trash Left
 		p.processInput("ROTATE_TRASH_LEFT");
 		m.update();
@@ -303,7 +314,7 @@ public class ModelRunningTests {
 		p.processInput("ROTATE_TRASH_RIGHT");
 		m.update();
 		m.update();
-		assertEquals(Math.PI/2 + Math.PI/40, p.getThrowAngle());
+		assertEquals(Math.PI/2 + Math.PI/40, p.getThrowAngle());*/
 		
 		// Throw Trash
 		p.processInput("SPECIAL_ACTION");
@@ -335,7 +346,7 @@ public class ModelRunningTests {
 		assertEquals(currentX, p.getBounds().x);
 		
 		// TURTLE
-		m.reset(EntityType.TURTLE);
+		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		Turtle p2 = (Turtle) m.getPlayer();
@@ -395,7 +406,7 @@ public class ModelRunningTests {
 	// Test worldBounds stuff
 	@Test
 	public void otherTests() {
-		m.reset(EntityType.TURTLE);
+		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		rq.fulfillAllRequests();
 		m.toggleTrashSpawning(false);
 		
@@ -408,12 +419,17 @@ public class ModelRunningTests {
 		t.handleTranslate(5, 10);
 		assertEquals(10, t.getWorldBounds().x);
 		assertEquals(20, t.getWorldBounds().y);
+		
+		m.incrementPollutionLevel(10);
+		assertEquals(10, m.getCurrentPollutionLevel());
+		m.incrementPollutionLevel(-50);
+		assertEquals(0, m.getCurrentPollutionLevel());
 	}
 	
 	// Tests the Boss's behavior TODO
 	@Test
 	public void bossTests() {
-		m.reset(EntityType.TURTLE);
+		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		rq.fulfillAllRequests();
 		
 		Boss b = new Boss(50, 50, rq);
@@ -421,21 +437,71 @@ public class ModelRunningTests {
 		
 		Request r = RequestFactory.createAddToModelRequest(b);
 		m.handleRequest(r);
+		assertTrue(m.getEntities().contains(b));
 		
 		m.update();
 	}
 	
+	// Tests the different start modes of the game
+	@Test
+	public void startModeTests() {
+		m.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
+		rq.fulfillAllRequests();
+		
+		assertTrue(m.getSpawner() instanceof TutorialTrashSpawner);
+		
+		m.reset(null, RequestType.START_GAME);
+		rq.fulfillAllRequests();
+		
+		assertTrue(m.getSpawner() instanceof TimerTrashSpawner);
+		
+		m.reset(null, RequestType.START_BOSS);
+		rq.fulfillAllRequests();
+		
+		boolean hasBoss = false;
+		for (Entity e : m.getEntities()) {
+			if (e instanceof Boss) {
+				hasBoss = true;
+				break;
+			}
+		}
+		assertTrue(hasBoss);
+		
+	}
+	
+	//Tests the Tutorial Mode
+	@Test
+	public void tutorialTests() {
+		m.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
+		rq.fulfillAllRequests();
+		
+		TutorialTrashSpawner spawner = (TutorialTrashSpawner) m.getSpawner();
+		spawner.handleRequest(RequestFactory.createUpdateScoreRequest(3));
+		
+		Trash t = f.createEasyTrash(100, 100, false);
+		spawner.handleRequest(RequestFactory.createAddToModelRequest(t));
+		spawner.handleRequest(RequestFactory.createRemoveFromModelRequest(t));
+		rq.fulfillAllRequests();
+		
+		for (int i=0; i<15; i++) {
+		spawner.handleRequest(RequestFactory.createUpdateScoreRequest(3));
+		}
+		
+		
+		
+	}
+		
 	// Tests that the game ends when endGame() is called
 	// Also tests that the game is restarted when reset() is called with the right Player
 	@Test
 	public void gameEndTest1() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		assertTrue(m.getPlayer() instanceof Crab);
 		assertFalse(m.gameOver);
 		m.endGame();
 		assertTrue(m.gameOver);
-		m.reset(EntityType.TURTLE);
+		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		assertFalse(m.gameOver);
 		assertTrue(m.getPlayer() instanceof Turtle);
 	}
@@ -443,7 +509,7 @@ public class ModelRunningTests {
 	// Tests that the game ends when the pollution level reaches 100 in update()
 	@Test
 	public void gameEndTest2() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		rq.fulfillAllRequests();
 		assertEquals(0, m.getCurrentPollutionLevel());
 		assertFalse(m.gameOver);
@@ -452,10 +518,8 @@ public class ModelRunningTests {
 		assertEquals(100, m.getCurrentPollutionLevel());
 		m.update();
 		assertTrue(m.gameOver);
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		assertFalse(m.gameOver);
 		
 	}
-	
-
 }

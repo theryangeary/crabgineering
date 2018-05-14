@@ -2,88 +2,100 @@
 package model.entities;
 
 import controller.requests.Request;
-import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.io.Serializable;
 
-/**
- * TrashSpawner, a time based trash generator
- */
-public class TrashSpawner {
-    private int interval = 0;
-    private TrashFactory factory;
-    private Action spawnAction;
-    private Timer spawnTimer;
-    private int offset;
-
-    /**
-     * Generate a TrashSpawner
-     * @param requestQueue for controller.requests
-     * @param spawnHeight
-     * @param spawnWidth Specifies how wide of a range to spawn trash in
-     * @param interval time between trash spawning
-     * @see Request
-     */
-    public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int interval){
-        //Interval is how long it talks between spawns
-        this.interval = interval;
-        factory = new TrashFactory(requestQueue);
-
-        //Abstract action that spawns trash randomly
-        spawnAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Generates a random x position within rage 0
-                int randX = (int)(Math.random()*spawnWidth+offset);
-                //Decide whether trash should be recyclable or not (50-50 chance)
-                boolean recyclable = Math.random() > .5;
-                requestQueue.postRequest(
-                        RequestFactory.createAddToModelRequest(
-                                factory.createEasyTrash(randX,spawnHeight, recyclable)
-                        )
-                );
-                if (spawnTimer.getDelay() > 500) {
-                    spawnTimer.setDelay((int) (spawnTimer.getDelay() / 1.03));
-                }
-            }
-        };
-
-        spawnTimer = new Timer(interval, spawnAction);
-    }
-
-    /**
-     * Set the time interval to spawn trash
-     * @param interval time, in ms, between trash generation
-     */
-    public void setInterval(int interval){
-        this.interval = interval;
-    }
-
-    /**
-     * Get the time interval to spawn trash
-     * @return time, in ms, between trash generation
-     */
-    public int getInterval(){
-        return interval;
-    }
-
-    /**
-     * Stop or pause the trash spawner
-     */
-    public void stop(){
-        spawnTimer.stop();
-    }
-
-    /**
-     * Start or resume the trash spawner
-     */
-    public void start(){
-        spawnTimer.start();
-    }
-
-    public void setOffset(int offset){
-        this.offset = offset;
-    }
+public abstract class TrashSpawner implements Serializable {
+	private int offset;
+	private int spawnHeight;
+	private int spawnWidth;
+	private TrashFactory factory;
+	RequestQueue requestQueue;
+	
+	/**
+	 * Generate a TrashSpawner
+	 *
+	 * @param requestQueue for requests
+	 * @param spawnHeight  Specifies the height at which trash spawns
+	 * @param spawnWidth   Specifies how wide of a range to spawn trash in
+	 * @param offset       x offset for the trash spawner
+	 * @see Request
+	 */
+	public TrashSpawner(RequestQueue requestQueue, int spawnHeight, int spawnWidth, int offset) {
+		this.requestQueue = requestQueue;
+		this.offset = offset;
+		factory = new TrashFactory(requestQueue);
+		this.spawnHeight = spawnHeight;
+		this.spawnWidth = spawnWidth;
+		
+		//start the spawning process
+		initSpawning();
+	}
+	
+	/**
+	 * Configures everything so that this TrashSpawner will actually spawn trash
+	 */
+	abstract void initSpawning();
+	
+	/**
+	 * Get the instance of Factory used by this TrashSpawner
+	 *
+	 * @return the factory instance used by this TrashSpawner
+	 */
+	TrashFactory getFactory() {
+		return factory;
+	}
+	
+	/**
+	 * Get the offset used by this spawner
+	 *
+	 * @return the offset for spawning used by this TrashSpawner
+	 */
+	public int getOffset() {
+		return offset;
+	}
+	
+	/**
+	 * Get the height at which this spawner spawns trash
+	 *
+	 * @return the height at which this spawner spawns trash
+	 */
+	public int getSpawnHeight() {
+		return spawnHeight;
+	}
+	
+	/**
+	 * Get the width of the spawning area
+	 *
+	 * @return the width of the spawning area
+	 */
+	public int getSpawnWidth() {
+		return spawnWidth;
+	}
+	
+	/**
+	 * Stop or pause the trash spawner
+	 */
+	abstract public void stop();
+	
+	/**
+	 * Start or resume the trash spawner
+	 */
+	abstract public void start();
+	
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	
+	/**
+	 * Sets the RequestQueue for the TrashSpawner.
+	 *
+	 * @param rq The RequestQueue to set for the TrashSpawner
+	 */
+	public void setRequestQueue(RequestQueue rq) {
+		requestQueue = rq;
+		factory.setRequestQueue(rq);
+	}
+	
 }

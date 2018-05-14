@@ -1,6 +1,7 @@
 package controller.requests;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *  (2) vertical updates (eg Entity to Model)
  *  (3) asynchronous events (eg removing Trash outside of update loop)
  */
-public class RequestQueue extends ArrayDeque<Request> {
+public class RequestQueue extends ArrayDeque<Request> implements Serializable {
 
     //anything that might fulfill a request from this queue
     private List<RequestListener> listeners;
@@ -30,8 +31,15 @@ public class RequestQueue extends ArrayDeque<Request> {
      * @param listener A RequestListener not already listening to this queue
      */
     public void addListener(RequestListener listener){
-
         listeners.add(listener);
+    }
+
+    /**
+     * Have this queue stop informing listener when it fulfils requests
+     * @param listener A RequestListener already listening to this queue
+     */
+    public void removeListener(RequestListener listener){
+        listeners.remove(listener);
     }
 
     /**

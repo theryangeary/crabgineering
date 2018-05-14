@@ -8,10 +8,7 @@ import model.Model;
 import model.entities.Entity;
 import view.estuaryenums.EstuaryFont;
 import view.estuaryenums.EstuaryImage;
-import view.jcomponents.JEstuaryImageLabel;
-import view.jcomponents.JPollutionBar;
-import view.jcomponents.JPollutionColor;
-import view.jcomponents.JScoreLabel;
+import view.jcomponents.*;
 import view.sprites.Sprite;
 
 import javax.swing.*;
@@ -32,20 +29,32 @@ public class View extends JPanel implements RequestListener {
 	public final static int FRAME_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	public final static int FRAME_WIDTH = FRAME_HEIGHT;  // It's a square now
 	
-	// Button Image dimension
+	// Button Image dimensions
 	private final int BUTTON_WIDTH = 100;
 	private final int BUTTON_HEIGHT = 100;
+
+	//Popup image dimensions
+	private final int POPUP_WIDTH = 110 * 2;
+	private final int POPUP_HEIGHT = 82 * 2;
 
 	// relative to model
 	private Dimension scale;
 
 	private ArrayList<Sprite> sprites;
 
+	public enum PopupType{
+		CRAB_TUTORIAL,
+		TURTLE_TUTORIAL,
+		SORTING_TUTORIAL
+	}
+
 	//buttons
 	private JButton crabButton;
 	private JButton turtleButton;
 	private JButton pauseButton;
-	//private JPanel buttonPanel;
+	private JButton crabPopup;
+	private JButton turtlePopup;
+	private JButton sortingPopup;
 
 	//other components
 	private JLabel titleImage;
@@ -110,6 +119,8 @@ public class View extends JPanel implements RequestListener {
         layers.add(createHUD());
         //Layer 5: menu UI elements
         layers.add(createMenu());
+        //Layer 6: popups
+		layers.add(createPopups());
 
         //add the layers to the layered pane in the right order
         for (int i = 0; i < layers.size(); i++) {
@@ -154,11 +165,11 @@ public class View extends JPanel implements RequestListener {
             //make sure the background image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
-                g.drawImage(getImage(),
+                g.drawImage(EstuaryImage.BACKGROUND.getScaledImage(
+                		background.getWidth(),
+						background.getHeight()),
                             0,
                             0,
-                            background.getWidth(),
-                            background.getHeight(),
                             null);
             }
         };
@@ -190,12 +201,12 @@ public class View extends JPanel implements RequestListener {
             //make sure the foreground image is scaled correctly
             @Override
             public void paintIcon(Component component, Graphics g, int x, int y){
-                g.drawImage(getImage(),
-                        0,
-                        0,
-                        foreground.getWidth(),
-                        foreground.getHeight(),
-                        null);
+				g.drawImage(EstuaryImage.FOREGROUND.getScaledImage(
+						foreground.getWidth(),
+						foreground.getHeight()),
+						0,
+						0,
+						null);
             }
         };
 
@@ -205,6 +216,16 @@ public class View extends JPanel implements RequestListener {
         foreground.setFocusable(false);
         return foreground;
     }
+
+	/**
+	 * Creates an AlphaContainer that changes color over time according to the pollution level.
+	 * @return A Component representing the pollution level with color opacity
+	 */
+	private Component createPollution() {
+		JPollutionEffect pc  = new JPollutionEffect();
+		requestQueue.addListener(pc);
+		return pc;
+	}
 
     /**
      * Creates and configures the game's info display elements
@@ -249,47 +270,45 @@ public class View extends JPanel implements RequestListener {
      */
     private Component createMenu(){
         //create a container to hold all the menu elements
-        JComponent menu = new JPanel();
+        JComponent menu = new JPanel(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
 
 		//create the buttons with images
-        Image crabButtonImage = EstuaryImage.CRAB_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
-        Image turtleButtonImage = EstuaryImage.TURTLE_BUTTON.getImage().getScaledInstance(BUTTON_WIDTH, BUTTON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
-
+        Image crabButtonImage = EstuaryImage.CRAB_BUTTON
+				.getScaledImage(BUTTON_WIDTH, BUTTON_HEIGHT);
+        Image turtleButtonImage = EstuaryImage.TURTLE_BUTTON
+				.getScaledImage(BUTTON_WIDTH, BUTTON_HEIGHT);
         
 		crabButton = new JButton("", new ImageIcon(crabButtonImage));
 		turtleButton = new JButton("", new ImageIcon(turtleButtonImage));
-		
-		crabButton.setOpaque(false);
-		turtleButton.setOpaque(false);
-		crabButton.setContentAreaFilled(false);
-		turtleButton.setContentAreaFilled(false);
-		crabButton.setBorderPainted(false);
-		turtleButton.setBorderPainted(false);
-		crabButton.setFocusPainted(false);
-		turtleButton.setFocusPainted(false);
 
 		final String PAUSED_TEXT = "Play"; //displayed when game is paused
 		final String UNPAUSED_TEXT = "Pause"; //displayed when game is playing
 		pauseButton = new JButton(UNPAUSED_TEXT);
+
+		//set drawing settings for the buttons
+		configureButton(crabButton, true);
+		configureButton(turtleButton, true);
+		configureButton(pauseButton, false);
 
 		//decide whether or not each should initially be visible
 		crabButton.setVisible(true);
 		turtleButton.setVisible(true);
 		pauseButton.setVisible(false);
 
-		//prevent the frame from focusing on the buttons so that
-		//pressing space won't trigger them
-		crabButton.setFocusable(false);
-		turtleButton.setFocusable(false);
-		pauseButton.setFocusable(false);
-
 		//and decide what happens when each button is pressed
 		crabButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Crab as the Player
+				/*
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.CRAB)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
+				);
+				*/
+
+				requestQueue.postAndFulfillRequest(
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.CRAB)
 				);
 			}
 		});
@@ -298,20 +317,25 @@ public class View extends JPanel implements RequestListener {
 			public void actionPerformed(ActionEvent e) {
 				//make a request to start the game with a Turtle as the Player
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createStartGameRequest(Entity.EntityType.TURTLE)
+						RequestFactory.createStartTutorialRequest(Entity.EntityType.TURTLE)
 				);
+
+
 			}
 		});
 		pauseButton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean isPaused = pauseButton.getText().equals(PAUSED_TEXT);
+
 				//make a request for game play to be paused/resumed
 				requestQueue.postAndFulfillRequest(
-						RequestFactory.createTogglePausedRequest()
+						RequestFactory.createTogglePausedRequest(!isPaused)
 				);
 
 				//and switch which message we're displaying accordingly
-				if (pauseButton.getText().equals(PAUSED_TEXT)){
+				if (isPaused){
 					pauseButton.setText(UNPAUSED_TEXT);
 				} else {
 					pauseButton.setText(PAUSED_TEXT);
@@ -320,24 +344,86 @@ public class View extends JPanel implements RequestListener {
 		});
 
 		//add buttons to menu layer
-		menu.add(crabButton);
-		menu.add(turtleButton);
-		menu.add(pauseButton);
+		menu.add(crabButton, constraints);
+		menu.add(turtleButton, constraints);
+		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.ipady = 5;
+		menu.add(pauseButton, constraints);
 
         menu.setOpaque(false);
         menu.setFocusable(false);
         return menu;
     }
-    
-    /**
-     * Creates an AlphaContainer that changes color over time according to the pollution level.
-     * @return A Component representing the pollution level with color opacity
-     */
-    private Component createPollution() {
-    	JPollutionColor pc  = new JPollutionColor();
-    	requestQueue.addListener(pc);
-    	return pc;
-    }
+
+	/**
+	 * creates all the popups for the tutorial and groups them into a component
+	 * @return a component holding all the popups for the tutorial
+	 */
+	private Component createPopups(){
+    	//create a container to hold all of the popups
+		JComponent popups = new JPanel(new GridBagLayout());
+
+		ArrayList<JButton> popList = new ArrayList<>();
+
+		//create the popups
+		crabPopup = new JButton(new ImageIcon(
+				EstuaryImage.CRAB_TUTORIAL.getScaledImage(
+						POPUP_WIDTH, POPUP_HEIGHT
+				)));
+		popList.add(crabPopup);
+		turtlePopup = new JButton(new ImageIcon(
+				EstuaryImage.TURTLE_TUTORIAL.getScaledImage(
+						POPUP_WIDTH, POPUP_HEIGHT
+				)));
+		popList.add(turtlePopup);
+		sortingPopup = new JButton(new ImageIcon(
+				EstuaryImage.SORTING_TUTORIAL.getScaledImage(
+						POPUP_WIDTH, POPUP_HEIGHT
+				)));
+		popList.add(sortingPopup);
+
+		for (JButton popup: popList){
+			popup.setVisible(false);
+			configureButton(popup, true);
+
+			popup.addActionListener(new AbstractAction() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					pauseButton.setVisible(true);
+					popup.setVisible(false);
+
+					requestQueue.postAndFulfillRequest(
+							RequestFactory.createTogglePausedRequest(false)
+					);
+				}
+			});
+
+			popups.add(popup);
+		}
+
+		popups.setOpaque(false);
+		popups.setFocusable(false);
+		return popups;
+	}
+
+	/**
+	 * Sets up the given button so that it will be interacted with
+	 * and displayed correctly
+	 * @param button the button to be configured
+	 * @param hasImage whether or not the button has a custom image
+	 */
+	private void configureButton(JButton button, boolean hasImage){
+    	button.setFocusable(false);
+
+    	if (hasImage) {
+    		button.setContentAreaFilled(false);
+			button.setOpaque(false);
+			button.setBorderPainted(false);
+			button.setFocusPainted(false);
+		}
+	}
 
 	/**
 	 * Specifies how the View should handle a Request
@@ -347,15 +433,23 @@ public class View extends JPanel implements RequestListener {
 	@Override
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()){
+			case START_TUTORIAL:
+			case START_BOSS:
+				//same as when starting a normal game here
 			case START_GAME:
+				//make sure we're not just continuing a game
+				if (request.getSpecifics() != null) {
+					//reset the sprites
+					sprites.clear();
 
-				//make the player selection buttons disappear
-				crabButton.setVisible(false);
-				turtleButton.setVisible(false);
-				endScore.setVisible(false);
+					//make the player selection buttons disappear
+					crabButton.setVisible(false);
+					turtleButton.setVisible(false);
+					endScore.setVisible(false);
 
-				//and the pause button appear
-				pauseButton.setVisible(true);
+					//and the pause button appear
+					pauseButton.setVisible(true);
+				}
 				break;
 			case ADD_TO_VIEW:
 				if (request.getSpecifics() instanceof Sprite)
@@ -365,6 +459,23 @@ public class View extends JPanel implements RequestListener {
 				if (request.getSpecifics() instanceof Sprite)
 					removeSprite((Sprite) request.getSpecifics());
 				break;
+			case SHOW_POPUP_REQUEST:
+				pauseButton.setVisible(false);
+				requestQueue.postAndFulfillRequest(
+						RequestFactory.createTogglePausedRequest(true)
+				);
+
+				switch ((PopupType) request.getSpecifics()){
+					case CRAB_TUTORIAL:
+						crabPopup.setVisible(true);
+						break;
+					case TURTLE_TUTORIAL:
+						turtlePopup.setVisible(true);
+						break;
+					case SORTING_TUTORIAL:
+						sortingPopup.setVisible(true);
+						break;
+				}
 		}
 	}
 
@@ -415,13 +526,11 @@ public class View extends JPanel implements RequestListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		Graphics2D g2d = (Graphics2D) g;
-		Dimension size = getSize();
-		g2d.scale(size.getWidth() / Model.WORLD_WIDTH,
-				  size.getHeight() / Model.WORLD_HEIGHT);
+		double scaleX = getSize().getWidth() / Model.WORLD_WIDTH;
+		double scaleY = getSize().getHeight() / Model.WORLD_HEIGHT;
 
         for (Sprite sprite: sprites) {
-            sprite.draw(g2d);
+            sprite.draw(g, scaleX, scaleY);
         }
 	}
 }

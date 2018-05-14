@@ -13,7 +13,7 @@ public class Turtle extends Player{
 
     public static final int TURTLE_WIDTH = 150;
     public static final int TURTLE_HEIGHT = 75;
-    private final int BOUNCE_SPEED = 2;
+    private final int BOUNCE_SPEED = 3;
     private final int ANGLE_FACTOR = 10;
     private final double BOUNCE_ANGLE = Math.PI/4;
     private final int TURTLE_CENTER_OFFSET = 4;
@@ -21,10 +21,8 @@ public class Turtle extends Player{
     private static final double SPEED = 5;
     private double currentSpeed = 0;
 
-    private RequestQueue requestQueue;
-
     public Turtle(int x, int y, RequestQueue requestQueue){
-        super(x,y,TURTLE_WIDTH,TURTLE_HEIGHT);
+        super(x,y,TURTLE_WIDTH,TURTLE_HEIGHT, requestQueue);
         this.requestQueue = requestQueue;
     }
 
