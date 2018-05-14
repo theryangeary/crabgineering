@@ -475,6 +475,7 @@ public class ModelRunningTests {
 		m.reset(EntityType.CRAB, RequestType.START_TUTORIAL);
 		rq.fulfillAllRequests();
 		
+		assertTrue(m.getPlayer() instanceof Crab);		
 		TutorialTrashSpawner spawner = (TutorialTrashSpawner) m.getSpawner();
 		spawner.handleRequest(RequestFactory.createUpdateScoreRequest(3));
 		
@@ -486,6 +487,10 @@ public class ModelRunningTests {
 		for (int i=0; i<15; i++) {
 		spawner.handleRequest(RequestFactory.createUpdateScoreRequest(3));
 		}
+		
+		m.reset(EntityType.TURTLE, RequestType.START_TUTORIAL);
+		rq.fulfillAllRequests();
+		assertTrue(m.getPlayer() instanceof Turtle);
 		
 		
 		

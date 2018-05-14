@@ -70,9 +70,10 @@ public class ModelRequestTests {
 	public void togglePausedTest() {
 		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		assertTrue(m.trashSpawning);
-		Request r = RequestFactory.createTogglePausedRequest(m.trashSpawning);
+		Request r = RequestFactory.createTogglePausedRequest(false);
 		m.handleRequest(r);
 		assertFalse(m.trashSpawning);
+		r = RequestFactory.createTogglePausedRequest(true);
 		m.handleRequest(r);
 		assertTrue(m.trashSpawning);
 	}
