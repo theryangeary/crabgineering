@@ -42,6 +42,7 @@ public class Model implements RequestListener, Serializable {
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
 	public static final int WATER_HEIGHT = 100;
+	private static final int QUICK_FIX = 10;
 
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
@@ -138,9 +139,9 @@ public class Model implements RequestListener, Serializable {
 			addEntity(player);
 
 
-			recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING, (int) getWorldBounds().getY() + BARGE_PADDING,
+			recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING - QUICK_FIX, (int) getWorldBounds().getY() + BARGE_PADDING,
 					BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
-			trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING),
+			trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING  + QUICK_FIX),
 					(int) getWorldBounds().getY() + BARGE_PADDING,
 					BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
 
