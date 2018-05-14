@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="1297.0">model.entities.Turtle</node>
+    <node x="898.375" y="288.5">view.sprites.EntitySprite</node>
+    <node x="442.50000000000006" y="865.0">model.entities.Entity.EntityType</node>
+    <node x="220.50000000000006" y="964.0">model.entities.Player</node>
+    <node x="1650.0" y="2245.5">model.entities.TutorialTrashSpawner</node>
+    <node x="552.5" y="2961.0">controller.GameKeyBindings</node>
+    <node x="2703.5" y="2003.0">view.estuaryenums.EstuarySound.Volume</node>
+    <node x="423.00000000000006" y="1275.0">model.entities.Crab</node>
+    <node x="602.0" y="3321.0">view.jcomponents.JTimedPopup</node>
+    <node x="581.0" y="2322.5">view.jcomponents.JScoreLabel</node>
+    <node x="1663.0" y="2961.0">controller.bounds.Bounds</node>
+    <node x="2665.0" y="1659.0">view.estuaryenums.EstuarySound</node>
+    <node x="897.5" y="2821.0">view.View.PopupType</node>
+    <node x="1893.0" y="2289.5">model.entities.TimerTrashSpawner</node>
+    <node x="603.5" y="875.0">model.entities.Barge</node>
+    <node x="1351.0" y="2961.0">controller.requests.RequestQueue</node>
+    <node x="0.0" y="2322.5">view.jcomponents.JPollutionEffect</node>
+    <node x="1398.0" y="2201.5">controller.Controller</node>
+    <node x="1020.0" y="2961.0">ModelRequestTests</node>
+    <node x="1455.0" y="2832.0">controller.Controller.DebugAction</node>
+    <node x="824.0" y="1981.5">view.View</node>
+    <node x="2327.0" y="2961.0">ModelExceptionTests</node>
+    <node x="2409.0" y="1659.0">controller.requests.Request</node>
+    <node x="1119.5" y="776.0">model.entities.Trash</node>
+    <node x="2876.0" y="1659.0">ModelRunningTests</node>
+    <node x="2606.0" y="2961.0">ModelDebugTests</node>
+    <node x="1786.625" y="1659.0">model.entities.TrashSpawner</node>
+    <node x="260.0" y="1970.0">model.Model</node>
+    <node x="614.0" y="123.0">model.entities.Entity</node>
+    <node x="672.75" y="0.0">controller.bounds.BoundsListener</node>
+    <node x="963.625" y="11.0">view.sprites.Sprite</node>
+    <node x="930.0" y="3321.0">resources.fonts</node>
+    <node x="240.00000000000006" y="1353.0">model.entities.Player.PlayerAction</node>
+    <node x="768.0" y="3321.0">resources.images</node>
+    <node x="3055.0" y="2961.0">view.estuaryenums.EstuaryFont</node>
+    <node x="879.5" y="908.0">model.entities.Boss</node>
+    <node x="1138.0" y="2300.5">view.jcomponents.JPollutionBar</node>
+    <node x="719.0" y="3062.0">controller.GameKeyBindings.KeyAction</node>
+    <node x="1993.0" y="2961.0">model.entities.TrashFactory</node>
+    <node x="214.0" y="3321.0">view.jcomponents.JEstuaryImageLabel</node>
+    <node x="443.0" y="3062.0">controller.GameKeyBindings.DebugKeyAction</node>
+    <node x="2110.0" y="1659.0">view.estuaryenums.EstuaryImage</node>
+    <node x="859.5" y="1759.0">controller.requests.RequestListener</node>
+    <node x="2815.0" y="2961.0">ModelInitialTests</node>
+    <node x="410.0" y="3321.0">resources.soundeffects</node>
+    <node x="2428.5" y="1782.0">controller.requests.Request.RequestType</node>
+    <node x="0.0" y="3321.0">Main</node>
+    <node x="0.0" y="2961.0">controller.requests.RequestFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="model.Model" target="controller.requests.RequestListener">
+      <point x="0.0" y="-400.5" />
+      <point x="410.5" y="1940.0" />
+      <point x="907.2857142857143" y="1940.0" />
+      <point x="-63.714285714285666" y="25.5" />
+    </edge>
+    <edge source="view.jcomponents.JScoreLabel" target="controller.requests.RequestListener">
+      <point x="0.0" y="-48.0" />
+      <point x="692.5" y="1950.0" />
+      <point x="939.1428571428571" y="1950.0" />
+      <point x="-31.85714285714289" y="25.5" />
+    </edge>
+    <edge source="controller.requests.Request.RequestType" target="controller.requests.Request">
+      <point x="0.0" y="-179.5" />
+      <point x="0.0" y="36.5" />
+    </edge>
+    <edge source="controller.Controller" target="controller.requests.RequestListener">
+      <point x="1.1368683772161603E-13" y="-169.0" />
+      <point x="1514.0" y="1940.0" />
+      <point x="1034.7142857142858" y="1940.0" />
+      <point x="63.714285714285666" y="25.5" />
+    </edge>
+    <edge source="model.entities.Player.PlayerAction" target="model.entities.Player">
+      <point x="0.0" y="-91.5" />
+      <point x="0.0" y="36.5" />
+    </edge>
+    <edge source="model.entities.TutorialTrashSpawner" target="controller.requests.RequestListener">
+      <point x="-55.75" y="-125.0" />
+      <point x="1705.75" y="1930.0" />
+      <point x="1066.5714285714284" y="1930.0" />
+      <point x="95.57142857142856" y="25.5" />
+    </edge>
+    <edge source="view.jcomponents.JPollutionEffect" target="controller.requests.RequestListener">
+      <point x="0.0" y="-48.0" />
+      <point x="120.0" y="1930.0" />
+      <point x="875.4285714285714" y="1930.0" />
+      <point x="-95.57142857142856" y="25.5" />
+    </edge>
+    <edge source="view.View.PopupType" target="view.View">
+      <point x="0.0" y="-47.5" />
+      <point x="0.0" y="389.0" />
+    </edge>
+    <edge source="view.estuaryenums.EstuarySound.Volume" target="view.estuaryenums.EstuarySound">
+      <point x="0.0" y="-58.5" />
+      <point x="0.0" y="147.0" />
+    </edge>
+    <edge source="model.entities.Barge" target="model.entities.Entity">
+      <point x="0.0" y="-125.5" />
+      <point x="0.0" y="301.5" />
+    </edge>
+    <edge source="controller.GameKeyBindings.DebugKeyAction" target="controller.GameKeyBindings">
+      <point x="0.0" y="-37.0" />
+      <point x="571.0" y="3037.0" />
+      <point x="630.75" y="3037.0" />
+      <point x="-78.25" y="25.5" />
+    </edge>
+    <edge source="model.entities.Boss" target="model.entities.Entity">
+      <point x="0.0" y="-92.5" />
+      <point x="989.5" y="756.0" />
+      <point x="778.5" y="756.0" />
+      <point x="47.0" y="301.5" />
+    </edge>
+    <edge source="view.sprites.EntitySprite" target="controller.bounds.BoundsListener">
+      <point x="-65.25" y="-136.0" />
+      <point x="963.625" y="98.0" />
+      <point x="849.0" y="98.0" />
+      <point x="58.75" y="36.5" />
+    </edge>
+    <edge source="model.entities.TimerTrashSpawner" target="model.entities.TrashSpawner">
+      <point x="0.0" y="-81.0" />
+      <point x="1979.0" y="1950.0" />
+      <point x="1953.875" y="1950.0" />
+      <point x="55.75" y="125.5" />
+    </edge>
+    <edge source="controller.GameKeyBindings.KeyAction" target="controller.GameKeyBindings">
+      <point x="0.0" y="-37.0" />
+      <point x="847.0" y="3037.0" />
+      <point x="787.25" y="3037.0" />
+      <point x="78.25" y="25.5" />
+    </edge>
+    <edge source="model.entities.Player" target="model.entities.Entity">
+      <point x="0.0" y="-36.5" />
+      <point x="321.50000000000006" y="746.0" />
+      <point x="637.5" y="746.0" />
+      <point x="-94.0" y="301.5" />
+    </edge>
+    <edge source="model.entities.Trash" target="model.entities.Entity">
+      <point x="0.0" y="-224.5" />
+      <point x="1265.0" y="746.0" />
+      <point x="825.5" y="746.0" />
+      <point x="94.0" y="301.5" />
+    </edge>
+    <edge source="view.sprites.EntitySprite" target="view.sprites.Sprite">
+      <point x="65.25" y="-136.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="view.jcomponents.JPollutionBar" target="controller.requests.RequestListener">
+      <point x="0.0" y="-70.0" />
+      <point x="1258.0" y="1950.0" />
+      <point x="1002.8571428571428" y="1950.0" />
+      <point x="31.857142857142776" y="25.5" />
+    </edge>
+    <edge source="model.entities.Turtle" target="model.entities.Player">
+      <point x="0.0" y="-147.5" />
+      <point x="110.0" y="1250.0" />
+      <point x="254.16666666666674" y="1250.0" />
+      <point x="-67.33333333333331" y="36.5" />
+    </edge>
+    <edge source="view.View" target="controller.requests.RequestListener">
+      <point x="0.0" y="-389.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="controller.Controller.DebugAction" target="controller.Controller">
+      <point x="0.0" y="-36.5" />
+      <point x="0.0" y="169.0" />
+    </edge>
+    <edge source="model.entities.Entity.EntityType" target="model.entities.Entity">
+      <point x="0.0" y="-135.5" />
+      <point x="513.0" y="756.0" />
+      <point x="684.5" y="756.0" />
+      <point x="-47.0" y="301.5" />
+    </edge>
+    <edge source="model.entities.Crab" target="model.entities.Player">
+      <point x="0.0" y="-169.5" />
+      <point x="533.0" y="1250.0" />
+      <point x="388.83333333333337" y="1250.0" />
+      <point x="67.33333333333331" y="36.5" />
+    </edge>
+    <edge source="model.entities.TutorialTrashSpawner" target="model.entities.TrashSpawner">
+      <point x="55.75" y="-125.0" />
+      <point x="1817.25" y="1950.0" />
+      <point x="1842.375" y="1950.0" />
+      <point x="-55.75" y="125.5" />
+    </edge>
+    <edge source="model.entities.Entity" target="controller.bounds.BoundsListener">
+      <point x="0.0" y="-301.5" />
+      <point x="-58.75" y="36.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="747.0" y="1592.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>Project Files</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
