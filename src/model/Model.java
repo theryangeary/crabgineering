@@ -84,7 +84,7 @@ public class Model implements RequestListener, Serializable {
 	/**
 	 * How long until the boss shows up after the game starts. Set to 2:30
 	 */
-	private final int TIME_TILL_BOSS=150*1000;
+	private final int TIME_TILL_BOSS=90*1000;
 
 	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
