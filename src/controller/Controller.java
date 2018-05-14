@@ -89,7 +89,6 @@ public class Controller implements RequestListener, Serializable {
 	public void handleRequest(Request request){
 		switch (request.getRequestedAction()){
 			case TOGGLE_PAUSED:
-			    System.out.println((boolean) request.getSpecifics());
 				if ((boolean) request.getSpecifics()){
 					updater.stop();
 				} else {
