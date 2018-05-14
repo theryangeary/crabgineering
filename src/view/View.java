@@ -45,7 +45,7 @@ public class View extends JPanel implements RequestListener {
 	public enum PopupType{
 		CRAB_TUTORIAL,
 		TURTLE_TUTORIAL,
-		SORTING_TUTORIAL;
+		SORTING_TUTORIAL
 	}
 
 	//buttons

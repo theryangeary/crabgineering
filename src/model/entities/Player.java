@@ -19,7 +19,7 @@ public abstract class Player extends Entity {
 		SPECIAL_ACTION,
 		ROTATE_TRASH_LEFT,
 		ROTATE_TRASH_RIGHT,
-		STOP_ROTATE;
+		STOP_ROTATE
 	}
 
 	/**

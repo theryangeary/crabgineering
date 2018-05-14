@@ -28,7 +28,7 @@ public abstract class Entity implements BoundsListener, Serializable {
         SODA_CAN,
         MILK_JUG,
 		TRASH_BARGE,
-		RECYCLING_BARGE;
+		RECYCLING_BARGE
 	}
 
 	//note: x counts pixels left of the left-hand side of the window

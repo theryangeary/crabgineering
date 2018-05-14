@@ -30,7 +30,7 @@ public class Controller implements RequestListener, Serializable {
 	 */
 	public enum DebugAction{
 		SAVE,
-		LOAD;
+		LOAD
 	}
 
 	//TODO: make these NOT be static (please...)

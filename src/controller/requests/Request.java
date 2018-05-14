@@ -28,7 +28,7 @@ public class Request<R> implements Serializable{
         UPDATE_SCORE,
         UPDATE_THROW_ANGLE,
         TOGGLE_DISPLAY,
-        PLAY_SOUND;
+        PLAY_SOUND
     }
 
     //any extra information that a RequestListener

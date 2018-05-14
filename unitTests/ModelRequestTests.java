@@ -1,17 +1,14 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
-
 import controller.requests.Request;
 import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import model.Model;
+import model.entities.Entity.EntityType;
 import model.entities.Trash;
 import model.entities.TrashFactory;
+import org.junit.jupiter.api.Test;
 import view.estuaryenums.EstuarySound;
-import model.entities.Entity.EntityType;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelRequestTests {
 	
@@ -73,7 +70,7 @@ public class ModelRequestTests {
 	public void togglePausedTest() {
 		m.reset(EntityType.TURTLE, RequestFactory.createStartGameRequest(EntityType.TURTLE).getRequestedAction());
 		assertTrue(m.trashSpawning);
-		Request r = RequestFactory.createTogglePausedRequest();
+		Request r = RequestFactory.createTogglePausedRequest(m.trashSpawning);
 		m.handleRequest(r);
 		assertFalse(m.trashSpawning);
 		m.handleRequest(r);
