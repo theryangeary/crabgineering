@@ -3,6 +3,7 @@ package controller.requests;
 import model.entities.Entity;
 import model.entities.Player;
 import model.entities.Trash;
+import view.View;
 import view.sprites.Sprite;
 
 import javax.lang.model.type.NullType;
@@ -25,11 +26,41 @@ public class RequestFactory {
     }
 
     /**
+     * @param playerType Indicates which type of Player the Model should use
+     * @return A Request to start the boss fight
+     */
+    public static Request<Entity.EntityType> createStartBossRequest(Entity.EntityType playerType){
+        return new Request<>(
+                playerType,
+                Request.RequestType.START_BOSS
+        );
+    }
+
+    /**
+     * @param playerType Indicates which type of Player the Model should use
+     * @return A Request to start the game with the given type of Player
+     */
+    public static Request<Entity.EntityType> createStartTutorialRequest(Entity.EntityType playerType){
+        return new Request<>(
+                playerType,
+                Request.RequestType.START_TUTORIAL
+        );
+    }
+
+    public static Request<View.PopupType> createShowPopupRequest(View.PopupType popupType){
+        return new Request<>(
+                popupType,
+                Request.RequestType.SHOW_POPUP_REQUEST
+        );
+    }
+
+    /**
+     * @param shouldBePaused indicates whether or not the game should be paused
      * @return A Request for the game to be paused
      */
-    public static Request<NullType> createTogglePausedRequest(){
+    public static Request<Boolean> createTogglePausedRequest(boolean shouldBePaused){
         return new Request<>(
-                null,
+                shouldBePaused,
                 Request.RequestType.TOGGLE_PAUSED
         );
     }

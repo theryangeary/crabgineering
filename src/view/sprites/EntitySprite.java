@@ -7,11 +7,12 @@ import view.estuaryenums.EstuaryImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 /**
  * Connects Sprites to Entities
  */
-public class EntitySprite implements Sprite, BoundsListener {
+public class EntitySprite implements Sprite, BoundsListener, Serializable {
 
     private final boolean DEBUG = false;
     private final EstuaryImage estuaryImage;
@@ -52,19 +53,14 @@ public class EntitySprite implements Sprite, BoundsListener {
                 return EstuaryImage.CLAM;
             case SHRIMP:
                 return EstuaryImage.SHRIMP;
-            case TRASH:
-                if (Math.random() > .5) {
-                    return EstuaryImage.SNACK_BAG;
-                } else {
-                    return EstuaryImage.STYROFOAM_CUP;
-                }
-
-            case RECYCLING:
-                if (Math.random() > .5) {
-                    return EstuaryImage.SODA_CAN;
-                } else {
-                    return EstuaryImage.MILK_JUG;
-                }
+            case SNACK_BAG:
+                return EstuaryImage.SNACK_BAG;
+            case STYROFOAM_CUP:
+                return EstuaryImage.STYROFOAM_CUP;
+            case SODA_CAN:
+                return EstuaryImage.SODA_CAN;
+            case MILK_JUG:
+                return EstuaryImage.MILK_JUG;
             case BOSS:
                 return EstuaryImage.BOSS;
             case TRASH_BARGE:
@@ -95,11 +91,21 @@ public class EntitySprite implements Sprite, BoundsListener {
     }
 
     /**
-     * Return the sprite for the entity
-     * @return BufferedImage sprite
+     * Return the image drawn by this sprite
+     * @return BufferedImage the image
      */
-    protected BufferedImage getImage(){
+    protected Image getImage(){
         return estuaryImage.getImage();
+    }
+
+    /**
+     * Gets a scaled copy of the image drawn by this sprite
+     * @param width the desired width
+     * @param height the desired height
+     * @return BufferedImage the image, scaled to the given size
+     */
+    protected Image getScaledImage(int width, int height) {
+        return estuaryImage.getScaledImage(width, height);
     }
 
     /**
@@ -125,23 +131,26 @@ public class EntitySprite implements Sprite, BoundsListener {
     /**
      * Draw this sprite at its bounds
      * @param g Graphics object to draw on
+     * @param scaleX
+     * @param scaleY
      */
-    public void draw(Graphics g){
+    public void draw(Graphics g, double scaleX, double scaleY){
         Rectangle rectangle = getBounds();
 
+        //scale bounds
+        int drawX = (int) (rectangle.getX() * scaleX);
+        int drawY = (int) (rectangle.getY() * scaleY);
+        int drawWidth = (int) (rectangle.getWidth() * scaleX);
+        int drawHeight = (int) (rectangle.getHeight() * scaleY);
+
         if(DEBUG){
-            g.drawRect((int) rectangle.getX(),
-                    (int) rectangle.getY(),
-                    (int) rectangle.getWidth(),
-                    (int) rectangle.getHeight());
+            g.drawRect(drawX, drawY, drawWidth, drawHeight);
         }
 
-
-        g.drawImage(getImage(),
-                (int) rectangle.getX(),
-                (int) rectangle.getY(),
-                (int) rectangle.getWidth(),
-                (int) rectangle.getHeight(),
+        g.drawImage(
+                getScaledImage(drawWidth, drawHeight),
+                drawX,
+                drawY,
                 //a BufferedImage won't change while
                 //the image is being loaded, so null
                 //will work for our observer

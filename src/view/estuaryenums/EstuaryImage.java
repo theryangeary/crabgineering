@@ -1,6 +1,7 @@
 package view.estuaryenums;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,12 +26,21 @@ public enum EstuaryImage {
 	TITLE("title.png"),
     BOSS("boss.png"),
     BACKGROUND("background.png"),
-    FOREGROUND("foreground.png");
+    FOREGROUND("foreground.png"),
+    POLLUTION_EFFECT("pollution-effect.png"),
+    CRAB_TUTORIAL("crab-tutorial.png"),
+    TURTLE_TUTORIAL("turtle-tutorial.png"),
+    SORTING_TUTORIAL("sorting-tutorial.png");
 
     //should be the same for all Sprites
-    final static String IMAGE_DIR = "src/resources/images/";
+    private final static String IMAGE_DIR = "src/resources/images/";
 
-    final BufferedImage image;
+    private final Image image;
+
+    //info for scale caching
+    private Image lastScaledImage;
+    private int lastWidth;
+    private int lastHeight;
 
     /**
      * Constructor to create a EstuaryImage
@@ -67,7 +77,37 @@ public enum EstuaryImage {
      * Get BufferedImage
      * @return The image
      */
-    public BufferedImage getImage() {
+    public Image getImage() {
         return image;
+    }
+
+    /**
+     * Gets a copy of the image held by this EstuaryImage,
+     * scaled to the requested size
+     * @param width the desired width of the image
+     * @param height the desired height of the image
+     * @return the scaled image
+     */
+    public Image getScaledImage(int width, int height){
+        //if we want the same scale as last time...
+        if (width == lastWidth && height == lastHeight){
+            //...just reuse the result from last time
+            return lastScaledImage;
+        } else {
+            //...otherwise scale the image to the new size...
+            lastScaledImage = image.getScaledInstance(
+                    width, height, Image.SCALE_SMOOTH);
+
+            //...and store the new size
+            lastWidth = width;
+            lastHeight = height;
+
+            /*
+            System.out.println(String.format("%s scaled to %d by %d ",
+                    name(), width, height));
+            */
+
+            return lastScaledImage;
+        }
     }
 }

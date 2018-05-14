@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import controller.bounds.Bounds;
+import controller.requests.RequestFactory;
 import controller.requests.RequestQueue;
 import model.Model;
 import model.entities.Player;
@@ -17,8 +18,8 @@ public class ModelInitialTests {
 	// Tests all final variables' values
 	@Test
 	public void finalVariablesTest() {
-		assertEquals(500, Model.WORLD_WIDTH);
-		assertEquals(500, Model.WORLD_HEIGHT);
+		assertEquals(750, Model.WORLD_WIDTH);
+		assertEquals(750, Model.WORLD_HEIGHT);
 		assertEquals(10, Model.SCORE_INCREMENT);
 		assertEquals(100, m.getMaxPollutionLevel());
 	}
@@ -26,7 +27,7 @@ public class ModelInitialTests {
 	// Tests the initial state just after a new Model is created
 	@Test 
 	public void initialStateTest() {
-		m.reset(EntityType.CRAB);
+		m.reset(EntityType.CRAB, RequestFactory.createStartGameRequest(EntityType.CRAB).getRequestedAction());
 		assertTrue(m.getPlayer() instanceof Player);
 		assertTrue(m.getWorldBounds() instanceof Bounds);
 		assertEquals(0, m.getCurrentPollutionLevel());

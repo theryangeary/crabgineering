@@ -1,5 +1,7 @@
 package model;
 
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import view.View;
 import view.estuaryenums.EstuarySound;
 import controller.bounds.Bounds;
 import controller.bounds.BoundsListener;
@@ -13,8 +15,15 @@ import controller.requests.RequestQueue;
 import view.sprites.EntitySprite;
 import view.sprites.Sprite;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import static model.entities.Barge.BARGE_HEIGHT;
+import static model.entities.Barge.BARGE_PADDING;
+import static model.entities.Barge.BARGE_WIDTH;
 
 /**
  * A class that contains the game's logic. Updates are called by a Controller.
@@ -22,20 +31,19 @@ import java.util.ArrayList;
  * @author Zelinsky
  * @see Controller
  */
-public class Model implements RequestListener {
+public class Model implements RequestListener, Serializable {	
 	//listeners
 	RequestQueue requestQueue;
 	
 	//constants relevant to simulation's physics
-	public static final int WORLD_WIDTH = 500;
+	public static final int WORLD_WIDTH = 750;
 	public static final int WORLD_HEIGHT = WORLD_WIDTH; //it's a square
 	private final Bounds worldBounds;
 	private final double GRAVITY = .05;
 	private final double DRAG = .01;
+	public static final int WATER_HEIGHT = 100;
+	private static final int QUICK_FIX = 10;
 
-	private final int BARGE_WIDTH= 200;
-	private final int BARGE_HEIGHT= BARGE_WIDTH * 20 / 40;
-	private final int BARGE_PADDING= 15;
 	//objects in simulation
 	private ArrayList<Entity> entities = new ArrayList<>();
 	private TrashSpawner spawner;
@@ -44,7 +52,6 @@ public class Model implements RequestListener {
 	private Barge recyclingBarge;
 	private ArrayList<Trash> thrownTrash = new ArrayList<>();
 	private ArrayList<Trash> removeFromThrownTrash = new ArrayList<>();
-	private ArrayList<Entity> toRemove = new ArrayList<>();
 
 	//game variables
 	private int currentPollutionLevel = 0;
@@ -70,6 +77,16 @@ public class Model implements RequestListener {
 	public boolean trashSpawning = true;
 
 	/**
+	 * Timer to count until the boss shows up.
+	 */
+	private Timer startBossTimer;
+
+	/**
+	 * How long until the boss shows up after the game starts. Set to 2:30
+	 */
+	private final int TIME_TILL_BOSS=150*1000;
+
+	/**
 	 * Constructs the Model with its Bounds and RequestQueue.
 	 * Starts a new game by calling reset().
 	 *
@@ -84,69 +101,122 @@ public class Model implements RequestListener {
 		//setup the RequestQueue Entities can use to post controller.requests
 		//for the Model
 		requestQueue.addListener(this);
+
+
+
+
+
 	}
 	
 	/**
 	 * Resets the model by clearing all components on the screen and resetting variables to their initial state
 	 * and adds a TrashSpawner and Player.
 	 */
-	public void reset(EntityType playerType) {
-		toRemove.addAll(entities);
-		for(Entity e : toRemove) {
-			removeEntity(e);
+	public void reset(EntityType playerType, Request.RequestType resetMode) {
+		//if playerType is null, we're continuing a game,
+		//so only reset the spawner
+		if (playerType != null) {
+			entities.clear();
+			thrownTrash.clear();
+			removeFromThrownTrash.clear();
+			player = null;
+			spawner = null;
+			gameOver = false;
+
+			int playerInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
+			int playerInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
+
+			switch (playerType) {
+				case CRAB:
+					player = new Crab(playerInitialX, playerInitialY, requestQueue);
+					break;
+				case TURTLE:
+					player = new Turtle(playerInitialX, playerInitialY, requestQueue);
+					break;
+				default:
+					throw new ValueException(playerType.name() + " not a valid player type");
+			}
+			addEntity(player);
+
+
+			recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING - QUICK_FIX, (int) getWorldBounds().getY() + BARGE_PADDING,
+					BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
+			trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING  + QUICK_FIX),
+					(int) getWorldBounds().getY() + BARGE_PADDING,
+					BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
+
+			addEntity(trashBarge);
+			addEntity(recyclingBarge);
+
+			requestQueue.postRequest(
+					RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
+			);
+			requestQueue.postRequest(
+					RequestFactory.createUpdateScoreRequest(0)
+			);
 		}
-		entities.clear();
-		thrownTrash.clear();
-		toRemove.clear();
-		removeFromThrownTrash.clear();
-		player = null;
-		spawner = null;
-		gameOver = false;
-		
-		int playerInitialX = worldBounds.width / 2 - Crab.CRAB_WIDTH / 2;
-		int playerInitialY = worldBounds.height / 2 - Crab.CRAB_HEIGHT / 2;
-		
-		switch (playerType) {
-		case CRAB:
-			player = new Crab(playerInitialX, playerInitialY, requestQueue);
-			break;
-		case TURTLE:
-			player = new Turtle(playerInitialX, playerInitialY,requestQueue);
-			break;
-		default:
-			break;
-		}
 
-		//Adding boss
-		Entity boss = new Boss(-500,25,requestQueue);
-		//addEntity(boss);
 
-		addEntity(player);
-
-		recyclingBarge = new Barge((int) getWorldBounds().getX() + BARGE_PADDING, (int) getWorldBounds().getY() + BARGE_PADDING,
-				BARGE_WIDTH, BARGE_HEIGHT, EntityType.RECYCLING_BARGE, requestQueue);
-		trashBarge = new Barge((int) (getWorldBounds().getX() + getWorldBounds().getWidth() - BARGE_WIDTH - BARGE_PADDING),
-				(int) getWorldBounds().getY() + BARGE_PADDING,
-				BARGE_WIDTH, BARGE_HEIGHT, EntityType.TRASH_BARGE, requestQueue);
-
-		addEntity(trashBarge);
-		addEntity(recyclingBarge);
-
+		//set up the spawner
 		int spawnInterval = 2 * 1000;
-		int spawnHeight = 0;
-		spawner = new TrashSpawner(
-		        requestQueue,
-				spawnHeight,
-				(int) worldBounds.getWidth() - Trash.TRASH_WIDTH,
-				spawnInterval);
-		spawner.start();
-		
-		requestQueue.postRequest(
-				RequestFactory.createUpdatePollutionRequest(-currentPollutionLevel)
-		);
-		requestQueue.postRequest(
-				RequestFactory.createUpdateScoreRequest(-1* score/SCORE_INCREMENT)
-		);
+		int spawnHeight = -Trash.TRASH_HEIGHT;
+		switch (resetMode) {
+			case START_TUTORIAL:
+				spawner = new TutorialTrashSpawner(
+						requestQueue,
+						spawnHeight,
+						(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2 * BARGE_WIDTH) - BARGE_PADDING,
+						BARGE_PADDING + BARGE_WIDTH);
+				spawner.start();
+
+				switch (player.getType()){
+					case CRAB:
+						requestQueue.postAndFulfillRequest(
+								RequestFactory.createShowPopupRequest(
+										View.PopupType.CRAB_TUTORIAL
+								)
+						);
+						break;
+					case TURTLE:
+						requestQueue.postAndFulfillRequest(
+								RequestFactory.createShowPopupRequest(
+										View.PopupType.TURTLE_TUTORIAL
+								)
+						);
+				}
+
+				break;
+			case START_GAME:
+				Action startBossAction = new AbstractAction() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						requestQueue.postRequest(RequestFactory.createStartBossRequest(null));
+					}
+				};
+
+				startBossTimer = new Timer(TIME_TILL_BOSS, startBossAction);
+				startBossTimer.start();
+
+				//set up the spawner for the regular game
+				spawner = new TimerTrashSpawner(
+						requestQueue,
+						spawnHeight,
+						(int) worldBounds.getWidth() - Trash.TRASH_WIDTH - (2 * BARGE_WIDTH) - BARGE_PADDING,
+						spawnInterval,
+						BARGE_PADDING + BARGE_WIDTH);
+				spawner.start();
+
+				break;
+
+			case START_BOSS:
+				startBossTimer.stop();
+				spawner.stop();
+				Entity boss = new Boss(-200, 25, requestQueue);
+				addEntity(boss);
+				break;
+			default:
+				throw new ValueException(resetMode.name() + " not a valid game mode");
+		}
 	}
 
 	/**
@@ -159,7 +229,7 @@ public class Model implements RequestListener {
 	public void handleRequest(Request request) {
 		switch (request.getRequestedAction()) {
 			case TOGGLE_PAUSED:
-				toggleTrashSpawning(!trashSpawning);
+				toggleTrashSpawning((boolean) request.getSpecifics());
 				break;
 			case ADD_TO_MODEL:
 				addEntity((Entity) request.getSpecifics());
@@ -187,7 +257,7 @@ public class Model implements RequestListener {
 	public void update() {
 		for (Entity entity : entities) {
 			entity.update(GRAVITY, DRAG);
-//			System.out.println(entity.toString());
+
 			//Check for player-trash collision and trash-trash collision
 			if (entity instanceof Trash) {
 				Trash trash = (Trash) entity;
@@ -199,14 +269,29 @@ public class Model implements RequestListener {
 						requestQueue.postRequest(
 								RequestFactory.createUpdateScoreRequest(3)
 						);
+						requestQueue.postRequest(
+								RequestFactory.createRemoveFromModelRequest(trash)
+						);
+						removeFromThrownTrash.add(trash);
 				}
-				if (((recyclingBarge.intersects(trash) || trashBarge.intersects(trash)) || trash.atTop()) && trash.touched()) {
-					toRemove.add(entity);
-					removeFromThrownTrash.add(trash);
+
+				if ((trashBarge.intersects(trash) && trash.touched() && !trashBarge.bargeMatchesTrash(trash)) ||
+						(recyclingBarge.intersects(trash) && trash.touched() && !recyclingBarge.bargeMatchesTrash(trash))) {
+						if (!trash.getPlayedSound()) {
+							EstuarySound.TRASH_WRONG.play();
+							trash.setPlayedSound(true);
+							}
 				}
+
 				if (trash.getYSpeed() > 0) {
 					thrownTrash.remove(trash);
 					trash.setThrown(false);
+					if ((trash.getBounds().getMinY() > trashBarge.getBounds().getMaxY()) && (trash.getBounds().getMinY() > recyclingBarge.getBounds().getMaxY())) {
+						if (trash.getPlayedSound()) {
+							trash.setPlayedSound(false);
+						}
+					}
+					
 				}
 				for (Trash tt : thrownTrash) {
 					if (entity.intersects(tt) && !entity.atBottom() && !trash.thrown()) {
@@ -218,11 +303,6 @@ public class Model implements RequestListener {
 				}
 			}
 		}
-		// Remove to-be-removed trash; prevents modifying ArrayList while iterating through
-		for (Entity e : toRemove) {
-			removeEntity(e);
-		}
-		toRemove.clear();
 
 		for (Trash t : removeFromThrownTrash) {
 			thrownTrash.remove(t);
@@ -249,13 +329,19 @@ public class Model implements RequestListener {
 	}
 
 	/**
-	 * Increments the score by the (modifier * SCORE_INCREMENT).
+	 * Increments the score by the specified modifer times SCORE_INCREMENT.
 	 *
-	 * @param modifier The amount to multiply SCORE_INCREMENT by
+	 * @param modifier The amount to multiply the SCORE_INCREMENT by
 	 */
 	public void incrementScore(int modifier) {
-		EstuarySound.POINTS.play();
-		score += SCORE_INCREMENT * modifier;
+		if (modifier > 0) {
+			EstuarySound.POINTS.play();
+		}
+		if (modifier == 0) {
+			this.score = 0;
+		} else {
+			this.score = this.score + (modifier * SCORE_INCREMENT);
+		}
 	}
 
 	/**
@@ -275,6 +361,7 @@ public class Model implements RequestListener {
 	 */
 	public void addEntity(Entity entity) {
 		//add the Entity, and let it react to being added
+
 		entity.setWorldBounds(worldBounds);
 		entities.add(entity);
 
@@ -285,6 +372,7 @@ public class Model implements RequestListener {
 		requestQueue.postRequest(
 				RequestFactory.createAddToViewRequest(sprite)
 		);
+
 	}
 
 	/**
@@ -294,6 +382,7 @@ public class Model implements RequestListener {
 	 * @param entity The Entity to be removed from the Model
 	 */
 	public void removeEntity(Entity entity) {
+
 		entities.remove(entity);
 
 		//remove any Sprites that are following the entity's movements
@@ -323,8 +412,11 @@ public class Model implements RequestListener {
 	 * @return The new pollution level
 	 */
 	// returns new pollution level
-	int incrementPollutionLevel(int addition) {
+	public int incrementPollutionLevel(int addition) {
 		this.currentPollutionLevel += addition;
+		if (this.currentPollutionLevel < 0) {
+			this.currentPollutionLevel = 0;
+		}
 		return this.currentPollutionLevel;
 	}
 
@@ -377,10 +469,85 @@ public class Model implements RequestListener {
 	}
 	
 	/**
+	 * Returns the TrashSpawner for the Model. For testing purposes.
+	 * @return The Model's TrashSpawner
+	 */
+	public TrashSpawner getSpawner() {
+		return spawner;
+	}
+	
+	/**
 	 * Returns the ArrayList of Trash that has been 'thrown'. For testing purposes.
 	 * @return The Model's ArrayList of 'thrown' Trash
 	 */
 	public ArrayList<Trash> getThrownTrash(){
 		return thrownTrash;
+	}
+	
+	/**
+	 * Removes all Entities from the Model and View, and removes self from the RequestListener.
+	 * For the purpose of loading in a new file, this one must be called on the old Model.
+	 */
+	public void retireModel() {
+		toggleTrashSpawning(false);
+		if (spawner instanceof TutorialTrashSpawner) {
+			requestQueue.removeListener((TutorialTrashSpawner) spawner);
+		}
+		for (Entity e : entities) {
+			requestQueue.postRequest(
+					RequestFactory.createRemoveFromModelRequest(e)
+			);
+		}
+		requestQueue.fulfillAllRequests();
+		requestQueue.removeListener(this);
+	}
+	
+	/**
+	 * Adds all Entities in the Model to the View, sets the correct score and pollution level, and sets the RequestQueue
+	 * for all Entities and components of the Model.
+	 * @param rq The RequestQueue to set for the Model and all components
+	 */
+	public void restore(RequestQueue rq) {	
+		setRequestQueue(rq);
+		spawner.setRequestQueue(rq);
+		if (spawner instanceof TutorialTrashSpawner) {
+			requestQueue.addListener((TutorialTrashSpawner) spawner);
+		}
+		for (Entity e: entities) {
+			
+			e.setRequestQueue(rq);
+			//create the corresponding sprite
+			Sprite sprite = new EntitySprite(e);
+
+			//and post a request for it to be added to the view
+			requestQueue.postRequest(
+					RequestFactory.createAddToViewRequest(sprite)
+			);
+		}
+		
+		int tempPollution = this.currentPollutionLevel;
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(-100)
+		);
+		requestQueue.postRequest(
+				RequestFactory.createUpdatePollutionRequest(tempPollution)
+		);
+		
+		int tempScore = this.score;
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(0)
+		);
+		requestQueue.postRequest(
+				RequestFactory.createUpdateScoreRequest(tempScore/SCORE_INCREMENT)
+		);		
+	}
+	
+	/**
+	 * Sets the RequestQueue for the Model
+	 * @param rq The RequestQueue to set the Model to
+	 */
+	public void setRequestQueue(RequestQueue rq) {
+		this.requestQueue = rq;
+		requestQueue.addListener(this);
 	}
 }
