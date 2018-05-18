@@ -467,12 +467,12 @@ public class Model implements RequestListener, Serializable {
 	 * Turns on the Trash Spawner if the state is true, off if the state is false.
 	 * @param state Determines whether the Trash Spawner is turned off or on
 	 */
-	public void toggleTrashSpawning(boolean state) {
-		trashSpawning = state;
-		if (state) {
-			spawner.start();
-		} else {
+	public void toggleTrashSpawning(boolean isPaused) {
+
+		if (isPaused) {
 			spawner.stop();
+		} else {
+			spawner.start();
 		}
 	}
 	
