@@ -80,6 +80,7 @@ public class Model implements RequestListener, Serializable {
 	 * Timer to count until the boss shows up.
 	 */
 	private Timer startBossTimer;
+	private boolean bossTimerOn = false;
 
 	/**
 	 * How long until the boss shows up after the game starts. Set to 2:30
@@ -187,15 +188,20 @@ public class Model implements RequestListener, Serializable {
 
 				break;
 			case START_GAME:
-				Action startBossAction = new AbstractAction() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						requestQueue.postRequest(RequestFactory.createStartBossRequest(null));
-					}
-				};
+				if (startBossTimer == null) {
+					Action startBossAction = new AbstractAction() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							requestQueue.postRequest(RequestFactory.createStartBossRequest(null));
+						}
+					};
 
-				startBossTimer = new Timer(TIME_TILL_BOSS, startBossAction);
-				startBossTimer.start();
+					startBossTimer = new Timer(TIME_TILL_BOSS, startBossAction);
+					startBossTimer.start();
+				} else {
+					startBossTimer.restart();
+				}
+				bossTimerOn = true;
 
 				//set up the spawner for the regular game
 				spawner = new TimerTrashSpawner(
@@ -210,6 +216,7 @@ public class Model implements RequestListener, Serializable {
 
 			case START_BOSS:
 				startBossTimer.stop();
+				bossTimerOn = false;
 				spawner.stop();
 				Entity boss = new Boss(-200, 25, requestQueue);
 				addEntity(boss);
@@ -230,6 +237,14 @@ public class Model implements RequestListener, Serializable {
 		switch (request.getRequestedAction()) {
 			case TOGGLE_PAUSED:
 				toggleTrashSpawning((boolean) request.getSpecifics());
+
+				if (bossTimerOn){
+					if ((boolean) request.getSpecifics()){
+						startBossTimer.start();
+					} else {
+						startBossTimer.stop();
+					}
+				}
 				break;
 			case ADD_TO_MODEL:
 				addEntity((Entity) request.getSpecifics());
@@ -323,6 +338,7 @@ public class Model implements RequestListener, Serializable {
 	 */
 	public void endGame() {
 		spawner.stop();
+		startBossTimer.stop();
 		gameOver = true;
 		//reset()
 		Controller.endGame();

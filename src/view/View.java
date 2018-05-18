@@ -274,6 +274,8 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.weightx = 1;
+		constraints.weighty = 1;
 
 		//create the buttons with images
         Image crabButtonImage = EstuaryImage.CRAB_BUTTON
