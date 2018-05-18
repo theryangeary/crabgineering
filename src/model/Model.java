@@ -240,9 +240,9 @@ public class Model implements RequestListener, Serializable {
 
 				if (bossTimerOn){
 					if ((boolean) request.getSpecifics()){
-						startBossTimer.start();
-					} else {
 						startBossTimer.stop();
+					} else {
+						startBossTimer.start();
 					}
 				}
 				break;
