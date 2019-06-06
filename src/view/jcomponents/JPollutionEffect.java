@@ -29,7 +29,9 @@ public class JPollutionEffect extends JPanel implements RequestListener{
             this.pollutionLevel += (int) request.getSpecifics();
             if (this.pollutionLevel < 0) {
             	this.pollutionLevel = 0;
-            }
+            } else if (this.pollutionLevel > Model.MAX_POLLUTION_LEVEL){
+            	this.pollutionLevel = Model.MAX_POLLUTION_LEVEL;
+			}
             /*
             alpha += OPACITY_INCREMENT;
             if (pollutionLevel <= 0) {

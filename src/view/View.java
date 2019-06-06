@@ -92,6 +92,8 @@ public class View extends JPanel implements RequestListener {
 
         //display the frame
         frame.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
         frame.pack();
         frame.setVisible(true);
     }
@@ -272,6 +274,8 @@ public class View extends JPanel implements RequestListener {
         //create a container to hold all the menu elements
         JComponent menu = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.weightx = 1;
+		constraints.weighty = 1;
 
 		//create the buttons with images
         Image crabButtonImage = EstuaryImage.CRAB_BUTTON
